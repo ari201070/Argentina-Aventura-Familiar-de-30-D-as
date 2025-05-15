@@ -1,20 +1,20 @@
-import React, { useEffect, useState } from 'react';
+// frontend/src/App.js
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import Itinerario from './pages/itinerario';
+import AlertaVuelo from './pages/AlertaVuelo';
 
 function App() {
-  const [mensaje, setMensaje] = useState('');
-
-  useEffect(() => {
-    fetch('http://localhost:3001/')
-      .then((response) => response.text())
-      .then((data) => setMensaje(data))
-      .catch((error) => setMensaje('Error al conectar con el backend'));
-  }, []);
-
   return (
-    <div>
-      <h1>Frontend React</h1>
-      <p>Mensaje del backend: {mensaje}</p>
-    </div>
+    <Router>
+      <nav>
+        <Link to="/">Itinerario</Link> | <Link to="/alerta-vuelo">Alerta de vuelo</Link>
+      </nav>
+      <Routes>
+        <Route path="/" element={<Itinerario />} />
+        <Route path="/alerta-vuelo" element={<AlertaVuelo />} />
+      </Routes>
+    </Router>
   );
 }
 
