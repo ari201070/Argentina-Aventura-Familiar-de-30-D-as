@@ -1,24 +1,12 @@
-// Importa las dependencias
+// mcp-backend/server.js
 const express = require('express');
 const cors = require('cors');
-
 const app = express();
 
-// Habilita CORS para todas las rutas y orígenes
 app.use(cors());
+app.use(express.json());
 
-// Ruta raíz
-app.get('/', (req, res) => {
-  res.send('¡Servidor Express funcionando!');
-});
+const itineraryRoutes = require('./routes/itinerary');
+app.use('/mcp/itinerary', itineraryRoutes);
 
-// Puedes agregar más rutas aquí
-// app.get('/otra-ruta', (req, res) => {
-//   res.send('Respuesta para otra ruta');
-// });
-
-// Puerto de escucha
-const PORT = process.env.PORT || 3001;
-app.listen(PORT, () => {
-  console.log(`Servidor MCP escuchando en el puerto ${PORT}`);
-});
+app.listen(3001, () => console.log('MCP backend escuchando en puerto 3001'));
