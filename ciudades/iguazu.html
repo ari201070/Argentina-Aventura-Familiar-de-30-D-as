@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Cataratas del Iguazú | Viaje Familiar a Argentina</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f9f9f9;
+      color: #333;
+      margin: 20px;
+      transition: direction 0.3s;
+    }
+    #language-selector {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 1000;
+      background-color: rgba(255,255,255,0.8);
+      padding: 5px;
+      border-radius: 5px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    }
+    .language-btn {
+      font-weight: bold;
+      padding: 8px 12px;
+      margin: 0 5px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      background-color: #f0f0f0;
+    }
+    .back-link {
+      margin-left: 20px;
+      text-decoration: none;
+      font-weight: bold;
+      color: #007BFF;
+    }
+    h1, h2 {
+      color: #0F4761;
+    }
+    ul {
+      margin-bottom: 20px;
+    }
+    iframe {
+      border: 1px solid black;
+    }
+  </style>
+</head>
+<body>
+  <div id="language-selector">
+    <button onclick="translatePage('es')" class="language-btn">Español</button>
+    <button onclick="translatePage('he')" class="language-btn">עברית</button>
+    <a href="../index.html" class="back-link" id="back-link">⬅ Volver al itinerario</a>
+  </div>
+
+  <h1 id="city-title">Cataratas del Iguazú</h1>
+  <p id="welcome-text">Bienvenidos a la sección de Cataratas del Iguazú.</p>
+
+  <h2 id="main-attractions-title">Atracciones principales</h2>
+  <ul id="main-attractions-list">
+    <li><a href="https://es.wikipedia.org/wiki/Cataratas_del_Iguaz%C3%BA" target="_blank" id="attraction-0">Parque Nacional Iguazú y Cataratas</a></li>
+    <li><a href="https://es.wikipedia.org/wiki/Garganta_del_Diablo" target="_blank" id="attraction-1">Garganta del Diablo</a></li>
+    <li><a href="https://es.wikipedia.org/wiki/Paseo_Superior_y_Paseo_Inferior" target="_blank" id="attraction-2">Paseos Superior e Inferior</a></li>
+    <li><a href="https://es.wikipedia.org/wiki/Isla_San_Mart%C3%ADn" target="_blank" id="attraction-3">Isla San Martín</a></li>
+  </ul>
+
+  <h2 id="restaurant-types-title">Tipos de restaurantes</h2>
+  <ul id="restaurant-types-list">
+    <li id="rest-0">Parrillas</li>
+    <li id="rest-1">Restaurantes regionales</li>
+    <li id="rest-2">Buffets en el parque</li>
+    <li id="rest-3">Cafés y casas de té</li>
+  </ul>
+
+  <h2 id="map-title">Mapa de Cataratas del Iguazú</h2>
+  <iframe src="https://www.openstreetmap.org/export/embed.html?bbox=-54.478%2C-25.707%2C-54.438%2C-25.664&amp;layer=mapnik" width="100%" height="350"></iframe>
+  <br><small><a href="https://www.openstreetmap.org/#map=14/-25.686/-54.458" target="_blank" id="see-bigger-map">Ver mapa más grande</a></small>
+
+  <script>
+    // Diccionario de traducciones español ↔ hebreo
+    const translations = {
+      es: {
+        "city-title": "Cataratas del Iguazú",
+        "welcome-text": "Bienvenidos a la sección de Cataratas del Iguazú.",
+        "main-attractions-title": "Atracciones principales",
+        "attraction-0": "Parque Nacional Iguazú y Cataratas",
+        "attraction-1": "Garganta del Diablo",
+        "attraction-2": "Paseos Superior e Inferior",
+        "attraction-3": "Isla San Martín",
+        "restaurant-types-title": "Tipos de restaurantes",
+        "rest-0": "Parrillas",
+        "rest-1": "Restaurantes regionales",
+        "rest-2": "Buffets en el parque",
+        "rest-3": "Cafés y casas de té",
+        "map-title": "Mapa de Cataratas del Iguazú",
+        "see-bigger-map": "Ver mapa más grande",
+        "back-link": "⬅ Volver al itinerario"
+      },
+      he: {
+        "city-title": "מפלי איגואסו",
+        "welcome-text": "ברוכים הבאים למדור מפלי איגואסו.",
+        "main-attractions-title": "אטרקציות עיקריות",
+        "attraction-0": "הפארק הלאומי ומפלי איגואסו",
+        "attraction-1": "גרגנטה דל דיאבלו",
+        "attraction-2": "מסלול עליון ותחתון",
+        "attraction-3": "אי סן מרטין",
+        "restaurant-types-title": "סוגי מסעדות",
+        "rest-0": "מסעדות בשרים (פריז'ות)",
+        "rest-1": "מסעדות אזוריות",
+        "rest-2": "בופה בפארק",
+        "rest-3": "בתי קפה ובתי תה",
+        "map-title": "מפת מפלי איגואסו",
+        "see-bigger-map": "לצפייה במפה גדולה יותר",
+        "back-link": "⬅ חזרה למפת המסלול"
+      }
+    };
+
+    function translatePage(language) {
+      document.body.dir = (language === 'he') ? 'rtl' : 'ltr';
+      document.getElementById('city-title').textContent = translations[language]["city-title"];
+      document.getElementById('welcome-text').textContent = translations[language]["welcome-text"];
+      document.getElementById('main-attractions-title').textContent = translations[language]["main-attractions-title"];
+      document.getElementById('attraction-0').textContent = translations[language]["attraction-0"];
+      document.getElementById('attraction-1').textContent = translations[language]["attraction-1"];
+      document.getElementById('attraction-2').textContent = translations[language]["attraction-2"];
+      document.getElementById('attraction-3').textContent = translations[language]["attraction-3"];
+      document.getElementById('restaurant-types-title').textContent = translations[language]["restaurant-types-title"];
+      document.getElementById('rest-0').textContent = translations[language]["rest-0"];
+      document.getElementById('rest-1').textContent = translations[language]["rest-1"];
+      document.getElementById('rest-2').textContent = translations[language]["rest-2"];
+      document.getElementById('rest-3').textContent = translations[language]["rest-3"];
+      document.getElementById('map-title').textContent = translations[language]["map-title"];
+      document.getElementById('see-bigger-map').textContent = translations[language]["see-bigger-map"];
+      document.getElementById('back-link').textContent = translations[language]["back-link"];
+    }
+  </script>
+</body>
+</html>

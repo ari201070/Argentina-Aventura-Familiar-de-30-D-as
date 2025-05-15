@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Buenos Aires | Viaje Familiar a Argentina</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f9f9f9;
+      color: #333;
+      margin: 20px;
+      transition: direction 0.3s;
+    }
+    #language-selector {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 1000;
+      background-color: rgba(255,255,255,0.8);
+      padding: 5px;
+      border-radius: 5px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    }
+    .language-btn {
+      font-weight: bold;
+      padding: 8px 12px;
+      margin: 0 5px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      background-color: #f0f0f0;
+    }
+    .back-link {
+      margin-left: 20px;
+      text-decoration: none;
+      font-weight: bold;
+      color: #007BFF;
+    }
+    h1, h2 {
+      color: #0F4761;
+    }
+    ul {
+      margin-bottom: 20px;
+    }
+    iframe {
+      border: 1px solid black;
+    }
+  </style>
+</head>
+<body>
+  <div id="language-selector">
+    <button onclick="translatePage('es')" class="language-btn">Español</button>
+    <button onclick="translatePage('he')" class="language-btn">עברית</button>
+    <a href="../index.html" class="back-link" id="back-link">⬅ Volver al itinerario</a>
+  </div>
+
+  <h1 id="city-title">Buenos Aires</h1>
+  <p id="welcome-text">Bienvenidos a la sección de Buenos Aires.</p>
+
+  <h2 id="main-attractions-title">Atracciones principales</h2>
+  <ul id="main-attractions-list">
+    <li><a href="https://es.wikipedia.org/wiki/Obelisco_de_Buenos_Aires" target="_blank" id="attraction-0">Obelisco</a></li>
+    <li><a href="https://es.wikipedia.org/wiki/Teatro_Col%C3%B3n" target="_blank" id="attraction-1">Teatro Colón</a></li>
+    <li><a href="https://es.wikipedia.org/wiki/Barrio_de_La_Boca" target="_blank" id="attraction-2">Barrio La Boca y Caminito</a></li>
+    <li><a href="https://es.wikipedia.org/wiki/Cementerio_de_la_Recoleta" target="_blank" id="attraction-3">Cementerio de la Recoleta</a></li>
+    <li><a href="https://es.wikipedia.org/wiki/Plaza_de_Mayo" target="_blank" id="attraction-5">Plaza de Mayo</a></li>
+    <li><a href="https://planetario.buenosaires.gob.ar/" target="_blank" id="attraction-4">Planetario</a></li>
+  </ul>
+
+  <h2 id="restaurant-types-title">Tipos de restaurantes</h2>
+  <ul id="restaurant-types-list">
+    <li id="rest-0">Parrillas</li>
+    <li id="rest-1">Pizzerías</li>
+    <li id="rest-2">Cafés históricos</li>
+    <li id="rest-3">Restaurantes gourmet</li>
+  </ul>
+
+  <h2 id="map-title">Mapa de Buenos Aires</h2>
+  <iframe src="https://www.openstreetmap.org/export/embed.html?bbox=-58.531%2C-34.705%2C-58.335%2C-34.545&amp;layer=mapnik" width="100%" height="350"></iframe>
+  <br><small><a href="https://www.openstreetmap.org/#map=12/-34.63/-58.43" target="_blank" id="see-bigger-map">Ver mapa más grande</a></small>
+
+  <script>
+    // Diccionario de traducciones español ↔ hebreo
+    const translations = {
+      es: {
+        "city-title": "Buenos Aires",
+        "welcome-text": "Bienvenidos a la sección de Buenos Aires.",
+        "main-attractions-title": "Atracciones principales",
+        "attraction-0": "Obelisco",
+        "attraction-1": "Teatro Colón",
+        "attraction-2": "Barrio La Boca y Caminito",
+        "attraction-3": "Cementerio de la Recoleta",
+        "attraction-4": "Plaza de Mayo",
+        "restaurant-types-title": "Tipos de restaurantes",
+        "rest-0": "Parrillas",
+        "rest-1": "Pizzerías",
+        "rest-2": "Cafés históricos",
+        "rest-3": "Restaurantes gourmet",
+        "map-title": "Mapa de Buenos Aires",
+        "see-bigger-map": "Ver mapa más grande",
+        "back-link": "⬅ Volver al itinerario"
+      },
+      he: {
+        "city-title": "בואנוס איירס",
+        "welcome-text": "ברוכים הבאים למדור בואנוס איירס.",
+        "main-attractions-title": "אטרקציות עיקריות",
+        "attraction-0": "האובליסק",
+        "attraction-1": "תיאטרון קולון",
+        "attraction-2": "שכונת לה בוקה ורחוב קמיניטו",
+        "attraction-3": "בית הקברות של רקולטה",
+        "attraction-4": "כיכר מאיו",
+        "restaurant-types-title": "סוגי מסעדות",
+        "rest-0": "מסעדות בשרים (פריז'ות)",
+        "rest-1": "פיצריות",
+        "rest-2": "בתי קפה היסטוריים",
+        "rest-3": "מסעדות גורמה",
+        "map-title": "מפת בואנוס איירס",
+        "see-bigger-map": "לצפייה במפה גדולה יותר",
+        "back-link": "⬅ חזרה למפת המסלול"
+      }
+    };
+
+    function translatePage(language) {
+      document.body.dir = (language === 'he') ? 'rtl' : 'ltr';
+      document.getElementById('city-title').textContent = translations[language]["city-title"];
+      document.getElementById('welcome-text').textContent = translations[language]["welcome-text"];
+      document.getElementById('main-attractions-title').textContent = translations[language]["main-attractions-title"];
+      document.getElementById('attraction-0').textContent = translations[language]["attraction-0"];
+      document.getElementById('attraction-1').textContent = translations[language]["attraction-1"];
+      document.getElementById('attraction-2').textContent = translations[language]["attraction-2"];
+      document.getElementById('attraction-3').textContent = translations[language]["attraction-3"];
+      document.getElementById('attraction-4').textContent = translations[language]["attraction-4"];
+      document.getElementById('restaurant-types-title').textContent = translations[language]["restaurant-types-title"];
+      document.getElementById('rest-0').textContent = translations[language]["rest-0"];
+      document.getElementById('rest-1').textContent = translations[language]["rest-1"];
+      document.getElementById('rest-2').textContent = translations[language]["rest-2"];
+      document.getElementById('rest-3').textContent = translations[language]["rest-3"];
+      document.getElementById('map-title').textContent = translations[language]["map-title"];
+      document.getElementById('see-bigger-map').textContent = translations[language]["see-bigger-map"];
+      document.getElementById('back-link').textContent = translations[language]["back-link"];
+    }
+  </script>
+</body>
+</html>

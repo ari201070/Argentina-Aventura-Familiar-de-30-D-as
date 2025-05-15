@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Jujuy | Viaje Familiar a Argentina</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f9f9f9;
+      color: #333;
+      margin: 20px;
+      transition: direction 0.3s;
+    }
+    #language-selector {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 1000;
+      background-color: rgba(255,255,255,0.8);
+      padding: 5px;
+      border-radius: 5px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    }
+    .language-btn {
+      font-weight: bold;
+      padding: 8px 12px;
+      margin: 0 5px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      background-color: #f0f0f0;
+    }
+    .back-link {
+      margin-left: 20px;
+      text-decoration: none;
+      font-weight: bold;
+      color: #007BFF;
+    }
+    h1, h2 {
+      color: #0F4761;
+    }
+    ul {
+      margin-bottom: 20px;
+    }
+    iframe {
+      border: 1px solid black;
+    }
+  </style>
+</head>
+<body>
+  <div id="language-selector">
+    <button onclick="translatePage('es')" class="language-btn">Español</button>
+    <button onclick="translatePage('he')" class="language-btn">עברית</button>
+    <a href="../index.html" class="back-link" id="back-link">⬅ Volver al itinerario</a>
+  </div>
+
+  <h1 id="city-title">Jujuy</h1>
+  <p id="welcome-text">Bienvenidos a la sección de Jujuy.</p>
+
+  <h2 id="main-attractions-title">Atracciones principales</h2>
+  <ul id="main-attractions-list">
+    <li><a href="https://es.wikipedia.org/wiki/Quebrada_de_Humahuaca" target="_blank" id="attraction-0">Quebrada de Humahuaca</a></li>
+    <li><a href="https://es.wikipedia.org/wiki/Cerro_de_los_Siete_Colores" target="_blank" id="attraction-1">Cerro de los Siete Colores (Purmamarca)</a></li>
+    <li><a href="https://es.wikipedia.org/wiki/Serran%C3%ADa_de_Hornocal" target="_blank" id="attraction-2">Serranías del Hornocal</a></li>
+    <li><a href="https://es.wikipedia.org/wiki/Salinas_Grandes_(Argentina)" target="_blank" id="attraction-3">Salinas Grandes</a></li>
+  </ul>
+
+  <h2 id="restaurant-types-title">Tipos de restaurantes</h2>
+  <ul id="restaurant-types-list">
+    <li id="rest-0">Peñas folclóricas</li>
+    <li id="rest-1">Comida andina</li>
+    <li id="rest-2">Cocina criolla</li>
+    <li id="rest-3">Cafés y casas de té</li>
+  </ul>
+
+  <h2 id="map-title">Mapa de Jujuy</h2>
+  <iframe src="https://www.openstreetmap.org/export/embed.html?bbox=-65.330%2C-24.283%2C-65.176%2C-24.151&amp;layer=mapnik" width="100%" height="350"></iframe>
+  <br><small><a href="https://www.openstreetmap.org/#map=12/-24.2/-65.3" target="_blank" id="see-bigger-map">Ver mapa más grande</a></small>
+
+  <script>
+    // Diccionario de traducciones español ↔ hebreo
+    const translations = {
+      es: {
+        "city-title": "Jujuy",
+        "welcome-text": "Bienvenidos a la sección de Jujuy.",
+        "main-attractions-title": "Atracciones principales",
+        "attraction-0": "Quebrada de Humahuaca",
+        "attraction-1": "Cerro de los Siete Colores (Purmamarca)",
+        "attraction-2": "Serranías del Hornocal",
+        "attraction-3": "Salinas Grandes",
+        "restaurant-types-title": "Tipos de restaurantes",
+        "rest-0": "Peñas folclóricas",
+        "rest-1": "Comida andina",
+        "rest-2": "Cocina criolla",
+        "rest-3": "Cafés y casas de té",
+        "map-title": "Mapa de Jujuy",
+        "see-bigger-map": "Ver mapa más grande",
+        "back-link": "⬅ Volver al itinerario"
+      },
+      he: {
+        "city-title": "חוחוי",
+        "welcome-text": "ברוכים הבאים למדור חוחוי.",
+        "main-attractions-title": "אטרקציות עיקריות",
+        "attraction-0": "קניון הומאוואקה",
+        "attraction-1": "הר שבעת הצבעים (פורמאמרקה)",
+        "attraction-2": "רכס הורנוקאל",
+        "attraction-3": "סאלינס גראנדס",
+        "restaurant-types-title": "סוגי מסעדות",
+        "rest-0": "פניה פולקלורית",
+        "rest-1": "מטבח אנדי",
+        "rest-2": "מטבח קריויו",
+        "rest-3": "בתי קפה ובתי תה",
+        "map-title": "מפת חוחוי",
+        "see-bigger-map": "לצפייה במפה גדולה יותר",
+        "back-link": "⬅ חזרה למפת המסלול"
+      }
+    };
+
+    function translatePage(language) {
+      document.body.dir = (language === 'he') ? 'rtl' : 'ltr';
+      document.getElementById('city-title').textContent = translations[language]["city-title"];
+      document.getElementById('welcome-text').textContent = translations[language]["welcome-text"];
+      document.getElementById('main-attractions-title').textContent = translations[language]["main-attractions-title"];
+      document.getElementById('attraction-0').textContent = translations[language]["attraction-0"];
+      document.getElementById('attraction-1').textContent = translations[language]["attraction-1"];
+      document.getElementById('attraction-2').textContent = translations[language]["attraction-2"];
+      document.getElementById('attraction-3').textContent = translations[language]["attraction-3"];
+      document.getElementById('restaurant-types-title').textContent = translations[language]["restaurant-types-title"];
+      document.getElementById('rest-0').textContent = translations[language]["rest-0"];
+      document.getElementById('rest-1').textContent = translations[language]["rest-1"];
+      document.getElementById('rest-2').textContent = translations[language]["rest-2"];
+      document.getElementById('rest-3').textContent = translations[language]["rest-3"];
+      document.getElementById('map-title').textContent = translations[language]["map-title"];
+      document.getElementById('see-bigger-map').textContent = translations[language]["see-bigger-map"];
+      document.getElementById('back-link').textContent = translations[language]["back-link"];
+    }
+  </script>
+</body>
+</html>

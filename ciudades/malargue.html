@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Malargüe | Viaje Familiar a Argentina</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f9f9f9;
+      color: #333;
+      margin: 20px;
+      transition: direction 0.3s;
+    }
+    #language-selector {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 1000;
+      background-color: rgba(255,255,255,0.8);
+      padding: 5px;
+      border-radius: 5px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    }
+    .language-btn {
+      font-weight: bold;
+      padding: 8px 12px;
+      margin: 0 5px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      background-color: #f0f0f0;
+    }
+    .back-link {
+      margin-left: 20px;
+      text-decoration: none;
+      font-weight: bold;
+      color: #007BFF;
+    }
+    h1, h2 {
+      color: #0F4761;
+    }
+    ul {
+      margin-bottom: 20px;
+    }
+    iframe {
+      border: 1px solid black;
+    }
+  </style>
+</head>
+<body>
+  <div id="language-selector">
+    <button onclick="translatePage('es')" class="language-btn">Español</button>
+    <button onclick="translatePage('he')" class="language-btn">עברית</button>
+    <a href="../index.html" class="back-link" id="back-link">⬅ Volver al itinerario</a>
+  </div>
+
+  <h1 id="city-title">Malargüe</h1>
+  <p id="welcome-text">Bienvenidos a la sección de Malargüe.</p>
+
+  <h2 id="main-attractions-title">Atracciones principales</h2>
+  <ul id="main-attractions-list">
+    <li><a href="https://es.wikipedia.org/wiki/Caverna_de_Las_Brujas" target="_blank" id="attraction-0">Caverna de Las Brujas</a></li>
+    <li><a href="https://es.wikipedia.org/wiki/Castillos_de_Pincheira" target="_blank" id="attraction-1">Castillos de Pincheira</a></li>
+    <li><a href="https://es.wikipedia.org/wiki/Reserva_Laguna_de_llancanelo" target="_blank" id="attraction-2">Laguna de Llancanelo</a></li>
+    <li><a href="https://es.wikipedia.org/wiki/Centro_de_Esqu%C3%AD_Las_Le%C3%B1as" target="_blank" id="attraction-3">Las Leñas (centro de esquí)</a></li>
+  </ul>
+
+  <h2 id="restaurant-types-title">Tipos de restaurantes</h2>
+  <ul id="restaurant-types-list">
+    <li id="rest-0">Parrillas</li>
+    <li id="rest-1">Restaurantes regionales</li>
+    <li id="rest-2">Pizzerías</li>
+    <li id="rest-3">Cafés y casas de té</li>
+  </ul>
+
+  <h2 id="map-title">Mapa de Malargüe</h2>
+  <iframe src="https://www.openstreetmap.org/export/embed.html?bbox=-70.170%2C-35.609%2C-69.980%2C-35.380&amp;layer=mapnik" width="100%" height="350"></iframe>
+  <br><small><a href="https://www.openstreetmap.org/#map=12/-35.48/-69.98" target="_blank" id="see-bigger-map">Ver mapa más grande</a></small>
+
+  <script>
+    // Diccionario de traducciones español ↔ hebreo
+    const translations = {
+      es: {
+        "city-title": "Malargüe",
+        "welcome-text": "Bienvenidos a la sección de Malargüe.",
+        "main-attractions-title": "Atracciones principales",
+        "attraction-0": "Caverna de Las Brujas",
+        "attraction-1": "Castillos de Pincheira",
+        "attraction-2": "Laguna de Llancanelo",
+        "attraction-3": "Las Leñas (centro de esquí)",
+        "restaurant-types-title": "Tipos de restaurantes",
+        "rest-0": "Parrillas",
+        "rest-1": "Restaurantes regionales",
+        "rest-2": "Pizzerías",
+        "rest-3": "Cafés y casas de té",
+        "map-title": "Mapa de Malargüe",
+        "see-bigger-map": "Ver mapa más grande",
+        "back-link": "⬅ Volver al itinerario"
+      },
+      he: {
+        "city-title": "מאלרגואה",
+        "welcome-text": "ברוכים הבאים למדור מאלרגואה.",
+        "main-attractions-title": "אטרקציות עיקריות",
+        "attraction-0": "מערת המכשפות",
+        "attraction-1": "טירות פינצ'יירה",
+        "attraction-2": "לגונת יאנקנלו",
+        "attraction-3": "לאס לנייס (מרכז הסקי)",
+        "restaurant-types-title": "סוגי מסעדות",
+        "rest-0": "מסעדות בשרים (פריז'ות)",
+        "rest-1": "מסעדות אזוריות",
+        "rest-2": "פיצריות",
+        "rest-3": "בתי קפה ובתי תה",
+        "map-title": "מפת מאלרגואה",
+        "see-bigger-map": "לצפייה במפה גדולה יותר",
+        "back-link": "⬅ חזרה למפת המסלול"
+      }
+    };
+
+    function translatePage(language) {
+      document.body.dir = (language === 'he') ? 'rtl' : 'ltr';
+      document.getElementById('city-title').textContent = translations[language]["city-title"];
+      document.getElementById('welcome-text').textContent = translations[language]["welcome-text"];
+      document.getElementById('main-attractions-title').textContent = translations[language]["main-attractions-title"];
+      document.getElementById('attraction-0').textContent = translations[language]["attraction-0"];
+      document.getElementById('attraction-1').textContent = translations[language]["attraction-1"];
+      document.getElementById('attraction-2').textContent = translations[language]["attraction-2"];
+      document.getElementById('attraction-3').textContent = translations[language]["attraction-3"];
+      document.getElementById('restaurant-types-title').textContent = translations[language]["restaurant-types-title"];
+      document.getElementById('rest-0').textContent = translations[language]["rest-0"];
+      document.getElementById('rest-1').textContent = translations[language]["rest-1"];
+      document.getElementById('rest-2').textContent = translations[language]["rest-2"];
+      document.getElementById('rest-3').textContent = translations[language]["rest-3"];
+      document.getElementById('map-title').textContent = translations[language]["map-title"];
+      document.getElementById('see-bigger-map').textContent = translations[language]["see-bigger-map"];
+      document.getElementById('back-link').textContent = translations[language]["back-link"];
+    }
+  </script>
+</body>
+</html>
