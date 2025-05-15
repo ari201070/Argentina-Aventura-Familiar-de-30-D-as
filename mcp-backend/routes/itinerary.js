@@ -1,11 +1,11 @@
 // mcp-backend/routes/itinerary.js
 const express = require('express');
 const router = express.Router();
-const { generarItinerario } = require('../agents/itineraryAgent');
+const itineraryAgent = require('../agents/itineraryAgent');
 
-router.post('/', (req, res) => {
-  const datos = req.body;
-  const itinerario = generarItinerario(datos);
+router.post('/generate', async (req, res) => {
+  const { fechas, ciudades, preferencias, idioma, moneda } = req.body;
+  const itinerario = await itineraryAgent.generarItinerario({ fechas, ciudades, preferencias, idioma, moneda });
   res.json(itinerario);
 });
 
