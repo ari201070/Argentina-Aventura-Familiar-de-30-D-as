@@ -1,4 +1,3 @@
-// frontend/src/pages/AlertaVuelo.jsx
 import React, { useState } from 'react';
 
 export default function AlertaVuelo() {
@@ -11,15 +10,34 @@ export default function AlertaVuelo() {
     notification_email: "tucorreo@ejemplo.com"
   });
   const [mensaje, setMensaje] = useState("");
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const crearAlerta = async () => {
-    const res = await fetch('http://localhost:3001/mcp/flights/watch_price', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(form)
-    });
-    const data = await res.json();
-    setMensaje(data.mensaje);
+    // Validación simple de email y precio
+    if (!form.notification_email.includes("@")) {
+      setError("El email no es válido.");
+      return;
+    }
+    if (!form.price_threshold || form.price_threshold <= 0) {
+      setError("El precio debe ser mayor a cero.");
+      return;
+    }
+    setError("");
+    setMensaje("");
+    setLoading(true);
+    try {
+      const res = await fetch('http://localhost:3001/mcp/flights/watch_price', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(form)
+      });
+      const data = await res.json();
+      setMensaje(data.mensaje || "Alerta creada correctamente.");
+    } catch (e) {
+      setError("Hubo un error al crear la alerta.");
+    }
+    setLoading(false);
   };
 
   return (
@@ -31,8 +49,9 @@ export default function AlertaVuelo() {
       <input type="date" value={form.returnDate} onChange={e => setForm(f => ({ ...f, returnDate: e.target.value }))} />
       <input type="number" placeholder="Precio máximo" value={form.price_threshold} onChange={e => setForm(f => ({ ...f, price_threshold: e.target.value }))} />
       <input placeholder="Email" value={form.notification_email} onChange={e => setForm(f => ({ ...f, notification_email: e.target.value }))} />
-      <button onClick={crearAlerta}>Crear alerta</button>
-      {mensaje && <p>{mensaje}</p>}
+      <button onClick={crearAlerta} disabled={loading}>{loading ? "Creando..." : "Crear alerta"}</button>
+      {mensaje && <p style={{ color: "green" }}>{mensaje}</p>}
+      {error && <p style={{ color: "red" }}>{error}</p>}
     </div>
   );
 }
