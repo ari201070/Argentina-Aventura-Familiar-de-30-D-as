@@ -1,19 +1,16 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
 
-// Creamos el contexto
 const MonedaContext = createContext();
 
-// Provider extendido
 export function MonedaProvider({ children }) {
   const [moneda, setMoneda] = useState("ARS");
-  const [tasas, setTasas] = useState({}); // Ejemplo: { USD: 0.0011, EUR: 0.00095 }
+  const [tasas, setTasas] = useState({});
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
-  // Al cambiar la moneda, si no está cacheada, trae la tasa de cambio
   useEffect(() => {
     async function fetchTasa() {
-      if (moneda === "ARS" || tasas[moneda]) return; // Si es ARS o ya está cacheada, no hace nada
+      if (moneda === "ARS" || tasas[moneda]) return;
       setLoading(true);
       setError("");
       try {
@@ -40,7 +37,6 @@ export function MonedaProvider({ children }) {
   );
 }
 
-// Hook para consumir el contexto
 export function useMoneda() {
   return useContext(MonedaContext);
 }

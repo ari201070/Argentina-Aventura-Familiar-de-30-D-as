@@ -11,7 +11,6 @@ function CurrencySelector() {
       <option value="ARS">ARS</option>
       <option value="USD">USD</option>
       <option value="EUR">EUR</option>
-      {/* Agregá más monedas si tu backend soporta */}
     </select>
   );
 }

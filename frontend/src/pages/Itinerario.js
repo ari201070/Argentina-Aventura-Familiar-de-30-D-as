@@ -34,7 +34,6 @@ export default function Itinerario() {
     setLoading(false);
   };
 
-  // Convierte precios cuando cambia el itinerario o la moneda
   useEffect(() => {
     if (!itinerario) {
       setItinerarioConvertido(null);
@@ -48,7 +47,6 @@ export default function Itinerario() {
       setItinerarioConvertido(itinerario);
       return;
     }
-    // Copia el itinerario y convierte los precios usando la tasa cacheada
     const nuevoItinerario = {
       ...itinerario,
       dias: itinerario.dias.map(dia => ({
