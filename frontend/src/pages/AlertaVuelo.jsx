@@ -1,42 +1,32 @@
-import React, { createContext, useContext, useState, useEffect } from "react";
+import React, { useState } from "react";
 
-const MonedaContext = createContext();
-
-export function MonedaProvider({ children }) {
-  const [moneda, setMoneda] = useState("ARS");
-  const [tasas, setTasas] = useState({});
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
-
-  useEffect(() => {
-    async function fetchTasa() {
-      if (moneda === "ARS" || tasas[moneda]) return;
-      setLoading(true);
-      setError("");
-      try {
-        const res = await fetch(`http://localhost:3001/mcp/currency/convert?from=ARS&to=${moneda}&amount=1`);
-        const data = await res.json();
-        if (data.result) {
-          setTasas(prev => ({ ...prev, [moneda]: data.result }));
-        } else {
-          setError("No se pudo obtener la tasa de cambio.");
-        }
-      } catch (e) {
-        setError("Error consultando la tasa de cambio.");
-      }
-      setLoading(false);
-    }
-    fetchTasa();
-    // eslint-disable-next-line
-  }, [moneda]);
+const AlertaVuelo = () => {
+  const [form, setForm] = useState({
+    from: "",
+    to: "",
+    departure: "",
+  });
 
   return (
-    <MonedaContext.Provider value={{ moneda, setMoneda, tasas, loading, error }}>
-      {children}
-    </MonedaContext.Provider>
+    <div>
+      <h1>Crear alerta de precio de vuelo</h1>
+      <input
+        placeholder="Desde"
+        value={form.from}
+        onChange={e => setForm(f => ({ ...f, from: e.target.value }))}
+      />
+      <input
+        placeholder="Hasta"
+        value={form.to}
+        onChange={e => setForm(f => ({ ...f, to: e.target.value }))}
+      />
+      <input
+        type="date"
+        value={form.departure}
+        onChange={e => setForm(f => ({ ...f, departure: e.target.value }))}
+      />
+    </div>
   );
-}
+};
 
-export function useMoneda() {
-  return useContext(MonedaContext);
-}
+export default AlertaVuelo;
