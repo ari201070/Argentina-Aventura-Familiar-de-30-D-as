@@ -14,7 +14,6 @@ export default function AlertaVuelo() {
   const [loading, setLoading] = useState(false);
 
   const crearAlerta = async () => {
-    // Validación simple de email y precio
     if (!form.notification_email.includes("@")) {
       setError("El email no es válido.");
       return;
