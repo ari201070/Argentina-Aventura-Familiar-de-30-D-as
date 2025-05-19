@@ -1,8 +1,20 @@
-// frontend/src/App.jsx
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, NavLink } from 'react-router-dom';
 import Itinerario from './pages/itinerario';
 import AlertaVuelo from './pages/AlertaVuelo';
+import { useMoneda } from './context/MonedaContext';
+
+function CurrencySelector() {
+  const { moneda, setMoneda, loading } = useMoneda();
+  return (
+    <select value={moneda} onChange={e => setMoneda(e.target.value)} disabled={loading} style={{ marginLeft: 12 }}>
+      <option value="ARS">ARS</option>
+      <option value="USD">USD</option>
+      <option value="EUR">EUR</option>
+      {/* Agregá más monedas si tu backend soporta */}
+    </select>
+  );
+}
 
 function App() {
   return (
@@ -28,6 +40,7 @@ function App() {
         >
           Alerta de vuelo
         </NavLink>
+        <CurrencySelector />
       </nav>
       <Routes>
         <Route path="/" element={<Itinerario />} />
