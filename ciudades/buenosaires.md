@@ -38,6 +38,15 @@ La ciudad ofrece desde parrillas tradicionales hasta restaurantes gourmet, opcio
 
 ---
 
+## Tipos de restaurantes
+
+- Parrillas tradicionales
+- Comida internacional
+- Opciones vegetarianas y veganas
+- Cafeterías históricas
+
+---
+
 ## Consejos para familias
 
 - Las zonas turísticas son seguras y están bien conectadas por transporte público (tarjeta SUBE).
@@ -65,7 +74,3 @@ La ciudad ofrece desde parrillas tradicionales hasta restaurantes gourmet, opcio
 - Es común saludar con un beso en la mejilla.
 - Los horarios de comida suelen ser más tarde que en otros países (cena desde las 21:00).
 - El mate es la infusión nacional.
-
----
-
-¿Necesitás el ejemplo adaptado para otra ciudad o para algún archivo HTML?
