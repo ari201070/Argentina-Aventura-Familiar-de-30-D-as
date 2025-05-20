@@ -1,0 +1,46 @@
+/* Estilos generales para la aplicación */
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: #f6f8fa;
+  margin: 0;
+  padding: 0;
+}
+
+/* Mensaje de error */
+.error-message {
+  color: red;
+  font-weight: bold;
+  margin-top: 1rem;
+}
+
+/* Títulos */
+h1, h3 {
+  color: #333;
+}
+
+/* Botón principal */
+button {
+  background-color: #1976d2;
+  color: white;
+  border: none;
+  padding: 0.7em 1.4em;
+  border-radius: 4px;
+  font-size: 1em;
+  cursor: pointer;
+  margin-top: 1em;
+  margin-bottom: 1em;
+  transition: background 0.3s;
+}
+button:disabled {
+  background-color: #b0bec5;
+  cursor: not-allowed;
+}
+
+/* Listas de actividades */
+ul {
+  padding-left: 1.2em;
+}
+
+li {
+  margin-bottom: 0.4em;
+}
