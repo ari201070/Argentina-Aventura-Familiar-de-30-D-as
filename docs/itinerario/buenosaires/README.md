@@ -1,18 +1,12 @@
-# Itinerario sugerido en Buenos Aires (3 días)
+# Itinerario sugerido en Buenos Aires
 
-**Día 1:**  
-- Plaza de Mayo, Casa Rosada y Catedral  
-- Obelisco y Av. 9 de Julio  
-- Teatro Colón (visita guiada)
+## Día 1 (28/09): Llegada, paseo por Recoleta y Plaza Francia  
+## Día 2 (29/09): Centro histórico, Obelisco, Plaza de Mayo, Café Tortoni  
+- Festival de Tango en Plaza Dorrego
 
-**Día 2:**  
-- Caminito y La Boca  
-- Puerto Madero  
-- Show de tango
+## Día 3 (30/09): Palermo: bosques, Jardín Japonés, museos, Planetario  
+## Día 4 (01/10): Caminito, La Boca, Puerto Madero  
+- Noche de los Museos
 
-**Día 3:**  
-- Palermo (Bosques, Jardín Japonés, Planetario)  
-- Recoleta (Cementerio y museo)  
-- Cena en parrilla tradicional
-
-Tips: Adaptar el itinerario según intereses y tiempo disponible.
+## Día 5 (02/10): Compras, actividades libres, despedida  
+## Día 6 (29/10): Último día, actividades cortas, relax, cena despedida  

@@ -1,19 +1,17 @@
 # Alojamiento en Buenos Aires
 
-Buenos Aires ofrece una amplia variedad de alojamientos:
+## Opciones recomendadas
+- Alvear Palace Hotel
+- Hotel Madero
+- Ibis Buenos Aires
+- Airbnb en Palermo (ideal para familias)
 
-## Zonas recomendadas
+## Zonas sugeridas
+- **Palermo:** Moderno, seguro, cerca de parques y museos.
+- **Recoleta:** Elegante, bien comunicado, ambiente tranquilo.
+- **Microcentro:** Opciones económicas, cerca de atracciones históricas.
 
-- Palermo: moderno, seguro, ideal para familias y cerca de parques.
-- Recoleta: elegante, con museos y restaurantes.
-- Microcentro: práctico para recorrer a pie las principales atracciones.
-- San Telmo: histórico y bohemio.
-
-## Tipos de alojamiento
-
-- Hoteles familiares
-- Departamentos temporarios
-- Hostels para grupos
-- Bed & Breakfasts
-
-Consejo: reservar con anticipación en temporada alta (enero/febrero y vacaciones de invierno).
+## Consejos
+- Reservar con anticipación, especialmente en fechas de eventos.
+- Considerar apartamentos temporarios para estancias largas.
+- Consultar si el alojamiento ofrece desayuno y acceso a SUBE (transporte).
