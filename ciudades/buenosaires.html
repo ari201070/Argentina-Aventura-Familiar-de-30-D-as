@@ -2,26 +2,128 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Buenos Aires - Guía Familiar</title>
+    <title>Buenos Aires</title>
+    <style>
+        body {
+            background: #f8f8f8;
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            background: #fff;
+            margin: 2rem auto;
+            padding: 2rem;
+            max-width: 900px;
+            border-radius: 10px;
+        }
+        h1, h2 {
+            color: #222;
+        }
+        ul {
+            margin-bottom: 1.5rem;
+        }
+        .menu {
+            margin-bottom: 2rem;
+        }
+        .menu ul {
+            list-style: none;
+            padding: 0;
+        }
+        .menu ul li {
+            display: inline;
+            margin-right: 12px;
+        }
+        .map {
+            margin-top: 2rem;
+        }
+        .topbar {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            gap: 1rem;
+            margin: 1rem 2rem 0 0;
+        }
+        .idioma-label {
+            margin-right: 0.5rem;
+            font-size: 1rem;
+        }
+        .idioma-btn {
+            margin-right: 0.2rem;
+            padding: 0.3rem 0.8rem;
+        }
+        .volver-link {
+            margin-left: 1rem;
+            text-decoration: none;
+            color: #2166c1;
+            font-size: 1rem;
+        }
+        .volver-link:hover {
+            text-decoration: underline;
+        }
+        @media (max-width: 600px) {
+            .container {
+                padding: 1rem;
+            }
+            .topbar {
+                flex-direction: column;
+                align-items: flex-end;
+                gap: 0.5rem;
+            }
+        }
+    </style>
 </head>
 <body>
-    <h1>Buenos Aires</h1>
-    <p>Buenos Aires es la ciudad más grande y cosmopolita de Argentina. Destacan su arquitectura, vida nocturna y variada oferta cultural y gastronómica.</p>
-    <h2>Lugares imperdibles</h2>
-    <ul>
-        <li>Obelisco</li>
-        <li>Teatro Colón</li>
-        <li>Puerto Madero</li>
-        <li>Barrio de La Boca</li>
-        <li>Barrio de Palermo</li>
-        <li>Recoleta</li>
-        <li>Plaza de Mayo</li>
-    </ul>
-    <h2>Recomendaciones</h2>
-    <ul>
-        <li>Utilizar la tarjeta SUBE para el transporte público.</li>
-        <li>Disfrutar un espectáculo de tango.</li>
-        <li>Probar la gastronomía local en una parrilla.</li>
-    </ul>
+    <div class="topbar">
+        <span class="idioma-label">Idioma:</span>
+        <button class="idioma-btn"><b>Español</b></button>
+        <button class="idioma-btn">עברית</button>
+        <a href="../itinerario.html" class="volver-link">&larr; Volver al itinerario</a>
+    </div>
+    <div class="container">
+        <h1>Buenos Aires</h1>
+        <div class="menu">
+            <ul>
+                <li><a href="buenosaires.html">Buenos Aires</a></li>
+                <li><a href="rosario.html">Rosario</a></li>
+                <li><a href="bariloche.html">Bariloche</a></li>
+                <li><a href="mendoza.html">Mendoza</a></li>
+                <li><a href="malargue.html">Malargüe</a></li>
+                <li><a href="jujuy.html">Jujuy</a></li>
+                <li><a href="iguazu.html">Iguazú</a></li>
+                <li><a href="corrientes.html">Corrientes</a></li>
+                <li><a href="ibera.html">Iberá</a></li>
+                <li><a href="../mapa.html">Mapa Interactivo</a></li>
+            </ul>
+        </div>
+
+        <h2>Atracciones principales</h2>
+        <ul>
+            <li><a href="https://turismo.buenosaires.gob.ar/es/atractivo/obelisco" target="_blank">Obelisco</a></li>
+            <li><a href="https://teatrocolon.org.ar/" target="_blank">Teatro Colón</a></li>
+            <li><a href="https://turismo.buenosaires.gob.ar/es/recorrido/caminito" target="_blank">Caminito y La Boca</a></li>
+            <li><a href="https://turismo.buenosaires.gob.ar/es/recorrido/palermo" target="_blank">Palermo (Bosques, Jardín Japonés)</a></li>
+            <li><a href="https://turismo.buenosaires.gob.ar/es/article/puerto-madero" target="_blank">Puerto Madero</a></li>
+            <li><a href="https://museobellasartes.gob.ar/" target="_blank">Museo Nacional de Bellas Artes</a></li>
+            <li><a href="https://turismo.buenosaires.gob.ar/es/recorrido/recoleta" target="_blank">Recoleta y Cementerio</a></li>
+            <li><a href="https://turismo.buenosaires.gob.ar/es/recorrido/plaza-de-mayo" target="_blank">Plaza de Mayo y Casa Rosada</a></li>
+        </ul>
+
+        <h2>Tipos de restaurantes</h2>
+        <ul>
+            <li>Parrillas tradicionales</li>
+            <li>Comida internacional</li>
+            <li>Opciones vegetarianas y veganas</li>
+            <li>Cafeterías históricas</li>
+        </ul>
+
+        <h2>Agenda de eventos</h2>
+        <ul>
+            <li><a href="https://turismo.buenosaires.gob.ar/es/eventos" target="_blank">Consultar agenda de eventos actualizada</a></li>
+        </ul>
+
+        <h2>Mapa de Buenos Aires</h2>
+        <div class="map">
+            <iframe src="https://www.openstreetmap.org/export/embed.html?bbox=-58.531%2C-34.705%2C-58.335%2C-34.540&amp;layer=mapnik" style="width:100%; height:350px; border:1px solid #ccc;"></iframe>
+        </div>
+    </div>
 </body>
 </html>

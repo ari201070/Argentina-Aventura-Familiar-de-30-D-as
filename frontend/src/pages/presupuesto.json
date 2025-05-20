@@ -151,5 +151,3 @@ const Presupuesto = () => {
     </div>
   );
 };
-
-export default Presupuesto;
