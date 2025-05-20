@@ -1,0 +1,21 @@
+[
+  {
+    "fecha": "2025-09-28",
+    "ciudad": "Buenos Aires",
+    "alojamiento": 85,
+    "comidas": 50,
+    "actividades": 40,
+    "transporteLocal": 20,
+    "otros": 10
+  },
+  {
+    "fecha": "2025-09-29",
+    "ciudad": "Buenos Aires",
+    "alojamiento": 85,
+    "comidas": 52,
+    "actividades": 30,
+    "transporteLocal": 22,
+    "otros": 5
+  }
+  // Agregar un entry por cada día del viaje...
+]

@@ -1,0 +1,155 @@
+import React, { useEffect, useState } from "react";
+
+const Presupuesto = () => {
+  const [presupuesto, setPresupuesto] = useState(null);
+  const [gastos, setGastos] = useState([]);
+  const [moneda, setMoneda] = useState("USD");
+
+  useEffect(() => {
+    fetch("/data/presupuesto.json")
+      .then(res => res.json())
+      .then(data => setPresupuesto(data));
+
+    fetch("/data/gastos-diarios.json")
+      .then(res => res.json())
+      .then(data => setGastos(data));
+  }, []);
+
+  if (!presupuesto) return <div>Cargando presupuesto...</div>;
+
+  const getSimbolo = (mon) => {
+    switch(mon) {
+      case "USD": return "$";
+      case "ARS": return "$";
+      case "ILS": return "₪";
+      default: return "";
+    }
+  };
+
+  const getTotal = (base) => {
+    if (moneda === "USD") return base;
+    if (moneda === "ARS") return base * presupuesto.cambioARS;
+    if (moneda === "ILS") return base * presupuesto.cambioILS;
+    return base;
+  };
+
+  // Suma de gastos reales por rubro
+  const totalesReales = gastos.reduce((acc, d) => {
+    acc.alojamiento += d.alojamiento || 0;
+    acc.comidas += d.comidas || 0;
+    acc.actividades += d.actividades || 0;
+    acc.transporteLocal += d.transporteLocal || 0;
+    acc.otros += d.otros || 0;
+    return acc;
+  }, { alojamiento: 0, comidas: 0, actividades: 0, transporteLocal: 0, otros: 0 });
+
+  const totalReal = Object.values(totalesReales).reduce((a, b) => a + b, 0);
+
+  return (
+    <div style={{padding:"2rem"}}>
+      <h1>Presupuesto Familiar</h1>
+      <div style={{marginBottom:"1rem"}}>
+        <label>Ver en moneda: </label>
+        <select value={moneda} onChange={e => setMoneda(e.target.value)}>
+          <option value="USD">Dólar (USD)</option>
+          <option value="ARS">Peso Argentino (ARS)</option>
+          <option value="ILS">Shekel (ILS)</option>
+        </select>
+      </div>
+
+      <div style={{background:"#f3f3f3", padding:"1rem", borderRadius:"8px", marginBottom:"2rem"}}>
+        <h2>Resumen General</h2>
+        <p><strong>Días planificados:</strong> {presupuesto.resumen.totalDias}</p>
+        <p><strong>Personas:</strong> {presupuesto.resumen.totalPersonas}</p>
+        <p><strong>Total estimado:</strong> {getSimbolo(moneda)}{getTotal(presupuesto.resumen.totalPrevistoUSD).toLocaleString()}</p>
+        <p><strong>Total con margen seguridad:</strong> {getSimbolo(moneda)}{getTotal(presupuesto.resumen.totalConMargenUSD).toLocaleString()}</p>
+        <p><strong>Total gastado real:</strong> {getSimbolo(moneda)}{getTotal(totalReal).toLocaleString()}</p>
+        <p style={{color: totalReal > presupuesto.resumen.totalConMargenUSD ? 'red':'green'}}>
+          <strong>Diferencia:</strong> {getSimbolo(moneda)}{getTotal(totalReal - presupuesto.resumen.totalConMargenUSD).toLocaleString()}
+        </p>
+      </div>
+
+      <h2>Plan de gastos promedio diarios</h2>
+      <table border="1" cellPadding="6" style={{marginBottom:"2rem", borderCollapse:"collapse"}}>
+        <thead>
+          <tr>
+            <th>Concepto</th>
+            <th>Monto/por día ({getSimbolo(moneda)})</th>
+          </tr>
+        </thead>
+        <tbody>
+          {Object.entries(presupuesto.costosDiariosPromedio).map(([concepto, valor]) => (
+            <tr key={concepto}>
+              <td>{concepto.charAt(0).toUpperCase() + concepto.slice(1)}</td>
+              <td>{getTotal(valor).toLocaleString()}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+
+      <h2>Detalle por Ciudad (Plan)</h2>
+      <table border="1" cellPadding="6" style={{borderCollapse:"collapse", marginBottom:"2rem"}}>
+        <thead>
+          <tr>
+            <th>Ciudad</th>
+            <th>Días</th>
+            <th>Alojamiento</th>
+            <th>Comidas</th>
+            <th>Actividades</th>
+            <th>Transporte</th>
+            <th>Otros</th>
+            <th>Total</th>
+          </tr>
+        </thead>
+        <tbody>
+          {presupuesto.detallePorCiudad.map((ciudad, i) => (
+            <tr key={i}>
+              <td>{ciudad.ciudad}</td>
+              <td>{ciudad.dias}</td>
+              <td>{getTotal(ciudad.alojamiento).toLocaleString()}</td>
+              <td>{getTotal(ciudad.comidas).toLocaleString()}</td>
+              <td>{getTotal(ciudad.actividades).toLocaleString()}</td>
+              <td>{getTotal(ciudad.transporteLocal).toLocaleString()}</td>
+              <td>{getTotal(ciudad.otros).toLocaleString()}</td>
+              <td><b>{getTotal(ciudad.totalUSD).toLocaleString()}</b></td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+
+      <h2>Gastos diarios reales</h2>
+      <table border="1" cellPadding="6" style={{borderCollapse:"collapse"}}>
+        <thead>
+          <tr>
+            <th>Fecha</th>
+            <th>Ciudad</th>
+            <th>Alojamiento</th>
+            <th>Comidas</th>
+            <th>Actividades</th>
+            <th>Transporte</th>
+            <th>Otros</th>
+            <th>Total día</th>
+          </tr>
+        </thead>
+        <tbody>
+          {gastos.map((dia, i) => (
+            <tr key={i}>
+              <td>{dia.fecha}</td>
+              <td>{dia.ciudad}</td>
+              <td>{getTotal(dia.alojamiento).toLocaleString()}</td>
+              <td>{getTotal(dia.comidas).toLocaleString()}</td>
+              <td>{getTotal(dia.actividades).toLocaleString()}</td>
+              <td>{getTotal(dia.transporteLocal).toLocaleString()}</td>
+              <td>{getTotal(dia.otros).toLocaleString()}</td>
+              <td><b>{getTotal(
+                (dia.alojamiento||0)+(dia.comidas||0)+(dia.actividades||0)+(dia.transporteLocal||0)+(dia.otros||0)
+              ).toLocaleString()}</b></td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+};
+
+export default Presupuesto;
