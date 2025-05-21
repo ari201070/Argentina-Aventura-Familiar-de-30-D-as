@@ -1,12 +1,15 @@
-import React from 'react';
-import Itinerario from './pages/Itinerario';
-import './App.css';
+import React from "react";
+import { AppSettingsProvider } from "./context/AppSettingsContext";
+import Presupuesto from "./pages/Presupuesto";
+// Importa otros componentes/rutas aquí
 
 function App() {
   return (
-    <div className="App">
-      <Itinerario />
-    </div>
+    <AppSettingsProvider>
+      {/* Aquí van tus rutas y páginas */}
+      <Presupuesto />
+      {/* ...otras rutas */}
+    </AppSettingsProvider>
   );
 }
 
