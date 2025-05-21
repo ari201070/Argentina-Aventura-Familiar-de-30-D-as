@@ -1,0 +1,41 @@
+.topbar {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  margin: 1rem 0 1.5rem 0;
+}
+.idioma-label,
+.moneda-label {
+  font-size: 1rem;
+  margin-right: 0.2rem;
+}
+.idioma-btn,
+.moneda-btn {
+  border: 1.2px solid #bbb;
+  border-radius: 6px;
+  background: #fff;
+  padding: 0.3rem 1.1rem;
+  margin-right: 0.18rem;
+  font-weight: 500;
+  color: #222;
+  font-size: 1.03rem;
+  cursor: pointer;
+  transition: background 0.18s, color 0.18s, border 0.18s;
+}
+.idioma-btn.active,
+.moneda-btn.active {
+  background: #eef4ff;
+  border-color: #3381ff;
+  color: #111;
+  font-weight: bold;
+  outline: 1.1px solid #3381ff;
+}
+.volver-link {
+  margin-left: 1.3rem;
+  color: #132a7a;
+  font-size: 1rem;
+  text-decoration: none;
+}
+.volver-link:hover {
+  text-decoration: underline;
+}
