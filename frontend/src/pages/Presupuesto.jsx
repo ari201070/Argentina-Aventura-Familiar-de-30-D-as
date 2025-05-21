@@ -1,6 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { useAppSettings } from "../context/AppSettingsContext";
+import clsx from "clsx";
 import "./Presupuesto.css";
 
 export default function Presupuesto() {
@@ -14,38 +15,52 @@ export default function Presupuesto() {
     monedasDisponibles,
   } = useAppSettings();
 
+  // Handlers separados para mayor claridad y reusabilidad
+  const handleIdiomaChange = (code) => {
+    setIdioma(code);
+  };
+
+  const handleMonedaChange = (code) => {
+    setMoneda(code);
+  };
+
+  const handleNavigation = (e) => {
+    e.preventDefault();
+    navigate("/itinerario");
+  };
+
+  // Centralización de etiquetas para facilitar i18n
+  const labels = {
+    idioma: "Idioma:",
+    moneda: "Moneda:",
+    volver: "← Volver al itinerario",
+  };
+
   return (
     <div className="topbar">
-      <span className="idioma-label">Idioma:</span>
+      <p className="idioma-label">{labels.idioma}</p>
       {idiomasDisponibles.map(({ code, label }) => (
         <button
           key={code}
-          className={`idioma-btn${idioma === code ? " active" : ""}`}
-          onClick={() => setIdioma(code)}
+          className={clsx("idioma-btn", { active: idioma === code })}
+          onClick={() => handleIdiomaChange(code)}
         >
           {idioma === code ? <b>{label}</b> : label}
         </button>
       ))}
-      <span className="moneda-label">Moneda:</span>
+      <p className="moneda-label">{labels.moneda}</p>
       {monedasDisponibles.map((code) => (
         <button
           key={code}
-          className={`moneda-btn${moneda === code ? " active" : ""}`}
-          onClick={() => setMoneda(code)}
+          className={clsx("moneda-btn", { active: moneda === code })}
+          onClick={() => handleMonedaChange(code)}
         >
           {moneda === code ? <b>{code}</b> : code}
         </button>
       ))}
-      <a
-        className="volver-link"
-        href="#"
-        onClick={(e) => {
-          e.preventDefault();
-          navigate("/itinerario");
-        }}
-      >
-        &larr; Volver al itinerario
-      </a>
+      <button className="volver-link" onClick={handleNavigation}>
+        {labels.volver}
+      </button>
     </div>
   );
 }
