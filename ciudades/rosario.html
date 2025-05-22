@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title data-i18n="city-title">Rosario | Viaje Familiar a Argentina</title>
+  <title data-i18n="ciudad_rosario">Rosario | Viaje Familiar a Argentina</title>
   <link rel="stylesheet" href="estilos.css">
   <style>
     body {
@@ -12,30 +12,40 @@
       margin: 20px;
       transition: direction 0.3s;
     }
-    #language-selector {
+    .topbar {
       position: fixed;
       top: 20px;
       right: 20px;
+      left: 0;
+      width: auto;
       z-index: 1000;
       background-color: rgba(255,255,255,0.8);
-      padding: 5px;
+      padding: 5px 20px;
       border-radius: 5px;
       box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+      display: flex;
+      align-items: center;
+      gap: 10px;
     }
-    .language-btn {
+    .idioma-label {
+      font-weight: bold;
+      margin-right: 8px;
+    }
+    .idioma-btn {
       font-weight: bold;
       padding: 8px 12px;
-      margin: 0 5px;
+      margin: 0 2px;
       border: none;
       border-radius: 4px;
       cursor: pointer;
       background-color: #f0f0f0;
     }
-    .back-link {
+    .volver-link {
       margin-left: 20px;
       text-decoration: none;
       font-weight: bold;
       color: #007BFF;
+      padding-left: 20px;
     }
     h1, h2 {
       color: #0F4761;
@@ -53,70 +63,102 @@
   </style>
 </head>
 <body>
-  <div id="language-selector">
-    <button onclick="translatePage('es')" class="language-btn">Español</button>
-    <button onclick="translatePage('he')" class="language-btn">עברית</button>
-    <a href="../index.html" class="back-link" id="back-link">⬅ Volver al itinerario</a>
+  <div class="topbar">
+    <span class="idioma-label" id="idioma-label" data-i18n="idioma">Idioma:</span>
+    <button class="idioma-btn" id="btn-es"><b>Español</b></button>
+    <button class="idioma-btn" id="btn-he">עברית</button>
+    <a href="../index.html" class="volver-link" id="volver-link" data-i18n="volver_itinerario">&larr; Volver al itinerario</a>
   </div>
 
-  <h1 id="city-title" data-i18n="ciudad_rosario">Rosario</h1>
-  <p id="welcome-text" data-i18n="bienvenida_rosario">Bienvenidos a la sección de Rosario.</p>
+  <div class="container">
+    <h1 id="city-title" data-i18n="ciudad_rosario">Rosario</h1>
+    <p id="welcome-text" data-i18n="bienvenida_rosario">Bienvenidos a la sección de Rosario.</p>
 
-  <h2 id="main-attractions-title" data-i18n="atracciones_principales">Atracciones principales</h2>
-  <ul id="main-attractions-list">
-    <li><a href="https://es.wikipedia.org/wiki/Monumento_Nacional_a_la_Bandera_(Argentina)" target="_blank" id="attraction-0" data-i18n="monumento_bandera">Monumento Nacional a la Bandera</a></li>
-    <li><a href="https://es.wikipedia.org/wiki/Parque_Independencia_(Rosario)" target="_blank" id="attraction-1" data-i18n="parque_independencia">Parque Independencia</a></li>
-    <li><a href="https://es.wikipedia.org/wiki/Costanera_Centro_de_Rosario" target="_blank" id="attraction-2" data-i18n="costanera_parana">Costanera y Río Paraná</a></li>
-    <li><a href="https://es.wikipedia.org/wiki/Museo_de_Arte_Contempor%C3%A1neo_de_Rosario" target="_blank" id="attraction-3" data-i18n="macro">Museo de Arte Contemporáneo (MACRO)</a></li>
-  </ul>
+    <h2 id="main-attractions-title" data-i18n="atracciones_principales">Atracciones principales</h2>
+    <ul id="main-attractions-list">
+      <li><a href="https://es.wikipedia.org/wiki/Monumento_Nacional_a_la_Bandera_(Argentina)" target="_blank" id="monumento_bandera" data-i18n="monumento_bandera">Monumento Nacional a la Bandera</a></li>
+      <li><a href="https://es.wikipedia.org/wiki/Parque_Independencia_(Rosario)" target="_blank" id="parque_independencia" data-i18n="parque_independencia">Parque Independencia</a></li>
+      <li><a href="https://es.wikipedia.org/wiki/Costanera_Centro_de_Rosario" target="_blank" id="costanera_parana" data-i18n="costanera_parana">Costanera y Río Paraná</a></li>
+      <li><a href="https://es.wikipedia.org/wiki/Museo_de_Arte_Contempor%C3%A1neo_de_Rosario" target="_blank" id="macro" data-i18n="macro">Museo de Arte Contemporáneo (MACRO)</a></li>
+    </ul>
 
-  <h2 id="restaurant-types-title" data-i18n="tipos_restaurantes">Tipos de restaurantes</h2>
-  <ul id="restaurant-types-list">
-    <li id="rest-0" data-i18n="parrillas">Parrillas</li>
-    <li id="rest-1" data-i18n="pizzerias">Pizzerías</li>
-    <li id="rest-2" data-i18n="heladerias">Heladerías artesanales</li>
-    <li id="rest-3" data-i18n="bares">Bares y cervecerías</li>
-  </ul>
+    <h2 id="restaurant-types-title" data-i18n="tipos_restaurantes">Tipos de restaurantes</h2>
+    <ul id="restaurant-types-list">
+      <li id="parrillas" data-i18n="parrillas">Parrillas</li>
+      <li id="pizzerias" data-i18n="pizzerias">Pizzerías</li>
+      <li id="heladerias" data-i18n="heladerias">Heladerías artesanales</li>
+      <li id="bares" data-i18n="bares">Bares y cervecerías</li>
+    </ul>
 
-  <h2 id="map-title" data-i18n="mapa_rosario">Mapa de Rosario</h2>
-  <iframe src="https://www.openstreetmap.org/export/embed.html?bbox=-60.701%2C-32.997%2C-60.620%2C-32.894&amp;layer=mapnik" width="100%" height="350"></iframe>
-  <br><small><a href="https://www.openstreetmap.org/#map=13/-32.9527/-60.6393" target="_blank" id="see-bigger-map" data-i18n="ver_mapa_grande">Ver mapa más grande</a></small>
+    <h2 id="map-title" data-i18n="mapa_rosario">Mapa de Rosario</h2>
+    <iframe src="https://www.openstreetmap.org/export/embed.html?bbox=-60.701%2C-32.997%2C-60.620%2C-32.894&amp;layer=mapnik" width="100%" height="350"></iframe>
+    <br><small><a href="https://www.openstreetmap.org/#map=13/-32.9527/-60.6393" target="_blank" id="ver_mapa_grande" data-i18n="ver_mapa_grande">Ver mapa más grande</a></small>
+  </div>
 
-  <script src="i18n.js"></script>
   <script>
-    // Traducción inicial al cargar la página
-    document.addEventListener("DOMContentLoaded", function() {
-      // Idioma predeterminado español
-      setLanguage("es");
+    // Guarda el idioma seleccionado en localStorage para mantenerlo al volver
+    function getIdiomaActual() {
+      return localStorage.getItem("idioma_rosario") || "es";
+    }
 
-      document.getElementById("btn-es").addEventListener("click", function() {
-        setLanguage("es");
-      });
-      document.getElementById("btn-he").addEventListener("click", function() {
-        setLanguage("he");
-      });
-    });
+    function setIdiomaActual(lang) {
+      localStorage.setItem("idioma_rosario", lang);
+    }
 
-    // Función de traducción usando archivos JSON locales
     function setLanguage(lang) {
       fetch("../locales/" + lang + ".json")
         .then(resp => resp.json())
         .then(data => {
           document.documentElement.lang = lang;
+          // RTL si es hebreo
           if(lang === "he") {
             document.body.classList.add("rtl");
           } else {
             document.body.classList.remove("rtl");
           }
-          // Cambia todos los elementos con data-i18n
+          // Traduce todo lo que tiene data-i18n
           document.querySelectorAll("[data-i18n]").forEach(el => {
             const key = el.getAttribute("data-i18n");
             if(data[key]) {
               el.textContent = data[key];
             }
           });
+          // Botones: negrita en el seleccionado
+          document.getElementById("btn-es").innerHTML = lang === "es" ? "<b>Español</b>" : "Español";
+          document.getElementById("btn-he").innerHTML = lang === "he" ? "<b>עברית</b>" : "עברית";
+          setIdiomaActual(lang);
         });
     }
+
+    // Mantiene el idioma después de volver al itinerario
+    document.addEventListener("DOMContentLoaded", function() {
+      // Botones de idioma
+      document.getElementById("btn-es").addEventListener("click", function() {
+        setLanguage("es");
+      });
+      document.getElementById("btn-he").addEventListener("click", function() {
+        setLanguage("he");
+      });
+
+      // Mantener idioma al volver al itinerario
+      document.getElementById("volver-link").addEventListener("click", function(e) {
+        const currentLang = getIdiomaActual();
+        // Agrega el idioma como query param solo si es he, para mantenerlo al volver
+        if(currentLang === "he") {
+          e.preventDefault();
+          window.location.href = this.getAttribute("href") + "?lang=he";
+        }
+      });
+
+      // Si llega con ?lang=he, setea hebreo
+      const urlParams = new URLSearchParams(window.location.search);
+      const langParam = urlParams.get('lang');
+      if(langParam === "he") {
+        setLanguage("he");
+      } else {
+        setLanguage(getIdiomaActual());
+      }
+    });
   </script>
 </body>
 </html>
