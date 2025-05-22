@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title data-i18n="ciudad_rosario">Rosario | Viaje Familiar a Argentina</title>
+  <title>Rosario | Viaje Familiar a Argentina</title>
   <link rel="stylesheet" href="estilos.css">
   <style>
     body {
@@ -12,40 +12,30 @@
       margin: 20px;
       transition: direction 0.3s;
     }
-    .topbar {
+    #language-selector {
       position: fixed;
       top: 20px;
       right: 20px;
-      left: 0;
-      width: auto;
       z-index: 1000;
       background-color: rgba(255,255,255,0.8);
-      padding: 5px 20px;
+      padding: 5px;
       border-radius: 5px;
       box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-      display: flex;
-      align-items: center;
-      gap: 10px;
     }
-    .idioma-label {
-      font-weight: bold;
-      margin-right: 8px;
-    }
-    .idioma-btn {
+    .language-btn {
       font-weight: bold;
       padding: 8px 12px;
-      margin: 0 2px;
+      margin: 0 5px;
       border: none;
       border-radius: 4px;
       cursor: pointer;
       background-color: #f0f0f0;
     }
-    .volver-link {
+    .back-link {
       margin-left: 20px;
       text-decoration: none;
       font-weight: bold;
       color: #007BFF;
-      padding-left: 20px;
     }
     h1, h2 {
       color: #0F4761;
@@ -63,102 +53,92 @@
   </style>
 </head>
 <body>
-  <div class="topbar">
-    <span class="idioma-label" id="idioma-label" data-i18n="idioma">Idioma:</span>
-    <button class="idioma-btn" id="btn-es"><b>Español</b></button>
-    <button class="idioma-btn" id="btn-he">עברית</button>
-    <a href="../index.html" class="volver-link" id="volver-link" data-i18n="volver_itinerario">&larr; Volver al itinerario</a>
+  <div id="language-selector">
+    <button onclick="translatePage('es')" class="language-btn">Español</button>
+    <button onclick="translatePage('he')" class="language-btn">עברית</button>
+    <a href="../index.html" class="back-link" id="back-link">⬅ Volver al itinerario</a>
   </div>
 
-  <div class="container">
-    <h1 id="city-title" data-i18n="ciudad_rosario">Rosario</h1>
-    <p id="welcome-text" data-i18n="bienvenida_rosario">Bienvenidos a la sección de Rosario.</p>
+  <h1 id="city-title">Rosario</h1>
+  <p id="welcome-text">Bienvenidos a la sección de Rosario.</p>
 
-    <h2 id="main-attractions-title" data-i18n="atracciones_principales">Atracciones principales</h2>
-    <ul id="main-attractions-list">
-      <li><a href="https://es.wikipedia.org/wiki/Monumento_Nacional_a_la_Bandera_(Argentina)" target="_blank" id="monumento_bandera" data-i18n="monumento_bandera">Monumento Nacional a la Bandera</a></li>
-      <li><a href="https://es.wikipedia.org/wiki/Parque_Independencia_(Rosario)" target="_blank" id="parque_independencia" data-i18n="parque_independencia">Parque Independencia</a></li>
-      <li><a href="https://es.wikipedia.org/wiki/Costanera_Centro_de_Rosario" target="_blank" id="costanera_parana" data-i18n="costanera_parana">Costanera y Río Paraná</a></li>
-      <li><a href="https://es.wikipedia.org/wiki/Museo_de_Arte_Contempor%C3%A1neo_de_Rosario" target="_blank" id="macro" data-i18n="macro">Museo de Arte Contemporáneo (MACRO)</a></li>
-    </ul>
+  <h2 id="main-attractions-title">Atracciones principales</h2>
+  <ul id="main-attractions-list">
+    <li><a href="https://es.wikipedia.org/wiki/Monumento_Nacional_a_la_Bandera_(Argentina)" target="_blank" id="attraction-0">Monumento Nacional a la Bandera</a></li>
+    <li><a href="https://es.wikipedia.org/wiki/Parque_Independencia_(Rosario)" target="_blank" id="attraction-1">Parque Independencia</a></li>
+    <li><a href="https://es.wikipedia.org/wiki/Costanera_Centro_de_Rosario" target="_blank" id="attraction-2">Costanera y Río Paraná</a></li>
+    <li><a href="https://es.wikipedia.org/wiki/Museo_de_Arte_Contempor%C3%A1neo_de_Rosario" target="_blank" id="attraction-3">Museo de Arte Contemporáneo (MACRO)</a></li>
+  </ul>
 
-    <h2 id="restaurant-types-title" data-i18n="tipos_restaurantes">Tipos de restaurantes</h2>
-    <ul id="restaurant-types-list">
-      <li id="parrillas" data-i18n="parrillas">Parrillas</li>
-      <li id="pizzerias" data-i18n="pizzerias">Pizzerías</li>
-      <li id="heladerias" data-i18n="heladerias">Heladerías artesanales</li>
-      <li id="bares" data-i18n="bares">Bares y cervecerías</li>
-    </ul>
+  <h2 id="restaurant-types-title">Tipos de restaurantes</h2>
+  <ul id="restaurant-types-list">
+    <li id="rest-0">Parrillas</li>
+    <li id="rest-1">Pizzerías</li>
+    <li id="rest-2">Heladerías artesanales</li>
+    <li id="rest-3">Bares y cervecerías</li>
+  </ul>
 
-    <h2 id="map-title" data-i18n="mapa_rosario">Mapa de Rosario</h2>
-    <iframe src="https://www.openstreetmap.org/export/embed.html?bbox=-60.701%2C-32.997%2C-60.620%2C-32.894&amp;layer=mapnik" width="100%" height="350"></iframe>
-    <br><small><a href="https://www.openstreetmap.org/#map=13/-32.9527/-60.6393" target="_blank" id="ver_mapa_grande" data-i18n="ver_mapa_grande">Ver mapa más grande</a></small>
-  </div>
+  <h2 id="map-title">Mapa de Rosario</h2>
+  <iframe src="https://www.openstreetmap.org/export/embed.html?bbox=-60.701%2C-32.997%2C-60.620%2C-32.894&amp;layer=mapnik" width="100%" height="350"></iframe>
+  <br><small><a href="https://www.openstreetmap.org/#map=13/-32.9527/-60.6393" target="_blank" id="see-bigger-map">Ver mapa más grande</a></small>
 
   <script>
-    // Guarda el idioma seleccionado en localStorage para mantenerlo al volver
-    function getIdiomaActual() {
-      return localStorage.getItem("idioma_rosario") || "es";
-    }
-
-    function setIdiomaActual(lang) {
-      localStorage.setItem("idioma_rosario", lang);
-    }
-
-    function setLanguage(lang) {
-      fetch("../locales/" + lang + ".json")
-        .then(resp => resp.json())
-        .then(data => {
-          document.documentElement.lang = lang;
-          // RTL si es hebreo
-          if(lang === "he") {
-            document.body.classList.add("rtl");
-          } else {
-            document.body.classList.remove("rtl");
-          }
-          // Traduce todo lo que tiene data-i18n
-          document.querySelectorAll("[data-i18n]").forEach(el => {
-            const key = el.getAttribute("data-i18n");
-            if(data[key]) {
-              el.textContent = data[key];
-            }
-          });
-          // Botones: negrita en el seleccionado
-          document.getElementById("btn-es").innerHTML = lang === "es" ? "<b>Español</b>" : "Español";
-          document.getElementById("btn-he").innerHTML = lang === "he" ? "<b>עברית</b>" : "עברית";
-          setIdiomaActual(lang);
-        });
-    }
-
-    // Mantiene el idioma después de volver al itinerario
-    document.addEventListener("DOMContentLoaded", function() {
-      // Botones de idioma
-      document.getElementById("btn-es").addEventListener("click", function() {
-        setLanguage("es");
-      });
-      document.getElementById("btn-he").addEventListener("click", function() {
-        setLanguage("he");
-      });
-
-      // Mantener idioma al volver al itinerario
-      document.getElementById("volver-link").addEventListener("click", function(e) {
-        const currentLang = getIdiomaActual();
-        // Agrega el idioma como query param solo si es he, para mantenerlo al volver
-        if(currentLang === "he") {
-          e.preventDefault();
-          window.location.href = this.getAttribute("href") + "?lang=he";
-        }
-      });
-
-      // Si llega con ?lang=he, setea hebreo
-      const urlParams = new URLSearchParams(window.location.search);
-      const langParam = urlParams.get('lang');
-      if(langParam === "he") {
-        setLanguage("he");
-      } else {
-        setLanguage(getIdiomaActual());
+    // Diccionario de traducciones español ↔ hebreo
+    const translations = {
+      es: {
+        "city-title": "Rosario",
+        "welcome-text": "Bienvenidos a la sección de Rosario.",
+        "main-attractions-title": "Atracciones principales",
+        "attraction-0": "Monumento Nacional a la Bandera",
+        "attraction-1": "Parque Independencia",
+        "attraction-2": "Costanera y Río Paraná",
+        "attraction-3": "Museo de Arte Contemporáneo (MACRO)",
+        "restaurant-types-title": "Tipos de restaurantes",
+        "rest-0": "Parrillas",
+        "rest-1": "Pizzerías",
+        "rest-2": "Heladerías artesanales",
+        "rest-3": "Bares y cervecerías",
+        "map-title": "Mapa de Rosario",
+        "see-bigger-map": "Ver mapa más grande",
+        "back-link": "⬅ Volver al itinerario"
+      },
+      he: {
+        "city-title": "רוסאריו",
+        "welcome-text": "ברוכים הבאים למדור רוסאריו.",
+        "main-attractions-title": "אטרקציות עיקריות",
+        "attraction-0": "המונומנטו הלאומי לדגל",
+        "attraction-1": "פארק אינדפנדנסיה",
+        "attraction-2": "הטיילת ונהר פרנה",
+        "attraction-3": "מוזיאון האמנות המודרנית (MACRO)",
+        "restaurant-types-title": "סוגי מסעדות",
+        "rest-0": "מסעדות בשרים (פריז'ות)",
+        "rest-1": "פיצריות",
+        "rest-2": "גלידריות בוטיק",
+        "rest-3": "ברים ופאבים",
+        "map-title": "מפת רוסאריו",
+        "see-bigger-map": "לצפייה במפה גדולה יותר",
+        "back-link": "⬅ חזרה למפת המסלול"
       }
-    });
+    };
+
+    function translatePage(language) {
+      document.body.dir = (language === 'he') ? 'rtl' : 'ltr';
+      document.getElementById('city-title').textContent = translations[language]["city-title"];
+      document.getElementById('welcome-text').textContent = translations[language]["welcome-text"];
+      document.getElementById('main-attractions-title').textContent = translations[language]["main-attractions-title"];
+      document.getElementById('attraction-0').textContent = translations[language]["attraction-0"];
+      document.getElementById('attraction-1').textContent = translations[language]["attraction-1"];
+      document.getElementById('attraction-2').textContent = translations[language]["attraction-2"];
+      document.getElementById('attraction-3').textContent = translations[language]["attraction-3"];
+      document.getElementById('restaurant-types-title').textContent = translations[language]["restaurant-types-title"];
+      document.getElementById('rest-0').textContent = translations[language]["rest-0"];
+      document.getElementById('rest-1').textContent = translations[language]["rest-1"];
+      document.getElementById('rest-2').textContent = translations[language]["rest-2"];
+      document.getElementById('rest-3').textContent = translations[language]["rest-3"];
+      document.getElementById('map-title').textContent = translations[language]["map-title"];
+      document.getElementById('see-bigger-map').textContent = translations[language]["see-bigger-map"];
+      document.getElementById('back-link').textContent = translations[language]["back-link"];
+    }
   </script>
 </body>
 </html>
