@@ -1,216 +1,168 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <title>Buenos Aires</title>
-    <style>
-        body {
-            background: #f8f8f8;
-            font-family: Arial, sans-serif;
-        }
-        .container {
-            background: #fff;
-            margin: 2rem auto;
-            padding: 2rem;
-            max-width: 900px;
-            border-radius: 10px;
-        }
-        h1, h2 {
-            color: #222;
-        }
-        ul {
-            margin-bottom: 1.5rem;
-        }
-        .menu {
-            margin-bottom: 2rem;
-        }
-        .menu ul {
-            list-style: none;
-            padding: 0;
-        }
-        .menu ul li {
-            display: inline;
-            margin-right: 12px;
-        }
-        .map {
-            margin-top: 2rem;
-        }
-        .topbar {
-            display: flex;
-            justify-content: flex-end;
-            align-items: center;
-            gap: 1rem;
-            margin: 1rem 2rem 0 0;
-        }
-        .idioma-label {
-            margin-right: 0.5rem;
-            font-size: 1rem;
-        }
-        .idioma-btn {
-            margin-right: 0.2rem;
-            padding: 0.3rem 0.8rem;
-        }
-        .volver-link {
-            margin-left: 1rem;
-            text-decoration: none;
-            color: #2166c1;
-            font-size: 1rem;
-        }
-        .volver-link:hover {
-            text-decoration: underline;
-        }
-        @media (max-width: 600px) {
-            .container {
-                padding: 1rem;
-            }
-            .topbar {
-                flex-direction: column;
-                align-items: flex-end;
-                gap: 0.5rem;
-            }
-        }
-    </style>
+  <meta charset="UTF-8">
+  <title>Buenos Aires | Viaje Familiar a Argentina</title>
+  <link rel="stylesheet" href="estilos.css">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f9f9f9;
+      color: #333;
+      margin: 20px;
+      transition: direction 0.3s;
+    }
+    #language-selector {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 1000;
+      background-color: rgba(255,255,255,0.8);
+      padding: 5px;
+      border-radius: 5px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    }
+    .language-btn {
+      font-weight: bold;
+      padding: 8px 12px;
+      margin: 0 5px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      background-color: #f0f0f0;
+    }
+    .back-link {
+      margin-left: 20px;
+      text-decoration: none;
+      font-weight: bold;
+      color: #007BFF;
+    }
+    .ciudad-foto {
+      width: 100%;
+      max-width: 700px;
+      height: auto;
+      display: block;
+      margin: 30px auto 20px auto;
+      border-radius: 14px;
+      box-shadow: 0 3px 16px rgba(0,0,0,0.15);
+    }
+    .foto-caption {
+      text-align: center;
+      color: #555;
+      font-size: 1em;
+      margin-bottom: 30px;
+    }
+    h1, h2 {
+      color: #0F4761;
+    }
+    ul {
+      margin-bottom: 20px;
+    }
+    iframe {
+      border: 1px solid black;
+    }
+    .rtl {
+      direction: rtl !important;
+      text-align: right !important;
+    }
+  </style>
 </head>
 <body>
-    <div class="topbar">
-        <span class="idioma-label">Idioma:</span>
-        <button class="idioma-btn"><b>Español</b></button>
-        <button class="idioma-btn">עברית</button>
-        <a href="../index.html" class="volver-link">&larr; Volver al itinerario</a>
-    </div>
-    <div class="container">
-        <h1>Buenos Aires</h1>
-        <div class="menu">
-            <ul>
-                <li><a href="buenosaires.html">Buenos Aires</a></li>
-                <li><a href="rosario.html">Rosario</a></li>
-                <li><a href="bariloche.html">Bariloche</a></li>
-                <li><a href="mendoza.html">Mendoza</a></li>
-                <li><a href="malargue.html">Malargüe</a></li>
-                <li><a href="jujuy.html">Jujuy</a></li>
-                <li><a href="iguazu.html">Iguazú</a></li>
-                <li><a href="corrientes.html">Corrientes</a></li>
-                <li><a href="ibera.html">Iberá</a></li>
-                <li><a href="../mapa.html">Mapa Interactivo</a></li>
-            </ul>
-        </div>
+  <div id="language-selector">
+    <button onclick="translatePage('es')" class="language-btn">Español</button>
+    <button onclick="translatePage('he')" class="language-btn">עברית</button>
+    <a href="../index.html" class="back-link" id="back-link">⬅ Volver al itinerario</a>
+  </div>
 
-        <h2>Fechas y duración</h2>
-        <ul>
-            <li><strong>Estadía:</strong> 28/09 al 02/10 (5 días) y 29/10 (1 día)</li>
-            <li><strong>Cómo llegar:</strong> Llegada internacional (EZE/AEP) / Vuelo desde Corrientes para la última noche</li>
-        </ul>
+  <!-- FOTO REPRESENTATIVA DE BUENOS AIRES (usar imagen local) -->
+  <img src="../imagenes/buenosaires.jpg"
+       alt="Obelisco de Buenos Aires"
+       class="ciudad-foto" id="city-photo">
+  <div class="foto-caption" id="foto-caption">Obelisco de Buenos Aires</div>
 
-        <h2>Atracciones principales</h2>
-        <ul>
-            <li><a href="https://turismo.buenosaires.gob.ar/es/atractivo/obelisco" target="_blank">Obelisco</a></li>
-            <li><a href="https://teatrocolon.org.ar/" target="_blank">Teatro Colón</a></li>
-            <li><a href="https://turismo.buenosaires.gob.ar/es/recorrido/caminito" target="_blank">Caminito y La Boca</a></li>
-            <li><a href="https://turismo.buenosaires.gob.ar/es/recorrido/palermo" target="_blank">Palermo (Bosques, Jardín Japonés)</a></li>
-            <li><a href="https://planetario.buenosaires.gob.ar/" target="_blank">Planetario Galileo Galilei</a></li>
-            <li><a href="https://turismo.buenosaires.gob.ar/es/article/puerto-madero" target="_blank">Puerto Madero</a></li>
-            <li><a href="https://museobellasartes.gob.ar/" target="_blank">Museo Nacional de Bellas Artes</a></li>
-            <li><a href="https://turismo.buenosaires.gob.ar/es/recorrido/recoleta" target="_blank">Recoleta y Cementerio</a></li>
-            <li><a href="https://turismo.buenosaires.gob.ar/es/recorrido/plaza-de-mayo" target="_blank">Plaza de Mayo y Casa Rosada</a></li>
-        </ul>
+  <h1 id="city-title">Buenos Aires</h1>
+  <p id="welcome-text">Bienvenidos a la sección de Buenos Aires.</p>
 
-        <h2>Actividades recomendadas</h2>
-        <ul>
-            <li>Tango y espectáculos típicos (San Telmo o La Boca)</li>
-            <li>Tours guiados a pie o en bicicleta</li>
-            <li>Picnic en los bosques de Palermo</li>
-            <li>Visita a museos y ferias artesanales</li>
-            <li>Paseo en barco por el Río de la Plata (Puerto Madero)</li>
-        </ul>
+  <h2 id="main-attractions-title">Atracciones principales</h2>
+  <ul id="main-attractions-list">
+    <li><a href="https://es.wikipedia.org/wiki/Obelisco_de_Buenos_Aires" target="_blank" id="attraction-0">Obelisco</a></li>
+    <li><a href="https://es.wikipedia.org/wiki/Teatro_Col%C3%B3n" target="_blank" id="attraction-1">Teatro Colón</a></li>
+    <li><a href="https://es.wikipedia.org/wiki/Barrio_de_La_Boca" target="_blank" id="attraction-2">La Boca y Caminito</a></li>
+    <li><a href="https://es.wikipedia.org/wiki/Palermo" target="_blank" id="attraction-3">Parques de Palermo</a></li>
+  </ul>
 
-        <h2>Gastronomía destacada</h2>
-        <ul>
-            <li><strong>Don Julio</strong> (parrilla clásica)</li>
-            <li><strong>Café Tortoni</strong> (histórico)</li>
-            <li><strong>Sacro</strong> (vegano gourmet)</li>
-            <li><strong>Bio Restaurante</strong> (orgánico)</li>
-        </ul>
+  <h2 id="restaurant-types-title">Tipos de restaurantes</h2>
+  <ul id="restaurant-types-list">
+    <li id="rest-0">Parrillas</li>
+    <li id="rest-1">Cafés notables</li>
+    <li id="rest-2">Heladerías artesanales</li>
+    <li id="rest-3">Pizzerías históricas</li>
+  </ul>
 
-        <h2>Tipos de restaurantes</h2>
-        <ul>
-            <li>Parrillas tradicionales</li>
-            <li>Comida internacional</li>
-            <li>Opciones vegetarianas y veganas</li>
-            <li>Cafeterías históricas</li>
-        </ul>
+  <h2 id="map-title">Mapa de Buenos Aires</h2>
+  <iframe src="https://www.openstreetmap.org/export/embed.html?bbox=-58.531%2C-34.705%2C-58.335%2C-34.526&amp;layer=mapnik" width="100%" height="350"></iframe>
+  <br><small><a href="https://www.openstreetmap.org/#map=12/-34.60/-58.45" target="_blank" id="see-bigger-map">Ver mapa más grande</a></small>
 
-        <h2>Alojamiento (ejemplos)</h2>
-        <ul>
-            <li>Alvear Palace</li>
-            <li>Madero</li>
-            <li>Ibis</li>
-            <li>Airbnb Palermo</li>
-        </ul>
+  <script>
+    // Diccionario de traducciones español ↔ hebreo
+    const translations = {
+      es: {
+        "city-title": "Buenos Aires",
+        "welcome-text": "Bienvenidos a la sección de Buenos Aires.",
+        "main-attractions-title": "Atracciones principales",
+        "attraction-0": "Obelisco",
+        "attraction-1": "Teatro Colón",
+        "attraction-2": "La Boca y Caminito",
+        "attraction-3": "Parques de Palermo",
+        "restaurant-types-title": "Tipos de restaurantes",
+        "rest-0": "Parrillas",
+        "rest-1": "Cafés notables",
+        "rest-2": "Heladerías artesanales",
+        "rest-3": "Pizzerías históricas",
+        "map-title": "Mapa de Buenos Aires",
+        "see-bigger-map": "Ver mapa más grande",
+        "back-link": "⬅ Volver al itinerario",
+        "foto-caption": "Obelisco de Buenos Aires"
+      },
+      he: {
+        "city-title": "בואנוס איירס",
+        "welcome-text": "ברוכים הבאים למדור בואנוס איירס.",
+        "main-attractions-title": "אטרקציות עיקריות",
+        "attraction-0": "אובליסקו",
+        "attraction-1": "תיאטרון קולון",
+        "attraction-2": "לה בוקה וקמיניטו",
+        "attraction-3": "הפארקים של פלרמו",
+        "restaurant-types-title": "סוגי מסעדות",
+        "rest-0": "מסעדות בשרים (פריז'ות)",
+        "rest-1": "בתי קפה היסטוריים",
+        "rest-2": "גלידריות בוטיק",
+        "rest-3": "פיצריות",
+        "map-title": "מפת בואנוס איירס",
+        "see-bigger-map": "לצפייה במפה גדולה יותר",
+        "back-link": "⬅ חזרה למפת המסלול",
+        "foto-caption": "האובליסק של בואנוס איירס"
+      }
+    };
 
-        <h2>Coordenadas aproximadas</h2>
-        <ul>
-            <li>34° 36' S 58° 22' 48" W</li>
-        </ul>
-
-        <h2>Agenda de eventos</h2>
-        <ul>
-            <li><strong>29/09/2025</strong>: Festival de Tango al aire libre en Plaza Dorrego</li>
-            <li><strong>01/10/2025</strong>: Noche de los Museos (entrada libre en museos seleccionados)</li>
-            <li>
-                <a href="../docs/agenda/ariflier1970@gmail.com.ical.zip" download>
-                    Descargar agenda completa en formato iCal (.zip)
-                </a>
-            </li>
-        </ul>
-
-        <h2>Consejos para familias</h2>
-        <ul>
-            <li>Las zonas turísticas son seguras y están bien conectadas por transporte público (tarjeta SUBE).</li>
-            <li>Hay muchas actividades gratuitas y para todas las edades.</li>
-            <li>Los fines de semana suelen haber espectáculos callejeros y ferias.</li>
-            <li>Se recomienda reservar alojamiento con anticipación en Palermo o Recoleta.</li>
-        </ul>
-
-        <h2>Presupuesto orientativo</h2>
-        <table>
-            <tr>
-                <th>Concepto</th>
-                <th>Precio estimado (USD)</th>
-            </tr>
-            <tr>
-                <td>Alojamiento (noche, familia)</td>
-                <td>50–120</td>
-            </tr>
-            <tr>
-                <td>Comida (por día, familia)</td>
-                <td>30–70</td>
-            </tr>
-            <tr>
-                <td>Transporte público (por día)</td>
-                <td>3–5</td>
-            </tr>
-            <tr>
-                <td>Actividades y tours (por día)</td>
-                <td>20–50</td>
-            </tr>
-            <tr>
-                <td>Entradas museos/atracciones</td>
-                <td>0–15</td>
-            </tr>
-        </table>
-
-        <h2>Tips culturales</h2>
-        <ul>
-            <li>El idioma oficial es español (rioplatense, muy amigable).</li>
-            <li>Es común saludar con un beso en la mejilla.</li>
-            <li>Los horarios de comida suelen ser más tarde que en otros países (cena desde las 21:00).</li>
-            <li>El mate es la infusión nacional.</li>
-        </ul>
-
-        <h2>Mapa de Buenos Aires</h2>
-        <div class="map">
-            <iframe src="https://www.openstreetmap.org/export/embed.html?bbox=-58.531%2C-34.705%2C-58.335%2C-34.540&amp;layer=mapnik" style="width:100%; height:350px; border:1px solid #ccc;"></iframe>
-        </div>
-    </div>
+    function translatePage(language) {
+      document.body.dir = (language === 'he') ? 'rtl' : 'ltr';
+      document.getElementById('city-title').textContent = translations[language]["city-title"];
+      document.getElementById('welcome-text').textContent = translations[language]["welcome-text"];
+      document.getElementById('main-attractions-title').textContent = translations[language]["main-attractions-title"];
+      document.getElementById('attraction-0').textContent = translations[language]["attraction-0"];
+      document.getElementById('attraction-1').textContent = translations[language]["attraction-1"];
+      document.getElementById('attraction-2').textContent = translations[language]["attraction-2"];
+      document.getElementById('attraction-3').textContent = translations[language]["attraction-3"];
+      document.getElementById('restaurant-types-title').textContent = translations[language]["restaurant-types-title"];
+      document.getElementById('rest-0').textContent = translations[language]["rest-0"];
+      document.getElementById('rest-1').textContent = translations[language]["rest-1"];
+      document.getElementById('rest-2').textContent = translations[language]["rest-2"];
+      document.getElementById('rest-3').textContent = translations[language]["rest-3"];
+      document.getElementById('map-title').textContent = translations[language]["map-title"];
+      document.getElementById('see-bigger-map').textContent = translations[language]["see-bigger-map"];
+      document.getElementById('back-link').textContent = translations[language]["back-link"];
+      document.getElementById('foto-caption').textContent = translations[language]["foto-caption"];
+    }
+  </script>
 </body>
 </html>
