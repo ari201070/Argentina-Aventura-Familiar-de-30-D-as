@@ -37,6 +37,21 @@
       font-weight: bold;
       color: #007BFF;
     }
+    .ciudad-foto {
+      width: 100%;
+      max-width: 700px;
+      height: auto;
+      display: block;
+      margin: 30px auto 20px auto;
+      border-radius: 14px;
+      box-shadow: 0 3px 16px rgba(0,0,0,0.15);
+    }
+    .foto-caption {
+      text-align: center;
+      color: #555;
+      font-size: 1em;
+      margin-bottom: 30px;
+    }
     h1, h2 {
       color: #0F4761;
     }
@@ -58,6 +73,12 @@
     <button onclick="translatePage('he')" class="language-btn">עברית</button>
     <a href="../index.html" class="back-link" id="back-link">⬅ Volver al itinerario</a>
   </div>
+
+  <!-- FOTO REPRESENTATIVA DE ROSARIO -->
+  <img src="https://upload.wikimedia.org/wikipedia/commons/6/69/Monumento_a_la_Bandera_-_Rosario_2.jpg"
+       alt="Monumento a la Bandera, Rosario"
+       class="ciudad-foto" id="city-photo">
+  <div class="foto-caption" id="foto-caption">Monumento Nacional a la Bandera, Rosario</div>
 
   <h1 id="city-title">Rosario</h1>
   <p id="welcome-text">Bienvenidos a la sección de Rosario.</p>
@@ -100,7 +121,8 @@
         "rest-3": "Bares y cervecerías",
         "map-title": "Mapa de Rosario",
         "see-bigger-map": "Ver mapa más grande",
-        "back-link": "⬅ Volver al itinerario"
+        "back-link": "⬅ Volver al itinerario",
+        "foto-caption": "Monumento Nacional a la Bandera, Rosario"
       },
       he: {
         "city-title": "רוסאריו",
@@ -117,7 +139,8 @@
         "rest-3": "ברים ופאבים",
         "map-title": "מפת רוסאריו",
         "see-bigger-map": "לצפייה במפה גדולה יותר",
-        "back-link": "⬅ חזרה למפת המסלול"
+        "back-link": "⬅ חזרה למפת המסלול",
+        "foto-caption": "אנדרטת הדגל הלאומי, רוסאריו"
       }
     };
 
@@ -138,6 +161,7 @@
       document.getElementById('map-title').textContent = translations[language]["map-title"];
       document.getElementById('see-bigger-map').textContent = translations[language]["see-bigger-map"];
       document.getElementById('back-link').textContent = translations[language]["back-link"];
+      document.getElementById('foto-caption').textContent = translations[language]["foto-caption"];
     }
   </script>
 </body>
