@@ -5,7 +5,7 @@
     <title>Itinerario Familiar por Argentina</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <!-- FontAwesome CSS CDN, sin JS, máxima compatibilidad -->
+    <!-- FontAwesome CSS CDN -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <style>
         body { background: #f8f9fa; }
@@ -97,6 +97,7 @@
                     <th id="tiempo-th"></th>
                     <th id="precio-th"></th>
                     <th id="compania-th"></th>
+                    <th id="web-th"></th>
                 </tr>
             </thead>
             <tbody id="tbody-transporte"></tbody>
@@ -146,309 +147,295 @@
             Fuente: <a href="https://polygon.io/" target="_blank" class="underline text-blue-500">Polygon.io</a>
         </div>
     </section>
-        <!-- Lista de equipaje -->
-        <section class="card-tool max-w-4xl mx-auto">
-            <h2 class="text-xl font-bold mb-3 flex items-center gap-2" id="packing-title"><i class="fas fa-suitcase-rolling text-yellow-500"></i> <span></span></h2>
-            <div class="flex items-center space-x-2 mb-4">
-                <button id="add-item" class="primary-btn"></button>
-                <select id="packing-select" class="px-2 py-2 border rounded text-base">
-                    <option value="esencial"></option>
-                    <option value="opcional"></option>
-                </select>
-                <input type="text" id="packing-item" class="flex-grow px-3 py-2 border rounded text-base" placeholder="">
+
+    <!-- Lista de equipaje -->
+    <section class="card-tool max-w-4xl mx-auto">
+        <h2 class="text-xl font-bold mb-3 flex items-center gap-2" id="packing-title"><i class="fas fa-suitcase-rolling text-yellow-500"></i> <span></span></h2>
+        <div class="flex items-center space-x-2 mb-4">
+            <button id="add-item" class="primary-btn"></button>
+            <select id="packing-select" class="px-2 py-2 border rounded text-base">
+                <option value="esencial"></option>
+                <option value="opcional"></option>
+            </select>
+            <input type="text" id="packing-item" class="flex-grow px-3 py-2 border rounded text-base" placeholder="">
+        </div>
+        <div>
+            <h4 class="font-semibold mb-2" id="packing-esenciales"></h4>
+            <ul id="packing-list" class="space-y-2"></ul>
+        </div>
+        <div class="mt-4">
+            <h4 class="font-semibold mb-2" id="packing-opcionales"></h4>
+            <ul id="optional-packing-list" class="space-y-2"></ul>
+        </div>
+    </section>
+
+    <!-- Consulta a IA -->
+    <section class="card-tool max-w-4xl mx-auto">
+        <h2 class="text-xl font-bold mb-3 flex items-center gap-2" id="ai-title"><i class="fas fa-robot text-indigo-500"></i> <span></span></h2>
+        <p class="mb-4" id="ai-desc"></p>
+        <div>
+            <textarea id="ai-prompt" class="w-full px-3 py-2 border rounded text-base mb-2" rows="3" placeholder=""></textarea>
+            <div class="flex gap-2 mb-2">
+                <button id="ask-ai" class="primary-btn flex-1" type="button"></button>
+                <button id="clear-ai" class="bg-gray-400 text-white rounded px-4 py-2 hover:bg-gray-600"><i class="fas fa-times"></i></button>
             </div>
-            <div>
-                <h4 class="font-semibold mb-2" id="packing-esenciales"></h4>
-                <ul id="packing-list" class="space-y-2"></ul>
+            <div id="ai-loading" class="text-center py-2 hidden">
+                <div class="inline-block w-8 h-8 border-4 border-gray-300 border-t-indigo-500 rounded-full animate-spin"></div>
+                <p class="mt-2" id="ai-loading-text"></p>
             </div>
-            <div class="mt-4">
-                <h4 class="font-semibold mb-2" id="packing-opcionales"></h4>
-                <ul id="optional-packing-list" class="space-y-2"></ul>
-            </div>
-        </section>
+            <div id="ai-response" class="mt-4 p-4 bg-gray-100 rounded max-h-64 overflow-y-auto hidden"></div>
+        </div>
+    </section>
 
-        <!-- Consulta a IA -->
-        <section class="card-tool max-w-4xl mx-auto">
-            <h2 class="text-xl font-bold mb-3 flex items-center gap-2" id="ai-title"><i class="fas fa-robot text-indigo-500"></i> <span></span></h2>
-            <p class="mb-4" id="ai-desc"></p>
-            <div>
-                <textarea id="ai-prompt" class="w-full px-3 py-2 border rounded text-base mb-2" rows="3" placeholder=""></textarea>
-                <div class="flex gap-2 mb-2">
-                    <button id="ask-ai" class="primary-btn flex-1" type="button"></button>
-                    <button id="clear-ai" class="bg-gray-400 text-white rounded px-4 py-2 hover:bg-gray-600"><i class="fas fa-times"></i></button>
-                </div>
-                <div id="ai-loading" class="text-center py-2 hidden">
-                    <div class="inline-block w-8 h-8 border-4 border-gray-300 border-t-indigo-500 rounded-full animate-spin"></div>
-                    <p class="mt-2" id="ai-loading-text"></p>
-                </div>
-                <div id="ai-response" class="mt-4 p-4 bg-gray-100 rounded max-h-64 overflow-y-auto hidden"></div>
-            </div>
-        </section>
+    <footer class="w-full bg-gray-100 py-4 mt-8">
+        <div class="container mx-auto text-center text-gray-500" id="footer-copyright"></div>
+    </footer>
 
-        <footer class="w-full bg-gray-100 py-4 mt-8">
-            <div class="container mx-auto text-center text-gray-500" id="footer-copyright"></div>
-        </footer>
+    <script>
+    // --- DEFINICIÓN DE CIUDADES Y TRANSPORTE ---
+    const ciudades = [
+        {es: "Buenos Aires", he: "בואנוס איירס"},
+        {es: "Rosario", he: "רוסאריו"},
+        {es: "Bariloche", he: "ברילוצ'ה"},
+        {es: "Mendoza", he: "מנדוסה"},
+        {es: "Malargüe", he: "מלארגואה"},
+        {es: "Jujuy", he: "חוחוי"},
+        {es: "Iguazú", he: "איגואסו"},
+        {es: "Corrientes", he: "קוריינטס"},
+        {es: "Iberá", he: "איברה"},
+        {es: "Mapa Interactivo", he: "מפה אינטראקטיבית"}
+    ];
 
-        <script>
-        // Aquí va tu JavaScript completo. Si necesitas el JS, avisame y te lo paso por partes también.
-        </script>
-    </body>
-    </html>
-<script>
-// JS principal para Itinerario Familiar por Argentina
-// Adaptable a cambios, multilenguaje (español/hebreo), multimoneda y utilidades varias
+    const tablaTransporte = [
+        {desde:0, hasta:1, medio:{es:"Bus",he:"אוטובוס"}, tiempo:4, precio:{ARS:20000,USD:22,ILS:80,EUR:20}, compania:"BusPlus", link:"https://www.busplus.com.ar/"},
+        {desde:1, hasta:3, medio:{es:"Bus",he:"אוטובוס"}, tiempo:13, precio:{ARS:50000,USD:55,ILS:200,EUR:50}, compania:"Andesmar", link:"https://www.andesmar.com/"},
+        {desde:3, hasta:4, medio:{es:"Bus",he:"אוטובוס"}, tiempo:6, precio:{ARS:18000,USD:20,ILS:72,EUR:18}, compania:"CATA", link:"https://www.catainternacional.com/"},
+        {desde:4, hasta:5, medio:{es:"Vuelo + Bus",he:"טיסה + אוטובוס"}, tiempo:10, precio:{ARS:110000,USD:120,ILS:440,EUR:100}, compania:"Pasajes de micro baratos", link:"https://www.pasajesenmicros.com.ar/"},
+        {desde:5, hasta:6, medio:{es:"Vuelo",he:"טיסה"}, tiempo:2, precio:{ARS:85000,USD:90,ILS:330,EUR:77}, compania:"Aerolineas Argentinas", link:"https://www.aerolineas.com.ar/"},
+        {desde:6, hasta:7, medio:{es:"Bus",he:"אוטובוס"}, tiempo:9, precio:{ARS:40000,USD:44,ILS:155,EUR:40}, compania:"Crucero del Norte", link:"https://www.crucerodelnorte.com.ar/"},
+        {desde:7, hasta:8, medio:{es:"Remis/Transfer",he:"מונית/הסעה"}, tiempo:4, precio:{ARS:60000,USD:66,ILS:240,EUR:60}, compania:"Esteros del Iberá", link:"https://www.esterosdelibera.com/"}
+    ];
 
-// --- CONFIGURACIÓN DE TEXTOS MULTILENGUAJE ---
-const textos = {
-    es: {
-        titulo: "Itinerario Familiar por Argentina",
-        bienvenida: "¡Bienvenidos! Aquí encontrarán el itinerario sugerido, con ciudades, transportes y herramientas útiles.",
-        ciudadesTitulo: "Ciudades del recorrido",
-        ciudades: ["Buenos Aires", "Córdoba", "Mendoza", "Bariloche"],
-        transporteTitulo: "Opciones de transporte",
-        transporte: [
-            { desde: "Buenos Aires", hasta: "Córdoba", medio: "Avión", tiempo: "1h 30m", precio: 90000, moneda: "ARS", compania: "Aerolíneas Argentinas" },
-            { desde: "Córdoba", hasta: "Mendoza", medio: "Bus", tiempo: "9h", precio: 70000, moneda: "ARS", compania: "Chevallier" },
-            { desde: "Mendoza", hasta: "Bariloche", medio: "Avión", tiempo: "2h 10m", precio: 110000, moneda: "ARS", compania: "Flybondi" }
-        ],
-        thDesde: "Desde",
-        thHasta: "Hasta",
-        thMedio: "Medio",
-        thTiempo: "Duración",
-        thPrecio: "Precio",
-        thCompania: "Compañía",
-        conversorTitulo: "Conversor de moneda",
-        labelCantidad: "Cantidad",
-        labelDe: "De",
-        labelA: "A",
-        btnConvertir: "Convertir",
-        packingTitle: "Lista de equipaje",
-        packingEsenciales: "Esenciales",
-        packingOpcionales: "Opcionales",
-        packingAgregar: "Agregar",
-        packingPlaceholder: "¿Qué más llevás?",
-        packingTipoEsencial: "esencial",
-        packingTipoOpcional: "opcional",
-        aiTitulo: "Consulta a la IA",
-        aiDesc: "Escribí tu pregunta sobre Argentina, el viaje, consejos, etc.",
-        aiPlace: "¿Qué querés saber?",
-        aiBtn: "Preguntar",
-        aiLoading: "Consultando IA...",
-        footer: "© 2024 Itinerario Familiar por Argentina",
-        idioma: "Idioma",
-        moneda: "Moneda",
-    },
-    he: {
-        titulo: "מסלול משפחתי בארגנטינה",
-        bienvenida: "ברוכים הבאים! כאן תמצאו מסלול מוצע, ערים, תחבורה וכלים שימושיים.",
-        ciudadesTitulo: "ערים במסלול",
-        ciudades: ["בואנוס איירס", "קורדובה", "מנדוסה", "ברילוצ'ה"],
-        transporteTitulo: "אפשרויות תחבורה",
-        transporte: [
-            { desde: "בואנוס איירס", hasta: "קורדובה", medio: "מטוס", tiempo: "שעה וחצי", precio: 90000, moneda: "ARS", compania: "Aerolíneas Argentinas" },
-            { desde: "קורדובה", hasta: "מנדוסה", medio: "אוטובוס", tiempo: "9 שעות", precio: 70000, moneda: "ARS", compania: "Chevallier" },
-            { desde: "מנדוסה", hasta: "ברילוצ'ה", medio: "מטוס", tiempo: "שעתיים ו-10 דקות", precio: 110000, moneda: "ARS", compania: "Flybondi" }
-        ],
-        thDesde: "מ",
-        thHasta: "אל",
-        thMedio: "אמצעי",
-        thTiempo: "משך",
-        thPrecio: "מחיר",
-        thCompania: "חברה",
-        conversorTitulo: "מחשבון המרה",
-        labelCantidad: "כמות",
-        labelDe: "מ",
-        labelA: "אל",
-        btnConvertir: "המר",
-        packingTitle: "רשימת ציוד",
-        packingEsenciales: "חובה",
-        packingOpcionales: "רשות",
-        packingAgregar: "הוסף",
-        packingPlaceholder: "מה עוד להביא?",
-        packingTipoEsencial: "חובה",
-        packingTipoOpcional: "רשות",
-        aiTitulo: "שאל את הבינה המלאכותית",
-        aiDesc: "כתוב כאן כל שאלה על ארגנטינה, המסלול, טיפים וכו'.",
-        aiPlace: "מה תרצה לדעת?",
-        aiBtn: "שלח",
-        aiLoading: "שואל את הבינה...",
-        footer: "© 2024 מסלול משפחתי בארגנטינה",
-        idioma: "שפה",
-        moneda: "מטבע",
+    // --- TEXTOS EN ESPAÑOL Y HEBREO ---
+    const textos = {
+        es: {
+            titulo: "Itinerario Familiar por Argentina",
+            bienvenida: "¡Bienvenidos! Aquí encontrarán el itinerario sugerido, con ciudades, transportes y herramientas útiles.",
+            ciudadesTitulo: "Ciudades del recorrido",
+            transporteTitulo: "Opciones de transporte",
+            thDesde: "Desde",
+            thHasta: "Hasta",
+            thMedio: "Medio",
+            thTiempo: "Duración (hs)",
+            thPrecio: "Precio",
+            thCompania: "Compañía",
+            thLink: "Web",
+            conversorTitulo: "Conversor de moneda",
+            labelCantidad: "Cantidad",
+            labelDe: "De",
+            labelA: "A",
+            btnConvertir: "Convertir",
+            packingTitle: "Lista de equipaje",
+            packingEsenciales: "Esenciales",
+            packingOpcionales: "Opcionales",
+            packingAgregar: "Agregar",
+            packingPlaceholder: "¿Qué más llevás?",
+            aiTitulo: "Consulta a la IA",
+            aiDesc: "Escribí tu pregunta sobre Argentina, el viaje, consejos, etc.",
+            aiPlace: "¿Qué querés saber?",
+            aiBtn: "Preguntar",
+            aiLoading: "Consultando IA...",
+            footer: "© 2024 Itinerario Familiar por Argentina",
+            idioma: "Idioma",
+            moneda: "Moneda",
+            web: "Sitio web"
+        },
+        he: {
+            titulo: "מסלול משפחתי בארגנטינה",
+            bienvenida: "ברוכים הבאים! כאן תמצאו מסלול מוצע, ערים, תחבורה וכלים שימושיים.",
+            ciudadesTitulo: "ערים במסלול",
+            transporteTitulo: "אפשרויות תחבורה",
+            thDesde: "מ",
+            thHasta: "אל",
+            thMedio: "אמצעי",
+            thTiempo: "משך (שעות)",
+            thPrecio: "מחיר",
+            thCompania: "חברה",
+            thLink: "אתר",
+            conversorTitulo: "מחשבון המרה",
+            labelCantidad: "כמות",
+            labelDe: "מ",
+            labelA: "אל",
+            btnConvertir: "המר",
+            packingTitle: "רשימת ציוד",
+            packingEsenciales: "חובה",
+            packingOpcionales: "רשות",
+            packingAgregar: "הוסף",
+            packingPlaceholder: "מה עוד להביא?",
+            aiTitulo: "שאל את הבינה המלאכותית",
+            aiDesc: "כתוב כאן כל שאלה על ארגנטינה, המסלול, טיפים וכו'.",
+            aiPlace: "מה תרצה לדעת?",
+            aiBtn: "שלח",
+            aiLoading: "שואל את הבינה...",
+            footer: "© 2024 מסלול משפחתי בארגנטינה",
+            idioma: "שפה",
+            moneda: "מטבע",
+            web: "אתר"
+        }
+    };
+
+    // --- VARIABLES DE ESTADO ---
+    let idioma = "es";
+    let moneda = "ARS";
+    let tasas = {
+        ARS: 1,
+        USD: 0.0011,
+        EUR: 0.0010,
+        ILS: 0.004
+    };
+    let tasasFecha = "";
+
+    // --- FUNCIONES DE RENDERIZADO ---
+    function setTextos() {
+        const t = textos[idioma];
+        document.getElementById("titulo-main").innerText = t.titulo;
+        document.getElementById("bienvenida").innerText = t.bienvenida;
+        document.getElementById("ciudades-titulo").innerText = t.ciudadesTitulo;
+        document.getElementById("lista-ciudades").innerHTML = ciudades.map(c => `<li>${c[idioma]}</li>`).join("");
+        document.getElementById("transporte-titulo").innerText = t.transporteTitulo;
+        document.getElementById("desde-th").innerText = t.thDesde;
+        document.getElementById("hasta-th").innerText = t.thHasta;
+        document.getElementById("medio-th").innerText = t.thMedio;
+        document.getElementById("tiempo-th").innerText = t.thTiempo;
+        document.getElementById("precio-th").innerText = t.thPrecio;
+        document.getElementById("compania-th").innerText = t.thCompania;
+        document.getElementById("web-th").innerText = t.thLink;
+        document.getElementById("titulo-conversor").childNodes[1].nodeValue = " " + t.conversorTitulo;
+        document.getElementById("label-cantidad").innerText = t.labelCantidad;
+        document.getElementById("label-de").innerText = t.labelDe;
+        document.getElementById("label-a").innerText = t.labelA;
+        document.getElementById("btn-convertir").innerText = t.btnConvertir;
+        document.getElementById("packing-title").childNodes[1].nodeValue = " " + t.packingTitle;
+        document.getElementById("add-item").innerText = t.packingAgregar;
+        document.getElementById("packing-select").children[0].innerText = t.packingEsenciales;
+        document.getElementById("packing-select").children[1].innerText = t.packingOpcionales;
+        document.getElementById("packing-item").placeholder = t.packingPlaceholder;
+        document.getElementById("packing-esenciales").innerText = t.packingEsenciales;
+        document.getElementById("packing-opcionales").innerText = t.packingOpcionales;
+        document.getElementById("ai-title").childNodes[1].nodeValue = " " + t.aiTitulo;
+        document.getElementById("ai-desc").innerText = t.aiDesc;
+        document.getElementById("ai-prompt").placeholder = t.aiPlace;
+        document.getElementById("ask-ai").innerText = t.aiBtn;
+        document.getElementById("ai-loading-text").innerText = t.aiLoading;
+        document.getElementById("label-idioma").innerText = t.idioma + ":";
+        document.getElementById("label-moneda").innerText = t.moneda + ":";
+        document.getElementById("footer-copyright").innerText = t.footer;
+        // RTL para hebreo
+        document.body.classList.toggle("rtl", idioma === "he");
+        renderTablaTransporte();
     }
-};
+    document.querySelectorAll(".lang-btn").forEach(btn =>
+        btn.onclick = function() {
+            idioma = btn.id === "lang-he" ? "he" : "es";
+            setTextos();
+            document.querySelectorAll(".lang-btn").forEach(b => b.classList.remove("active"));
+            btn.classList.add("active");
+        }
+    );
+    document.querySelectorAll(".currency-btn").forEach(btn =>
+        btn.onclick = function() {
+            moneda = btn.id.replace("cur-", "");
+            document.querySelectorAll(".currency-btn").forEach(b => b.classList.remove("active"));
+            btn.classList.add("active");
+            renderTablaTransporte();
+        }
+    );
 
-let idioma = "es";
-let moneda = "ARS";
-let tasas = {
-    ARS: 1,
-    USD: 0.0011,
-    EUR: 0.0010,
-    ILS: 0.004
-};
-let tasasFecha = "";
-
-function setTextos() {
-    const t = textos[idioma];
-    document.getElementById("titulo-main").innerText = t.titulo;
-    document.getElementById("bienvenida").innerText = t.bienvenida;
-    document.getElementById("ciudades-titulo").innerText = t.ciudadesTitulo;
-    document.getElementById("lista-ciudades").innerHTML = t.ciudades.map(ciudad => `<li>${ciudad}</li>`).join("");
-    document.getElementById("transporte-titulo").innerText = t.transporteTitulo;
-    document.getElementById("desde-th").innerText = t.thDesde;
-    document.getElementById("hasta-th").innerText = t.thHasta;
-    document.getElementById("medio-th").innerText = t.thMedio;
-    document.getElementById("tiempo-th").innerText = t.thTiempo;
-    document.getElementById("precio-th").innerText = t.thPrecio;
-    document.getElementById("compania-th").innerText = t.thCompania;
-    document.getElementById("titulo-conversor").childNodes[1].nodeValue = " " + t.conversorTitulo;
-    document.getElementById("label-cantidad").innerText = t.labelCantidad;
-    document.getElementById("label-de").innerText = t.labelDe;
-    document.getElementById("label-a").innerText = t.labelA;
-    document.getElementById("btn-convertir").innerText = t.btnConvertir;
-    document.getElementById("packing-title").childNodes[1].nodeValue = " " + t.packingTitle;
-    document.getElementById("add-item").innerText = t.packingAgregar;
-    document.getElementById("packing-select").children[0].innerText = t.packingTipoEsencial;
-    document.getElementById("packing-select").children[1].innerText = t.packingTipoOpcional;
-    document.getElementById("packing-item").placeholder = t.packingPlaceholder;
-    document.getElementById("packing-esenciales").innerText = t.packingEsenciales;
-    document.getElementById("packing-opcionales").innerText = t.packingOpcionales;
-    document.getElementById("ai-title").childNodes[1].nodeValue = " " + t.aiTitulo;
-    document.getElementById("ai-desc").innerText = t.aiDesc;
-    document.getElementById("ai-prompt").placeholder = t.aiPlace;
-    document.getElementById("ask-ai").innerText = t.aiBtn;
-    document.getElementById("ai-loading-text").innerText = t.aiLoading;
-    document.getElementById("label-idioma").innerText = t.idioma + ":";
-    document.getElementById("label-moneda").innerText = t.moneda + ":";
-    document.getElementById("footer-copyright").innerText = t.footer;
-    // RTL para hebreo
-    document.body.classList.toggle("rtl", idioma === "he");
-}
-
-// --- CAMBIO DE IDIOMA ---
-document.getElementById("lang-es").onclick = () => { idioma = "es"; setTextos(); llenarTabla(); };
-document.getElementById("lang-he").onclick = () => { idioma = "he"; setTextos(); llenarTabla(); };
-document.querySelectorAll(".lang-btn").forEach(btn =>
-    btn.onclick = function() {
-        idioma = btn.id === "lang-he" ? "he" : "es";
-        setTextos(); llenarTabla();
-        document.querySelectorAll(".lang-btn").forEach(b => b.classList.remove("active"));
-        btn.classList.add("active");
+    // --- TABLA DE TRANSPORTE ---
+    function renderTablaTransporte() {
+        const t = textos[idioma];
+        let html = "";
+        tablaTransporte.forEach(row => {
+            const nombreDesde = ciudades[row.desde][idioma];
+            const nombreHasta = ciudades[row.hasta][idioma];
+            const medio = row.medio[idioma];
+            const tiempo = row.tiempo;
+            const precio = row.precio[moneda] ? row.precio[moneda].toLocaleString() : "?";
+            const linkWeb = `<a href="${row.link}" target="_blank">${t.web}</a>`;
+            html += `<tr>
+                <td>${nombreDesde}</td>
+                <td>${nombreHasta}</td>
+                <td>${medio}</td>
+                <td>${tiempo}</td>
+                <td>${precio} ${moneda}</td>
+                <td>${row.compania}</td>
+                <td>${linkWeb}</td>
+            </tr>`;
+        });
+        document.getElementById("tbody-transporte").innerHTML = html;
     }
-);
 
-// --- CAMBIO DE MONEDA ---
-document.querySelectorAll(".currency-btn").forEach(btn =>
-    btn.onclick = function() {
-        moneda = btn.id.replace("cur-", "");
-        document.querySelectorAll(".currency-btn").forEach(b => b.classList.remove("active"));
-        btn.classList.add("active");
-        llenarTabla();
+    // --- CONVERSOR DE MONEDA (puedes mejorar con tasa online si quieres) ---
+    document.getElementById("convert-btn").onclick = function() {
+        const monto = parseFloat(document.getElementById("amount").value) || 0;
+        const de = document.getElementById("from-currency").value;
+        const a = document.getElementById("to-currency").value;
+        let resultado = monto;
+        if (de !== a && tasas[de] && tasas[a]) {
+            resultado = monto / tasas[de] * tasas[a];
+        }
+        document.getElementById("conversion-result").innerText = `${resultado.toLocaleString(undefined, {maximumFractionDigits:2})} ${a}`;
+        document.getElementById("currency-date").innerText = tasasFecha ? "Tasa al: " + tasasFecha : "";
+    };
+
+    // --- LISTA DE EQUIPAJE ---
+    let listaEquipaje = { esencial: [], opcional: [] };
+    document.getElementById("add-item").onclick = function() {
+        const tipo = document.getElementById("packing-select").value;
+        const item = document.getElementById("packing-item").value.trim();
+        if (item && !listaEquipaje[tipo].includes(item)) {
+            listaEquipaje[tipo].push(item);
+            actualizarEquipaje();
+            document.getElementById("packing-item").value = "";
+        }
+    };
+    function actualizarEquipaje() {
+        document.getElementById("packing-list").innerHTML = listaEquipaje.esencial.map(
+            item => `<li>${item} <button onclick="eliminarEquipaje('esencial','${item}')" style="color:red;">✖</button></li>`
+        ).join("");
+        document.getElementById("optional-packing-list").innerHTML = listaEquipaje.opcional.map(
+            item => `<li>${item} <button onclick="eliminarEquipaje('opcional','${item}')" style="color:red;">✖</button></li>`
+        ).join("");
     }
-);
-
-// --- TABLA DE TRANSPORTE ---
-function llenarTabla() {
-    const t = textos[idioma];
-    let html = "";
-    t.transporte.forEach(row => {
-        const precioConvertido = convertirMoneda(row.precio, row.moneda, moneda);
-        html += `<tr>
-            <td>${row.desde}</td>
-            <td>${row.hasta}</td>
-            <td>${row.medio}</td>
-            <td>${row.tiempo}</td>
-            <td>${precioConvertido} ${moneda}</td>
-            <td>${row.compania}</td>
-        </tr>`;
-    });
-    document.getElementById("tbody-transporte").innerHTML = html;
-}
-function convertirMoneda(valor, monedaOrigen, monedaDestino) {
-    if (monedaOrigen === monedaDestino) return valor.toLocaleString();
-    if (!tasas[monedaOrigen] || !tasas[monedaDestino]) return "?";
-    return (valor / tasas[monedaOrigen] * tasas[monedaDestino]).toLocaleString(undefined, { maximumFractionDigits: 2 });
-}
-
-// --- CARGAR TASA DE CAMBIO ---
-async function actualizarTasas() {
-    try {
-        const res = await fetch("https://api.exchangerate-api.com/v4/latest/ARS");
-        const data = await res.json();
-        tasas = {
-            ARS: 1,
-            USD: data.rates.USD,
-            EUR: data.rates.EUR,
-            ILS: data.rates.ILS
-        };
-        tasasFecha = data.date;
-    } catch (e) {
-        tasas = { ARS: 1, USD: 0.0011, EUR: 0.0010, ILS: 0.004 };
-        tasasFecha = "(offline)";
-    }
-}
-actualizarTasas();
-
-// --- CONVERSOR DE MONEDA ---
-document.getElementById("convert-btn").onclick = async function() {
-    document.getElementById("currency-loading").classList.remove("hidden");
-    await actualizarTasas();
-    const monto = parseFloat(document.getElementById("amount").value) || 0;
-    const de = document.getElementById("from-currency").value;
-    const a = document.getElementById("to-currency").value;
-    let resultado = convertirMoneda(monto, de, a);
-    document.getElementById("currency-loading").classList.add("hidden");
-    document.getElementById("conversion-result").innerText = `${resultado} ${a}`;
-    document.getElementById("currency-date").innerText = tasasFecha ? "Tasa al: " + tasasFecha : "";
-};
-
-// --- LISTA DE EQUIPAJE ---
-let listaEquipaje = { esencial: [], opcional: [] };
-document.getElementById("add-item").onclick = function() {
-    const tipo = document.getElementById("packing-select").value;
-    const item = document.getElementById("packing-item").value.trim();
-    if (item && !listaEquipaje[tipo].includes(item)) {
-        listaEquipaje[tipo].push(item);
+    window.eliminarEquipaje = (tipo, item) => {
+        listaEquipaje[tipo] = listaEquipaje[tipo].filter(x => x !== item);
         actualizarEquipaje();
-        document.getElementById("packing-item").value = "";
-    }
-};
-function actualizarEquipaje() {
-    document.getElementById("packing-list").innerHTML = listaEquipaje.esencial.map(
-        item => `<li>${item} <button onclick="eliminarEquipaje('esencial','${item}')" style="color:red;">✖</button></li>`
-    ).join("");
-    document.getElementById("optional-packing-list").innerHTML = listaEquipaje.opcional.map(
-        item => `<li>${item} <button onclick="eliminarEquipaje('opcional','${item}')" style="color:red;">✖</button></li>`
-    ).join("");
-}
-window.eliminarEquipaje = (tipo, item) => {
-    listaEquipaje[tipo] = listaEquipaje[tipo].filter(x => x !== item);
+    };
+
+    // --- CONSULTA A IA (simulado, puede enlazarse a una API real) ---
+    document.getElementById("ask-ai").onclick = async function() {
+        const pregunta = document.getElementById("ai-prompt").value.trim();
+        if (!pregunta) return;
+        document.getElementById("ai-loading").classList.remove("hidden");
+        document.getElementById("ai-response").classList.add("hidden");
+        setTimeout(() => {
+            document.getElementById("ai-response").innerText = idioma === "es" ?
+                "Esta es una respuesta simulada. Integre la API de IA para obtener respuestas reales." :
+                "זוהי תשובה לדוגמה. יש לחבר ל-API של בינה מלאכותית לתשובות אמיתיות.";
+            document.getElementById("ai-loading").classList.add("hidden");
+            document.getElementById("ai-response").classList.remove("hidden");
+        }, 1800);
+    };
+    document.getElementById("clear-ai").onclick = function() {
+        document.getElementById("ai-prompt").value = "";
+        document.getElementById("ai-response").innerText = "";
+        document.getElementById("ai-response").classList.add("hidden");
+    };
+
+    // --- INICIALIZACIÓN ---
+    setTextos();
+    renderTablaTransporte();
     actualizarEquipaje();
-};
-
-// --- CONSULTA A IA (simulado, puede enlazarse a una API real) ---
-document.getElementById("ask-ai").onclick = async function() {
-    const pregunta = document.getElementById("ai-prompt").value.trim();
-    if (!pregunta) return;
-    document.getElementById("ai-loading").classList.remove("hidden");
-    document.getElementById("ai-response").classList.add("hidden");
-    setTimeout(() => {
-        document.getElementById("ai-response").innerText = idioma === "es" ?
-            "Esta es una respuesta simulada. Integre la API de IA para obtener respuestas reales." :
-            "זוהי תשובה לדוגמה. יש לחבר ל-API של בינה מלאכותית לתשובות אמיתיות.";
-        document.getElementById("ai-loading").classList.add("hidden");
-        document.getElementById("ai-response").classList.remove("hidden");
-    }, 1800);
-};
-document.getElementById("clear-ai").onclick = function() {
-    document.getElementById("ai-prompt").value = "";
-    document.getElementById("ai-response").innerText = "";
-    document.getElementById("ai-response").classList.add("hidden");
-};
-
-// --- INICIALIZACIÓN ---
-setTextos();
-llenarTabla();
-actualizarEquipaje();
-</script>
-EOF
+    </script>
+</body>
+</html>
