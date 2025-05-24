@@ -102,10 +102,6 @@
         <div class="text-sm text-gray-500 mt-2">Powered by <a href="https://www.exchangerate-api.com/" target="_blank" class="underline text-blue-500">ExchangeRate-API.com</a></div>
     </div>
 
-    <!-- ============================= -->
-    <!-- === HERRAMIENTAS NUEVAS ==== -->
-    <!-- ============================= -->
-
     <!-- Conversor de moneda -->
     <section class="card-tool max-w-4xl mx-auto" id="moderno-conversor-moneda">
         <h2 class="text-xl font-bold mb-3 flex items-center gap-2" id="titulo-conversor"><i class="fas fa-dollar-sign text-green-500"></i> </h2>
@@ -152,12 +148,12 @@
     <section class="card-tool max-w-4xl mx-auto">
         <h2 class="text-xl font-bold mb-3 flex items-center gap-2" id="packing-title"><i class="fas fa-suitcase-rolling text-yellow-500"></i> <span></span></h2>
         <div class="flex items-center space-x-2 mb-4">
-            <input type="text" id="packing-item" class="flex-grow px-3 py-2 border rounded text-base" placeholder="">
+            <button id="add-item" class="primary-btn"></button>
             <select id="packing-select" class="px-2 py-2 border rounded text-base">
                 <option value="esencial"></option>
                 <option value="opcional"></option>
             </select>
-            <button id="add-item" class="primary-btn"><i class="fas fa-plus"></i></button>
+            <input type="text" id="packing-item" class="flex-grow px-3 py-2 border rounded text-base" placeholder="">
         </div>
         <div>
             <h4 class="font-semibold mb-2" id="packing-esenciales"></h4>
@@ -193,7 +189,6 @@
 
     <script src="https://kit.fontawesome.com/20c306f2e2.js" crossorigin="anonymous"></script>
     <script>
-// === DATOS Y TRADUCCIONES ===
 const ciudades = [
     {es: "Buenos Aires", he: "בואנוס איירס"},
     {es: "Rosario", he: "רוסאריו"},
@@ -207,7 +202,6 @@ const ciudades = [
     {es: "Mapa Interactivo", he: "מפה אינטראקטיבית"}
 ];
 const tablaTransporte = [
-    // desde, hasta, medio, tiempo, precio, compañia, link
     {desde:0, hasta:1, medio:{es:"Bus",he:"אוטובוס"}, tiempo:4, precio:{ARS:20000,USD:22,ILS:80,EUR:20}, compania:"BusPlus", link:"https://www.busplus.com.ar/"},
     {desde:1, hasta:3, medio:{es:"Bus",he:"אוטובוס"}, tiempo:13, precio:{ARS:50000,USD:55,ILS:200,EUR:50}, compania:"Andesmar", link:"https://www.andesmar.com/"},
     {desde:3, hasta:4, medio:{es:"Bus",he:"אוטובוס"}, tiempo:6, precio:{ARS:18000,USD:20,ILS:72,EUR:18}, compania:"CATA", link:"https://www.catainternacional.com/"},
@@ -244,14 +238,13 @@ es: {
     "Agregar ítem...": "Agregar ítem...",
     Esencial: "Esencial",
     Opcional: "Opcional",
+    "Agregar": "Agregar",
     "Consulta a la IA": "Consulta a la IA",
     "Haz cualquier pregunta sobre tu viaje familiar a Argentina y recibe una respuesta experta y personalizada.": "Haz cualquier pregunta sobre tu viaje familiar a Argentina y recibe una respuesta experta y personalizada.",
     "Procesando tu consulta...": "Procesando tu consulta...",
     Consultar: "Consultar",
     "© 2025 Argentina Aventura Familiar | Herramientas útiles para viajeros": "© 2025 Argentina Aventura Familiar | Herramientas útiles para viajeros",
-    horas: "h",
-    "Agregar": "Agregar",
-    "Fuente": "Fuente"
+    horas: "h"
 },
 he: {
     idioma: "שפה:",
@@ -280,20 +273,19 @@ he: {
     "Agregar ítem...": "הוסף פריט...",
     Esencial: "חיוני",
     Opcional: "אופציונלי",
+    "Agregar": "הוסף",
     "Consulta a la IA": "שאל את הבינה המלאכותית",
     "Haz cualquier pregunta sobre tu viaje familiar a Argentina y recibe una respuesta experta y personalizada.": "שאל כל שאלה על הטיול המשפחתי שלך וקבל תשובה מותאמת אישית.",
     "Procesando tu consulta...": "מעבד את שאלתך...",
     Consultar: "שאל",
     "© 2025 Argentina Aventura Familiar | Herramientas útiles para viajeros": "© 2025 מסע משפחתי בארגנטינה | כלים שימושיים למטיילים",
-    horas: "ש'",
-    "Agregar": "הוסף",
-    "Fuente": "מקור"
-}
-};
+    horas: "ש'"
+}};
 
 // === RENDER Y FUNCIONES DINÁMICAS ===
 let currentLang = "es";
 let currentCurrency = "ARS";
+let packingTranslations = {}; // {text_es: {es, he}, text_he: {es, he}}
 
 function renderPage() {
     // Títulos y etiquetas
@@ -346,6 +338,7 @@ function renderPage() {
     document.getElementById('packing-item').placeholder = t["Agregar ítem..."];
     document.getElementById('packing-select').options[0].text = t.Esencial;
     document.getElementById('packing-select').options[1].text = t.Opcional;
+    document.getElementById('add-item').textContent = t["Agregar"];
     document.getElementById('ai-title').innerHTML = `<i class="fas fa-robot text-indigo-500"></i> ${t["Consulta a la IA"]}`;
     document.getElementById('ai-desc').textContent = t["Haz cualquier pregunta sobre tu viaje familiar a Argentina y recibe una respuesta experta y personalizada."];
     document.getElementById('ask-ai').textContent = t.Consultar;
@@ -368,23 +361,26 @@ function renderPage() {
             </li>
     `;
     document.body.classList.toggle('rtl', currentLang === 'he');
-    // Recarga lista equipaje
+    // Recarga lista equipaje (con traducción)
     loadPackingList();
     updatePrices();
 }
 
-document.getElementById('lang-es').onclick = () => {
-    currentLang = "es";
-    document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
-    document.getElementById('lang-es').classList.add('active');
-    renderPage();
-};
-document.getElementById('lang-he').onclick = () => {
-    currentLang = "he";
-    document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
-    document.getElementById('lang-he').classList.add('active');
-    renderPage();
-};
+// Traducción automática de LibreTranslate
+async function translateText(text, from, to) {
+    if (!text || from === to) return text;
+    try {
+        const res = await fetch("https://libretranslate.com/translate", {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({q: text, source: from, target: to, format: "text"})
+        });
+        const data = await res.json();
+        return data.translatedText || text;
+    } catch(e) {
+        return text;
+    }
+}
 
 // === MONEDA Y CAMBIO EN TABLA ===
 const currencyBtns = document.querySelectorAll('.currency-btn');
@@ -453,10 +449,11 @@ async function convertCurrency() {
         let msg = currentLang === 'he' ? 'המרה לא זמינה.' : 'Conversión no disponible.';
         document.getElementById('conversion-result').textContent = msg;
     } else {
-        let symbol = to === 'ARS' ? '$' : (to === 'USD' ? 'US$' : (to === 'ILS' ? '₪' : '€'));
+        let symbol = to === 'ARS' ? '₪' : (to === 'USD' ? 'US$' : (to === 'ILS' ? '₪' : '€'));
+        let val = (amount * rate).toLocaleString(currentLang === "he" ? "he-IL" : undefined, {maximumFractionDigits: 2});
         let resultStr = currentLang === "he"
-            ? `${amount} ${from} = ${symbol} ${(amount * rate).toLocaleString("he-IL", {maximumFractionDigits: 2})} ${to}`
-            : `${amount} ${from} = ${symbol} ${(amount * rate).toLocaleString(undefined, {maximumFractionDigits: 2})} ${to}`;
+            ? `${amount} ${from} = ${symbol} ${val} ${to}`
+            : `${amount} ${from} = ${symbol} ${val} ${to}`;
         document.getElementById('conversion-result').textContent = resultStr;
     }
     document.getElementById('currency-loading').classList.add('hidden');
@@ -464,22 +461,26 @@ async function convertCurrency() {
 }
 document.getElementById('convert-btn').addEventListener('click', convertCurrency);
 
-// === LISTA DE EQUIPAJE (ESENCIALES Y OPCIONALES) ===
+// === LISTA DE EQUIPAJE (con traducción automática) ===
 const packingKey = "equipaje_argentina";
 function savePackingList() {
     const esenciales = Array.from(document.querySelectorAll('#packing-list > li')).map(li => ({
         id: li.querySelector('input').id,
         checked: li.querySelector('input').checked,
-        text: li.querySelector('label').textContent
+        text: li.querySelector('label').textContent,
+        es: li.querySelector('label').getAttribute('data-es') || li.querySelector('label').textContent,
+        he: li.querySelector('label').getAttribute('data-he') || li.querySelector('label').textContent
     }));
     const opcionales = Array.from(document.querySelectorAll('#optional-packing-list > li')).map(li => ({
         id: li.querySelector('input').id,
         checked: li.querySelector('input').checked,
-        text: li.querySelector('label').textContent
+        text: li.querySelector('label').textContent,
+        es: li.querySelector('label').getAttribute('data-es') || li.querySelector('label').textContent,
+        he: li.querySelector('label').getAttribute('data-he') || li.querySelector('label').textContent
     }));
     localStorage.setItem(packingKey, JSON.stringify({esenciales, opcionales, lang: currentLang}));
 }
-function loadPackingList() {
+async function loadPackingList() {
     const data = JSON.parse(localStorage.getItem(packingKey) || "{}");
     const t = translations[currentLang];
     // Esenciales
@@ -487,47 +488,59 @@ function loadPackingList() {
     ul.innerHTML = `
         <li class="flex items-center">
             <input type="checkbox" id="item-passport" class="mr-2">
-            <label for="item-passport">${t["Pasaporte y documentos"]}</label>
+            <label for="item-passport" data-es="${translations.es['Pasaporte y documentos']}" data-he="${translations.he['Pasaporte y documentos']}">${t["Pasaporte y documentos"]}</label>
         </li>
         <li class="flex items-center">
             <input type="checkbox" id="item-insurance" class="mr-2">
-            <label for="item-insurance">${t["Seguro de viaje"]}</label>
+            <label for="item-insurance" data-es="${translations.es['Seguro de viaje']}" data-he="${translations.he['Seguro de viaje']}">${t["Seguro de viaje"]}</label>
         </li>
         <li class="flex items-center">
             <input type="checkbox" id="item-medication" class="mr-2">
-            <label for="item-medication">${t["Medicamentos"]}</label>
+            <label for="item-medication" data-es="${translations.es['Medicamentos']}" data-he="${translations.he['Medicamentos']}">${t["Medicamentos"]}</label>
         </li>
     `;
+    // Esenciales personalizados
     if (data.esenciales) {
-        data.esenciales.forEach(item => {
+        for (let item of data.esenciales) {
             if (!["item-passport","item-insurance","item-medication"].includes(item.id)) {
-                addCustomPackingItem(item.text, item.checked, true);
+                await addCustomPackingItem(item[currentLang] || item.text, item.checked, true, false, item.es, item.he);
             } else {
                 const el = document.getElementById(item.id);
                 if (el) el.checked = item.checked;
             }
-        });
+        }
     }
     // Opcionales
     const ulO = document.getElementById('optional-packing-list');
     ulO.innerHTML = "";
     if (data.opcionales) {
-        data.opcionales.forEach(item => {
-            addCustomPackingItem(item.text, item.checked, false, true);
-        });
+        for (let item of data.opcionales) {
+            await addCustomPackingItem(item[currentLang] || item.text, item.checked, false, true, item.es, item.he);
+        }
     }
     // Reactivar eventos
     Array.from(document.querySelectorAll('#packing-list input')).forEach(i => { i.onchange = savePackingList; });
     Array.from(document.querySelectorAll('#optional-packing-list input')).forEach(i => { i.onchange = savePackingList; });
 }
-function addCustomPackingItem(text, checked=false, esEsencial=true, esOpcional=false) {
+async function addCustomPackingItem(text, checked=false, esEsencial=true, esOpcional=false, esVal=null, heVal=null) {
     const id = "custom-" + Date.now() + Math.random().toString(36).substring(2,7);
+    let es = esVal, he = heVal;
+    // Si no tenemos traducción previa, la generamos
+    if (!es || !he) {
+        if (currentLang === "es") {
+            es = text;
+            he = await translateText(text, "es", "he");
+        } else {
+            he = text;
+            es = await translateText(text, "he", "es");
+        }
+    }
     const li = document.createElement('li');
     li.className = "flex items-center justify-between custom-packing";
     li.innerHTML = `
         <div class="flex items-center">
             <input type="checkbox" id="${id}" class="mr-2" ${checked ? "checked" : ""}>
-            <label for="${id}">${text}</label>
+            <label for="${id}" data-es="${es}" data-he="${he}">${currentLang === "es" ? es : he}</label>
         </div>
         <button class="text-red-500 hover:text-red-700" title="Eliminar"><i class="fas fa-trash"></i></button>
     `;
@@ -543,15 +556,15 @@ function addCustomPackingItem(text, checked=false, esEsencial=true, esOpcional=f
     }
     savePackingList();
 }
-document.getElementById('add-item').onclick = () => {
+document.getElementById('add-item').onclick = async () => {
     const input = document.getElementById('packing-item');
     const text = input.value.trim();
     const tipo = document.getElementById('packing-select').value;
     if (text) {
         if (tipo === "esencial") {
-            addCustomPackingItem(text, false, true, false);
+            await addCustomPackingItem(text, false, true, false);
         } else {
-            addCustomPackingItem(text, false, false, true);
+            await addCustomPackingItem(text, false, false, true);
         }
         input.value = "";
     }
@@ -562,7 +575,6 @@ document.getElementById('packing-item').addEventListener('keypress', (e) => {
 
 // === CONSULTA IA (PYREFLY, RESPUESTA EN IDIOMA DE LA PREGUNTA) ===
 async function fetchPyreflyResponse(prompt, lang) {
-    // lang: "es" o "he"
     let system = lang === "he"
         ? "אתה מדריך טיולים מקצועי בארגנטינה, ענה תשובה מותאמת למשפחה עם ילדים, עברית תקנית."
         : "Eres un experto en viajes familiares por Argentina. Responde de forma clara, útil y adaptada a una familia con niños, en español neutro.";
