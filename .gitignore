@@ -1,0 +1,93 @@
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+package-lock.json
+yarn.lock
+.pnpm-debug.log
+
+# Build output
+dist/
+build/
+out/
+coverage/
+.tmp/
+temp/
+.cache/
+.next/
+.nuxt/
+.svelte-kit/
+.eslintcache
+.vite/
+vite.config.ts
+
+# Logs
+logs/
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Icon?
+Desktop.ini
+
+# IDEs
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Python (si usas)
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.env
+.venv/
+
+# Misc
+.env.*
+.env
+*.local
+*.test.js
+*.test.ts
+*.spec.js
+*.spec.ts
+
+# Frontend
+*.map
+*.lock
+.cache/
+bower_components/
+jspm_packages/
+typings/
+jspm_packages/
+*.tsbuildinfo
+
+# Mac
+.AppleDouble
+.LSOverride
+
+# Windows
+$RECYCLE.BIN/
+*.cab
+*.msi
+*.msm
+*.msp
+
+# CopilotForXcode
+xcuserdata/
+*.xcworkspace
+*.xcodeproj
+*.xcuserstate
+*.xcuserdatad
+
+# Others
+*.bak
+*.tmp
