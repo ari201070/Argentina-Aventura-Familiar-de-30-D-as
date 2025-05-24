@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Itinerario Familiar por Argentina</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: #f8f9fa;
+        }
+        .main-card {
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+            padding: 2rem 2.5rem;
+            margin-top: 2rem;
+        }
+        .table th, .table td {
+            padding: 0.5em 1em;
+            border: 1px solid #dee2e6;
+        }
+        .table th {
+            background: #e7eef7;
+        }
+        .currency-btn, .lang-btn {
+            padding: 0.3em 1.1em;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            margin-right: 0.3em;
+            background: #f8f9fa;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .currency-btn.active, .lang-btn.active {
+            background: #e7eef7;
+            border-color: #5D5CDE;
+            color: #222;
+        }
+        .currency-btn:last-child, .lang-btn:last-child {
+            margin-right: 0;
+        }
+        .label {
+            font-weight: bold;
+            margin-right: 0.4em;
+        }
+        @media (max-width: 640px) {
+            .main-card { padding: 1em 0.3em; }
+            table { font-size: 0.96em; }
+        }
+        /* Estilos para las herramientas nuevas */
+        .card-tool {
+            background: #fff;
+            border-radius: 1rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.07);
+            padding: 2rem;
+            margin-top: 2.5rem;
+        }
+        .primary-btn {
+            background: #5D5CDE;
+            color: #fff;
+            border-radius: 0.5rem;
+            padding: 0.5rem 1.5rem;
+            transition: background 0.2s;
+        }
+        .primary-btn:hover {
+            background: #4a49b0;
+        }
+        .loading-spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(93,92,222,0.3);
+            border-radius: 50%;
+            border-top-color: #5D5CDE;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+    </style>
+</head>
+<body class="min-h-screen">
+
+    <!-- Barra superior (idioma y moneda) -->
+    <div class="w-full flex justify-end px-8 pt-4 text-gray-700" style="font-size:1.05em;">
+        <span class="mr-2">Idioma:</span>
+        <button class="lang-btn active" id="lang-es">Español</button>
+        <button class="lang-btn" id="lang-he">עברית</button>
+        <span class="ml-6 mr-2">Moneda:</span>
+        <button class="currency-btn active" id="cur-ARS">ARS</button>
+        <button class="currency-btn" id="cur-USD">USD</button>
+        <button class="currency-btn" id="cur-ILS">ILS</button>
+        <button class="currency-btn" id="cur-EUR">EUR</button>
+    </div>
+
+    <!-- Tarjeta principal -->
+    <div class="main-card max-w-4xl mx-auto">
+        <h1 class="text-3xl font-bold mb-2">Itinerario Familiar por Argentina</h1>
+        <p class="mb-6">¡Bienvenidos! Haz clic en cada ciudad para ver información, mapas y recomendaciones.</p>
+        <h2 class="text-xl font-bold mb-2">Ciudades y Destinos</h2>
+        <ul class="mb-6 list-disc ml-6">
+            <li><a href="#">Buenos Aires</a></li>
+            <li><a href="#">Rosario</a></li>
+            <li><a href="#">Bariloche</a></li>
+            <li><a href="#">Mendoza</a></li>
+            <li><a href="#">Malargüe</a></li>
+            <li><a href="#">Jujuy</a></li>
+            <li><a href="#">Iguazú</a></li>
+            <li><a href="#">Corrientes</a></li>
+            <li><a href="#">Iberá</a></li>
+            <li><a href="#">Mapa Interactivo</a></li>
+        </ul>
+        <h2 class="text-xl font-bold mb-2">Transporte entre ciudades</h2>
+        <div class="overflow-x-auto">
+        <table class="table min-w-full text-left border-collapse mb-2">
+            <thead>
+                <tr>
+                    <th>Desde</th>
+                    <th>Hasta</th>
+                    <th>Medio</th>
+                    <th>Tiempo</th>
+                    <th>Precio aprox.</th>
+                    <th>Compañía</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Buenos Aires</td><td>Rosario</td><td>Bus</td><td>4 h</td><td><span class="price" data-ars="20000" data-usd="22" data-ils="80" data-eur="20">$ 20000</span></td><td><a href="https://www.busplus.com.ar/" target="_blank">BusPlus</a></td>
+                </tr>
+                <tr>
+                    <td>Rosario</td><td>Mendoza</td><td>Bus</td><td>13 h</td><td><span class="price" data-ars="50000" data-usd="55" data-ils="200" data-eur="50">$ 50000</span></td><td><a href="https://www.andesmar.com/" target="_blank">Andesmar</a></td>
+                </tr>
+                <tr>
+                    <td>Mendoza</td><td>Malargüe</td><td>Bus</td><td>6 h</td><td><span class="price" data-ars="18000" data-usd="20" data-ils="72" data-eur="18">$ 18000</span></td><td><a href="https://www.catainternacional.com/" target="_blank">CATA</a></td>
+                </tr>
+                <tr>
+                    <td>Malargüe</td><td>Jujuy</td><td>Vuelo + Bus</td><td>10 h</td><td><span class="price" data-ars="110000" data-usd="120" data-ils="440" data-eur="100">$ 110000</span></td><td><a href="https://www.pasajesenmicros.com.ar/" target="_blank">Pasajes de micro baratos</a></td>
+                </tr>
+                <tr>
+                    <td>Jujuy</td><td>Iguazú</td><td>Vuelo</td><td>2 h</td><td><span class="price" data-ars="85000" data-usd="90" data-ils="330" data-eur="77">$ 85000</span></td><td><a href="https://www.aerolineas.com.ar/" target="_blank">Aerolineas Argentinas</a></td>
+                </tr>
+                <tr>
+                    <td>Iguazú</td><td>Corrientes</td><td>Bus</td><td>9 h</td><td><span class="price" data-ars="40000" data-usd="44" data-ils="155" data-eur="40">$ 40000</span></td><td><a href="https://www.crucerodelnorte.com.ar/" target="_blank">Crucero del Norte</a></td>
+                </tr>
+                <tr>
+                    <td>Corrientes</td><td>Esteros del Iberá</td><td>Remis/Transfer</td><td>4 h</td><td><span class="price" data-ars="60000" data-usd="66" data-ils="240" data-eur="60">$ 60000</span></td><td><a href="https://www.esterosdelibera.com/" target="_blank">Esteros del Iberá</a></td>
+                </tr>
+            </tbody>
+        </table>
+        </div>
+        <div class="text-sm text-gray-500 mt-2">Powered by <a href="https://www.exchangerate-api.com/" target="_blank" class="underline text-blue-500">ExchangeRate-API.com</a></div>
+    </div>
+
+    <!-- ============================= -->
+    <!-- === HERRAMIENTAS NUEVAS ==== -->
+    <!-- ============================= -->
+
+    <!-- Conversor de moneda actualizable -->
+    <section class="card-tool max-w-4xl mx-auto" id="moderno-conversor-moneda">
+        <h2 class="text-xl font-bold mb-3 flex items-center gap-2"><i class="fas fa-dollar-sign text-green-500"></i> Conversor de moneda</h2>
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+            <div>
+                <label for="amount" class="block mb-1">Cantidad:</label>
+                <input type="number" id="amount" class="w-full px-3 py-2 border rounded text-base" value="100">
+            </div>
+            <div>
+                <label for="from-currency" class="block mb-1">De:</label>
+                <select id="from-currency" class="w-full px-3 py-2 border rounded text-base">
+                    <option value="ARS">ARS (Peso Argentino)</option>
+                    <option value="USD">USD (Dólar US)</option>
+                    <option value="EUR">EUR (Euro)</option>
+                    <option value="ILS">ILS (Shekel)</option>
+                </select>
+            </div>
+            <div>
+                <label for="to-currency" class="block mb-1">A:</label>
+                <select id="to-currency" class="w-full px-3 py-2 border rounded text-base">
+                    <option value="USD">USD (Dólar US)</option>
+                    <option value="ARS">ARS (Peso Argentino)</option>
+                    <option value="EUR">EUR (Euro)</option>
+                    <option value="ILS">ILS (Shekel)</option>
+                </select>
+            </div>
+            <div class="flex items-end">
+                <button id="convert-btn" class="primary-btn flex items-center gap-2 w-full">
+                    <span>Convertir</span>
+                    <div id="currency-loading" class="loading-spinner hidden"></div>
+                </button>
+            </div>
+        </div>
+        <div class="mt-4 flex items-center gap-4">
+            <span id="conversion-result" class="font-bold text-lg"></span>
+        </div>
+        <div class="mt-2 text-sm text-gray-500">
+            <span id="currency-date"></span><br>
+            Fuente: <a href="https://exchangerate.host/" target="_blank" class="underline text-blue-500">exchangerate.host</a>
+        </div>
+    </section>
+
+    <!-- Lista de equipaje (agregados van debajo de esenciales, sin "Mis ítems:") -->
+    <section class="card-tool max-w-4xl mx-auto">
+        <h2 class="text-xl font-bold mb-3 flex items-center gap-2"><i class="fas fa-suitcase-rolling text-yellow-500"></i> Lista de equipaje</h2>
+        <div class="flex items-center space-x-2 mb-4">
+            <input type="text" id="packing-item" class="flex-grow px-3 py-2 border rounded text-base" placeholder="Agregar ítem...">
+            <button id="add-item" class="primary-btn"><i class="fas fa-plus"></i></button>
+        </div>
+        <div>
+            <h4 class="font-semibold mb-2">Esenciales:</h4>
+            <ul id="packing-list" class="space-y-2">
+                <li class="flex items-center">
+                    <input type="checkbox" id="item-passport" class="mr-2">
+                    <label for="item-passport">Pasaporte y documentos</label>
+                </li>
+                <li class="flex items-center">
+                    <input type="checkbox" id="item-insurance" class="mr-2">
+                    <label for="item-insurance">Seguro de viaje</label>
+                </li>
+                <li class="flex items-center">
+                    <input type="checkbox" id="item-medication" class="mr-2">
+                    <label for="item-medication">Medicamentos</label>
+                </li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- Consulta a IA -->
+    <section class="card-tool max-w-4xl mx-auto">
+        <h2 class="text-xl font-bold mb-3 flex items-center gap-2"><i class="fas fa-robot text-indigo-500"></i> Consulta a la IA</h2>
+        <p class="mb-4">Haz cualquier pregunta sobre tu viaje familiar a Argentina y recibe una respuesta experta y personalizada.</p>
+        <div>
+            <textarea id="ai-prompt" class="w-full px-3 py-2 border rounded text-base mb-2" rows="3" placeholder="Ej: ¿Qué ropa llevar para Bariloche en octubre?"></textarea>
+            <div class="flex gap-2 mb-2">
+                <button id="ask-ai" class="primary-btn flex-1">Consultar</button>
+                <button id="clear-ai" class="bg-gray-400 text-white rounded px-4 py-2 hover:bg-gray-600"><i class="fas fa-times"></i></button>
+            </div>
+            <div id="ai-loading" class="text-center py-2 hidden">
+                <div class="inline-block w-8 h-8 border-4 border-gray-300 border-t-indigo-500 rounded-full animate-spin"></div>
+                <p class="mt-2">Procesando tu consulta...</p>
+            </div>
+            <div id="ai-response" class="mt-4 p-4 bg-gray-100 rounded max-h-64 overflow-y-auto hidden"></div>
+        </div>
+    </section>
+
+    <footer class="w-full bg-gray-100 py-4 mt-8">
+        <div class="container mx-auto text-center text-gray-500">
+            © 2025 Argentina Aventura Familiar | Herramientas útiles para viajeros
+        </div>
+    </footer>
+
+    <script src="https://kit.fontawesome.com/20c306f2e2.js" crossorigin="anonymous"></script>
+    <script>
+        // --- Moneda y cambio en tabla ---
+        const currencyBtns = document.querySelectorAll('.currency-btn');
+        let currentCurrency = 'ARS';
+        function updatePrices() {
+            document.querySelectorAll('.price').forEach(span => {
+                let value = span.getAttribute('data-' + currentCurrency.toLowerCase());
+                let symbol = currentCurrency === 'ARS' ? '$ ' : (currentCurrency === 'USD' ? 'US$ ' : (currentCurrency === 'ILS' ? '₪ ' : '€ '));
+                span.textContent = symbol + value;
+            });
+        }
+        currencyBtns.forEach(btn => {
+            btn.onclick = () => {
+                currencyBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                currentCurrency = btn.id.replace('cur-','');
+                updatePrices();
+            };
+        });
+        updatePrices();
+
+        // --- Idioma (solo toggle visual) ---
+        const langBtns = document.querySelectorAll('.lang-btn');
+        langBtns.forEach(btn => {
+            btn.onclick = () => {
+                langBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+            };
+        });
+
+        // --- Conversor de moneda moderno ---
+        const apiBase = "https://api.exchangerate.host/latest";
+        let rates = {};
+        let lastUpdate = "";
+        async function fetchRates() {
+            document.getElementById('currency-loading').classList.remove('hidden');
+            try {
+                const base = document.getElementById('from-currency').value;
+                const symbols = ["USD", "ARS", "EUR", "ILS"].join(',');
+                const res = await fetch(`${apiBase}?base=${base}&symbols=${symbols}`);
+                const data = await res.json();
+                rates = data.rates;
+                lastUpdate = data.date;
+                document.getElementById('currency-date').textContent = "Actualizado: " + lastUpdate;
+            } catch (e) {
+                document.getElementById('currency-date').textContent = "No se pudo obtener la tasa actual";
+            }
+            document.getElementById('currency-loading').classList.add('hidden');
+        }
+        async function convertCurrency() {
+            document.getElementById('conversion-result').textContent = "";
+            await fetchRates();
+            const amount = parseFloat(document.getElementById('amount').value);
+            const from = document.getElementById('from-currency').value;
+            const to = document.getElementById('to-currency').value;
+            if (!rates[to]) {
+                document.getElementById('conversion-result').textContent = "Conversión no disponible.";
+                return;
+            }
+            const result = amount * rates[to];
+            let symbol = to === 'ARS' ? '$ ' : (to === 'USD' ? 'US$ ' : (to === 'ILS' ? '₪ ' : '€ '));
+            document.getElementById('conversion-result').textContent = `${amount} ${from} = ${symbol}${result.toLocaleString(undefined, {maximumFractionDigits: 2})} ${to}`;
+        }
+        document.getElementById('convert-btn').addEventListener('click', convertCurrency);
+        document.getElementById('from-currency').addEventListener('change', fetchRates);
+        window.addEventListener('DOMContentLoaded', fetchRates);
+
+        // --- Lista de equipaje (agregados debajo de esenciales, sin "Mis ítems:") ---
+        const packingKey = "equipaje_argentina";
+        function savePackingList() {
+            // Esenciales + personalizados en el orden en que están en la lista
+            const items = Array.from(document.querySelectorAll('#packing-list > li')).map(li => ({
+                id: li.querySelector('input').id,
+                checked: li.querySelector('input').checked,
+                text: li.querySelector('label').textContent,
+                essential: !li.classList.contains('custom-packing')
+            }));
+            localStorage.setItem(packingKey, JSON.stringify(items));
+        }
+        function loadPackingList() {
+            const data = JSON.parse(localStorage.getItem(packingKey) || "[]");
+            // Limpiar la lista y rearmar esenciales
+            const ul = document.getElementById('packing-list');
+            ul.innerHTML = "";
+            // Esenciales (orden fijo)
+            const esenciales = [
+                { id: "item-passport", text: "Pasaporte y documentos" },
+                { id: "item-insurance", text: "Seguro de viaje" },
+                { id: "item-medication", text: "Medicamentos" }
+            ];
+            esenciales.forEach(e => {
+                const li = document.createElement('li');
+                li.className = "flex items-center";
+                li.innerHTML = `
+                    <input type="checkbox" id="${e.id}" class="mr-2">
+                    <label for="${e.id}">${e.text}</label>
+                `;
+                ul.appendChild(li);
+            });
+            // Marcar checks de esenciales guardados
+            data.forEach(item => {
+                if(item.essential){
+                    const el = document.getElementById(item.id);
+                    if (el) el.checked = item.checked;
+                }
+            });
+            // Agregar personalizados después de esenciales
+            data.filter(item => !item.essential).forEach(item => {
+                addCustomPackingItem(item.text, item.checked, false);
+            });
+            // Reactivar eventos
+            Array.from(document.querySelectorAll('#packing-list input')).forEach(i => {
+                i.onchange = savePackingList;
+            });
+        }
+        function addCustomPackingItem(text, checked=false, focusSave=true) {
+            const ul = document.getElementById('packing-list');
+            const id = "custom-" + Date.now() + Math.random().toString(36).substring(2,7);
+            const li = document.createElement('li');
+            li.className = "flex items-center justify-between custom-packing";
+            li.innerHTML = `
+                <div class="flex items-center">
+                    <input type="checkbox" id="${id}" class="mr-2" ${checked ? "checked" : ""}>
+                    <label for="${id}">${text}</label>
+                </div>
+                <button class="text-red-500 hover:text-red-700" title="Eliminar"><i class="fas fa-trash"></i></button>
+            `;
+            li.querySelector('button').onclick = () => {
+                li.remove();
+                savePackingList();
+            };
+            li.querySelector('input').onchange = savePackingList;
+            ul.appendChild(li);
+            if(focusSave) savePackingList();
+        }
+        document.getElementById('add-item').onclick = () => {
+            const input = document.getElementById('packing-item');
+            const text = input.value.trim();
+            if (text) {
+                addCustomPackingItem(text);
+                input.value = "";
+            }
+        };
+        document.getElementById('packing-item').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') document.getElementById('add-item').click();
+        });
+        // Reactivar eventos esenciales al cargar
+        window.addEventListener('DOMContentLoaded', () => {
+            loadPackingList();
+            Array.from(document.querySelectorAll('#packing-list input')).forEach(i => {
+                i.onchange = savePackingList;
+            });
+        });
+
+        // --- Consulta a IA (mock experto viajes Argentina) ---
+        function aiMockResponse(prompt) {
+            const p = prompt.toLowerCase();
+            if (p.includes("ropa") || p.includes("vestimenta")) {
+                return `<h3>Recomendación de ropa</h3>
+                <p>Para viajar a distintas regiones de Argentina en octubre, lleva ropa por capas: remera, buzo o campera liviana, y un abrigo impermeable. En Bariloche y la Patagonia, hace frío y viento, así que suma gorro y guantes. En Buenos Aires y norte, puede hacer calor durante el día y fresco por la noche.</p>`;
+            }
+            if (p.includes("clima") || p.includes("temperatura") || p.includes("tiempo")) {
+                return `<h3>Clima en Argentina</h3>
+                <p>Argentina tiene climas muy variados. En primavera (septiembre-noviembre), Buenos Aires y centro: 15-25°C, Patagonia: 5-18°C, Noroeste: 18-28°C. Consulta el pronóstico antes de viajar.</p>`;
+            }
+            if (p.includes("dinero") || p.includes("moneda") || p.includes("cambio")) {
+                return `<h3>Consejos de dinero</h3>
+                <ul>
+                    <li>El peso argentino suele ser inestable. Lleva una parte en dólares o euros y cambia en casas oficiales o consulta tasas "MEP" o "Blue".</li>
+                    <li>Tarjetas de crédito/débito suelen tener cotización oficial, que es menos conveniente.</li>
+                    <li>Consulta siempre el tipo de cambio al día.</li>
+                </ul>`;
+            }
+            if (p.includes("seguridad")) {
+                return `<h3>Seguridad en Argentina</h3>
+                <p>Argentina es generalmente segura para familias, pero en ciudades grandes cuida bolsos y objetos de valor, sobre todo en zonas turísticas y transporte público. Evita caminar solo/a de noche por zonas poco transitadas.</p>`;
+            }
+            if (p.includes("salud") || p.includes("medico") || p.includes("diabetes")) {
+                return `<h3>Salud y seguro</h3>
+                <ul>
+                    <li>Lleva siempre un seguro de viaje que cubra emergencias médicas.</li>
+                    <li>Si viajas con diabetes, lleva recetas y medicamentos suficientes. En farmacias grandes suelen conseguirse insumos, pero no en pueblos chicos.</li>
+                    <li>El sistema de salud público es gratuito en emergencias.</li>
+                </ul>`;
+            }
+            if (p.includes("transporte") || p.includes("viajar") || p.includes("moverse")) {
+                return `<h3>Transporte</h3>
+                <ul>
+                    <li>Para largas distancias, lo más cómodo son los vuelos internos (Aerolíneas Argentinas, Jetsmart, Flybondi).</li>
+                    <li>Entre ciudades medianas puedes usar ómnibus de larga distancia (cómodos y frecuentes).</li>
+                    <li>Para moverse en ciudad, usa apps como Uber, Cabify o taxis oficiales.</li>
+                </ul>`;
+            }
+            if (p.includes("familia") || p.includes("niño") || p.includes("nene")) {
+                return `<h3>Viajar en familia</h3>
+                <ul>
+                    <li>La mayoría de los destinos y excursiones en Argentina son aptos para niños.</li>
+                    <li>Consulta siempre si la actividad tiene restricciones de edad/altura.</li>
+                    <li>En restaurantes, suelen tener menú infantil.</li>
+                </ul>`;
+            }
+            if (p.includes("alojamiento") || p.includes("hotel") || p.includes("departamento")) {
+                return `<h3>Alojamiento</h3>
+                <ul>
+                    <li>Para familias, recomiendo departamentos temporarios (tipo Airbnb) o cabañas, más cómodos y económicos que hotel tradicional.</li>
+                    <li>En destinos turísticos reserva con anticipación, sobre todo en temporada alta.</li>
+                </ul>`;
+            }
+            return `<h3>Consejos generales para viajar en familia a Argentina</h3>
+                <ul>
+                    <li>Planifica los traslados con tiempo, las distancias son grandes.</li>
+                    <li>Consulta siempre el pronóstico y adapta el equipaje.</li>
+                    <li>Ten siempre copia digital de documentos y contactos de emergencia.</li>
+                    <li>Disfruta la gastronomía local y los paisajes. ¡Buen viaje!</li>
+                </ul>`;
+        }
+        document.getElementById('ask-ai').onclick = function() {
+            const prompt = document.getElementById('ai-prompt').value.trim();
+            if (!prompt) return;
+            document.getElementById('ai-loading').classList.remove('hidden');
+            document.getElementById('ai-response').classList.add('hidden');
+            setTimeout(() => {
+                const res = aiMockResponse(prompt);
+                document.getElementById('ai-response').innerHTML = res;
+                document.getElementById('ai-response').classList.remove('hidden');
+                document.getElementById('ai-loading').classList.add('hidden');
+            }, 1100);
+        };
+        document.getElementById('clear-ai').onclick = function() {
+            document.getElementById('ai-prompt').value = "";
+            document.getElementById('ai-response').innerHTML = "";
+            document.getElementById('ai-response').classList.add('hidden');
+        };
+    </script>
+</body>
+</html>
