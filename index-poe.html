@@ -106,7 +106,7 @@
     <!-- === HERRAMIENTAS NUEVAS ==== -->
     <!-- ============================= -->
 
-    <!-- Conversor de moneda actualizable -->
+    <!-- Conversor de moneda -->
     <section class="card-tool max-w-4xl mx-auto" id="moderno-conversor-moneda">
         <h2 class="text-xl font-bold mb-3 flex items-center gap-2" id="titulo-conversor"><i class="fas fa-dollar-sign text-green-500"></i> </h2>
         <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
@@ -193,18 +193,411 @@
 
     <script src="https://kit.fontawesome.com/20c306f2e2.js" crossorigin="anonymous"></script>
     <script>
-        // Traducciones, ciudades, tabla, IA y utilidades
-        // ... (por razones de espacio, el código JS es muy largo. Si lo deseas, te lo paso en un mensaje aparte o lo puedes pedir en un Gist.)
+// === DATOS Y TRADUCCIONES ===
+const ciudades = [
+    {es: "Buenos Aires", he: "בואנוס איירס"},
+    {es: "Rosario", he: "רוסאריו"},
+    {es: "Bariloche", he: "ברילוצ'ה"},
+    {es: "Mendoza", he: "מנדוסה"},
+    {es: "Malargüe", he: "מלארגואה"},
+    {es: "Jujuy", he: "חוחוי"},
+    {es: "Iguazú", he: "איגואסו"},
+    {es: "Corrientes", he: "קוריינטס"},
+    {es: "Iberá", he: "איברה"},
+    {es: "Mapa Interactivo", he: "מפה אינטראקטיבית"}
+];
+const tablaTransporte = [
+    // desde, hasta, medio, tiempo, precio, compañia, link
+    {desde:0, hasta:1, medio:{es:"Bus",he:"אוטובוס"}, tiempo:4, precio:{ARS:20000,USD:22,ILS:80,EUR:20}, compania:"BusPlus", link:"https://www.busplus.com.ar/"},
+    {desde:1, hasta:3, medio:{es:"Bus",he:"אוטובוס"}, tiempo:13, precio:{ARS:50000,USD:55,ILS:200,EUR:50}, compania:"Andesmar", link:"https://www.andesmar.com/"},
+    {desde:3, hasta:4, medio:{es:"Bus",he:"אוטובוס"}, tiempo:6, precio:{ARS:18000,USD:20,ILS:72,EUR:18}, compania:"CATA", link:"https://www.catainternacional.com/"},
+    {desde:4, hasta:5, medio:{es:"Vuelo + Bus",he:"טיסה + אוטובוס"}, tiempo:10, precio:{ARS:110000,USD:120,ILS:440,EUR:100}, compania:"Pasajes de micro baratos", link:"https://www.pasajesenmicros.com.ar/"},
+    {desde:5, hasta:6, medio:{es:"Vuelo",he:"טיסה"}, tiempo:2, precio:{ARS:85000,USD:90,ILS:330,EUR:77}, compania:"Aerolineas Argentinas", link:"https://www.aerolineas.com.ar/"},
+    {desde:6, hasta:7, medio:{es:"Bus",he:"אוטובוס"}, tiempo:9, precio:{ARS:40000,USD:44,ILS:155,EUR:40}, compania:"Crucero del Norte", link:"https://www.crucerodelnorte.com.ar/"},
+    {desde:7, hasta:8, medio:{es:"Remis/Transfer",he:"מונית/הסעה"}, tiempo:4, precio:{ARS:60000,USD:66,ILS:240,EUR:60}, compania:"Esteros del Iberá", link:"https://www.esterosdelibera.com/"}
+];
+const translations = {
+es: {
+    idioma: "Idioma:",
+    moneda: "Moneda:",
+    "Itinerario Familiar por Argentina": "Itinerario Familiar por Argentina",
+    bienvenida: "¡Bienvenidos! Haz clic en cada ciudad para ver información, mapas y recomendaciones.",
+    "Ciudades y Destinos": "Ciudades y Destinos",
+    "Transporte entre ciudades": "Transporte entre ciudades",
+    Desde: "Desde",
+    Hasta: "Hasta",
+    Medio: "Medio",
+    Tiempo: "Tiempo",
+    "Precio aprox.": "Precio aprox.",
+    Compañía: "Compañía",
+    "Conversor de moneda": "Conversor de moneda",
+    Cantidad: "Cantidad:",
+    De: "De:",
+    A: "A:",
+    Convertir: "Convertir",
+    Esenciales: "Esenciales:",
+    Opcionales: "Opcionales:",
+    "Lista de equipaje": "Lista de equipaje",
+    "Pasaporte y documentos": "Pasaporte y documentos",
+    "Seguro de viaje": "Seguro de viaje",
+    Medicamentos: "Medicamentos",
+    "Agregar ítem...": "Agregar ítem...",
+    Esencial: "Esencial",
+    Opcional: "Opcional",
+    "Consulta a la IA": "Consulta a la IA",
+    "Haz cualquier pregunta sobre tu viaje familiar a Argentina y recibe una respuesta experta y personalizada.": "Haz cualquier pregunta sobre tu viaje familiar a Argentina y recibe una respuesta experta y personalizada.",
+    "Procesando tu consulta...": "Procesando tu consulta...",
+    Consultar: "Consultar",
+    "© 2025 Argentina Aventura Familiar | Herramientas útiles para viajeros": "© 2025 Argentina Aventura Familiar | Herramientas útiles para viajeros",
+    horas: "h",
+    "Agregar": "Agregar",
+    "Fuente": "Fuente"
+},
+he: {
+    idioma: "שפה:",
+    moneda: "מטבע:",
+    "Itinerario Familiar por Argentina": "מסלול משפחתי בארגנטינה",
+    bienvenida: "!ברוכים הבאים! לחץ על כל עיר להצגת מידע, מפות והמלצות.",
+    "Ciudades y Destinos": "ערים ויעדים",
+    "Transporte entre ciudades": "תחבורה בין ערים",
+    Desde: "מ-",
+    Hasta: "ל-",
+    Medio: "אמצעי",
+    Tiempo: "משך",
+    "Precio aprox.": "מחיר משוער",
+    Compañía: "חברה",
+    "Conversor de moneda": "ממיר מטבעות",
+    Cantidad: "כמות:",
+    De: "מ:",
+    A: "ל:",
+    Convertir: "המר",
+    Esenciales: "חיוניים:",
+    Opcionales: "אופציונלי:",
+    "Lista de equipaje": "רשימת ציוד",
+    "Pasaporte y documentos": "דרכון ומסמכים",
+    "Seguro de viaje": "ביטוח נסיעות",
+    Medicamentos: "תרופות",
+    "Agregar ítem...": "הוסף פריט...",
+    Esencial: "חיוני",
+    Opcional: "אופציונלי",
+    "Consulta a la IA": "שאל את הבינה המלאכותית",
+    "Haz cualquier pregunta sobre tu viaje familiar a Argentina y recibe una respuesta experta y personalizada.": "שאל כל שאלה על הטיול המשפחתי שלך וקבל תשובה מותאמת אישית.",
+    "Procesando tu consulta...": "מעבד את שאלתך...",
+    Consultar: "שאל",
+    "© 2025 Argentina Aventura Familiar | Herramientas útiles para viajeros": "© 2025 מסע משפחתי בארגנטינה | כלים שימושיים למטיילים",
+    horas: "ש'",
+    "Agregar": "הוסף",
+    "Fuente": "מקור"
+}
+};
 
-        // El código JS completo incluye:
-        // - Traducción dinámica de todo el contenido, ciudades, tabla, tiempo ("h"/"ש'")
-        // - Conversor de moneda con respuesta clara y símbolo correcto
-        // - Integración con Pyrefly para la consulta a IA (detecta el idioma y responde en el mismo)
-        // - Traducción automática de ítems de equipaje al cambiar de idioma (usando una API pública)
-        // - Selector de "אופציונלי" corregido
-        // - Todo completamente funcional y listo para copiar y usar
+// === RENDER Y FUNCIONES DINÁMICAS ===
+let currentLang = "es";
+let currentCurrency = "ARS";
 
-        // Si necesitas el JS completo aquí, solo avísame y te lo copio en el próximo mensaje (¡es muy extenso para colocar de una sola vez!)
+function renderPage() {
+    // Títulos y etiquetas
+    const t = translations[currentLang];
+    document.getElementById('label-idioma').textContent = t.idioma;
+    document.getElementById('label-moneda').textContent = t.moneda;
+    document.getElementById('titulo-main').textContent = t["Itinerario Familiar por Argentina"];
+    document.getElementById('bienvenida').textContent = t.bienvenida;
+    document.getElementById('ciudades-titulo').textContent = t["Ciudades y Destinos"];
+    document.getElementById('transporte-titulo').textContent = t["Transporte entre ciudades"];
+    document.getElementById('desde-th').textContent = t.Desde;
+    document.getElementById('hasta-th').textContent = t.Hasta;
+    document.getElementById('medio-th').textContent = t.Medio;
+    document.getElementById('tiempo-th').textContent = t.Tiempo;
+    document.getElementById('precio-th').textContent = t["Precio aprox."];
+    document.getElementById('compania-th').textContent = t.Compañía;
+    // Ciudades
+    let ul = document.getElementById('lista-ciudades');
+    ul.innerHTML = "";
+    ciudades.forEach(c => {
+        let li = document.createElement('li');
+        li.innerHTML = `<a href="#">${c[currentLang]}</a>`;
+        ul.appendChild(li);
+    });
+    // Tabla transporte
+    let tbody = document.getElementById('tbody-transporte');
+    tbody.innerHTML = "";
+    tablaTransporte.forEach(row => {
+        let tiempoStr = (currentLang === "he" ? row.tiempo + " " + t.horas : row.tiempo + " " + t.horas);
+        let tr = document.createElement('tr');
+        tr.innerHTML = `
+            <td>${ciudades[row.desde][currentLang]}</td>
+            <td>${ciudades[row.hasta][currentLang]}</td>
+            <td>${row.medio[currentLang]}</td>
+            <td>${tiempoStr}</td>
+            <td><span class="price" data-ars="${row.precio.ARS}" data-usd="${row.precio.USD}" data-ils="${row.precio.ILS}" data-eur="${row.precio.EUR}">${currentCurrency === 'ARS' ? '$ ' + row.precio.ARS : currentCurrency === 'USD' ? 'US$ ' + row.precio.USD : currentCurrency === 'ILS' ? '₪ ' + row.precio.ILS : '€ ' + row.precio.EUR}</span></td>
+            <td><a href="${row.link}" target="_blank">${row.compania}</a></td>
+        `;
+        tbody.appendChild(tr);
+    });
+    // Herramientas
+    document.getElementById('titulo-conversor').innerHTML = `<i class="fas fa-dollar-sign text-green-500"></i> ${t["Conversor de moneda"]}`;
+    document.getElementById('label-cantidad').textContent = t.Cantidad;
+    document.getElementById('label-de').textContent = t.De;
+    document.getElementById('label-a').textContent = t.A;
+    document.getElementById('btn-convertir').textContent = t.Convertir;
+    document.getElementById('packing-title').innerHTML = `<i class="fas fa-suitcase-rolling text-yellow-500"></i> ${t["Lista de equipaje"]}`;
+    document.getElementById('packing-esenciales').textContent = t.Esenciales;
+    document.getElementById('packing-opcionales').textContent = t.Opcionales;
+    document.getElementById('packing-item').placeholder = t["Agregar ítem..."];
+    document.getElementById('packing-select').options[0].text = t.Esencial;
+    document.getElementById('packing-select').options[1].text = t.Opcional;
+    document.getElementById('ai-title').innerHTML = `<i class="fas fa-robot text-indigo-500"></i> ${t["Consulta a la IA"]}`;
+    document.getElementById('ai-desc').textContent = t["Haz cualquier pregunta sobre tu viaje familiar a Argentina y recibe una respuesta experta y personalizada."];
+    document.getElementById('ask-ai').textContent = t.Consultar;
+    document.getElementById('ai-loading-text').textContent = t["Procesando tu consulta..."];
+    document.getElementById('footer-copyright').textContent = t["© 2025 Argentina Aventura Familiar | Herramientas útiles para viajeros"];
+    // Packing esenciales
+    let ulEss = document.getElementById('packing-list');
+    ulEss.innerHTML = `
+            <li class="flex items-center">
+                <input type="checkbox" id="item-passport" class="mr-2">
+                <label for="item-passport">${t["Pasaporte y documentos"]}</label>
+            </li>
+            <li class="flex items-center">
+                <input type="checkbox" id="item-insurance" class="mr-2">
+                <label for="item-insurance">${t["Seguro de viaje"]}</label>
+            </li>
+            <li class="flex items-center">
+                <input type="checkbox" id="item-medication" class="mr-2">
+                <label for="item-medication">${t["Medicamentos"]}</label>
+            </li>
+    `;
+    document.body.classList.toggle('rtl', currentLang === 'he');
+    // Recarga lista equipaje
+    loadPackingList();
+    updatePrices();
+}
+
+document.getElementById('lang-es').onclick = () => {
+    currentLang = "es";
+    document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('lang-es').classList.add('active');
+    renderPage();
+};
+document.getElementById('lang-he').onclick = () => {
+    currentLang = "he";
+    document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('lang-he').classList.add('active');
+    renderPage();
+};
+
+// === MONEDA Y CAMBIO EN TABLA ===
+const currencyBtns = document.querySelectorAll('.currency-btn');
+function updatePrices() {
+    document.querySelectorAll('.price').forEach(span => {
+        let value = span.getAttribute('data-' + currentCurrency.toLowerCase());
+        let symbol = currentCurrency === 'ARS' ? '$ ' : (currentCurrency === 'USD' ? 'US$ ' : (currentCurrency === 'ILS' ? '₪ ' : '€ '));
+        span.textContent = symbol + value;
+    });
+}
+currencyBtns.forEach(btn => {
+    btn.onclick = () => {
+        currencyBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentCurrency = btn.id.replace('cur-','');
+        renderPage();
+    };
+});
+
+// === CONVERSOR DE MONEDA POLYGON.IO + PUENTE USD ===
+const polygonKey = "JGaKP6lqstTjGs2q0jBEKAq3PQFjrkCx";
+const pairs = {
+    "USD_ARS": "C:USDARS",
+    "ARS_USD": "C:ARSUSD",
+    "USD_EUR": "C:USDEUR",
+    "EUR_USD": "C:EURUSD",
+    "USD_ILS": "C:USDILS",
+    "ILS_USD": "C:ILSUSD",
+    "EUR_ARS": "C:EURARS",
+    "ARS_EUR": "C:ARSEUR",
+    "EUR_ILS": "C:EURILS",
+    "ILS_EUR": "C:ILSEUR"
+};
+async function fetchPolygonRate(from, to) {
+    if (from === to) return 1;
+    let direct = pairs[`${from}_${to}`];
+    if (direct) {
+        let url = `https://api.polygon.io/v2/aggs/ticker/${direct}/prev?adjusted=true&apiKey=${polygonKey}`;
+        let res = await fetch(url);
+        let data = await res.json();
+        if (data && data.results && data.results[0] && data.results[0].c) {
+            return data.results[0].c;
+        }
+    }
+    // Si no existe directo, probamos puente por USD
+    if (from !== "USD" && to !== "USD") {
+        let rate1 = await fetchPolygonRate(from, "USD");
+        let rate2 = await fetchPolygonRate("USD", to);
+        if (rate1 && rate2) return rate1 * rate2;
+    }
+    return null;
+}
+async function convertCurrency() {
+    document.getElementById('conversion-result').textContent = "";
+    document.getElementById('currency-loading').classList.remove('hidden');
+    const amount = parseFloat(document.getElementById('amount').value);
+    const from = document.getElementById('from-currency').value;
+    const to = document.getElementById('to-currency').value;
+    if (from === to) {
+        document.getElementById('conversion-result').textContent = `${amount} ${from} = ${amount} ${to}`;
+        document.getElementById('currency-loading').classList.add('hidden');
+        return;
+    }
+    let rate = await fetchPolygonRate(from, to);
+    if (rate === null) {
+        let msg = currentLang === 'he' ? 'המרה לא זמינה.' : 'Conversión no disponible.';
+        document.getElementById('conversion-result').textContent = msg;
+    } else {
+        let symbol = to === 'ARS' ? '$' : (to === 'USD' ? 'US$' : (to === 'ILS' ? '₪' : '€'));
+        let resultStr = currentLang === "he"
+            ? `${amount} ${from} = ${symbol} ${(amount * rate).toLocaleString("he-IL", {maximumFractionDigits: 2})} ${to}`
+            : `${amount} ${from} = ${symbol} ${(amount * rate).toLocaleString(undefined, {maximumFractionDigits: 2})} ${to}`;
+        document.getElementById('conversion-result').textContent = resultStr;
+    }
+    document.getElementById('currency-loading').classList.add('hidden');
+    document.getElementById('currency-date').textContent = "";
+}
+document.getElementById('convert-btn').addEventListener('click', convertCurrency);
+
+// === LISTA DE EQUIPAJE (ESENCIALES Y OPCIONALES) ===
+const packingKey = "equipaje_argentina";
+function savePackingList() {
+    const esenciales = Array.from(document.querySelectorAll('#packing-list > li')).map(li => ({
+        id: li.querySelector('input').id,
+        checked: li.querySelector('input').checked,
+        text: li.querySelector('label').textContent
+    }));
+    const opcionales = Array.from(document.querySelectorAll('#optional-packing-list > li')).map(li => ({
+        id: li.querySelector('input').id,
+        checked: li.querySelector('input').checked,
+        text: li.querySelector('label').textContent
+    }));
+    localStorage.setItem(packingKey, JSON.stringify({esenciales, opcionales, lang: currentLang}));
+}
+function loadPackingList() {
+    const data = JSON.parse(localStorage.getItem(packingKey) || "{}");
+    const t = translations[currentLang];
+    // Esenciales
+    const ul = document.getElementById('packing-list');
+    ul.innerHTML = `
+        <li class="flex items-center">
+            <input type="checkbox" id="item-passport" class="mr-2">
+            <label for="item-passport">${t["Pasaporte y documentos"]}</label>
+        </li>
+        <li class="flex items-center">
+            <input type="checkbox" id="item-insurance" class="mr-2">
+            <label for="item-insurance">${t["Seguro de viaje"]}</label>
+        </li>
+        <li class="flex items-center">
+            <input type="checkbox" id="item-medication" class="mr-2">
+            <label for="item-medication">${t["Medicamentos"]}</label>
+        </li>
+    `;
+    if (data.esenciales) {
+        data.esenciales.forEach(item => {
+            if (!["item-passport","item-insurance","item-medication"].includes(item.id)) {
+                addCustomPackingItem(item.text, item.checked, true);
+            } else {
+                const el = document.getElementById(item.id);
+                if (el) el.checked = item.checked;
+            }
+        });
+    }
+    // Opcionales
+    const ulO = document.getElementById('optional-packing-list');
+    ulO.innerHTML = "";
+    if (data.opcionales) {
+        data.opcionales.forEach(item => {
+            addCustomPackingItem(item.text, item.checked, false, true);
+        });
+    }
+    // Reactivar eventos
+    Array.from(document.querySelectorAll('#packing-list input')).forEach(i => { i.onchange = savePackingList; });
+    Array.from(document.querySelectorAll('#optional-packing-list input')).forEach(i => { i.onchange = savePackingList; });
+}
+function addCustomPackingItem(text, checked=false, esEsencial=true, esOpcional=false) {
+    const id = "custom-" + Date.now() + Math.random().toString(36).substring(2,7);
+    const li = document.createElement('li');
+    li.className = "flex items-center justify-between custom-packing";
+    li.innerHTML = `
+        <div class="flex items-center">
+            <input type="checkbox" id="${id}" class="mr-2" ${checked ? "checked" : ""}>
+            <label for="${id}">${text}</label>
+        </div>
+        <button class="text-red-500 hover:text-red-700" title="Eliminar"><i class="fas fa-trash"></i></button>
+    `;
+    li.querySelector('button').onclick = () => {
+        li.remove();
+        savePackingList();
+    };
+    li.querySelector('input').onchange = savePackingList;
+    if (esOpcional) {
+        document.getElementById('optional-packing-list').appendChild(li);
+    } else {
+        document.getElementById('packing-list').appendChild(li);
+    }
+    savePackingList();
+}
+document.getElementById('add-item').onclick = () => {
+    const input = document.getElementById('packing-item');
+    const text = input.value.trim();
+    const tipo = document.getElementById('packing-select').value;
+    if (text) {
+        if (tipo === "esencial") {
+            addCustomPackingItem(text, false, true, false);
+        } else {
+            addCustomPackingItem(text, false, false, true);
+        }
+        input.value = "";
+    }
+};
+document.getElementById('packing-item').addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') document.getElementById('add-item').click();
+});
+
+// === CONSULTA IA (PYREFLY, RESPUESTA EN IDIOMA DE LA PREGUNTA) ===
+async function fetchPyreflyResponse(prompt, lang) {
+    // lang: "es" o "he"
+    let system = lang === "he"
+        ? "אתה מדריך טיולים מקצועי בארגנטינה, ענה תשובה מותאמת למשפחה עם ילדים, עברית תקנית."
+        : "Eres un experto en viajes familiares por Argentina. Responde de forma clara, útil y adaptada a una familia con niños, en español neutro.";
+    let res = await fetch("https://pyrefly.org/api/chat", {
+        method: "POST",
+        headers: {"Content-Type":"application/json"},
+        body: JSON.stringify({model:"gpt-3.5-turbo", messages:[{role:"system",content:system},{role:"user",content:prompt}]})
+    });
+    let data = await res.json();
+    return data.choices?.[0]?.message?.content || "";
+}
+document.getElementById('ask-ai').onclick = async function() {
+    const prompt = document.getElementById('ai-prompt').value.trim();
+    if (!prompt) return;
+    document.getElementById('ai-loading').classList.remove('hidden');
+    document.getElementById('ai-response').classList.add('hidden');
+    let lang = currentLang;
+    // Detectar idioma de la pregunta
+    if (/[\u0590-\u05FF]/.test(prompt)) lang = "he";
+    else if (/[a-zA-ZáéíóúñüÁÉÍÓÚÑÜ]/.test(prompt)) lang = "es";
+    let res = await fetchPyreflyResponse(prompt, lang);
+    document.getElementById('ai-response').innerHTML = res.replace(/\n/g,"<br>");
+    document.getElementById('ai-response').classList.remove('hidden');
+    document.getElementById('ai-loading').classList.add('hidden');
+};
+document.getElementById('clear-ai').onclick = function() {
+    document.getElementById('ai-prompt').value = "";
+    document.getElementById('ai-response').innerHTML = "";
+    document.getElementById('ai-response').classList.add('hidden');
+};
+
+// ==== INICIALIZACIÓN ====
+window.addEventListener('DOMContentLoaded', () => {
+    renderPage();
+});
     </script>
 </body>
 </html>
