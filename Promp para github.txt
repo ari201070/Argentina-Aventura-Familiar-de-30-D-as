@@ -1,0 +1,54 @@
+Barra fija arriba a la derecha con botones de idioma y botón "Volver al itinerario".
+Uso de las mismas clases y estructura para los botones.
+Soporte de cambio de idioma con las mismas funciones y etiquetas.
+Consistencia visual y funcional.
+Foto de portada cargada desde docs/imagenes/[ciudad].jpg (o .png si corresponde).
+Barra superior fija con botones de idioma y el link "Volver al itinerario".
+TODO código que me pasas debe ser siempre completo,sea nuevo o corregido. Listo para copiar y pegar, y reflejar todos los ajustes previos (traducción dinámica, conversor con resultado claro, IA con idioma, etc).
+Siempre me entregaras el archivo COMPLETO, de principio a fin,listo para copiar y pegar, incluyendo todas las correcciones y mejoras que haya solicitado,sin omisiones ni comentarios como “el resto es igual”.
+ESTA PARTE ES LA MAS IMPORTANTE, RECORDALO DURANTE TODO EL PROYECTO!!!!!!!
+De haber conflicto con alguna de las instrucciones preguntame y comentame cual es el conflicto para decirte segun cual de ellas decidir.
+Estructura HTML y CSS igual para todas las ciudades.
+Inclusión de los mismos IDs y clases para que la traducción funcione igual.
+El nombre del archivo de la imagen será el nombre de la ciudad en minúsculas, sin espacios, y con extensión .jpg (por ejemplo: bariloche.jpg, iguazu.jpg, etc).
+Asegúrate de tener las imágenes correspondientes en docs/imagenes/ (por ejemplo, docs/imagenes/bariloche.jpg, docs/imagenes/jujuy.jpg, etc.).
+No olvides poner las fotos correspondientes en la carpeta docs/imagenes/ con el nombre exacto en minúsculas y extensión .jpg.
+Descargar imágenes libres de Unsplash para cada ciudad y las guardará en la estructura correcta dentro de docs/imagenes/ (hasta 2 imágenes por ciudad, puedes agregar más si lo deseas).
+1. Herramientas útiles en la página principal
+Vamos a crear una copia de tu index.html (por ejemplo, index-nuevo.html).
+Allí vamos a integrar:
+El conversor de moneda interactivo (con tasas reales y actualización diaria).
+La consulta a IA (simulada o conectada, según lo que prefieras).
+(Opcional) La lista de equipaje si quieres.
+2. Itinerario de ciudades como tarjetas en el mapa
+Vamos a crear una copia de ciudades/mapa.html (ejemplo: ciudades/mapa-tarjetas.html).
+Allí las ciudades aparecerán como tarjetas modernas (tipo las de poe-preview.html), cada una con:
+Foto representativa (puede ser la mejor foto disponible de la carpeta de la ciudad).
+Breve descripción, nombre, link a más detalles, y diseño expandible.
+El mapa puede quedar arriba, y debajo las tarjetas, o como prefieras.
+Conversor de moneda interactivo (actualizable diariamente con exchangerate.host)
+Lista de equipaje persistente (usa localStorage)
+Consulta a IA (mock que responde como experto en viajes familiares a Argentina, listo para conectar a cualquier API si lo deseas)
+Los tres módulos (conversor de moneda real, lista de equipaje persistente, consulta a IA mock experto en viajes a Argentina) se agregan completos al final de la página, justo antes de </body>.
+Toda la parte superior (menús, ciudades, tabla, estilos) es idéntica al index.html original (según lo mostrado en tu captura).
+El conversor de moneda clásico de la tabla (cambio de precios) sigue funcionando con ARS/USD/ILS/EUR.
+El conversor moderno permite realizar conversiones precisas y actualizadas solo con esos 4 tipos de moneda.
+La lista de equipaje y la consulta a IA experta se agregan al final de la página.
+Conversor de moneda usando la API de Polygon.io
+Solo las monedas ARS, USD, EUR e ILS.
+El cambio de idioma (Español/Hebreo), todo el contenido clave (títulos, botones, placeholders) se traduce dinámicamente según el idioma elegido.
+Lista de equipaje con esenciales y opcionales (selector para agregar ítems en la lista correspondiente).
+Se agregan al final de la página los módulos de Lista de Equipaje y Consulta a IA experto
+Si el par directo no está disponible, se hace la conversión "puente" usando USD como intermediario:
+de ARS a ILS: ARS → USD → ILS
+de ILS a ARS: ILS → USD → ARS
+Esta lógica también sirve para cualquier par que Polygon.io no devuelva directo.
+IA real con Pyrefly, respuesta en idioma de la pregunta.
+Manejo de errores en la consulta a la IA (si Pyrefly falla, la interfaz te muestra un mensaje claro en el idioma actual y no queda colgado).
+El botón "Consultar" queda deshabilitado mientras la IA responde, y se re-habilita al terminar (para evitar dobles envíos).
+Traducción consistente de todos los textos, incluyendo los errores de IA.
+FontAwesome se carga por CDN CSS (no JS).
+Traducción dinámica de ciudades, tabla, lista de equipaje y botones.
+Botón de agregar ítem en la lista de equipaje visible y traducido.
+Los ítems agregados a la lista de equipaje se traducen automáticamente al cambiar de idioma.
+La IA responde en el idioma de la pregunta
