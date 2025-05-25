@@ -1,441 +1,653 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <title>Itinerario Familiar por Argentina</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <!-- FontAwesome CSS CDN -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    <style>
-        body { background: #f8f9fa; }
-        .main-card {
-            background: #fff;
-            border-radius: 12px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.07);
-            padding: 2rem 2.5rem;
-            margin-top: 2rem;
-        }
-        .table th, .table td { padding: 0.5em 1em; border: 1px solid #dee2e6; }
-        .table th { background: #e7eef7; }
-        .currency-btn, .lang-btn {
-            padding: 0.3em 1.1em;
-            border: 1px solid #ccc;
-            border-radius: 6px;
-            margin-right: 0.3em;
-            background: #f8f9fa;
-            font-weight: bold;
-            cursor: pointer;
-        }
-        .currency-btn.active, .lang-btn.active {
-            background: #e7eef7;
-            border-color: #5D5CDE;
-            color: #222;
-        }
-        .currency-btn:last-child, .lang-btn:last-child { margin-right: 0; }
-        .rtl { direction: rtl; }
-        @media (max-width: 640px) {
-            .main-card { padding: 1em 0.3em; }
-            table { font-size: 0.96em; }
-        }
-        .card-tool {
-            background: #fff;
-            border-radius: 1rem;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.07);
-            padding: 2rem;
-            margin-top: 2.5rem;
-        }
-        .primary-btn {
-            background: #5D5CDE;
-            color: #fff;
-            border-radius: 0.5rem;
-            padding: 0.5rem 1.5rem;
-            transition: background 0.2s;
-        }
-        .primary-btn:hover { background: #4a49b0; }
-        .primary-btn:disabled { background: #a6a6d4; cursor: not-allowed; }
-        .loading-spinner {
-            display: inline-block;
-            width: 20px;
-            height: 20px;
-            border: 3px solid rgba(93,92,222,0.3);
-            border-radius: 50%;
-            border-top-color: #5D5CDE;
-            animation: spin 1s linear infinite;
-        }
-        @keyframes spin { to { transform: rotate(360deg); } }
-    </style>
+  <meta charset="UTF-8">
+  <title>Itinerario Familiar por Argentina</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f7f7f7;
+      margin: 0;
+      padding: 0 0 40px 0;
+    }
+    .top-bar {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      gap: 18px;
+      padding: 16px 24px 0 24px;
+      background: #f7f7f7;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .top-bar span {
+      font-size: 15px;
+      color: #222;
+    }
+    .top-bar button {
+      padding: 4px 12px;
+      margin-left: 2px;
+      border: 1px solid #bbb;
+      background: #fff;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 15px;
+    }
+    .top-bar button.active {
+      background: #e6eaff;
+      border-color: #6d7fc9;
+      font-weight: bold;
+    }
+    main {
+      max-width: 1100px;
+      margin: 0 auto;
+      background: #fff;
+      border-radius: 8px;
+      padding: 30px 28px 24px 28px;
+      box-shadow: 0 2px 8px #0001;
+      margin-top: 18px;
+    }
+    h1 { margin-top: 0; }
+    ul#menu-ciudades {
+      margin: 0 0 18px 0;
+      padding: 0 0 0 18px;
+      font-size: 18px;
+    }
+    ul#menu-ciudades li {
+      margin-bottom: 3px;
+    }
+    ul#menu-ciudades a {
+      text-decoration: none;
+      color: #2553a2;
+      transition: color 0.2s;
+    }
+    ul#menu-ciudades a:hover {
+      color: #3f7edb;
+      text-decoration: underline;
+    }
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      margin-top: 18px;
+      background: #f7fbff;
+    }
+    th, td {
+      border: 1px solid #b3c7e6;
+      padding: 8px 10px;
+      text-align: left;
+      font-size: 16px;
+    }
+    th {
+      background: #e6f0fa;
+      font-weight: bold;
+    }
+    .attribution {
+      font-size:12px;
+      color:#888;
+      text-align: right;
+      margin-top: 16px;
+    }
+    .corrientes-atracciones {
+      margin-top: 32px;
+      background: #f2f7fa;
+      padding: 18px 16px;
+      border-radius: 6px;
+      max-width: 600px;
+    }
+    .corrientes-atracciones h3 {
+      margin-top: 0;
+      margin-bottom: 8px;
+      color: #2176d2;
+    }
+    .corrientes-atracciones ul {
+      padding-left: 20px;
+      margin: 0;
+    }
+    .corrientes-atracciones a {
+      color: #2176d2;
+      text-decoration: none;
+    }
+    .corrientes-atracciones a:hover {
+      text-decoration: underline;
+    }
+
+    /* ESTILO DE SECCIONES ADICIONALES DE LA IMAGEN */
+    .custom-section {
+      max-width: 1100px;
+      margin: 25px auto 0 auto;
+      background: #fff;
+      border-radius: 18px;
+      box-shadow: 0 2px 8px #0001;
+      padding: 24px 32px 20px 32px;
+      margin-bottom: 28px;
+    }
+    .custom-section h2 {
+      display: flex;
+      align-items: center;
+      font-size: 1.3em;
+      font-weight: 700;
+      margin: 0 0 18px 0;
+    }
+    .custom-section h2 i {
+      margin-right: 10px;
+      font-size: 1.1em;
+    }
+    .conversor-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr 1.1fr;
+      gap: 14px;
+    }
+    @media (max-width: 900px) {
+      .custom-section, main { padding: 12px 2vw; }
+      .conversor-grid { grid-template-columns: 1fr; }
+    }
+    .custom-label {
+      font-weight: 500;
+      margin-bottom: 5px;
+      display: block;
+    }
+    .custom-input, .custom-select {
+      width: 100%;
+      padding: 9px 10px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 15px;
+      box-sizing: border-box;
+      margin-bottom: 0;
+    }
+    .custom-btn {
+      background: #5D5CDE;
+      color: #fff;
+      border-radius: 6px;
+      border: none;
+      padding: 10px 0;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.2s;
+      width: 100%;
+      margin-top: 0;
+    }
+    .custom-btn:hover { background: #4a49b0; }
+    .custom-btn:disabled { background: #a6a6d4; cursor: not-allowed; }
+
+    .packing-controls {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+    .packing-controls .custom-btn {
+      width: auto;
+      padding: 0 18px;
+      height: 38px;
+    }
+    .packing-controls .custom-select {
+      width: 130px;
+    }
+    .packing-controls .custom-input {
+      flex: 1;
+      min-width: 140px;
+    }
+    .packing-lists {
+      margin-top: 6px;
+    }
+    .packing-lists h4 {
+      margin: 8px 0 3px 0;
+      font-weight: 600;
+    }
+    .packing-lists ul {
+      list-style: none;
+      padding-left: 0;
+      margin: 0 0 7px 0;
+    }
+    .packing-lists li {
+      padding: 2px 0;
+      font-size: 15px;
+    }
+    .packing-lists button {
+      background: none;
+      border: none;
+      color: #c00;
+      font-size: 15px;
+      margin-left: 8px;
+      cursor: pointer;
+    }
+    .ai-section label {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 15px;
+      color: #333;
+    }
+    .ai-section textarea {
+      width: 100%;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 15px;
+      padding: 8px 10px;
+      resize: vertical;
+      min-height: 60px;
+      margin-bottom: 10px;
+      box-sizing: border-box;
+    }
+    .ai-section .custom-btn {
+      margin-top: 0;
+      margin-right: 10px;
+    }
+    .ai-section .ai-btns {
+      display: flex;
+      gap: 7px;
+      align-items: center;
+    }
+    .ai-section .clear-btn {
+      background: #666;
+      color: #fff;
+      border-radius: 6px;
+      border: none;
+      padding: 10px 16px;
+      font-size: 22px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .ai-section .clear-btn:hover { background: #444; }
+    .ai-section .ai-response {
+      background: #f8f8fa;
+      border-radius: 6px;
+      padding: 12px;
+      margin-top: 10px;
+      font-size: 15px;
+      color: #333;
+    }
+    .ai-section .ai-loading {
+      font-size: 15px;
+      color: #7d7deb;
+      margin-top: 10px;
+    }
+    .custom-section small {
+      color: #888;
+      font-size: 12px;
+    }
+  </style>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
-<body class="min-h-screen">
+<body>
+  <!-- Barra superior: selector de idioma y moneda -->
+  <div class="top-bar">
+    <span data-i18n="idioma">Idioma:</span>
+    <button id="btn-es" onclick="cambiarIdioma('es')">Español</button>
+    <button id="btn-he" onclick="cambiarIdioma('he')">עברית</button>
+    <span data-i18n="moneda">Moneda:</span>
+    <button id="btn-ars" onclick="cambiarMoneda('ARS')">ARS</button>
+    <button id="btn-usd" onclick="cambiarMoneda('USD')">USD</button>
+    <button id="btn-ils" onclick="cambiarMoneda('ILS')">ILS</button>
+  </div>
 
-    <!-- Barra superior (idioma y moneda) -->
-    <div class="w-full flex justify-end px-8 pt-4 text-gray-700" style="font-size:1.05em;">
-        <span class="mr-2" id="label-idioma">Idioma:</span>
-        <button class="lang-btn active" id="lang-es">Español</button>
-        <button class="lang-btn" id="lang-he">עברית</button>
-        <span class="ml-6 mr-2" id="label-moneda">Moneda:</span>
-        <button class="currency-btn active" id="cur-ARS">ARS</button>
-        <button class="currency-btn" id="cur-USD">USD</button>
-        <button class="currency-btn" id="cur-ILS">ILS</button>
-        <button class="currency-btn" id="cur-EUR">EUR</button>
+  <main>
+    <h1 data-i18n="titulo">Itinerario Familiar por Argentina</h1>
+    <p data-i18n="bienvenida">¡Bienvenidos! Haz clic en cada ciudad para ver información, mapas y recomendaciones.</p>
+
+    <h2 data-i18n="ciudades">Ciudades y Destinos</h2>
+
+    <!-- Menú de ciudades -->
+    <ul id="menu-ciudades"></ul>
+
+    <h2 data-i18n="transporte">Opciones de transporte</h2>
+
+    <!-- Tabla de transporte -->
+    <table>
+      <thead>
+        <tr>
+          <th data-i18n="desde">Desde</th>
+          <th data-i18n="hasta">Hasta</th>
+          <th data-i18n="medio">Medio</th>
+          <th data-i18n="tiempo">Tiempo</th>
+          <th data-i18n="precio">Precio aprox.</th>
+          <th data-i18n="compania">Compañía</th>
+        </tr>
+      </thead>
+      <tbody id="tabla-transporte"></tbody>
+    </table>
+
+    <!-- Atracciones principales Corrientes -->
+    <div class="corrientes-atracciones" id="corrientes-atracciones" style="display:none;">
+      <h3>Atracciones principales</h3>
+      <ul>
+        <li>
+          <a href="https://corrientes.tur.ar/producto/esterosdelibera/" target="_blank">
+            Descubrí CORRIENTES
+          </a>
+        </li>
+      </ul>
     </div>
 
-    <!-- Tarjeta principal -->
-    <div class="main-card max-w-4xl mx-auto" id="main-card">
-        <h1 class="text-3xl font-bold mb-2" id="titulo-main"></h1>
-        <p class="mb-6" id="bienvenida"></p>
-        <h2 class="text-xl font-bold mb-2" id="ciudades-titulo"></h2>
-        <ul class="mb-6 list-disc ml-6" id="lista-ciudades"></ul>
-        <h2 class="text-xl font-bold mb-2" id="transporte-titulo"></h2>
-        <div class="overflow-x-auto">
-        <table class="table min-w-full text-left border-collapse mb-2" id="tabla-transporte">
-            <thead>
-                <tr>
-                    <th id="desde-th"></th>
-                    <th id="hasta-th"></th>
-                    <th id="medio-th"></th>
-                    <th id="tiempo-th"></th>
-                    <th id="precio-th"></th>
-                    <th id="compania-th"></th>
-                    <th id="web-th"></th>
-                </tr>
-            </thead>
-            <tbody id="tbody-transporte"></tbody>
-        </table>
-        </div>
-        <div class="text-sm text-gray-500 mt-2">Powered by <a href="https://www.exchangerate-api.com/" target="_blank" class="underline text-blue-500">ExchangeRate-API.com</a></div>
+    <div class="attribution">
+      Powered by <a href="https://www.exchangerate-api.com" target="_blank">ExchangeRate-API.com</a>
     </div>
 
-    <!-- Conversor de moneda -->
-    <section class="card-tool max-w-4xl mx-auto" id="moderno-conversor-moneda">
-        <h2 class="text-xl font-bold mb-3 flex items-center gap-2" id="titulo-conversor"><i class="fas fa-dollar-sign text-green-500"></i> </h2>
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
-            <div>
-                <label for="amount" class="block mb-1" id="label-cantidad"></label>
-                <input type="number" id="amount" class="w-full px-3 py-2 border rounded text-base" value="100">
-            </div>
-            <div>
-                <label for="from-currency" class="block mb-1" id="label-de"></label>
-                <select id="from-currency" class="w-full px-3 py-2 border rounded text-base">
-                    <option value="ARS">ARS (Peso Argentino)</option>
-                    <option value="USD">USD (Dólar US)</option>
-                    <option value="EUR">EUR (Euro)</option>
-                    <option value="ILS">ILS (Shekel)</option>
-                </select>
-            </div>
-            <div>
-                <label for="to-currency" class="block mb-1" id="label-a"></label>
-                <select id="to-currency" class="w-full px-3 py-2 border rounded text-base">
-                    <option value="USD">USD (Dólar US)</option>
-                    <option value="ARS">ARS (Peso Argentino)</option>
-                    <option value="EUR">EUR (Euro)</option>
-                    <option value="ILS">ILS (Shekel)</option>
-                </select>
-            </div>
-            <div class="flex items-end">
-                <button id="convert-btn" class="primary-btn flex items-center gap-2 w-full">
-                    <span id="btn-convertir"></span>
-                    <div id="currency-loading" class="loading-spinner hidden"></div>
-                </button>
-            </div>
-        </div>
-        <div class="mt-4 flex items-center gap-4">
-            <span id="conversion-result" class="font-bold text-lg"></span>
-        </div>
-        <div class="mt-2 text-sm text-gray-500">
-            <span id="currency-date"></span><br>
-            Fuente: <a href="https://polygon.io/" target="_blank" class="underline text-blue-500">Polygon.io</a>
-        </div>
-    </section>
-
-    <!-- Lista de equipaje -->
-    <section class="card-tool max-w-4xl mx-auto">
-        <h2 class="text-xl font-bold mb-3 flex items-center gap-2" id="packing-title"><i class="fas fa-suitcase-rolling text-yellow-500"></i> <span></span></h2>
-        <div class="flex items-center space-x-2 mb-4">
-            <button id="add-item" class="primary-btn"></button>
-            <select id="packing-select" class="px-2 py-2 border rounded text-base">
-                <option value="esencial"></option>
-                <option value="opcional"></option>
-            </select>
-            <input type="text" id="packing-item" class="flex-grow px-3 py-2 border rounded text-base" placeholder="">
+    <!-- SECCIONES ADICIONALES DE LA IMAGEN -->
+    <div class="custom-section" id="conversor-section">
+      <h2><i class="fas fa-dollar-sign" style="color:#27c257;"></i> Conversor de moneda</h2>
+      <div class="conversor-grid">
+        <div>
+          <label class="custom-label" for="conv-cantidad">Cantidad</label>
+          <input type="number" id="conv-cantidad" class="custom-input" value="100">
         </div>
         <div>
-            <h4 class="font-semibold mb-2" id="packing-esenciales"></h4>
-            <ul id="packing-list" class="space-y-2"></ul>
+          <label class="custom-label" for="conv-de">De</label>
+          <select id="conv-de" class="custom-select">
+            <option value="ARS">ARS (Peso Argentino)</option>
+            <option value="USD">USD (Dólar US)</option>
+            <option value="EUR">EUR (Euro)</option>
+            <option value="ILS">ILS (Shekel)</option>
+          </select>
         </div>
-        <div class="mt-4">
-            <h4 class="font-semibold mb-2" id="packing-opcionales"></h4>
-            <ul id="optional-packing-list" class="space-y-2"></ul>
-        </div>
-    </section>
-
-    <!-- Consulta a IA -->
-    <section class="card-tool max-w-4xl mx-auto">
-        <h2 class="text-xl font-bold mb-3 flex items-center gap-2" id="ai-title"><i class="fas fa-robot text-indigo-500"></i> <span></span></h2>
-        <p class="mb-4" id="ai-desc"></p>
         <div>
-            <textarea id="ai-prompt" class="w-full px-3 py-2 border rounded text-base mb-2" rows="3" placeholder=""></textarea>
-            <div class="flex gap-2 mb-2">
-                <button id="ask-ai" class="primary-btn flex-1" type="button"></button>
-                <button id="clear-ai" class="bg-gray-400 text-white rounded px-4 py-2 hover:bg-gray-600"><i class="fas fa-times"></i></button>
-            </div>
-            <div id="ai-loading" class="text-center py-2 hidden">
-                <div class="inline-block w-8 h-8 border-4 border-gray-300 border-t-indigo-500 rounded-full animate-spin"></div>
-                <p class="mt-2" id="ai-loading-text"></p>
-            </div>
-            <div id="ai-response" class="mt-4 p-4 bg-gray-100 rounded max-h-64 overflow-y-auto hidden"></div>
+          <label class="custom-label" for="conv-a">A</label>
+          <select id="conv-a" class="custom-select">
+            <option value="USD">USD (Dólar US)</option>
+            <option value="ARS">ARS (Peso Argentino)</option>
+            <option value="EUR">EUR (Euro)</option>
+            <option value="ILS">ILS (Shekel)</option>
+          </select>
         </div>
-    </section>
+        <div style="display:flex;align-items:end;">
+          <button class="custom-btn" id="conv-btn">Convertir</button>
+        </div>
+      </div>
+      <div style="margin:13px 0 0 0;font-size:16px;">
+        <span id="conv-resultado" style="font-weight:bold;"></span>
+      </div>
+      <div style="margin-top:8px;"><small>Fuente: <a href="https://polygon.io/" target="_blank">Polygon.io</a></small></div>
+    </div>
 
-    <footer class="w-full bg-gray-100 py-4 mt-8">
-        <div class="container mx-auto text-center text-gray-500" id="footer-copyright"></div>
-    </footer>
+    <div class="custom-section" id="packing-section">
+      <h2><i class="fas fa-suitcase-rolling" style="color:#f9a825;"></i> Lista de equipaje</h2>
+      <div class="packing-controls">
+        <button class="custom-btn" id="packing-add">Agregar</button>
+        <select class="custom-select" id="packing-type">
+          <option value="esencial">Esenciales</option>
+          <option value="opcional">Opcionales</option>
+        </select>
+        <input class="custom-input" id="packing-input" placeholder="¿Qué más llevás?">
+      </div>
+      <div class="packing-lists">
+        <h4>Esenciales</h4>
+        <ul id="packing-list-esencial"></ul>
+        <h4>Opcionales</h4>
+        <ul id="packing-list-opcional"></ul>
+      </div>
+    </div>
 
-    <script>
-    // --- DEFINICIÓN DE CIUDADES Y TRANSPORTE ---
-    const ciudades = [
-        {es: "Buenos Aires", he: "בואנוס איירס"},
-        {es: "Rosario", he: "רוסאריו"},
-        {es: "Bariloche", he: "ברילוצ'ה"},
-        {es: "Mendoza", he: "מנדוסה"},
-        {es: "Malargüe", he: "מלארגואה"},
-        {es: "Jujuy", he: "חוחוי"},
-        {es: "Iguazú", he: "איגואסו"},
-        {es: "Corrientes", he: "קוריינטס"},
-        {es: "Iberá", he: "איברה"},
-        {es: "Mapa Interactivo", he: "מפה אינטראקטיבית"}
-    ];
+    <div class="custom-section ai-section" id="ai-section">
+      <h2><i class="fas fa-robot" style="color:#6d7fc9;"></i> Consulta a la IA</h2>
+      <label for="ai-input">Escribí tu pregunta sobre Argentina, el viaje, consejos, etc.</label>
+      <textarea id="ai-input" placeholder="¿Qué querés saber?"></textarea>
+      <div class="ai-btns">
+        <button class="custom-btn" id="ai-ask">Preguntar</button>
+        <button class="clear-btn" id="ai-clear" title="Limpiar">×</button>
+      </div>
+      <div id="ai-loading" class="ai-loading" style="display:none;">Consultando IA...</div>
+      <div id="ai-response" class="ai-response" style="display:none;"></div>
+    </div>
+  </main>
 
-    const tablaTransporte = [
-        {desde:0, hasta:1, medio:{es:"Bus",he:"אוטובוס"}, tiempo:4, precio:{ARS:20000,USD:22,ILS:80,EUR:20}, compania:"BusPlus", link:"https://www.busplus.com.ar/"},
-        {desde:1, hasta:3, medio:{es:"Bus",he:"אוטובוס"}, tiempo:13, precio:{ARS:50000,USD:55,ILS:200,EUR:50}, compania:"Andesmar", link:"https://www.andesmar.com/"},
-        {desde:3, hasta:4, medio:{es:"Bus",he:"אוטובוס"}, tiempo:6, precio:{ARS:18000,USD:20,ILS:72,EUR:18}, compania:"CATA", link:"https://www.catainternacional.com/"},
-        {desde:4, hasta:5, medio:{es:"Vuelo + Bus",he:"טיסה + אוטובוס"}, tiempo:10, precio:{ARS:110000,USD:120,ILS:440,EUR:100}, compania:"Pasajes de micro baratos", link:"https://www.pasajesenmicros.com.ar/"},
-        {desde:5, hasta:6, medio:{es:"Vuelo",he:"טיסה"}, tiempo:2, precio:{ARS:85000,USD:90,ILS:330,EUR:77}, compania:"Aerolineas Argentinas", link:"https://www.aerolineas.com.ar/"},
-        {desde:6, hasta:7, medio:{es:"Bus",he:"אוטובוס"}, tiempo:9, precio:{ARS:40000,USD:44,ILS:155,EUR:40}, compania:"Crucero del Norte", link:"https://www.crucerodelnorte.com.ar/"},
-        {desde:7, hasta:8, medio:{es:"Remis/Transfer",he:"מונית/הסעה"}, tiempo:4, precio:{ARS:60000,USD:66,ILS:240,EUR:60}, compania:"Esteros del Iberá", link:"https://www.esterosdelibera.com/"}
-    ];
-
-    // --- TEXTOS EN ESPAÑOL Y HEBREO ---
-    const textos = {
-        es: {
-            titulo: "Itinerario Familiar por Argentina",
-            bienvenida: "¡Bienvenidos! Aquí encontrarán el itinerario sugerido, con ciudades, transportes y herramientas útiles.",
-            ciudadesTitulo: "Ciudades del recorrido",
-            transporteTitulo: "Opciones de transporte",
-            thDesde: "Desde",
-            thHasta: "Hasta",
-            thMedio: "Medio",
-            thTiempo: "Duración (hs)",
-            thPrecio: "Precio",
-            thCompania: "Compañía",
-            thLink: "Web",
-            conversorTitulo: "Conversor de moneda",
-            labelCantidad: "Cantidad",
-            labelDe: "De",
-            labelA: "A",
-            btnConvertir: "Convertir",
-            packingTitle: "Lista de equipaje",
-            packingEsenciales: "Esenciales",
-            packingOpcionales: "Opcionales",
-            packingAgregar: "Agregar",
-            packingPlaceholder: "¿Qué más llevás?",
-            aiTitulo: "Consulta a la IA",
-            aiDesc: "Escribí tu pregunta sobre Argentina, el viaje, consejos, etc.",
-            aiPlace: "¿Qué querés saber?",
-            aiBtn: "Preguntar",
-            aiLoading: "Consultando IA...",
-            footer: "© 2024 Itinerario Familiar por Argentina",
-            idioma: "Idioma",
-            moneda: "Moneda",
-            web: "Sitio web"
-        },
-        he: {
-            titulo: "מסלול משפחתי בארגנטינה",
-            bienvenida: "ברוכים הבאים! כאן תמצאו מסלול מוצע, ערים, תחבורה וכלים שימושיים.",
-            ciudadesTitulo: "ערים במסלול",
-            transporteTitulo: "אפשרויות תחבורה",
-            thDesde: "מ",
-            thHasta: "אל",
-            thMedio: "אמצעי",
-            thTiempo: "משך (שעות)",
-            thPrecio: "מחיר",
-            thCompania: "חברה",
-            thLink: "אתר",
-            conversorTitulo: "מחשבון המרה",
-            labelCantidad: "כמות",
-            labelDe: "מ",
-            labelA: "אל",
-            btnConvertir: "המר",
-            packingTitle: "רשימת ציוד",
-            packingEsenciales: "חובה",
-            packingOpcionales: "רשות",
-            packingAgregar: "הוסף",
-            packingPlaceholder: "מה עוד להביא?",
-            aiTitulo: "שאל את הבינה המלאכותית",
-            aiDesc: "כתוב כאן כל שאלה על ארגנטינה, המסלול, טיפים וכו'.",
-            aiPlace: "מה תרצה לדעת?",
-            aiBtn: "שלח",
-            aiLoading: "שואל את הבינה...",
-            footer: "© 2024 מסלול משפחתי בארגנטינה",
-            idioma: "שפה",
-            moneda: "מטבע",
-            web: "אתר"
-        }
+  <script>
+    // --- Diccionario de traducción ---
+    const traducciones = {
+      es: {
+        idioma: "Idioma:",
+        moneda: "Moneda:",
+        titulo: "Itinerario Familiar por Argentina",
+        bienvenida: "¡Bienvenidos! Haz clic en cada ciudad para ver información, mapas y recomendaciones.",
+        ciudades: "Ciudades y Destinos",
+        transporte: "Opciones de transporte",
+        desde: "Desde",
+        hasta: "Hasta",
+        medio: "Medio",
+        tiempo: "Tiempo",
+        precio: "Precio aprox.",
+        compania: "Compañía",
+        volver: "Volver a la página principal",
+        menu: [
+          { archivo: "buenosaires.html", nombre: "Buenos Aires" },
+          { archivo: "rosario.html", nombre: "Rosario" },
+          { archivo: "bariloche.html", nombre: "Bariloche" },
+          { archivo: "mendoza.html", nombre: "Mendoza" },
+          { archivo: "malargue.html", nombre: "Malargüe" },
+          { archivo: "jujuy.html", nombre: "Jujuy" },
+          { archivo: "iguazu.html", nombre: "Iguazú" },
+          { archivo: "corrientes.html", nombre: "Corrientes" },
+          { archivo: "ibera.html", nombre: "Iberá" },
+          { archivo: "mapa.html", nombre: "Mapa Interactivo" }
+        ],
+        tabla: [
+          ["Buenos Aires", "Rosario", "Bus", "4 h", 20000, {nombre: "BusPlus", link: "https://busplus.com.ar/"}],
+          ["Rosario", "Mendoza", "Bus", "13 h", 50000, {nombre: "Andesmar", link: "https://www.andesmar.com/"}],
+          ["Mendoza", "Malargüe", "Bus", "6 h", 18000, {nombre: "CATA", link: "https://www.catainternacional.com/"}],
+          ["Malargüe", "Jujuy", "Vuelo + Bus", "10 h", 110000, {nombre: "Pasajes de micro baratos", link: "https://www.centraldepasajes.com.ar/cdp/pasajes-micro/mendoza/san-salvador-de-jujuy"}],
+          ["Jujuy", "Iguazú", "Vuelo", "2 h", 85000, {nombre: "Aerolineas Argentinas", link: "https://www.aerolineas.com.ar/"}],
+          ["Iguazú", "Corrientes", "Bus", "9 h", 40000, {nombre: "Crucero del Norte", link: "https://www.crucerodelnorte.com.ar/"}],
+          ["Corrientes", "Esteros del Iberá", "Remis/Transfer", "4 h", 60000, {nombre: "Esteros del Iberá", link: "https://corrientes.tur.ar/producto/esterosdelibera/"}]
+        ]
+      },
+      he: {
+        idioma: "שפה:",
+        moneda: "מטבע:",
+        titulo: "מסלול משפחתי בארגנטינה",
+        bienvenida: "ברוכים הבאים! לחצו על כל עיר למידע, מפות והמלצות.",
+        ciudades: "ערים ויעדים",
+        transporte: "אפשרויות תחבורה",
+        desde: "מוצא",
+        hasta: "יעד",
+        medio: "אמצעי",
+        tiempo: "משך",
+        precio: "מחיר משוער",
+        compania: "חברה",
+        volver: "חזרה לעמוד הראשי",
+        menu: [
+          { archivo: "buenosaires.html", nombre: "בואנוס איירס" },
+          { archivo: "rosario.html", nombre: "רוסאריו" },
+          { archivo: "bariloche.html", nombre: "ברילוצ'ה" },
+          { archivo: "mendoza.html", nombre: "מנדוסה" },
+          { archivo: "malargue.html", nombre: "מלארגואה" },
+          { archivo: "jujuy.html", nombre: "חוחוי" },
+          { archivo: "iguazu.html", nombre: "איגואסו" },
+          { archivo: "corrientes.html", nombre: "קוריינטס" },
+          { archivo: "ibera.html", nombre: "איברה" },
+          { archivo: "mapa.html", nombre: "מפת המסלול" }
+        ],
+        tabla: [
+          ["בואנוס איירס", "רוסאריו", "אוטובוס", "4 ש׳", 20000, {nombre: "BusPlus", link: "https://busplus.com.ar/"}],
+          ["רוסאריו", "מנדוסה", "אוטובוס", "13 ש׳", 50000, {nombre: "Andesmar", link: "https://www.andesmar.com/"}],
+          ["מנדוסה", "מלארגואה", "אוטובוס", "6 ש׳", 18000, {nombre: "CATA", link: "https://www.catainternacional.com/"}],
+          ["מלארגואה", "חוחוי", "טיסה + אוטובוס", "10 ש׳", 110000, {nombre: "Pasajes de micro baratos", link: "https://www.centraldepasajes.com.ar/cdp/pasajes-micro/mendoza/san-salvador-de-jujuy"}],
+          ["חוחוי", "איגואסו", "טיסה", "2 ש׳", 85000, {nombre: "Aerolineas Argentinas", link: "https://www.aerolineas.com.ar/"}],
+          ["איגואסו", "קוריינטס", "אוטובוס", "9 ש׳", 40000, {nombre: "Crucero del Norte", link: "https://www.crucerodelnorte.com.ar/"}],
+          ["קוריינטס", "אסטרוס דה איברה", "רמיס/הסעה", "4 ש׳", 60000, {nombre: "Esteros del Iberá", link: "https://corrientes.tur.ar/producto/esterosdelibera/"}]
+        ]
+      }
     };
 
-    // --- VARIABLES DE ESTADO ---
-    let idioma = "es";
-    let moneda = "ARS";
+    // Tasas de cambio (se actualizan al cargar la página)
     let tasas = {
-        ARS: 1,
-        USD: 0.0011,
-        EUR: 0.0010,
-        ILS: 0.004
+      ARS: 1,
+      USD: 1000,
+      EUR: 1.06,
+      ILS: 110
     };
-    let tasasFecha = "";
+    const simbolos = {
+      ARS: "$",
+      USD: "US$",
+      EUR: "€",
+      ILS: "₪"
+    };
 
-    // --- FUNCIONES DE RENDERIZADO ---
-    function setTextos() {
-        const t = textos[idioma];
-        document.getElementById("titulo-main").innerText = t.titulo;
-        document.getElementById("bienvenida").innerText = t.bienvenida;
-        document.getElementById("ciudades-titulo").innerText = t.ciudadesTitulo;
-        document.getElementById("lista-ciudades").innerHTML = ciudades.map(c => `<li>${c[idioma]}</li>`).join("");
-        document.getElementById("transporte-titulo").innerText = t.transporteTitulo;
-        document.getElementById("desde-th").innerText = t.thDesde;
-        document.getElementById("hasta-th").innerText = t.thHasta;
-        document.getElementById("medio-th").innerText = t.thMedio;
-        document.getElementById("tiempo-th").innerText = t.thTiempo;
-        document.getElementById("precio-th").innerText = t.thPrecio;
-        document.getElementById("compania-th").innerText = t.thCompania;
-        document.getElementById("web-th").innerText = t.thLink;
-        document.getElementById("titulo-conversor").childNodes[1].nodeValue = " " + t.conversorTitulo;
-        document.getElementById("label-cantidad").innerText = t.labelCantidad;
-        document.getElementById("label-de").innerText = t.labelDe;
-        document.getElementById("label-a").innerText = t.labelA;
-        document.getElementById("btn-convertir").innerText = t.btnConvertir;
-        document.getElementById("packing-title").childNodes[1].nodeValue = " " + t.packingTitle;
-        document.getElementById("add-item").innerText = t.packingAgregar;
-        document.getElementById("packing-select").children[0].innerText = t.packingEsenciales;
-        document.getElementById("packing-select").children[1].innerText = t.packingOpcionales;
-        document.getElementById("packing-item").placeholder = t.packingPlaceholder;
-        document.getElementById("packing-esenciales").innerText = t.packingEsenciales;
-        document.getElementById("packing-opcionales").innerText = t.packingOpcionales;
-        document.getElementById("ai-title").childNodes[1].nodeValue = " " + t.aiTitulo;
-        document.getElementById("ai-desc").innerText = t.aiDesc;
-        document.getElementById("ai-prompt").placeholder = t.aiPlace;
-        document.getElementById("ask-ai").innerText = t.aiBtn;
-        document.getElementById("ai-loading-text").innerText = t.aiLoading;
-        document.getElementById("label-idioma").innerText = t.idioma + ":";
-        document.getElementById("label-moneda").innerText = t.moneda + ":";
-        document.getElementById("footer-copyright").innerText = t.footer;
-        // RTL para hebreo
-        document.body.classList.toggle("rtl", idioma === "he");
-        renderTablaTransporte();
-    }
-    document.querySelectorAll(".lang-btn").forEach(btn =>
-        btn.onclick = function() {
-            idioma = btn.id === "lang-he" ? "he" : "es";
-            setTextos();
-            document.querySelectorAll(".lang-btn").forEach(b => b.classList.remove("active"));
-            btn.classList.add("active");
-        }
-    );
-    document.querySelectorAll(".currency-btn").forEach(btn =>
-        btn.onclick = function() {
-            moneda = btn.id.replace("cur-", "");
-            document.querySelectorAll(".currency-btn").forEach(b => b.classList.remove("active"));
-            btn.classList.add("active");
-            renderTablaTransporte();
-        }
-    );
+    let idiomaActual = 'es';
+    let monedaActual = 'ARS';
 
-    // --- TABLA DE TRANSPORTE ---
-    function renderTablaTransporte() {
-        const t = textos[idioma];
-        let html = "";
-        tablaTransporte.forEach(row => {
-            const nombreDesde = ciudades[row.desde][idioma];
-            const nombreHasta = ciudades[row.hasta][idioma];
-            const medio = row.medio[idioma];
-            const tiempo = row.tiempo;
-            const precio = row.precio[moneda] ? row.precio[moneda].toLocaleString() : "?";
-            const linkWeb = `<a href="${row.link}" target="_blank">${t.web}</a>`;
-            html += `<tr>
-                <td>${nombreDesde}</td>
-                <td>${nombreHasta}</td>
-                <td>${medio}</td>
-                <td>${tiempo}</td>
-                <td>${precio} ${moneda}</td>
-                <td>${row.compania}</td>
-                <td>${linkWeb}</td>
-            </tr>`;
+    function actualizarTasas(callback) {
+      fetch('https://open.er-api.com/v6/latest/USD')
+        .then(response => response.json())
+        .then(data => {
+          if (data && data.result === "success") {
+            tasas.ARS = data.rates.ARS;
+            tasas.USD = 1;
+            tasas.EUR = data.rates.EUR;
+            tasas.ILS = data.rates.ILS;
+          }
+          if (typeof callback === "function") callback();
+        })
+        .catch(() => {
+          if (typeof callback === "function") callback();
         });
-        document.getElementById("tbody-transporte").innerHTML = html;
     }
 
-    // --- CONVERSOR DE MONEDA (puedes mejorar con tasa online si quieres) ---
-    document.getElementById("convert-btn").onclick = function() {
-        const monto = parseFloat(document.getElementById("amount").value) || 0;
-        const de = document.getElementById("from-currency").value;
-        const a = document.getElementById("to-currency").value;
-        let resultado = monto;
-        if (de !== a && tasas[de] && tasas[a]) {
-            resultado = monto / tasas[de] * tasas[a];
-        }
-        document.getElementById("conversion-result").innerText = `${resultado.toLocaleString(undefined, {maximumFractionDigits:2})} ${a}`;
-        document.getElementById("currency-date").innerText = tasasFecha ? "Tasa al: " + tasasFecha : "";
-    };
-
-    // --- LISTA DE EQUIPAJE ---
-    let listaEquipaje = { esencial: [], opcional: [] };
-    document.getElementById("add-item").onclick = function() {
-        const tipo = document.getElementById("packing-select").value;
-        const item = document.getElementById("packing-item").value.trim();
-        if (item && !listaEquipaje[tipo].includes(item)) {
-            listaEquipaje[tipo].push(item);
-            actualizarEquipaje();
-            document.getElementById("packing-item").value = "";
-        }
-    };
-    function actualizarEquipaje() {
-        document.getElementById("packing-list").innerHTML = listaEquipaje.esencial.map(
-            item => `<li>${item} <button onclick="eliminarEquipaje('esencial','${item}')" style="color:red;">✖</button></li>`
-        ).join("");
-        document.getElementById("optional-packing-list").innerHTML = listaEquipaje.opcional.map(
-            item => `<li>${item} <button onclick="eliminarEquipaje('opcional','${item}')" style="color:red;">✖</button></li>`
-        ).join("");
+    function cambiarIdioma(idioma) {
+      idiomaActual = idioma;
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        el.textContent = traducciones[idioma][key];
+      });
+      renderMenu();
+      renderTabla();
+      mostrarAtraccionesCorrientes();
+      document.body.dir = (idioma === 'he') ? 'rtl' : 'ltr';
+      document.getElementById('btn-es').classList.toggle('active', idioma === 'es');
+      document.getElementById('btn-he').classList.toggle('active', idioma === 'he');
     }
-    window.eliminarEquipaje = (tipo, item) => {
-        listaEquipaje[tipo] = listaEquipaje[tipo].filter(x => x !== item);
-        actualizarEquipaje();
+
+    function cambiarMoneda(moneda) {
+      monedaActual = moneda;
+      document.getElementById('btn-ars').classList.toggle('active', moneda === 'ARS');
+      document.getElementById('btn-usd').classList.toggle('active', moneda === 'USD');
+      document.getElementById('btn-ils').classList.toggle('active', moneda === 'ILS');
+      renderTabla();
+    }
+
+    function renderMenu() {
+      const menu = document.getElementById('menu-ciudades');
+      menu.innerHTML = '';
+      const menuData = traducciones[idiomaActual].menu;
+      menuData.forEach((ciudad) => {
+        const li = document.createElement('li');
+        li.innerHTML = `<a href="ciudades/${ciudad.archivo}">${ciudad.nombre}</a>`;
+        menu.appendChild(li);
+      });
+      menu.style.textAlign = (idiomaActual === 'he') ? 'right' : 'left';
+      menu.style.direction = (idiomaActual === 'he') ? 'rtl' : 'ltr';
+    }
+
+    function renderTabla() {
+      const tbody = document.getElementById('tabla-transporte');
+      tbody.innerHTML = '';
+      traducciones[idiomaActual].tabla.forEach(fila => {
+        const tr = document.createElement('tr');
+        fila.forEach((celda, j) => {
+          const td = document.createElement('td');
+          // Columna de precio (índice 4)
+          if (j === 4) {
+            let valorARS = Number(celda);
+            let simbolo = simbolos[monedaActual];
+            let valorConvertido = valorARS;
+            if (monedaActual === 'USD') valorConvertido = (valorARS / tasas.ARS).toFixed(2);
+            if (monedaActual === 'ILS') valorConvertido = (valorARS / tasas.ARS * tasas.ILS).toFixed(2);
+            if (monedaActual === 'EUR') valorConvertido = (valorARS / tasas.ARS * tasas.EUR).toFixed(2);
+            if (monedaActual === 'ARS') valorConvertido = valorARS;
+            td.textContent = `${simbolo} ${valorConvertido}`;
+          }
+          // Columna "Compañía" (índice 5) muestra el nombre como link
+          else if (j === 5 && typeof celda === 'object' && celda.nombre && celda.link) {
+            td.innerHTML = `<a href="${celda.link}" target="_blank">${celda.nombre}</a>`;
+          }
+          // Otras columnas
+          else {
+            td.textContent = celda;
+          }
+          tr.appendChild(td);
+        });
+        tbody.appendChild(tr);
+      });
+    }
+
+    function mostrarAtraccionesCorrientes() {
+      let currentPage = window.location.pathname.toLowerCase();
+      let corrientesPage = "corrientes.html";
+      if (
+        currentPage.endsWith("/" + corrientesPage) ||
+        currentPage.endsWith("/ciudades/" + corrientesPage)
+      ) {
+        document.getElementById("corrientes-atracciones").style.display = "block";
+      } else {
+        document.getElementById("corrientes-atracciones").style.display = "none";
+      }
+    }
+
+    // --- Conversor de moneda ---
+    document.getElementById('conv-btn').onclick = function() {
+      const monto = parseFloat(document.getElementById('conv-cantidad').value) || 0;
+      const de = document.getElementById('conv-de').value;
+      const a = document.getElementById('conv-a').value;
+      let resultado = monto;
+      if (de !== a && tasas[de] && tasas[a]) {
+        resultado = monto / tasas[de] * tasas[a];
+      }
+      document.getElementById('conv-resultado').innerText = `${simbolos[a] || a} ${resultado.toLocaleString(undefined, {maximumFractionDigits:2})}`;
     };
 
-    // --- CONSULTA A IA (simulado, puede enlazarse a una API real) ---
-    document.getElementById("ask-ai").onclick = async function() {
-        const pregunta = document.getElementById("ai-prompt").value.trim();
-        if (!pregunta) return;
-        document.getElementById("ai-loading").classList.remove("hidden");
-        document.getElementById("ai-response").classList.add("hidden");
-        setTimeout(() => {
-            document.getElementById("ai-response").innerText = idioma === "es" ?
-                "Esta es una respuesta simulada. Integre la API de IA para obtener respuestas reales." :
-                "זוהי תשובה לדוגמה. יש לחבר ל-API של בינה מלאכותית לתשובות אמיתיות.";
-            document.getElementById("ai-loading").classList.add("hidden");
-            document.getElementById("ai-response").classList.remove("hidden");
-        }, 1800);
+    // --- Lista de equipaje ---
+    let packingList = {esencial: [], opcional: []};
+
+    function actualizarPackingLists() {
+      document.getElementById('packing-list-esencial').innerHTML =
+        packingList.esencial.map(item =>
+          `<li>${item} <button onclick="eliminarPacking('esencial','${item.replace(/'/g,"\\'")}')">✖</button></li>`
+        ).join('');
+      document.getElementById('packing-list-opcional').innerHTML =
+        packingList.opcional.map(item =>
+          `<li>${item} <button onclick="eliminarPacking('opcional','${item.replace(/'/g,"\\'")}')">✖</button></li>`
+        ).join('');
+    }
+    document.getElementById('packing-add').onclick = function() {
+      const tipo = document.getElementById('packing-type').value;
+      const item = document.getElementById('packing-input').value.trim();
+      if (item && !packingList[tipo].includes(item)) {
+        packingList[tipo].push(item);
+        actualizarPackingLists();
+        document.getElementById('packing-input').value = "";
+      }
     };
-    document.getElementById("clear-ai").onclick = function() {
-        document.getElementById("ai-prompt").value = "";
-        document.getElementById("ai-response").innerText = "";
-        document.getElementById("ai-response").classList.add("hidden");
+    window.eliminarPacking = function(tipo, item) {
+      packingList[tipo] = packingList[tipo].filter(x => x !== item);
+      actualizarPackingLists();
     };
 
-    // --- INICIALIZACIÓN ---
-    setTextos();
-    renderTablaTransporte();
-    actualizarEquipaje();
-    </script>
+    // --- Consulta a la IA (demo) ---
+    document.getElementById('ai-ask').onclick = function() {
+      const pregunta = document.getElementById('ai-input').value.trim();
+      if (!pregunta) return;
+      document.getElementById('ai-response').style.display = 'none';
+      document.getElementById('ai-loading').style.display = 'block';
+      setTimeout(() => {
+        document.getElementById('ai-loading').style.display = 'none';
+        document.getElementById('ai-response').style.display = 'block';
+        document.getElementById('ai-response').innerText =
+          "Esta es una respuesta simulada. Integra una API de IA para respuestas reales.";
+      }, 1500);
+    };
+    document.getElementById('ai-clear').onclick = function() {
+      document.getElementById('ai-input').value = '';
+      document.getElementById('ai-response').style.display = 'none';
+    };
+
+    // Inicialización
+    actualizarTasas(function() {
+      cambiarIdioma('es');
+      cambiarMoneda('ARS');
+      mostrarAtraccionesCorrientes();
+      actualizarPackingLists();
+    });
+  </script>
 </body>
 </html>
