@@ -83,6 +83,7 @@ Así, cuando cambies de idioma, el texto del enlace también cambia (por ejemplo
 - Todos los IDs y clases deben mantenerse igual para que la traducción funcione en todas las páginas.
 - Los ítems de la lista de equipaje se traducen automáticamente al cambiar el idioma.
 - La IA responde en el idioma en que se hace la pregunta.
+-Soporte para texto de derecha a izquierda (RTL) en el idioma Hebreo
 
 ---
 
