@@ -176,6 +176,36 @@ Toda nueva instrucción debe agregarse en este archivo, bajo el tema correspondi
 
 ---
 
+## 14. Estructura de las páginas
+
+### 14.1 Estructura de index.html (página principal)
+
+- Es la página principal del itinerario del viaje y debe contener:
+  - Barra superior fija a la derecha con selectores de idioma y moneda, usando las mismas clases y estructura para los botones en todas las páginas.
+  - Título principal y bienvenida.
+  - Lista de ciudades/destinos, cada una con su link correspondiente a la página de ciudad.
+  - Tabla de transporte entre ciudades, con nombres de compañías como enlace (no columna web).
+  - (Opcional) Sección de atracciones destacadas (ej: Corrientes) según corresponda.
+  - Módulos interactivos al final (antes de `</body>`): conversor de moneda moderno, lista de equipaje, y consulta a IA, todos integrados y funcionando.
+  - Traducción dinámica de textos y soporte multilenguaje para todos los componentes y módulos.
+  - Consistencia visual y funcional en todos los elementos y botones.
+  - Al hacer clic en "⬅ Volver al itinerario" desde cualquier página de ciudad, debe retornar a `index.html`.
+
+### 14.2 Estructura de páginas de ciudad (por ejemplo: ciudades/rosario.html)
+
+- Cada página de ciudad debe tener la siguiente estructura:
+  - Barra superior fija arriba a la derecha, con el mismo diseño y funcionalidad que en index.html: botones de idioma, selector de moneda (si aplica), y botón "⬅ Volver al itinerario" (link a `/index.html`).
+  - Título con el nombre de la ciudad, traducido dinámicamente.
+  - Foto de portada correspondiente, cargada desde `docs/imagenes/[ciudad].jpg` (el nombre del archivo debe ser igual al de la ciudad en minúsculas, sin espacios ni tildes).
+  - Secciones principales: breve introducción, actividades recomendadas, gastronomía, alojamiento, agenda de eventos, atracciones, presupuesto orientativo y consejos para familias.
+  - Cada sección debe tener su propio título y contenido, ambos traducibles dinámicamente.
+  - El menú de navegación y todos los botones deben usar las mismas clases e IDs que en index.html para que la traducción y la experiencia sean consistentes.
+  - Todos los enlaces internos (a otras ciudades/mapa/etc.) deben funcionar igual y mantenerse en el idioma seleccionado.
+  - El diseño, IDs, y clases deben ser los mismos en todas las páginas de ciudad.
+  - Si se agregan módulos adicionales (ejemplo: galería, comentarios, etc.), se deben ubicar después del contenido principal y antes de `</body>`, siguiendo la misma lógica de integración que los módulos de la página principal.
+
+---
+
 **IMPORTANTE:**  
 - Toda nueva instrucción debe agregarse en este archivo, bajo el tema correspondiente.  
 - Si tienes dudas o surge un conflicto entre pedidos, CONSÚLTALO antes de decidir.
