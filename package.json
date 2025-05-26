@@ -1,6 +1,19 @@
 {
+  "name": "argentina-aventura-familiar",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
   "dependencies": {
-    "i18next": "^25.2.1",
-    "react-i18next": "^15.5.2"
+    "i18next": "^23.0.0",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0",
+    "react-i18next": "^13.0.0"
+  },
+  "devDependencies": {
+    "vite": "^5.0.0"
   }
 }
