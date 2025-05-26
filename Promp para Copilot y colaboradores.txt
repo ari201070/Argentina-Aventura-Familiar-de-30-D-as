@@ -1,20 +1,22 @@
-# Promp para Copilot y colaboradores: Organización y lineamientos del proyecto
-Este promp te guiara durante todo el proyecto, antes de realizar algun cambio en cualquier carpeta/archivo vendras a consultar al promp aunque tarde unos segundos mas la programacion.
-Esta es la parte mas importante del proyecto, SIN COLTULTAR EL PROMP NO AVANZAS!!!
+# Promp para Copilot y colaboradores: Organización y lineamientos del proyecto (versión ordenada por temas)
+
 Este archivo contiene TODAS las reglas y lineamientos para el desarrollo y edición del proyecto **Argentina Aventura Familiar de 30 Días**.  
 Toda nueva instrucción debe agregarse en este archivo, bajo el tema correspondiente.  
 **No borres este archivo. Si surgen conflictos entre reglas, consultar a ari201070 antes de decidir.**
 
 ---
 
-## 1. Objetivo general del proyecto
+## 1. Objetivo y alcance
 
-- Documentar y organizar un viaje familiar de un mes por Argentina, orientado a familias (pareja + 2 hijos), con información en español y hebreo.
-- Se incluyen: itinerario, actividades, alojamientos, presupuesto, logística, consejos y recursos útiles, priorizando experiencia y comodidad familiar.
+- Documentar y organizar un viaje familiar de un mes por Argentina, orientado a familias (pareja + 2 hijos) con información en español y hebreo.
+- El itinerario debe incluir destinos principales, duración en cada lugar, actividades clave, sugerencias de alojamiento y transporte.
+- El enfoque está en la comodidad, seguridad y variedad de experiencias familiares (actividades y alojamientos pensados para familias).
+- Para opciones de comida, priorizar alternativas aptas para diabéticos y bajas en carbohidratos (sin gluten si es posible), sin excluir otras, pero siempre cubriendo esas necesidades.
+- El proyecto debe funcionar tanto online como offline, en cualquier navegador (especialmente móviles y tablets Android).
 
 ---
 
-## 2. Estructura del proyecto
+## 2. Estructura del proyecto y carpetas
 
 ```
 / (raíz del proyecto)
@@ -27,7 +29,7 @@ Toda nueva instrucción debe agregarse en este archivo, bajo el tema correspondi
 │   │   ├── rosario.jpg
 │   │   ├── bariloche.jpg
 │   │   ├── ... (más imágenes por ciudad, en minúsculas y sin espacios)
-│   └── ... (otros recursos/documentos de apoyo) ...
+│   └── ... (otros recursos/documentos de apoyo, PDFs, Excel, etc.)
 ├── ciudades/
 │   ├── buenosaires.html
 │   ├── rosario.html
@@ -35,46 +37,58 @@ Toda nueva instrucción debe agregarse en este archivo, bajo el tema correspondi
 │   ├── ... (todas las ciudades y mapa interactivo) ...
 ├── css/   # Opcional, estilos compartidos
 ├── js/    # Opcional, scripts JS compartidos
+├── locales/
+│   ├── es.json
+│   └── he.json
 ├── README.md
+├── data/  # Datos estructurados (JSON, CSV)
 └── ... (otros archivos como favicon, licencia, etc.)
 ```
 - Todas las imágenes deben estar en `docs/imagenes/` y llamarse igual al nombre de la ciudad en minúsculas, sin espacios, con extensión `.jpg` (o `.png` si aplica).
 - Todas las páginas de ciudad y el mapa están en la carpeta `ciudades/`.
-- Todos los archivos auxiliares/documentación en `docs/`.
-- Si usás módulos externos, podés agregar una carpeta `libs/`.
+- Archivos auxiliares/documentación en `docs/`.
+- Si se usan módulos externos, pueden ir en `libs/` o similar.
+- No crear carpetas vacías (agregar `.gitkeep` si hace falta).
+- Los archivos de traducción y scripts de traducción deben estar en el proyecto y NO depender de recursos externos.
 
 ---
 
 ## 3. Reglas de entrega y edición de archivos
 
 - **SIEMPRE entregar los archivos completos, de principio a fin, listos para copiar y pegar.**
-- **No omitir nada de lo ya existente salvo pedido explícito.**
+- **Nunca omitir nada de lo ya existente salvo pedido explícito.**
 - **No dejar comentarios ambiguos como “el resto es igual” ni archivos parciales.**
-- Al corregir, integrar o agregar módulos, conservar toda la estructura y contenido previo (sólo agregar o modificar lo necesario).
-- ¿Conflicto entre pedidos? Consultar a ari201070 antes de decidir.
+- Al corregir, integrar o agregar módulos, conservar toda la estructura y contenido previo (solo agregar o modificar lo necesario).
+- Si surge un conflicto entre pedidos, consultar antes de decidir.
+- Todas las instrucciones y archivos deben estar en castellano.
 
 ---
 
 ## 4. Consistencia visual y funcional
 
-- Barra fija arriba a la derecha con botones de idioma y botón "Volver al itinerario".
-- Uso de las mismas clases y estructura para todos los botones (idioma, moneda, volver).
-- Foto de portada cargada desde `docs/imagenes/[ciudad].jpg` (o `.png` si corresponde) en todas las páginas de ciudad.
-- Toda la estructura HTML y CSS debe ser igual en todas las ciudades (incluyendo IDs y clases para traducción automática y funcionalidad consistente).
-- El menú de navegación, función de cambio de idioma y moneda, y botón "Volver al itinerario" deben funcionar igual en todas las páginas.
-- El nombre de la imagen debe corresponder exactamente al nombre de la ciudad (minúsculas, sin espacios ni tildes).
-- Las imágenes deben estar presentes en la carpeta correspondiente antes de publicar la página.
+- Barra fija arriba a la derecha con botones de idioma y botón "⬅ Volver al itinerario".
+- Mismo diseño, estructura y clases para los botones en todas las páginas.
+- Menú de navegación y enlaces internos consistentes y sincronizados (ciudades, mapa, volver).
+- Foto de portada en cada ciudad desde `docs/imagenes/[ciudad].jpg` (nombre en minúsculas, sin espacios ni tildes).
+- Estructura HTML y CSS igual en todas las ciudades (incluyendo IDs y clases para traducción y funcionalidades).
+- La selección de idioma y moneda debe mantenerse al navegar (por localStorage o en la URL).
+- Todos los textos de botones y enlaces deben ser traducibles dinámicamente.
+- Soporte para texto de derecha a izquierda (RTL) para hebreo.
+- El botón de idioma seleccionado aparece en negrita o destacado igual en todas las páginas.
 
 ---
 
-## 5. Traducción dinámica y soporte multilenguaje
+## 5. Traducción dinámica y multilenguaje
 
 - Todos los textos, botones, títulos, placeholders y mensajes de error deben ser traducibles dinámicamente según el idioma elegido.
+- El diccionario de traducción debe incluir todas las cadenas de texto del contenido (usando archivos locales en `/locales/`).
 - El selector de idioma debe cambiar textos y enlaces al idioma correspondiente.
 - Al navegar, la selección de idioma se mantiene (usando localStorage o querystring).
-- Todos los IDs y clases deben mantenerse igual para que la traducción funcione en todas las páginas.
-- Los ítems de la lista de equipaje se traducen automáticamente al cambiar el idioma.
+- Todos los IDs y clases deben ser iguales para que la traducción funcione en todas las páginas.
+- Los ítems de la lista de equipaje y textos de módulos interactivos se traducen automáticamente al cambiar el idioma.
 - La IA responde en el idioma en que se hace la pregunta.
+- No depender de servicios de traducción online ni recursos externos para textos o scripts críticos.
+- El sitio debe seguir funcionando igual sin conexión a internet.
 
 ---
 
@@ -93,15 +107,15 @@ Toda nueva instrucción debe agregarse en este archivo, bajo el tema correspondi
 - Lista con esenciales y opcionales (selector para agregar ítems en la lista correspondiente).
 - Agregar ítems traduce automáticamente al cambiar de idioma.
 - El botón para agregar ítems debe ser visible y traducido.
-- (Ideal: persistencia usando localStorage).
+- Ideal: persistencia usando localStorage para que no se pierda la lista al recargar.
 
 ### 6.3 Consulta a IA
 
 - Módulo de consulta a IA experto en viajes familiares en Argentina, al final de index.html.
-- Puede ser mock (respuesta simulada) o conectado a Pyrefly o a una API real.
+- Puede ser mock (respuesta simulada) o conectado a Pyrefly o una API real.
 - El botón de consulta queda deshabilitado mientras responde.
-- Manejo de errores: si la IA falla, mostrar mensaje claro en el idioma actual.
-- Traducción de todos los textos y errores de IA.
+- Manejo de errores: si la IA falla, mostrar mensaje claro en el idioma actual y no debe quedarse colgado.
+- Traducción consistente de todos los textos y errores de IA.
 - La respuesta debe mostrarse en el idioma de la pregunta.
 
 ---
@@ -109,26 +123,30 @@ Toda nueva instrucción debe agregarse en este archivo, bajo el tema correspondi
 ## 7. Reglas para imágenes
 
 - El nombre del archivo de la imagen será el nombre de la ciudad en minúsculas, sin espacios ni tildes y extensión .jpg.
-- Deben estar presentes en `C:\proyectos_git\Argentina-Aventura-Familiar-de-30-D-as\docs\imagenes\(nombre de la ciudad)`.
+- Deben estar presentes en `docs/imagenes/`.
 - Descargar imágenes libres de Unsplash o equivalentes para cada ciudad.
+- No depender de imágenes de servicios externos en producción.
 
 ---
 
-## 8. Buenas prácticas y organización de datos/documentos
+## 8. Organización de datos y documentación
 
 - Guardar los Excel/CSV fuente en subcarpetas específicas por temática en `docs/`.
 - Si la app consume datos, agregar una carpeta `/data` con versiones en JSON.
 - README(s) en Markdown explicando el propósito de cada carpeta y archivo.
 - Mantener documentación clara y actualizada en `docs/`.
 - No crear carpetas vacías: si es necesario, agregar un archivo `.gitkeep`.
+- Los archivos de información y contenido principal (.md, .html) de cada ciudad van juntos en `ciudades/`.
+- Todos los recursos multimedia y documentos adjuntos en `docs/nombreciudad/`.
 
 ---
 
 ## 9. Sincronización y enriquecimiento de contenidos
 
 - Cada sección importante de la ciudad en su archivo .md debe reflejarse y ampliarse en la carpeta correspondiente en `docs/`.
-- Las secciones de ciudad deben estar sincronizadas entre los .html, .md y la documentación `docs/`.
-- Ejemplo: "Agenda de eventos" debe estar tanto en la página de la ciudad como en `docs/agenda/[ciudad]/README.md`.
+- Las secciones de ciudad deben estar sincronizadas entre los .html, .md y la documentación en `docs/`.
+- Por ejemplo, "Agenda de eventos" debe estar tanto en la página de la ciudad como en `docs/agenda/[ciudad]/README.md`.
+- Las agendas de eventos de cada ciudad deben mostrar SOLO eventos relevantes para las fechas en que la familia estará en esa ciudad.
 
 ---
 
@@ -152,17 +170,54 @@ Toda nueva instrucción debe agregarse en este archivo, bajo el tema correspondi
 
 ---
 
-## 12. Propuestas y mejoras futuras
+## 12. Propuestas y buenas prácticas (futuras/mejoras)
 
 - Integrar APIs de tipo de cambio, reservas, mapas, etc.
 - Formularios para agregar notas y gastos diarios.
 - Visualización de presupuesto con tablas, tarjetas, o gráficos.
 - Documentar scripts de automatización de datos.
 - Internacionalización: README en español, inglés y hebreo.
+- Sincronizar eventos automáticamente con tu archivo de ciudades.
+- Mejorar UI: más íconos, colores por tipo, edición de reservas, exportar PDF, etc.
+- Permitir agregar eventos personalizados.
+- Separar frontend y documentación/datos para mayor escalabilidad.
+- Usar scripts para automatizar conversiones de Excel/CSV a JSON, etc.
+- Centralizar traducciones en archivos JSON independientes.
+- Implementar tests, optimización de imágenes, y mejoras de accesibilidad.
 
 ---
 
-## 13. Ciudades y destinos incluidos
+## 13. Estructura de las páginas
+
+### 13.1 index.html (página principal)
+
+- Es la página principal del itinerario del viaje y debe contener:
+  - Barra superior fija a la derecha con selectores de idioma y moneda, usando las mismas clases y estructura para los botones en todas las páginas.
+  - Título principal y bienvenida.
+  - Lista de ciudades/destinos, cada una con su link correspondiente a la página de ciudad.
+  - Tabla de transporte entre ciudades, con nombres de compañías como enlace (sin columna web).
+  - (Opcional) Sección de atracciones destacadas según corresponda.
+  - Módulos interactivos al final (antes de `</body>`): conversor de moneda moderno, lista de equipaje, y consulta a IA, todos integrados y funcionando.
+  - Traducción dinámica de textos y soporte multilenguaje para todos los componentes y módulos.
+  - Consistencia visual y funcional en todos los elementos y botones.
+  - Al hacer clic en "⬅ Volver al itinerario" desde cualquier página de ciudad, debe retornar a `index.html`.
+
+### 13.2 Páginas de ciudad (ejemplo: ciudades/rosario.html)
+
+- Cada página de ciudad debe tener la siguiente estructura:
+  - Barra superior fija arriba a la derecha, con el mismo diseño y funcionalidad que en index.html: botones de idioma, y botón "⬅ Volver al itinerario" (link a `/index.html`).
+  - Título con el nombre de la ciudad, traducido dinámicamente.
+  - Foto de portada correspondiente, cargada desde `docs/imagenes/[ciudad].jpg` (nombre en minúsculas, sin espacios ni tildes).
+  - Secciones principales: breve introducción, actividades recomendadas, gastronomía (con foco en opciones aptas para diabéticos y bajas en carbohidratos siempre incluidas), alojamiento, agenda de eventos, atracciones, presupuesto orientativo y consejos para familias.
+  - Cada sección debe tener su propio título y contenido, ambos traducibles dinámicamente.
+  - El menú de navegación y todos los botones deben usar las mismas clases e IDs que en index.html para que la traducción y la experiencia sean consistentes.
+  - Todos los enlaces internos (a otras ciudades/mapa/etc.) deben funcionar igual y mantenerse en el idioma seleccionado.
+  - El diseño, IDs y clases deben ser los mismos en todas las páginas de ciudad.
+  - Si se agregan módulos adicionales (galería, comentarios, etc.), deben ubicarse después del contenido principal y antes de `</body>`, siguiendo la misma lógica de integración que los módulos de la página principal.
+
+---
+
+## 14. Ciudades y destinos incluidos
 
 - Buenos Aires
 - Rosario
