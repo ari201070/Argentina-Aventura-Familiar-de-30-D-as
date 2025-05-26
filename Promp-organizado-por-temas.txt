@@ -63,6 +63,14 @@ Toda nueva instrucción debe agregarse en este archivo, bajo el tema correspondi
 - El menú de navegación, función de cambio de idioma y moneda, y botón "Volver al itinerario" deben funcionar igual en todas las páginas.
 - El nombre de la imagen debe corresponder exactamente al nombre de la ciudad (minúsculas, sin espacios ni tildes).
 - Las imágenes deben estar presentes en la carpeta correspondiente antes de publicar la página.
+-Para que todas las páginas de ciudades sean consistentes y multi-idioma, solo necesitas que la barra superior tenga:
+
+Botón: Español
+Botón: עברית
+Enlace: ⬅ Volver al itinerario (que también se traduce a hebreo automáticamente)
+Copia el mismo bloque HTML y el mismo script que usa el diccionario con la clave "back-link".
+Así, cuando cambies de idioma, el texto del enlace también cambia (por ejemplo, a:
+⬅ חזרה למפת המסלול ).
 
 ---
 
@@ -152,13 +160,16 @@ Toda nueva instrucción debe agregarse en este archivo, bajo el tema correspondi
 
 ---
 
-## 12. Propuestas y mejoras futuras (opcional)
+## 12. Propuestas y mejoras futuras
 
 - Integrar APIs de tipo de cambio, reservas, mapas, etc.
 - Formularios para agregar notas y gastos diarios.
 - Visualización de presupuesto con tablas, tarjetas, o gráficos.
 - Documentar scripts de automatización de datos.
 - Internacionalización: README en español, inglés y hebreo.
+-Sincronizar eventos automáticamente con tu archivo de ciudades.
+-Mejorar UI (más íconos, colores por tipo, edición de reservas, exportar PDF, etc.).
+-Permitir agregar eventos personalizados.
 
 ---
 
