@@ -69,6 +69,7 @@ Toda nueva instrucción debe agregarse en este archivo, bajo el tema correspondi
 ## 5. Traducción dinámica y soporte multilenguaje
 
 - Todos los textos, botones, títulos, placeholders y mensajes de error deben ser traducibles dinámicamente según el idioma elegido.
+-El diccionario de traducción (translations) debe incluir todas las cadenas de texto del contenido.
 - El selector de idioma debe cambiar textos y enlaces al idioma correspondiente.
 - Al navegar, la selección de idioma se mantiene (usando localStorage o querystring).
 - Todos los IDs y clases deben mantenerse igual para que la traducción funcione en todas las páginas.
