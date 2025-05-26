@@ -187,6 +187,16 @@ Así, cuando cambies de idioma, el texto del enlace también cambia (por ejemplo
 - Mapa Interactivo
 
 ---
+Flujo del Itinerario
+Buenos Aires (inicio)
+Rosario
+Mendoza
+Malargüe
+Jujuy
+Cataratas del Iguazú
+Corrientes
+Esteros del Iberá
+Buenos Aires (regreso)
 
 ## 14. Estructura de las páginas
 
