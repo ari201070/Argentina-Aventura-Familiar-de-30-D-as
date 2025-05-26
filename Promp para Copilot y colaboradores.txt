@@ -1,5 +1,6 @@
 # Promp para Copilot y colaboradores: Organización y lineamientos del proyecto
-
+Este promp te guiara durante todo el proyecto, antes de realizar algun cambio en cualquier carpeta/archivo vendras a consultar al promp aunque tarde unos segundos mas la programacion.
+Esta es la parte mas importante del proyecto, SIN COLTULTAR EL PROMP NO AVANZAS!!!
 Este archivo contiene TODAS las reglas y lineamientos para el desarrollo y edición del proyecto **Argentina Aventura Familiar de 30 Días**.  
 Toda nueva instrucción debe agregarse en este archivo, bajo el tema correspondiente.  
 **No borres este archivo. Si surgen conflictos entre reglas, consultar a ari201070 antes de decidir.**
