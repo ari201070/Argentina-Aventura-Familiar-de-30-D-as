@@ -293,4 +293,74 @@ Poné un mensaje de commit (ej: "agrego main.jsx").
 Hacé Commit y luego Push.
 Refrescá en GitHub web para ver los cambios reflejados.
 
+Mejoras en el Código:
 
+Separar las traducciones en archivos JSON independientes dentro de /locales/ para facilitar el mantenimiento
+Implementar un sistema de rutas más limpio
+Crear componentes reutilizables para elementos comunes como el header y footer
+Implementar un sistema de templates para reducir la duplicación de código HTML
+Optimizaciones Técnicas:
+
+Implementar manejo de caché para recursos estáticos
+Minificar archivos CSS y JavaScript para producción
+Optimizar las imágenes para mejor rendimiento
+Implementar lazy loading para imágenes y contenido
+Mejoras de Accesibilidad:
+
+Añadir atributos ARIA para mejor accesibilidad
+Mejorar el contraste de colores
+Asegurar que todos los elementos interactivos sean accesibles por teclado
+Incluir textos alternativos para todas las imágenes
+Documentación:
+
+Crear un archivo CONTRIBUTING.md con guías de contribución
+Mejorar la documentación en el README.md
+Añadir comentarios explicativos en el código
+Documentar el sistema de traducciones
+Gestión de Estado:
+
+Implementar un sistema de gestión de estado más robusto para manejar las preferencias de idioma y moneda
+Guardar las preferencias del usuario en localStorage
+Mejoras en el Sistema de Traducciones:
+
+Centralizar todas las cadenas de texto en archivos de idioma
+Implementar un sistema de fallback para traducciones faltantes
+Añadir soporte para más idiomas de manera escalable
+SEO y Metadatos:
+
+Mejorar los metadatos para SEO
+Añadir Open Graph tags para compartir en redes sociales
+Implementar un sitemap.xml
+Añadir un robots.txt
+Estilos y Diseño:
+
+Implementar un sistema de diseño consistente
+Usar variables CSS para una gestión más fácil de colores y temas
+Mejorar la responsividad para diferentes dispositivos
+Implementar temas claro/oscuro
+Testing:
+
+Añadir tests unitarios para las funciones JavaScript
+Implementar tests de integración
+Añadir pruebas de accesibilidad automatizadas
+Implementar pruebas de rendimiento
+Manejo de Errores:
+
+Implementar un sistema de manejo de errores más robusto
+Añadir páginas de error personalizadas (404, 500)
+Implementar logging de errores
+Seguridad:
+
+Implementar headers de seguridad
+Sanitizar inputs de usuario
+Proteger contra XSS y otros vectores de ataque comunes
+Performance:
+
+Implementar service workers para funcionalidad offline
+Optimizar el critical rendering path
+Implementar code splitting para reducir el tamaño inicial de la carga
+Control de Versiones:
+
+Añadir un archivo .gitignore apropiado
+Implementar conventional commits
+Configurar GitHub Actions para CI/CD
