@@ -299,3 +299,24 @@ En cada página HTML, incluís el selector y el script central, y llamás a tran
 Todo el contenido, textos y scripts de traducción deben estar guardados en los archivos del propio proyecto (es decir, local en el sentido de “incluido en la carpeta del sitio”).
 Si hay internet, la app funciona igual; si no hay, sigue funcionando exactamente igual.
 Si en el futuro querés agregar funciones online (comentarios, mapas en vivo, etc.), podés hacerlo sin afectar la parte básica.
+.gitignore recomendado para tu proyecto
+Incluye:
+
+Node.js (node_modules, logs)
+Mac, Linux y Windows (archivos de sistema)
+Visual Studio Code y JetBrains IDEs (archivos de configuración)
+Archivos comunes de backend y frontend (dist, build, coverage, etc.)
+¿Qué hace este archivo?
+Evita subir dependencias (node_modules, bower_components, etc.)
+Evita archivos generados automáticamente (dist, build, out, etc.)
+Ignora archivos de configuración local (de VSCode, JetBrains, Xcode, etc.)
+Bloquea archivos de sistema de Windows y Mac
+No sube logs, cachés ni archivos temporales
+Incluye reglas para CopilotForXcode y proyectos de Xcode
+El archivo .gitignore debe estar en la raíz de tu repositorio (en la misma carpeta donde está la carpeta .git, tu package.json, etc).
+Los archivos HTML de todas las ciudades del viaje, unificados siguiendo el mismo modelo para todas las ciudades:
+Barra superior fija (selector de idioma y botón “Volver al itinerario”).
+Foto de portada cargada desde docs/imagenes/[ciudad].jpg.
+Estructura, IDs y clases listos para traducción automática.
+El nombre del archivo de la imagen será el nombre de la ciudad en minúsculas, sin espacios ni tildes y extensión .jpg.
+Asegúrarse de tener las imágenes correspondientes en docs/imagenes/ (por ejemplo, docs/imagenes/bariloche.jpg, docs/imagenes/jujuy.jpg, etc.).
