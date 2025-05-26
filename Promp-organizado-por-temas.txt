@@ -10,7 +10,19 @@ Toda nueva instrucción debe agregarse en este archivo, bajo el tema correspondi
 
 - Documentar y organizar un viaje familiar de un mes por Argentina, orientado a familias (pareja + 2 hijos), con información en español y hebreo.
 - Se incluyen: itinerario, actividades, alojamientos, presupuesto, logística, consejos y recursos útiles, priorizando experiencia y comodidad familiar.
+El proyecto está orientado a documentar y organizar un viaje familiar de un mes por Argentina, con información en hebreo, para una familia (pareja + 2 hijos). Incluye itinerario, actividades, alojamientos, coordenadas y presupuesto detallado, así como la adaptación cultural y lingüística para viajeros israelíes o de habla hebrea.
 
+Estructura y Contenidos:
+
+Itinerario detallado: Incluye destinos principales (Buenos Aires, Rosario, Bariloche, Mendoza, Jujuy, Puerto Iguazú, Corrientes, regreso a Buenos Aires), duración en cada lugar, actividades clave, sugerencias de alojamiento y coordenadas geográficas.
+
+Presupuesto: Cálculo de costos diarios promedio (alojamiento, comidas, actividades, transporte local), suma total para 30 días, margen de seguridad del 25%, y costos de vuelos internacionales desde Israel sin pasar por Turquía o países árabes.
+
+Archivos fuente: El itinerario y los datos principales están en hojas de cálculo (Excel), lo que facilita la actualización y exportación de datos.
+
+Enfoque en la experiencia familiar: Las actividades y alojamientos están pensados para familias y priorizan la comodidad, la seguridad y la variedad de experiencias.
+
+Para las opciones de comida tiene que ser apta para diabeticos y baja en carbohiratos (sin gluten de ser posible), si tiene que ser el unico tipo de dieta pero si abarcar estas posibilidades.
 ---
 
 ## 2. Estructura del proyecto
@@ -364,3 +376,316 @@ Control de Versiones:
 Añadir un archivo .gitignore apropiado
 Implementar conventional commits
 Configurar GitHub Actions para CI/CD
+
+
+Propuestas y Buenas Prácticas
+Separar claramente frontend y documentación/datos:
+
+Mantener la app React en la carpeta frontend/.
+Centralizar la documentación y archivos fuente en /docs.
+Hojas de cálculo y datos estructurados:
+
+Guardar los Excel y CSV en subcarpetas específicas por temática (itinerario, presupuesto, alojamientos, etc).
+Si la app consume datos, agregar una carpeta /data con versiones en JSON, facilitando la integración y futuras automatizaciones.
+Documentación clara:
+
+README(s) en Markdown explicando el propósito de cada carpeta y archivo.
+Resumir el itinerario y presupuesto también en Markdown para visualización rápida en GitHub.
+Consejos culturales y lingüísticos:
+
+Crear un archivo dedicado (por ejemplo, /docs/cultura-lenguaje/adaptacion.md) con recomendaciones para viajeros israelíes/hebrea.
+Automatización y scripts:
+
+Si el itinerario y presupuesto se actualizan frecuentemente, agregar scripts para convertir Excel/CSV a JSON para la app.
+Documentar el uso de estos scripts.
+Versionado de datos:
+
+Si varias personas editan los datos, sugerir el uso de formatos fácilmente versionables (CSV, JSON, Markdown) además de Excel.
+Internacionalización:
+
+Si el contenido está en hebreo, indicar el idioma en los nombres de archivo o carpetas (ej: itinerario-he.xlsx).
+Considerar agregar un README en español, inglés y hebreo para mayor alcance.
+Separar claramente la app del contenido documental y de datos hará el proyecto más escalable, colaborativo y fácil de mantener.
+Documentar y versionar los datos clave, y ofrecer formatos tanto para humanos (Excel, Markdown) como para la app (JSON), es una práctica ideal.
+Scripts y automatización ayudan a mantener todo sincronizado.
+La documentación cultural y de contexto en carpetas propias refuerza el valor diferencial de tu proyecto.
+
+Es recomendable y necesario incluir la carpeta del backend si el proyecto tiene lógica de servidor, base de datos, API, etc. Esto mejora la claridad, organización y escalabilidad del repositorio.
+¿Por qué es importante incluir mcp-backend?
+Claridad: Deja explícito que el proyecto es full-stack o tiene lógica de backend.
+Mantenimiento: Permite a otros contribuir o desplegar el backend fácilmente.
+Separación de responsabilidades: Facilita trabajar frontend y backend por separado, con sus propias dependencias y despliegues.
+Escalabilidad: Si en el futuro el backend crece (más servicios, autenticación, etc), está listo para organizarse.
+
+Estructura recomendada y utilidad de archivos
+Carpeta raíz del proyecto
+README.md
+Útil y fundamental. Resume el objetivo, alcance y cómo empezar. Ya lo tenés completísimo y muy detallado.
+/frontend
+Carpeta esencial para toda la app web.
+Incluye:
+public/ y src/: Necesarios para React.
+package.json y yarn.lock: Mantener, gestionan dependencias y scripts.
+Otros archivos de configuración (ej. .env, .gitignore): Útiles para ambiente y ocultar datos sensibles.
+/mcp-backend (si tuvieras backend)
+Muy útil si pensás integrar APIs propias, lógica de servidores, autenticación, almacenamiento de datos dinámicos, etc.
+Si aún no existe, podés dejarlo para más adelante, pero tener la carpeta pensada es bueno para crecer.
+/docs
+Muy útil y recomendable para documentación, planillas, explicaciones, etc.
+itinerario/: Guardar itinerario en .xlsx y .csv, y un resumen en .md.
+presupuesto/: Igual que itinerario, pero para costos.
+alojamientos/, actividades/, coordenadas/: Útiles si querés tener documentación y archivos de datos que no cambian seguido.
+cultura-lenguaje/: Muy útil para tips de viaje, cultura, costumbres, consejos para israelíes/hebrea, etc.
+/data
+Clave si querés que tu web consuma datos estructurados (JSON, CSV).
+Acá podés tener:
+itinerario.json
+presupuesto.json
+alojamiento.json
+actividades.json
+etc.
+Permite actualizar la web fácilmente desde Excel (con scripts de conversión).
+/scripts
+Muy útil si querés automatizar la conversión de Excel/CSV a JSON para la web, importar datos, o procesar info externa (por ejemplo, tasas de cambio, traducciones, etc).
+
+Propuestas para potenciar la web (MCP + funciones modernas)
+Cambio de monedas automático:
+
+Integrá una API de tipo de cambio (ej. exchangerate-api, openexchangerates, etc).
+Guardá el resultado en /data/cambio.json y actualizalo con un script.
+Mostrá siempre valores en pesos, dólares y shekels (o la moneda de preferencia).
+Traducción de páginas/contenido:
+
+Usá librerías como i18next, react-intl, o incluso APIs externas (Google Translate, DeepL) para traducir contenido.
+Guardá los textos en /data/lang/ (ej. es.json, he.json, en.json).
+Búsqueda de transportes y reservas:
+
+Integrá APIs de buses, vuelos o plataformas de reservas (si están disponibles) o permití búsquedas manuales con enlaces útiles.
+Mantené archivos de referencia en /docs/ o /data/ con las empresas, plataformas y tips.
+Actualización dinámica de datos:
+
+Automatizá la importación de datos (precios, itinerarios) con scripts en /scripts/ y/o conecta el frontend a una API (backend propio o servicios externos).
+Otras ideas para MCP/Interactividad:
+
+Formulario para que la familia agregue notas, comentarios o sugerencias.
+Calendario interactivo.
+Mapas con marcadores (usá Leaflet, Mapbox, Google Maps API).
+Panel con alertas de salud, clima o avisos importantes.
+Sección de “Preguntas frecuentes” dinámica.
+
+¿En qué carpeta poner presupuesto.json e itinerario.json?
+La mejor práctica es colocarlos en una carpeta llamada /data en la raíz de tu proyecto, para mantener separados los datos estructurados del código fuente y la documentación.
+
+Opciones para mostrar el presupuesto en la web
+Algunas opciones de visualización recomendadas:
+
+Tabla simple: Una tabla HTML mostrando los costos por ciudad, tipo de gasto, totales, etc.
+Tarjetas/resúmenes: Un bloque resumen con el total, margen de seguridad y conversión de monedas, y tarjetas individuales para cada ciudad o gasto.
+Gráficos: Barras o tortas usando librerías como Chart.js o Recharts para mostrar la distribución de gastos.
+Filtros/interactividad: Permitir seleccionar moneda, ciudad, tipo de gasto, etc., y que la tabla/gráficos se actualicen dinámicamente.
+Resumen destacado: Un bloque visual muy claro con el total del viaje, gastos diarios, margen, etc.
+
+Presupuesto: Tabla simple y posibilidad de actualización diaria
+a) Organización para actualización diaria
+Para registrar los gastos diarios, te recomiendo:
+
+Mantener el archivo presupuesto.json como resumen y plan general.
+Crear un archivo adicional gastos-diarios.json donde cada miembro de la familia puede cargar cuánto gastó cada día y en qué rubro.
+Mostrar en la web tanto el plan (presupuesto) como el gasto real acumulado, permitiendo comparar y ver la diferencia.
+Código completo: frontend/src/pages/Presupuesto.jsx
+Este componente:
+
+Lee presupuesto.json y gastos-diarios.json.
+Muestra tabla de presupuesto planificado y tabla de gastos reales diarios.
+Permite comparar totales y ver la diferencia.
+La edición/carga de gastos diarios la podés hacer editando el archivo (o después agregar un formulario).
+
+Conviene juntar los archivos solo si tienen información redundante o si ambos son usados siempre juntos y tienen la misma estructura y propósito.
+Si uno es, por ejemplo, un archivo .html con formato web y otro es un .md (Markdown) para documentación, lo mejor es dejarlos separados.
+¿Ventajas de dejarlos separados?
+Puedes usar cada uno para fines específicos:
+El .md para documentación, notas, edición colaborativa, integración con sistemas como GitHub, etc.
+El .html para visualizar como página web, mostrar en un navegador, etc.
+No hay conflictos si están en la misma carpeta, siempre que tengan nombres distintos (buenosaires.md y buenosaires.html, por ejemplo).
+¿Qué tener en cuenta?
+Si hay información que quieres mantener sincronizada entre ambos, deberías actualizar los dos si cambia algo importante.
+Puedes agregar un README.md en la carpeta explicando para qué es cada archivo.
+
+Los archivos de información y contenido principal (por ejemplo, .md, .html) de cada ciudad van todos juntos en la carpeta ciudades.
+Todos los recursos multimedia y archivos adjuntos (imágenes, mapas, PDFs, etc.) se almacenan ordenados por ciudad dentro de docs/ciudad/.
+Evitás duplicar o complicar la estructura.
+Es más fácil encontrar y mantener la información.
+Todos los .md y .html de ciudades juntos en ciudades/.
+Todos los recursos multimedia y documentos adjuntos en docs/nombreciudad/.
+
+
+Ejemplo completo para la sincronización entre las carpetas ciudades/ y docs/ para Buenos Aires, siguiendo la estructura y convenciones que definimos.
+1. Archivo Markdown principal
+# Buenos Aires
+
+## Actividades principales
+
+| Actividad                                                                 | Horario        | Precio aprox. | Info                                              |
+|---------------------------------------------------------------------------|---------------|---------------|---------------------------------------------------|
+| Tours culturales                                                          | 09:00–12:00   | 15 USD        | [Wiki](https://es.wikipedia.org/wiki/Buenos_Aires)|
+| Espectáculo de tango                                                      | 20:00–22:30   | 40 USD        | —                                                 |
+| Paseo en bote por Puerto Madero                                           | 17:00–18:00   | 10 USD        | [Wiki](https://es.wikipedia.org/wiki/Puerto_Madero)|
+| Visita al Teatro Colón, Casa Rosada, Obelisco, Recoleta, MNBA y La Boca   | 14:00–18:00   | Gratis        | [La Boca](https://es.wikipedia.org/wiki/La_Boca)  |
+| Recorrido por Parque Tres de Febrero                                      | 10:00–12:00   | Gratis        | [Wiki](https://es.wikipedia.org/wiki/Parque_Tres_de_Febrero)|
+| Día en el Jardín Japonés                                                  | 09:30–11:30   | 5 USD         | [Wiki](https://es.wikipedia.org/wiki/Jard%C3%ADn_Japon%C3%A9s_(Buenos_Aires))|
+| Explorar Palermo (tiendas y cafés)                                        | 16:00–19:00   | Variable      | [Wiki](https://es.wikipedia.org/wiki/Palermo_(Buenos_Aires))|
+
+![Obelisco de Buenos Aires](../docs/buenosaires/obelisco.jpg)
+
+Puedes consultar el [mapa turístico de Buenos Aires (PDF)](../docs/buenosaires/mapa.pdf).
+
+---
+
+## Restaurantes recomendados
+
+| Restaurante                                      | Tipo                      | Gluten-free | Sugar-free |
+|--------------------------------------------------|---------------------------|:-----------:|:----------:|
+| [Don Julio](https://www.parrilladonjulio.com/)   | Parrilla Premium          | ✔️          | ❌         |
+| [Sacro](https://www.sacro.restaurant/)           | Vegano Gourmet            | ✔️          | ✔️         |
+| [Bio Restaurante](https://www.biorestaurante.com/) | Orgánico                 | ✔️          | ✔️         |
+| [Paru Inkas Sushi & Grill](https://parurestaurant.com/) | Fusión Peruano-Japonesa | ✔️          | ❌         |
+
+También puedes descargar un [listado ampliado de restaurantes (PDF)](../docs/buenosaires/restaurantes.pdf).
+
+---
+
+## Confiterías y cafés
+
+| Confitería                                         | Tipo                      | Gluten-free | Sugar-free |
+|----------------------------------------------------|---------------------------|:-----------:|:----------:|
+| [Café Tortoni](https://www.cafetortoni.com.ar/)    | Histórico / Clásico       | ❌          | ❌         |
+| [Havanna](https://www.havanna.com.ar/)             | Alfajores / Café          | ✔️          | ✔️         |
+| [Confitería Ideal](https://www.confiteriaideal.com/) | Repostería Tradicional   | ❌          | ❌         |
+
+---
+
+![Show de Tango](../docs/buenosaires/tango-show.jpg)
+
+> **Notas:**  
+> - Los horarios y precios pueden variar según la temporada.  
+> - Consultar disponibilidad para actividades y reservas en restaurantes recomendados.
+> - Descarga el [itinerario editable de Buenos Aires (xlsx)](../docs/buenosaires/itinerario.xlsx) para organizar tu viaje.
+
+2. Contenido para la carpeta docs/buenosaires/
+Puedes agregar y organizar recursos que referencie el markdown, por ejemplo:
+
+obelisco.jpg (imagen del Obelisco, ya referenciada en el archivo .md)
+mapa.pdf (mapa turístico, guía de la ciudad)
+restaurantes.pdf (listado ampliado de restaurantes)
+tango-show.jpg (imagen de un espectáculo de tango)
+itinerario.xlsx (planilla editable con itinerario)
+
+# Buenos Aires
+
+## Actividades principales
+
+![Obelisco de Buenos Aires](../docs/buenosaires/obelisco.jpg)
+
+Consulta el [mapa turístico de Buenos Aires](../docs/buenosaires/mapa.pdf) para ubicarte fácilmente.
+
+...
+
+> Descarga el itinerario editable: [Itinerario Buenos Aires (xlsx)](../docs/buenosaires/itinerario.xlsx)
+
+## Restaurantes recomendados
+
+Puedes ver la lista ampliada aquí: [restaurantes.pdf](../docs/buenosaires/restaurantes.pdf)
+
+3. Ejemplo de estructura de la carpeta docs/buenosaires/
+
+docs/
+└── buenosaires/
+    ├── obelisco.jpg
+    ├── mapa.pdf
+    ├── restaurantes.pdf
+    ├── tango-show.jpg
+    └── itinerario.xlsx
+
+De esta forma, todo lo que referencies en tu archivo Markdown de Buenos Aires está sincronizado y organizado dentro de docs/buenosaires/, quedando claro y ordenado.
+1. Sobre la estructura HTML y “Agenda de eventos”
+Todas las ciudades ahora deben tener la sección <h2>Agenda de eventos</h2>, como ya lo agregaste.
+El menú de navegación y el enlace "Volver al itinerario" ya funcionan y están sincronizados para todas las ciudades.
+La entrada <li><a href="../mapa.html">Mapa Interactivo</a></li> también debe estar para todas las ciudades, lo cual ya hiciste.
+2. Sincronización y enriquecimiento entre /ciudades y /docs
+¿Qué significa “enriquecer” docs?
+Que los archivos dentro de docs/ (por ejemplo, docs/actividades/buenosaires/README.md, docs/alojamientos/buenosaires/README.md, etc.) contengan información actualizada, ampliada y consistente con lo que figura en los archivos .md y .html de cada ciudad.
+Que toda sección importante de la ciudad en su .md también se refleje y amplíe en la carpeta correspondiente en docs/.
+¿Cómo se puede sincronizar y enriquecer?
+Revisar el contenido de cada archivo de ciudad (.md y .html) para ver qué secciones existen: atracciones, agenda, restaurantes, cultura, itinerario, etc.
+Asegurarse que cada sección tenga su contraparte en docs/:
+Ejemplo:
+La sección "Tipos de restaurantes" en el .md de Buenos Aires debe estar en docs/alojamientos/buenosaires/README.md o, si lo deseas más detallado, en un archivo específico dentro de alojamientos.
+La sección "Agenda de eventos" debe figurar en docs/agenda/buenosaires/README.md o en el README principal de la ciudad dentro de docs/.
+"Atracciones" en docs/actividades/buenosaires/README.md.
+Enriquecer agregando información adicional relevante en cada archivo de docs/ según el tema:
+Más detalles sobre lugares, eventos, contactos, recomendaciones, mapas, enlaces útiles, etc.
+Mantener la estructura y el formato coherentes:
+Usar títulos, listas, enlaces y tablas igual o mejor que en la versión .md principal.
+3. Ejemplo concreto para Buenos Aires
+Supón que tu ciudades/buenosaires.md tiene secciones como:
+
+Lugares imperdibles
+Actividades recomendadas
+Gastronomía destacada
+Tipos de restaurantes
+Agenda de eventos
+Consejos para familias
+Presupuesto orientativo
+Tips culturales
+Cómo sincronizar y enriquecer docs para Buenos Aires:
+
+docs/actividades/buenosaires/README.md:
+“Lugares imperdibles” y “Actividades recomendadas”, pero más detallado o ampliado.
+docs/alojamientos/buenosaires/README.md:
+Descripción de zonas, hoteles, hospedajes y “Tipos de restaurantes”, con ejemplos y recomendaciones.
+docs/presupuesto/buenosaires/README.md:
+Presupuesto orientativo, pero con detalles ampliados, consejos de ahorro, etc.
+docs/cultura-lenguaje/buenosaires/README.md:
+Tips culturales, costumbres, idioma, eventos, etc.
+docs/itinerario/buenosaires/README.md:
+Sugerencias de recorrido, itinerarios día por día.
+docs/coordenadas/buenosaires/README.md:
+Coordenadas exactas de atracciones, mapas integrados, enlaces a Google Maps.
+docs/agenda/buenosaires/README.md (nuevo, si querés):
+Agenda de eventos actualizada, enlaces de descarga, iCal, etc.
+
+
+Poner una sección “Agenda de eventos” en cada página de ciudad, con los eventos locales relevantes y/o un enlace a una agenda central si existe.
+Si hay eventos nacionales o compartidos, podés poner una agenda general en el index y, en cada ciudad, enlazar a esa agenda además de mostrar los eventos propios.
+Ejemplo de organización:
+En cada ciudades/<ciudad>.html:
+
+Agenda de eventos locales destacados (propios de la ciudad).
+Enlace a la agenda general si hay eventos nacionales o itinerantes.
+En index.html:
+
+Agenda general del viaje (eventos nacionales, fechas clave, etc.).
+
+¿Por qué de esta forma?
+Así el usuario encuentra rápido los eventos de la ciudad que le interesa.
+No se pierde la visión global del viaje.
+Es fácil de mantener: solo los eventos propios van en la ciudad, los grandes o nacionales en el index.
+
+Solo interesa mostrar los eventos que ocurren en la ciudad en la que efectivamente va a estar la familia en esa fecha.
+
+Esto implica:
+
+La agenda de eventos debe estar asociada a cada ciudad, solo con los eventos relevantes para las fechas en las que esa ciudad está programada en el itinerario.
+No tiene sentido mostrar eventos de Buenos Aires cuando ya se está en Mendoza, ni viceversa.
+¿Cómo organizarlo?
+Cada archivo de ciudad (por ejemplo, buenosaires.html) debe incluir solo los eventos que ocurren durante las fechas en que la familia estará en Buenos Aires.
+Lo mismo para Mendoza, Rosario, etc.
+Si querés una agenda general, puede ser solo a modo de referencia, pero la que importa para la experiencia del usuario está en cada ciudad.
+Ejemplo concreto (“Buenos Aires”)
+Supongamos que del 10 al 13 de octubre están en Buenos Aires.
+Solo listamos los eventos de Buenos Aires entre esas fechas en su sección de “Agenda de eventos”.
+
+Recomendación final
+La agenda de cada ciudad debe mostrar solo los eventos de las fechas en que están allí.
+Si en algún lado centralizás la agenda (por ejemplo, en el index), debe dejar muy claro en qué ciudad se está cada día y solo mostrar los eventos que corresponden.
+¡Esto hace la experiencia mucho más relevante y clara!
