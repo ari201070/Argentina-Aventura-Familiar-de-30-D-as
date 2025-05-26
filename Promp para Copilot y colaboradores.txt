@@ -1,0 +1,183 @@
+# Promp para Copilot y colaboradores: Organización y lineamientos del proyecto
+
+Este archivo contiene TODAS las reglas y lineamientos para el desarrollo y edición del proyecto **Argentina Aventura Familiar de 30 Días**.  
+Toda nueva instrucción debe agregarse en este archivo, bajo el tema correspondiente.  
+**No borres este archivo. Si surgen conflictos entre reglas, consultar a ari201070 antes de decidir.**
+
+---
+
+## 1. Objetivo general del proyecto
+
+- Documentar y organizar un viaje familiar de un mes por Argentina, orientado a familias (pareja + 2 hijos), con información en español y hebreo.
+- Se incluyen: itinerario, actividades, alojamientos, presupuesto, logística, consejos y recursos útiles, priorizando experiencia y comodidad familiar.
+
+---
+
+## 2. Estructura del proyecto
+
+```
+/ (raíz del proyecto)
+├── index.html                         # Página principal del itinerario
+├── Promp para github.txt              # Archivo de reglas original (NO BORRAR)
+├── Promp-organizado-por-temas.txt     # Este archivo, versión ordenada y ampliable
+├── docs/
+│   ├── imagenes/
+│   │   ├── buenosaires.jpg
+│   │   ├── rosario.jpg
+│   │   ├── bariloche.jpg
+│   │   ├── ... (más imágenes por ciudad, en minúsculas y sin espacios)
+│   └── ... (otros recursos/documentos de apoyo) ...
+├── ciudades/
+│   ├── buenosaires.html
+│   ├── rosario.html
+│   ├── bariloche.html
+│   ├── ... (todas las ciudades y mapa interactivo) ...
+├── css/   # Opcional, estilos compartidos
+├── js/    # Opcional, scripts JS compartidos
+├── README.md
+└── ... (otros archivos como favicon, licencia, etc.)
+```
+- Todas las imágenes deben estar en `docs/imagenes/` y llamarse igual al nombre de la ciudad en minúsculas, sin espacios, con extensión `.jpg` (o `.png` si aplica).
+- Todas las páginas de ciudad y el mapa están en la carpeta `ciudades/`.
+- Todos los archivos auxiliares/documentación en `docs/`.
+- Si usás módulos externos, podés agregar una carpeta `libs/`.
+
+---
+
+## 3. Reglas de entrega y edición de archivos
+
+- **SIEMPRE entregar los archivos completos, de principio a fin, listos para copiar y pegar.**
+- **No omitir nada de lo ya existente salvo pedido explícito.**
+- **No dejar comentarios ambiguos como “el resto es igual” ni archivos parciales.**
+- Al corregir, integrar o agregar módulos, conservar toda la estructura y contenido previo (sólo agregar o modificar lo necesario).
+- ¿Conflicto entre pedidos? Consultar a ari201070 antes de decidir.
+
+---
+
+## 4. Consistencia visual y funcional
+
+- Barra fija arriba a la derecha con botones de idioma y botón "Volver al itinerario".
+- Uso de las mismas clases y estructura para todos los botones (idioma, moneda, volver).
+- Foto de portada cargada desde `docs/imagenes/[ciudad].jpg` (o `.png` si corresponde) en todas las páginas de ciudad.
+- Toda la estructura HTML y CSS debe ser igual en todas las ciudades (incluyendo IDs y clases para traducción automática y funcionalidad consistente).
+- El menú de navegación, función de cambio de idioma y moneda, y botón "Volver al itinerario" deben funcionar igual en todas las páginas.
+- El nombre de la imagen debe corresponder exactamente al nombre de la ciudad (minúsculas, sin espacios ni tildes).
+- Las imágenes deben estar presentes en la carpeta correspondiente antes de publicar la página.
+
+---
+
+## 5. Traducción dinámica y soporte multilenguaje
+
+- Todos los textos, botones, títulos, placeholders y mensajes de error deben ser traducibles dinámicamente según el idioma elegido.
+- El selector de idioma debe cambiar textos y enlaces al idioma correspondiente.
+- Al navegar, la selección de idioma se mantiene (usando localStorage o querystring).
+- Todos los IDs y clases deben mantenerse igual para que la traducción funcione en todas las páginas.
+- Los ítems de la lista de equipaje se traducen automáticamente al cambiar el idioma.
+- La IA responde en el idioma en que se hace la pregunta.
+
+---
+
+## 6. Herramientas interactivas y módulos especiales
+
+### 6.1 Conversor de moneda
+
+- Conversor interactivo moderno, ubicado al final de index.html (antes de `</body>`), con tasas reales y actualización diaria (Polygon.io o exchangerate.host).
+- Conversor clásico en la tabla sigue funcionando con ARS/USD/ILS/EUR.
+- Si el par directo no está disponible, la conversión se realiza usando USD como intermediario (ejemplo: ARS → USD → ILS).
+- Solo monedas ARS, USD, EUR, ILS.
+- El resultado de la conversión debe ser claro y visible.
+
+### 6.2 Lista de equipaje
+
+- Lista con esenciales y opcionales (selector para agregar ítems en la lista correspondiente).
+- Agregar ítems traduce automáticamente al cambiar de idioma.
+- El botón para agregar ítems debe ser visible y traducido.
+- (Ideal: persistencia usando localStorage).
+
+### 6.3 Consulta a IA
+
+- Módulo de consulta a IA experto en viajes familiares en Argentina, al final de index.html.
+- Puede ser mock (respuesta simulada) o conectado a Pyrefly o a una API real.
+- El botón de consulta queda deshabilitado mientras responde.
+- Manejo de errores: si la IA falla, mostrar mensaje claro en el idioma actual.
+- Traducción de todos los textos y errores de IA.
+- La respuesta debe mostrarse en el idioma de la pregunta.
+
+---
+
+## 7. Reglas para imágenes
+
+- El nombre del archivo de la imagen será el nombre de la ciudad en minúsculas, sin espacios ni tildes y extensión .jpg.
+- Deben estar presentes en `C:\proyectos_git\Argentina-Aventura-Familiar-de-30-D-as\docs\imagenes\(nombre de la ciudad)`.
+- Descargar imágenes libres de Unsplash o equivalentes para cada ciudad.
+
+---
+
+## 8. Buenas prácticas y organización de datos/documentos
+
+- Guardar los Excel/CSV fuente en subcarpetas específicas por temática en `docs/`.
+- Si la app consume datos, agregar una carpeta `/data` con versiones en JSON.
+- README(s) en Markdown explicando el propósito de cada carpeta y archivo.
+- Mantener documentación clara y actualizada en `docs/`.
+- No crear carpetas vacías: si es necesario, agregar un archivo `.gitkeep`.
+
+---
+
+## 9. Sincronización y enriquecimiento de contenidos
+
+- Cada sección importante de la ciudad en su archivo .md debe reflejarse y ampliarse en la carpeta correspondiente en `docs/`.
+- Las secciones de ciudad deben estar sincronizadas entre los .html, .md y la documentación `docs/`.
+- Ejemplo: "Agenda de eventos" debe estar tanto en la página de la ciudad como en `docs/agenda/[ciudad]/README.md`.
+
+---
+
+## 10. Centralización de idioma y moneda
+
+- El estado de idioma y moneda debe manejarse globalmente (centralizado, por localStorage o querystring).
+- Cambiar idioma no afecta la conversión de moneda y viceversa.
+- Los selectores de idioma y moneda usan la misma lógica y clases activas en todas las páginas.
+- Al navegar o cambiar idioma/moneda, toda la navegación y los contenidos se mantienen en ese idioma y moneda.
+
+---
+
+## 11. .gitignore recomendado
+
+- Incluir reglas para:
+  - Node.js (node_modules, logs)
+  - Mac, Linux y Windows (archivos de sistema)
+  - IDEs (VSCode, JetBrains, etc.)
+  - Archivos generados automáticamente y de configuración local
+  - No subir logs, cachés, temporales, ni archivos vacíos
+
+---
+
+## 12. Propuestas y mejoras futuras
+
+- Integrar APIs de tipo de cambio, reservas, mapas, etc.
+- Formularios para agregar notas y gastos diarios.
+- Visualización de presupuesto con tablas, tarjetas, o gráficos.
+- Documentar scripts de automatización de datos.
+- Internacionalización: README en español, inglés y hebreo.
+
+---
+
+## 13. Ciudades y destinos incluidos
+
+- Buenos Aires
+- Rosario
+- Bariloche
+- Mendoza
+- Malargüe
+- Jujuy
+- Iguazú
+- Corrientes
+- Iberá
+- Mapa Interactivo
+
+---
+
+**IMPORTANTE:**  
+- Toda nueva instrucción debe agregarse en este archivo, bajo el tema correspondiente.  
+- Si tienes dudas o surge un conflicto entre pedidos, CONSÚLTALO antes de decidir.
+
+---
