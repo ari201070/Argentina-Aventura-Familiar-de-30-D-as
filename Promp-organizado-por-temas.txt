@@ -211,3 +211,63 @@ Toda nueva instrucción debe agregarse en este archivo, bajo el tema correspondi
 - Si tienes dudas o surge un conflicto entre pedidos, CONSÚLTALO antes de decidir.
 
 ---
+
+Recomendaciones según tu objetivo de crear una web interactiva integrando MCP y facilitando el proceso de desarrollo y colaboración con GitHub Copilot:
+
+1. Visual Studio Code (VSCode)
+Imprescindible si aún no lo usás. Es el editor más flexible para proyectos web modernos.
+Extensión recomendada:
+GitHub Copilot (para autocompletado inteligente).
+GitHub Copilot Chat (interacción conversacional integrada).
+Gestión de MCP:
+Soporte completo para Node.js, React, Python, etc.
+Terminal integrada para correr scripts y servidores.
+2. Extensiones útiles para proyectos MCP / Web
+Prettier: Autoformato de código.
+ESLint: Linter para JavaScript/React.
+Live Server: Vista previa instantánea de HTML/JS/CSS.
+Markdown Preview Enhanced: Para trabajar con la documentación en Markdown.
+REST Client: Probar APIs de tu backend MCP desde el propio editor.
+Thunder Client: Alternativa sencilla a Postman para testeo de APIs REST.
+3. Git y GitHub
+Extensión de GitHub en VSCode para hacer commits, push, pull y revisión de PRs desde el editor.
+GitLens: Para análisis avanzado de historial y autoría de código.
+4. MCP (Modelo Cliente-Servidor)
+Si te referís a frameworks o herramientas para facilitar el desarrollo MCP:
+
+Si usás Node.js, asegurate de tener Node.js y npm instalados.
+Para backend en Python: Python, pip y frameworks como Flask o FastAPI.
+Si querés desarrollo “fullstack” integrado: Vite o Create React App para React.
+No hay una extensión “MCP” oficial, pero sí muchas para facilitar cliente-servidor:
+
+Thunder Client o REST Client para probar APIs.
+Docker (si pensás dockerizar).
+5. Opcional: AI y asistencia
+Tabnine: Alternativa/extra de AI para autocompletado.
+Kite: Otro complemento de AI (menos popular que Copilot, pero útil).
+
+1. Mejorar la navegación visualmente
+Podés usar una lista (<ul>) o agregar algo de padding para que la navegación se vea mejor.
+
+2. Resaltar el link activo
+Con NavLink de React Router, podés resaltar el enlace actual automáticamente.
+
+3. Usar App.jsx en vez de App.js (opcional)
+La convención en proyectos modernos con React + Vite es usar .jsx para componentes con JSX, pero ambos funcionan.
+
+TU FLUJO DE TRABAJO IDEAL
+Abrí el archivo con Notepad, VS Code o Notepad++
+
+Si el archivo no existe, crealo desde el explorador de archivos de Windows o desde tu editor.
+Copiá el código que te paso y pegalo en el archivo.
+
+Guardá el archivo.
+
+En GitHub Desktop:
+
+Verificá los cambios (deberían aparecer listados).
+Poné un mensaje de commit (ej: "agrego main.jsx").
+Hacé Commit y luego Push.
+Refrescá en GitHub web para ver los cambios reflejados.
+
+
