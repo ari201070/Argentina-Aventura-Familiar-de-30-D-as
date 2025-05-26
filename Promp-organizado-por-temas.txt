@@ -689,3 +689,65 @@ Recomendación final
 La agenda de cada ciudad debe mostrar solo los eventos de las fechas en que están allí.
 Si en algún lado centralizás la agenda (por ejemplo, en el index), debe dejar muy claro en qué ciudad se está cada día y solo mostrar los eventos que corresponden.
 ¡Esto hace la experiencia mucho más relevante y clara!
+
+El proyecto tiene que funcionar sin conexión a internet (offline).
+Las plataformas principales serán teléfonos y tablets Android (posiblemente usando el navegador de esos dispositivos).
+No vas a poder depender de servidores externos ni de tu PC.
+Todo debe ser autocontenible y local, es decir, que funcione aunque no haya internet.
+¿Qué implica esto para la traducción y la estructura del proyecto?
+1. Traducción “local” es lo correcto
+Cuando menciono “local”, me refiero a que todos los archivos necesarios (HTML, JS, CSS, textos de traducción) estén guardados dentro del propio proyecto y NO dependan de recursos de internet.
+
+Los archivos con los textos traducidos (es.json, he.json, etc.) deben estar dentro de tu carpeta del proyecto.
+El script JS que maneja la traducción también tiene que estar dentro del proyecto.
+2. Nada de cargar archivos externos o usar APIs online
+No uses Google Translate ni ningún otro servicio externo de traducción en tiempo real.
+No uses librerías que requieran conexión para cargar recursos (CDN). Si usás librerías, descargá el archivo .js y guardalo en tu proyecto.
+3. ¿Cómo se usa en Android y tablets?
+Simplemente abrís el archivo index.html en el navegador del celular/tablet.
+Todo el contenido y la lógica funcionan igual, estés o no conectado.
+4. ¿Qué estructura te propongo?
+/index.html
+/js/i18n.js ← Script de traducción
+/locales/es.json
+/locales/he.json
+/ciudades/rosario.html, etc.
+Otros archivos estáticos (imágenes, etc.)
+Todo esto puede ser copiado a cualquier teléfono/tablet y abierto con el navegador.
+
+Respondiendo a tu duda
+Sí conviene que todo sea local, porque:
+
+Te asegura que el sitio funcione sin internet.
+No dependés de servidores ni recursos externos.
+Es fácil de copiar a cualquier dispositivo (teléfono, tablet, otra PC).
+
+Eel proyecto debe funcionar siempre aunque no tengas conexión a internet, pero no necesitás evitar que funcione online cuando haya acceso.
+Lo importante es que la app nunca dependa de recursos externos para funciones críticas como la traducción, la navegación o el acceso a los contenidos.
+
+Resumen de la solución ideal para tu caso:
+
+Todo el contenido, textos y scripts de traducción deben estar guardados en los archivos del propio proyecto (es decir, local en el sentido de “incluido en la carpeta del sitio”).
+Si hay internet, la app funciona igual; si no hay, sigue funcionando exactamente igual.
+Si en el futuro querés agregar funciones online (comentarios, mapas en vivo, etc.), podés hacerlo sin afectar la parte básica.
+
+Colocá los archivos i18n.js y estilos.css en la carpeta ciudades.
+Usá los atributos data-i18n="clave" en los elementos a traducir en tu HTML.
+
+Selector de idioma arriba a la derecha, igual que Bariloche.
+Traducción dinámica usando archivos locales/es.json y locales/he.json.
+El idioma se mantiene si salís y volvés (usando localStorage).
+Si estás en עברית y apretás "⬅ חזרה למפת המסלול", vas al itinerario con ?lang=he para que siga en hebreo.
+Todos los textos usan data-i18n para facilitar la traducción.
+El botón del idioma seleccionado aparece en negrita.
+
+¿Dónde guardar las imágenes?
+Lo mejor es que las imágenes que uses sean propias, libres de derechos, o subidas a tu propio proyecto (ejemplo: en una carpeta img/ dentro del proyecto), para no depender de servicios externos y evitar problemas de copyright.
+Si usas imágenes con derechos (como Shutterstock), aparecerán marcas de agua y no es legal usarlas públicamente.
+
+Recomendación:
+
+Crea una carpeta img en la raíz del proyecto (o dentro de ciudades).
+Guarda ahí tus imágenes representativas.
+Usa la ruta relativa en el src, por ejemplo: src="../img/rosario.jpg"
+
