@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import cheerio from 'cheerio';
-import './styles/AgendaCorrientes.css';
+import '../styles/AgendaCorrientes.css';
 
 const AgendaCorrientes = () => {
   const [eventos, setEventos] = useState([]);
