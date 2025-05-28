@@ -3,7 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <title>Malargüe | Viaje Familiar a Argentina</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="estilos.css">
+  <script src="i18n.js"></script>
   <style>
+    /* Estilos generales del cuerpo y barra superior */
     body {
       font-family: Arial, sans-serif;
       background: #f9f9f9;
@@ -34,105 +38,550 @@
       margin-left: 20px;
       text-decoration: none;
       font-weight: bold;
-      color: #007BFF;
+      color: #007bff;
+      font-size: 16px;
     }
-    h1, h2 {
-      color: #0F4761;
-    }
-    ul {
+    .header {
+      text-align: center;
       margin-bottom: 20px;
     }
-    iframe {
-      border: 1px solid black;
+    .header img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    .content-section {
+      background: #fff;
+      padding: 20px;
+      margin-bottom: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    }
+    h1, h2 {
+      color: #222;
+      border-bottom: 2px solid #eee;
+      padding-bottom: 10px;
+      margin-top: 0;
+    }
+    ul {
+      list-style-type: disc;
+      margin-left: 20px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
+    th, td {
+      border: 1px solid #ddd;
+      padding: 8px;
+      text-align: left;
+    }
+    th {
+      background-color: #f2f2f2;
+    }
+    .ai-section {
+      background-color: #e8f0fe; /* Un color suave para las secciones de IA */
+      border-left: 5px solid #4285f4;
+      padding: 15px;
+      margin-top: 20px;
+      border-radius: 5px;
+    }
+    .ai-response {
+      white-space: pre-wrap; /* Para mantener saltos de línea del texto generado por IA */
+      background-color: #f0f6ff;
+      border: 1px dashed #a0c3ff;
+      padding: 10px;
+      margin-top: 10px;
+      border-radius: 4px;
+    }
+    .ai-button {
+      background-color: #4285f4;
+      color: white;
+      padding: 10px 15px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+      margin-top: 10px;
+    }
+    .ai-button:hover {
+      background-color: #3367d6;
     }
   </style>
 </head>
 <body>
   <div id="language-selector">
-    <button onclick="translatePage('es')" class="language-btn">Español</button>
-    <button onclick="translatePage('he')" class="language-btn">עברית</button>
-    <a href="../index.html" class="back-link" id="back-link">⬅ Volver al itinerario</a>
+    <button class="language-btn" data-lang="es">Español</button>
+    <button class="language-btn" data-lang="he">עברית</button>
   </div>
 
-  <h1 id="city-title">Malargüe</h1>
-  <p id="welcome-text">Bienvenidos a la sección de Malargüe.</p>
+  <main>
+    <a href="../index.html" class="back-link" data-i18n="back-to-itinerary">⬅️ Volver al itinerario</a>
 
-  <h2 id="main-attractions-title">Atracciones principales</h2>
-  <ul id="main-attractions-list">
-    <li><a href="https://es.wikipedia.org/wiki/Caverna_de_Las_Brujas" target="_blank" id="attraction-0">Caverna de Las Brujas</a></li>
-    <li><a href="https://es.wikipedia.org/wiki/Castillos_de_Pincheira" target="_blank" id="attraction-1">Castillos de Pincheira</a></li>
-    <li><a href="https://es.wikipedia.org/wiki/Reserva_Laguna_de_llancanelo" target="_blank" id="attraction-2">Laguna de Llancanelo</a></li>
-    <li><a href="https://es.wikipedia.org/wiki/Centro_de_Esqu%C3%AD_Las_Le%C3%B1as" target="_blank" id="attraction-3">Las Leñas (centro de esquí)</a></li>
-  </ul>
+    <div class="header">
+      <h1 data-i18n="city-name">Malargüe</h1>
+      <img src="../docs/imagenes/malargue/malargue.jpg" alt="Caverna de las Brujas, Malargüe" class="ciudad-foto" id="city-photo">
+      <p id="foto-caption" data-i18n="foto-caption-malargue">Caverna de las Brujas, Malargüe</p>
+      <p id="welcome-text" data-i18n="welcome-text-malargue">
+        Malargüe es una ciudad en el sur de Mendoza, conocida por sus paisajes volcánicos, formaciones geológicas únicas y aventuras en la naturaleza. Es la puerta de entrada a atractivos como la Caverna de las Brujas y la Laguna de la Niña Encantada.
+      </p>
+    </div>
 
-  <h2 id="restaurant-types-title">Tipos de restaurantes</h2>
-  <ul id="restaurant-types-list">
-    <li id="rest-0">Parrillas</li>
-    <li id="rest-1">Restaurantes regionales</li>
-    <li id="rest-2">Pizzerías</li>
-    <li id="rest-3">Cafés y casas de té</li>
-  </ul>
+    <div class="content-section">
+      <h2 data-i18n="dates-duration-title">Fechas y duración</h2>
+      <ul>
+        <li data-i18n="malargue-stay">**Estadía**: 13/10 al 16/10 (4 días)</li>
+        <li data-i18n="malargue-how-to-get-there">**Cómo llegar**: Bus desde Mendoza / Auto de alquiler</li>
+      </ul>
+    </div>
 
-  <h2 id="map-title">Mapa de Malargüe</h2>
-  <iframe src="https://www.openstreetmap.org/export/embed.html?bbox=-70.170%2C-35.609%2C-69.980%2C-35.380&amp;layer=mapnik" width="100%" height="350"></iframe>
-  <br><small><a href="https://www.openstreetmap.org/#map=12/-35.48/-69.98" target="_blank" id="see-bigger-map">Ver mapa más grande</a></small>
+    <div class="content-section">
+      <h2 data-i18n="must-see-places-title">Lugares imperdibles</h2>
+      <ul>
+        <li data-i18n="malargue-place-0">**Caverna de las Brujas**: Impactante sistema de cuevas con estalactitas y estalagmitas (requiere reserva y tour guiado).</li>
+        <li data-i18n="malargue-place-1">**La Payunia**: Reserva Natural de campos de lava y volcanes (excursión de día completo, requiere 4x4 y guía).</li>
+        <li data-i18n="malargue-place-2">**Laguna de la Niña Encantada**: Pequeña laguna de aguas cristalinas rodeada de rocas.</li>
+        <li data-i18n="malargue-place-3">**Valle de Las Leñas**: Centro de esquí en invierno, con actividades de montaña en verano.</li>
+        <li data-i18n="malargue-place-4">**Dino Park (Parque Huellas de Dinosaurios)**: Para los amantes de la paleontología.</li>
+        <li data-i18n="malargue-place-5">**Planetario Malargüe**: Ideal para observación astronómica.</li>
+      </ul>
+    </div>
+
+    <div class="content-section">
+      <h2 data-i18n="recommended-activities-title">Actividades recomendadas</h2>
+      <ul>
+        <li data-i18n="malargue-activity-0">Excursiones guiadas a la Caverna de las Brujas.</li>
+        <li data-i18n="malargue-activity-1">Safari fotográfico en La Payunia (si las edades y el interés lo permiten).</li>
+        <li data-i18n="malargue-activity-2">Trekking suave o paseos en bicicleta por el Valle de Las Leñas (fuera de temporada de nieve).</li>
+        <li data-i18n="malargue-activity-3">Visita al Observatorio Pierre Auger (con reserva).</li>
+        <li data-i18n="malargue-activity-4">Rafting o cabalgatas en los alrededores.</li>
+        <li data-i18n="malargue-activity-5">Exploración de la Laguna de la Niña Encantada y sus formaciones rocosas.</li>
+      </ul>
+    </div>
+
+    <div class="content-section">
+      <h2 data-i18n="gastronomy-title">Gastronomía destacada</h2>
+      <p data-i18n="gastronomy-intro-malargue">
+        La gastronomía en Malargüe se enfoca en platos patagónicos, carnes a la parrilla, chivito a la llama (plato típico de la zona) y productos regionales. Las opciones para dietas especiales pueden ser más limitadas, por lo que se recomienda preguntar.
+      </p>
+
+      <h3 data-i18n="restaurants-title">Restaurantes recomendados</h3>
+      <table>
+        <thead>
+          <tr>
+            <th data-i18n="table-restaurant">Restaurante</th>
+            <th data-i18n="table-type">Tipo</th>
+            <th data-i18n="table-gluten-free">Sin Gluten</th>
+            <th data-i18n="table-sugar-free">Sin Azúcar</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td data-i18n="malargue-rest-0-name">La Posta de Jamón</td>
+            <td data-i18n="malargue-rest-0-type">Parrilla / Chivito a la llama</td>
+            <td>✔️</td>
+            <td>❌</td>
+          </tr>
+          <tr>
+            <td data-i18n="malargue-rest-1-name">El Viejo Retiro</td>
+            <td data-i18n="malargue-rest-1-type">Comida casera / Regional</td>
+            <td>✔️</td>
+            <td>✔️</td>
+          </tr>
+          <tr>
+            <td data-i18n="malargue-rest-2-name">Pizzería La Avenida</td>
+            <td data-i18n="malargue-rest-2-type">Pizzería tradicional</td>
+            <td>❌</td>
+            <td>❌</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3 data-i18n="coffees-title">Confiterías y cafés</h3>
+      <table>
+        <thead>
+          <tr>
+            <th data-i18n="table-confectionery">Confitería</th>
+            <th data-i18n="table-type">Tipo</th>
+            <th data-i18n="table-gluten-free">Sin Gluten</th>
+            <th data-i18n="table-sugar-free">Sin Azúcar</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td data-i18n="malargue-cafe-0-name">(Opciones limitadas)</td>
+            <td data-i18n="malargue-cafe-0-type">Cafés locales / panaderías</td>
+            <td>❌</td>
+            <td>❌</td>
+          </tr>
+          <tr>
+            <td data-i18n="malargue-cafe-1-name">Supermercados</td>
+            <td data-i18n="malargue-cafe-1-type">Para abastecerse</td>
+            <td>✔️</td>
+            <td>✔️</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="ai-section">
+      <h2 data-i18n="ai-menu-title">Sugerencias de Menú para Diabéticos</h2>
+      <button class="ai-button" data-i18n="generate-menu-suggestions" onclick="callGeminiAPI('ai-menu', 'malargue')">Generar sugerencias de menú para Malargüe</button>
+      <div class="ai-response" id="ai-menu-response"></div>
+    </div>
+
+    <div class="content-section">
+      <h2 data-i18n="accommodation-title">Alojamiento (ejemplos)</h2>
+      <ul>
+        <li data-i18n="malargue-acc-0">Hotel Malargüe</li>
+        <li data-i18n="malargue-acc-1">Complejo Los Molles (cerca de Las Leñas)</li>
+        <li data-i18n="malargue-acc-2">Cabañas y hospedajes rurales.</li>
+        <li data-i18n="malargue-acc-3">Airbnb en el centro de Malargüe.</li>
+      </ul>
+    </div>
+
+    <div class="ai-section">
+      <h2 data-i18n="ai-accommodation-title">Sugerencias de Alojamiento para Familias</h2>
+      <button class="ai-button" data-i18n="generate-accommodation-suggestions" onclick="callGeminiAPI('ai-accommodation', 'malargue')">Generar sugerencias de alojamiento para Malargüe</button>
+      <div class="ai-response" id="ai-accommodation-response"></div>
+    </div>
+
+    <div class="content-section">
+      <h2 data-i18n="coordinates-title">Coordenadas aproximadas</h2>
+      <ul>
+        <li data-i18n="malargue-coords">35° 28' S 69° 35' O</li>
+      </ul>
+    </div>
+
+    <div class="content-section">
+      <h2 data-i18n="events-agenda-title">Agenda de eventos</h2>
+      <ul>
+        <li data-i18n="malargue-event-0">**(Consultar agenda local)**: Fiesta Nacional del Chivo (Enero).</li>
+        <li data-i18n="malargue-event-1">**(Consultar agenda local)**: Eventos relacionados con astronomía o geología.</li>
+        <li><a href="../docs/agenda/ariflier1970@gmail.com.ical.zip" data-i18n="download-agenda">Descargar agenda completa en formato iCal (.zip)</a></li>
+      </ul>
+    </div>
+
+    <div class="content-section">
+      <h2 data-i18n="family-tips-title">Consejos para familias</h2>
+      <ul>
+        <li data-i18n="malargue-tip-0">Para explorar los atractivos naturales, es casi indispensable contar con un vehículo propio o contratar excursiones organizadas.</li>
+        <li data-i18n="malargue-tip-1">La Caverna de las Brujas puede ser un poco exigente físicamente para niños muy pequeños o personas con movilidad reducida.</li>
+        <li data-i18n="malargue-tip-2">Lleven abundante agua y ropa adecuada para cambios bruscos de temperatura, especialmente si visitan áreas de alta montaña o desierto.</li>
+        <li data-i18n="malargue-tip-3">La señal de celular puede ser limitada fuera de la ciudad.</li>
+        <li data-i18n="malargue-tip-4">Respeten las indicaciones de los guías en las reservas naturales.</li>
+      </ul>
+    </div>
+
+    <div class="content-section">
+      <h2 data-i18n="budget-title">Presupuesto orientativo</h2>
+      <table>
+        <thead>
+          <tr>
+            <th data-i18n="budget-concept">Concepto</th>
+            <th data-i18n="budget-price">Precio estimado (USD)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td data-i18n="budget-accommodation">Alojamiento (noche, familia)</td>
+            <td>40–100</td>
+          </tr>
+          <tr>
+            <td data-i18n="budget-food">Comida (por día, familia)</td>
+            <td>25–60</td>
+          </tr>
+          <tr>
+            <td data-i18n="budget-transport">Transporte local (por día)</td>
+            <td>5–15 (excl. alquiler auto)</td>
+          </tr>
+          <tr>
+            <td data-i18n="budget-activities">Actividades y tours (por día)</td>
+            <td>20–60 (excl. Payunia)</td>
+          </tr>
+          <tr>
+            <td data-i18n="budget-attractions">Entradas museos/atracciones</td>
+            <td>0–15</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="ai-section">
+      <h2 data-i18n="ai-budget-title">Sugerencias de Presupuesto</h2>
+      <button class="ai-button" data-i18n="generate-budget-suggestions" onclick="callGeminiAPI('ai-budget', 'malargue')">Generar sugerencias de presupuesto para Malargüe</button>
+      <div class="ai-response" id="ai-budget-response"></div>
+    </div>
+
+    <div class="content-section">
+      <h2 data-i18n="cultural-tips-title">Tips culturales</h2>
+      <ul>
+        <li data-i18n="malargue-cultural-0">Malargüe es una región más rural y con una fuerte identidad de campo.</li>
+        <li data-i18n="malargue-cultural-1">La vida nocturna es limitada; el foco está en la naturaleza y el descanso.</li>
+        <li data-i18n="malargue-cultural-2">El chivito a la llama es una tradición culinaria muy arraigada y un imperdible local.</li>
+        <li data-i18n="malargue-cultural-3">La amabilidad y la hospitalidad de su gente son características destacadas.</li>
+      </ul>
+    </div>
+
+    <div class="content-section">
+      <h2 data-i18n="map-title">Mapa de Malargüe</h2>
+      <p>
+        <a href="https://www.openstreetmap.org/#map=12/-35.478/-69.585" target="_blank" data-i18n="see-bigger-map">Ver mapa más grande</a>
+      </p>
+    </div>
+  </main>
 
   <script>
-    // Diccionario de traducciones español ↔ hebreo
+    const apiKey = ""; // API Key se inyecta en Canvas
+
+    async function callGeminiAPI(type, city) {
+      const responseDiv = document.getElementById(`${type}-response`);
+      responseDiv.textContent = "Generando sugerencias...";
+
+      let prompt = "";
+      if (type === "ai-menu") {
+        prompt = `Genera 3 sugerencias de menú para un viaje familiar a ${city}, considerando opciones saludables, bajas en carbohidratos y aptas para diabéticos. Incluye un plato principal, una guarnición y una bebida, o tres opciones de comidas completas. Formatea la respuesta como una lista numerada.`;
+      } else if (type === "ai-accommodation") {
+        prompt = `Genera 3 sugerencias de alojamiento en ${city} para una familia con 2 adultos y 2 niños, priorizando comodidad, seguridad, buena ubicación y actividades para niños. Formatea la respuesta como una lista numerada con una breve descripción de cada opción.`;
+      } else if (type === "ai-budget") {
+        prompt = `Proporciona 3 consejos para optimizar el presupuesto en ${city} para una familia. Enfócate en ahorro en comida, transporte y actividades. Formatea la respuesta como una lista numerada.`;
+      }
+
+      try {
+        const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            contents: [{ parts: [{ text: prompt }] }]
+          })
+        });
+
+        if (!response.ok) {
+          const errorData = await response.json();
+          console.error('Error al llamar a la API de Gemini:', response.status, errorData);
+          responseDiv.textContent = `Error: ${errorData.error.message || response.statusText}. Asegúrate de que la API Key sea válida y de que el entorno sea Canvas.`;
+          return;
+        }
+
+        const data = await response.json();
+        if (data.candidates && data.candidates.length > 0 && data.candidates[0].content && data.candidates[0].content.parts && data.candidates[0].content.parts.length > 0) {
+          responseDiv.textContent = data.candidates[0].content.parts[0].text;
+        } else {
+          responseDiv.textContent = "No se pudo generar una respuesta. Estructura de respuesta inesperada.";
+          console.error("Estructura de respuesta inesperada del LLM:", data);
+        }
+      } catch (error) {
+        console.error("Error en la conexión con la API de Gemini:", error);
+        responseDiv.textContent = `Error de conexión: ${error.message}. Verifica tu conexión a internet o el estado del servicio.`;
+      }
+    }
+
+    // Traducciones específicas de la página
     const translations = {
       es: {
-        "city-title": "Malargüe",
-        "welcome-text": "Bienvenidos a la sección de Malargüe.",
-        "main-attractions-title": "Atracciones principales",
-        "attraction-0": "Caverna de Las Brujas",
-        "attraction-1": "Castillos de Pincheira",
-        "attraction-2": "Laguna de Llancanelo",
-        "attraction-3": "Las Leñas (centro de esquí)",
-        "restaurant-types-title": "Tipos de restaurantes",
-        "rest-0": "Parrillas",
-        "rest-1": "Restaurantes regionales",
-        "rest-2": "Pizzerías",
-        "rest-3": "Cafés y casas de té",
+        "back-to-itinerary": "⬅️ Volver al itinerario",
+        "city-name": "Malargüe",
+        "foto-caption-malargue": "Caverna de las Brujas, Malargüe",
+        "welcome-text-malargue": "Malargüe es una ciudad en el sur de Mendoza, conocida por sus paisajes volcánicos, formaciones geológicas únicas y aventuras en la naturaleza. Es la puerta de entrada a atractivos como la Caverna de las Brujas y la Laguna de la Niña Encantada.",
+        "dates-duration-title": "Fechas y duración",
+        "malargue-stay": "**Estadía**: 13/10 al 16/10 (4 días)",
+        "malargue-how-to-get-there": "**Cómo llegar**: Bus desde Mendoza / Auto de alquiler",
+        "must-see-places-title": "Lugares imperdibles",
+        "malargue-place-0": "**Caverna de las Brujas**: Impactante sistema de cuevas con estalactitas y estalagmitas (requiere reserva y tour guiado).",
+        "malargue-place-1": "**La Payunia**: Reserva Natural de campos de lava y volcanes (excursión de día completo, requiere 4x4 y guía).",
+        "malargue-place-2": "**Laguna de la Niña Encantada**: Pequeña laguna de aguas cristalinas rodeada de rocas.",
+        "malargue-place-3": "**Valle de Las Leñas**: Centro de esquí en invierno, con actividades de montaña en verano.",
+        "malargue-place-4": "**Dino Park (Parque Huellas de Dinosaurios)**: Para los amantes de la paleontología.",
+        "malargue-place-5": "**Planetario Malargüe**: Ideal para observación astronómica.",
+        "recommended-activities-title": "Actividades recomendadas",
+        "malargue-activity-0": "Excursiones guiadas a la Caverna de las Brujas.",
+        "malargue-activity-1": "Safari fotográfico en La Payunia (si las edades y el interés lo permiten).",
+        "malargue-activity-2": "Trekking suave o paseos en bicicleta por el Valle de Las Leñas (fuera de temporada de nieve).",
+        "malargue-activity-3": "Visita al Observatorio Pierre Auger (con reserva).",
+        "malargue-activity-4": "Rafting o cabalgatas en los alrededores.",
+        "malargue-activity-5": "Exploración de la Laguna de la Niña Encantada y sus formaciones rocosas.",
+        "gastronomy-title": "Gastronomía destacada",
+        "gastronomy-intro-malargue": "La gastronomía en Malargüe se enfoca en platos patagónicos, carnes a la parrilla, chivito a la llama (plato típico de la zona) y productos regionales. Las opciones para dietas especiales pueden ser más limitadas, por lo que se recomienda preguntar.",
+        "restaurants-title": "Restaurantes recomendados",
+        "table-restaurant": "Restaurante",
+        "table-type": "Tipo",
+        "table-gluten-free": "Sin Gluten",
+        "table-sugar-free": "Sin Azúcar",
+        "malargue-rest-0-name": "La Posta de Jamón",
+        "malargue-rest-0-type": "Parrilla / Chivito a la llama",
+        "malargue-rest-1-name": "El Viejo Retiro",
+        "malargue-rest-1-type": "Comida casera / Regional",
+        "malargue-rest-2-name": "Pizzería La Avenida",
+        "malargue-rest-2-type": "Pizzería tradicional",
+        "coffees-title": "Confiterías y cafés",
+        "table-confectionery": "Confitería",
+        "malargue-cafe-0-name": "(Opciones limitadas)",
+        "malargue-cafe-0-type": "Cafés locales / panaderías",
+        "malargue-cafe-1-name": "Supermercados",
+        "malargue-cafe-1-type": "Para abastecerse",
+        "ai-menu-title": "Sugerencias de Menú para Diabéticos",
+        "generate-menu-suggestions": "Generar sugerencias de menú para Malargüe",
+        "accommodation-title": "Alojamiento (ejemplos)",
+        "malargue-acc-0": "Hotel Malargüe",
+        "malargue-acc-1": "Complejo Los Molles (cerca de Las Leñas)",
+        "malargue-acc-2": "Cabañas y hospedajes rurales.",
+        "malargue-acc-3": "Airbnb en el centro de Malargüe.",
+        "ai-accommodation-title": "Sugerencias de Alojamiento para Familias",
+        "generate-accommodation-suggestions": "Generar sugerencias de alojamiento para Malargüe",
+        "coordinates-title": "Coordenadas aproximadas",
+        "malargue-coords": "35° 28' S 69° 35' O",
+        "events-agenda-title": "Agenda de eventos",
+        "malargue-event-0": "**(Consultar agenda local)**: Fiesta Nacional del Chivo (Enero).",
+        "malargue-event-1": "**(Consultar agenda local)**: Eventos relacionados con astronomía o geología.",
+        "download-agenda": "Descargar agenda completa en formato iCal (.zip)",
+        "family-tips-title": "Consejos para familias",
+        "malargue-tip-0": "Para explorar los atractivos naturales, es casi indispensable contar con un vehículo propio o contratar excursiones organizadas.",
+        "malargue-tip-1": "La Caverna de las Brujas puede ser un poco exigente físicamente para niños muy pequeños o personas con movilidad reducida.",
+        "malargue-tip-2": "Lleven abundante agua y ropa adecuada para cambios bruscos de temperatura, especialmente si visitan áreas de alta montaña o desierto.",
+        "malargue-tip-3": "La señal de celular puede ser limitada fuera de la ciudad.",
+        "malargue-tip-4": "Respeten las indicaciones de los guías en las reservas naturales.",
+        "budget-title": "Presupuesto orientativo",
+        "budget-concept": "Concepto",
+        "budget-price": "Precio estimado (USD)",
+        "budget-accommodation": "Alojamiento (noche, familia)",
+        "budget-food": "Comida (por día, familia)",
+        "budget-transport": "Transporte local (por día)",
+        "budget-activities": "Actividades y tours (por día)",
+        "budget-attractions": "Entradas museos/atracciones",
+        "ai-budget-title": "Sugerencias de Presupuesto",
+        "generate-budget-suggestions": "Generar sugerencias de presupuesto para Malargüe",
+        "cultural-tips-title": "Tips culturales",
+        "malargue-cultural-0": "Malargüe es una región más rural y con una fuerte identidad de campo.",
+        "malargue-cultural-1": "La vida nocturna es limitada; el foco está en la naturaleza y el descanso.",
+        "malargue-cultural-2": "El chivito a la llama es una tradición culinaria muy arraigada y un imperdible local.",
+        "malargue-cultural-3": "La amabilidad y la hospitalidad de su gente son características destacadas.",
         "map-title": "Mapa de Malargüe",
-        "see-bigger-map": "Ver mapa más grande",
-        "back-link": "⬅ Volver al itinerario"
+        "see-bigger-map": "Ver mapa más grande"
       },
       he: {
-        "city-title": "מאלרגואה",
-        "welcome-text": "ברוכים הבאים למדור מאלרגואה.",
-        "main-attractions-title": "אטרקציות עיקריות",
-        "attraction-0": "מערת המכשפות",
-        "attraction-1": "טירות פינצ'יירה",
-        "attraction-2": "לגונת יאנקנלו",
-        "attraction-3": "לאס לנייס (מרכז הסקי)",
-        "restaurant-types-title": "סוגי מסעדות",
-        "rest-0": "מסעדות בשרים (פריז'ות)",
-        "rest-1": "מסעדות אזוריות",
-        "rest-2": "פיצריות",
-        "rest-3": "בתי קפה ובתי תה",
-        "map-title": "מפת מאלרגואה",
-        "see-bigger-map": "לצפייה במפה גדולה יותר",
-        "back-link": "⬅ חזרה למפת המסלול"
+        "back-to-itinerary": "⬅️ חזרה למפת המסלול",
+        "city-name": "מלרגואה",
+        "foto-caption-malargue": "מערת המכשפות, מלרגואה",
+        "welcome-text-malargue": "מלרגואה היא עיר בדרום מנדוסה, הידועה בנופיה הוולקניים, תצורות גיאולוגיות ייחודיות והרפתקאות בטבע. זוהי שער הכניסה לאטרקציות כמו מערת המכשפות ולגונת הילדה המכושפת.",
+        "dates-duration-title": "תאריכים ומשך שהייה",
+        "malargue-stay": "**שהייה**: 13/10 עד 16/10 (4 ימים)",
+        "malargue-how-to-get-there": "**איך מגיעים**: אוטובוס ממנדוסה / רכב שכור",
+        "must-see-places-title": "מקומות שאסור להחמיץ",
+        "malargue-place-0": "**מערת המכשפות (Caverna de las Brujas)**: מערכת מערות מרשימה עם נטיפים וזקיפים (דורש הזמנה וסיור מודרך).",
+        "malargue-place-1": "**לה פאיאוניה (La Payunia)**: שמורת טבע של שדות לבה והרי געש (טיול יום מלא, דורש רכב 4X4 ומדריך).",
+        "malargue-place-2": "**לגונת הילדה המכושפת (Laguna de la Niña Encantada)**: לגונה קטנה עם מים צלולים מוקפת סלעים.",
+        "malargue-place-3": "**ואייה דה לאס לניאס (Valle de Las Leñas)**: מרכז סקי בחורף, עם פעילויות הרים בקיץ.",
+        "malargue-place-4": "**דינו פארק (פארק עקבות דינוזאורים) (Dino Park (Parque Huellas de Dinosaurios))**: לאוהבי הפלאונטולוגיה.",
+        "malargue-place-5": "**פלנטריום מלרגואה (Planetario Malargüe)**: אידיאלי לתצפיות אסטרונומיות.",
+        "recommended-activities-title": "פעילויות מומלצות",
+        "malargue-activity-0": "טיולים מודרכים למערת המכשפות.",
+        "malargue-activity-1": "ספארי צילום בלה פאיאוניה (אם הגילאים והעניין מאפשרים).",
+        "malargue-activity-2": "טרקים קלים או רכיבה על אופניים בעמק לאס לניאס (מחוץ לעונת השלג).",
+        "malargue-activity-3": "ביקור במצפה הכוכבים פייר אוז'ה (עם הזמנה).",
+        "malargue-activity-4": "רפטינג או רכיבה על סוסים בסביבה.",
+        "malargue-activity-5": "חקירת לגונת הילדה המכושפת ותצורות הסלע שלה.",
+        "gastronomy-title": "גסטרונומיה מומלצת",
+        "gastronomy-intro-malargue": "המטבח במלרגואה מתמקד במנות פטגוניות, בשרים על האש, צ'יביטו א לה יאמה (מנת עז טיפוסית לאזור) ומוצרים אזוריים. אפשרויות לדיאטות מיוחדות עשויות להיות מוגבלות יותר, ולכן מומלץ לשאול.",
+        "restaurants-title": "מסעדות מומלצות",
+        "table-restaurant": "מסעדה",
+        "table-type": "סוג",
+        "table-gluten-free": "ללא גלוטן",
+        "table-sugar-free": "ללא סוכר",
+        "malargue-rest-0-name": "לה פוסטה דה חמון (La Posta de Jamón)",
+        "malargue-rest-0-type": "מסעדת בשרים / צ'יביטו א לה יאמה",
+        "malargue-rest-1-name": "אל וייחו רטירו (El Viejo Retiro)",
+        "malargue-rest-1-type": "אוכל ביתי / אזורי",
+        "malargue-rest-2-name": "פיצריית לה אוונידה (Pizzería La Avenida)",
+        "malargue-rest-2-type": "פיצרייה מסורתית",
+        "coffees-title": "קונדיטוריות ובתי קפה",
+        "table-confectionery": "קונדיטוריה",
+        "malargue-cafe-0-name": "(אפשרויות מוגבלות)",
+        "malargue-cafe-0-type": "בתי קפה מקומיים / מאפיות",
+        "malargue-cafe-1-name": "סופרמרקטים",
+        "malargue-cafe-1-type": "להצטיידות",
+        "ai-menu-title": "הצעות תפריט לסוכרתיים",
+        "generate-menu-suggestions": "צור הצעות תפריט למלרגואה",
+        "accommodation-title": "לינה (דוגמאות)",
+        "malargue-acc-0": "מלון מלרגואה (Hotel Malargüe)",
+        "malargue-acc-1": "קומפלקס לוס מולס (Complejo Los Molles) (ליד לאס לניאס)",
+        "malargue-acc-2": "בקתות ואירוח כפרי.",
+        "malargue-acc-3": "Airbnb במרכז מלרגואה.",
+        "ai-accommodation-title": "הצעות לינה למשפחות",
+        "generate-accommodation-suggestions": "צור הצעות לינה למלרגואה",
+        "coordinates-title": "קואורדינטות משוערות",
+        "malargue-coords": "35° 28' S 69° 35' O",
+        "events-agenda-title": "לוח אירועים",
+        "malargue-event-0": "**(מומלץ לבדוק לו"ז מקומי)**: פסטיבל הגדי הלאומי (ינואר).",
+        "malargue-event-1": "**(מומלץ לבדוק לו"ז מקומי)**: אירועים הקשורים לאסטרונומיה או גיאולוגיה.",
+        "download-agenda": "הורד לוח זמנים מלא בפורמט iCal (.zip)",
+        "family-tips-title": "טיפים למשפחות",
+        "malargue-tip-0": "כדי לחקור את האטרקציות הטבעיות, כמעט הכרחי שיהיה לכם רכב פרטי או שתשכרו טיולים מאורגנים.",
+        "malargue-tip-1": "מערת המכשפות עשויה להיות קצת תובענית פיזית לילדים קטנים מאוד או לאנשים עם מוגבלות בניידות.",
+        "malargue-tip-2": "קחו איתכם הרבה מים ובגדים מתאימים לשינויי טמפרטורה פתאומיים, במיוחד אם אתם מבקרים באזורי הרים גבוהים או מדבר.",
+        "malargue-tip-3": "קליטת סלולר עשויה להיות מוגבלת מחוץ לעיר.",
+        "malargue-tip-4": "כבדו את הוראות המדריכים בשמורות הטבע.",
+        "budget-title": "תקציב משוער",
+        "budget-concept": "קונספט",
+        "budget-price": "מחיר משוער (USD)",
+        "budget-accommodation": "לינה (לילה, משפחה)",
+        "budget-food": "אוכל (ליום, משפחה)",
+        "budget-transport": "תחבורה מקומית (ליום)",
+        "budget-activities": "פעילויות וסיורים (ליום)",
+        "budget-attractions": "כניסות למוזיאונים/אטרקציות",
+        "ai-budget-title": "הצעות לתקציב",
+        "generate-budget-suggestions": "צור הצעות לתקציב עבור מלרגואה",
+        "cultural-tips-title": "טיפים תרבותיים",
+        "malargue-cultural-0": "מלרגואה היא אזור כפרי יותר עם זהות כפרית חזקה.",
+        "malargue-cultural-1": "חיי הלילה מוגבלים; הדגש הוא על הטבע והמנוחה.",
+        "malargue-cultural-2": "ה\"צ'יביטו א לה יאמה\" (Chivito a la llama) הוא מסורת קולינרית מושרשת מאוד ומאכל מקומי שאסור להחמיץ.",
+        "malargue-cultural-3": "החמימות והאירוח של תושביה בולטים.",
+        "map-title": "מפת מלרגואה",
+        "see-bigger-map": "הצג מפה גדולה יותר"
       }
     };
 
-    function translatePage(language) {
-      document.body.dir = (language === 'he') ? 'rtl' : 'ltr';
-      document.getElementById('city-title').textContent = translations[language]["city-title"];
-      document.getElementById('welcome-text').textContent = translations[language]["welcome-text"];
-      document.getElementById('main-attractions-title').textContent = translations[language]["main-attractions-title"];
-      document.getElementById('attraction-0').textContent = translations[language]["attraction-0"];
-      document.getElementById('attraction-1').textContent = translations[language]["attraction-1"];
-      document.getElementById('attraction-2').textContent = translations[language]["attraction-2"];
-      document.getElementById('attraction-3').textContent = translations[language]["attraction-3"];
-      document.getElementById('restaurant-types-title').textContent = translations[language]["restaurant-types-title"];
-      document.getElementById('rest-0').textContent = translations[language]["rest-0"];
-      document.getElementById('rest-1').textContent = translations[language]["rest-1"];
-      document.getElementById('rest-2').textContent = translations[language]["rest-2"];
-      document.getElementById('rest-3').textContent = translations[language]["rest-3"];
-      document.getElementById('map-title').textContent = translations[language]["map-title"];
-      document.getElementById('see-bigger-map').textContent = translations[language]["see-bigger-map"];
-      document.getElementById('back-link').textContent = translations[language]["back-link"];
+    document.addEventListener('DOMContentLoaded', function() {
+      initLanguageSelector(translations); // De i18n.js
+      loadAndApplyLanguage(); // De i18n.js
+    });
+
+    // Función para cargar y aplicar el idioma guardado, sobrescribiendo si hay un parámetro de URL
+    function loadAndApplyLanguage() {
+        let lang = localStorage.getItem('idiomaPreferido') || 'es';
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.has('lang')) {
+            lang = urlParams.get('lang');
+        }
+        applyLanguage(lang);
+    }
+    // Sobreescribir el `applyLanguage` de `i18n.js` para que también actualice el título y la foto-caption
+    function applyLanguage(lang) {
+        document.documentElement.lang = lang;
+        document.querySelectorAll('[data-i18n]').forEach(element => {
+            const key = element.getAttribute('data-i18n');
+            if (translations[lang] && translations[lang][key]) {
+                let text = translations[lang][key];
+                if (text.includes('**')) {
+                    text = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+                    element.innerHTML = text;
+                } else {
+                    element.textContent = text;
+                }
+            }
+        });
+
+        document.querySelectorAll('.language-btn').forEach(btn => {
+            if (btn.dataset.lang === lang) {
+                btn.classList.add('active');
+            } else {
+                btn.classList.remove('active');
+            }
+        });
+        localStorage.setItem('idiomaPreferido', lang);
     }
   </script>
 </body>
