@@ -3,8 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <title>Bariloche | Viaje Familiar a Argentina</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="estilos.css">
+  <script src="i18n.js"></script>
   <style>
+    /* Estilos generales del cuerpo y barra superior */
     body {
       font-family: Arial, sans-serif;
       background: #f9f9f9;
@@ -35,130 +38,573 @@
       margin-left: 20px;
       text-decoration: none;
       font-weight: bold;
-      color: #007BFF;
+      color: #007bff;
+      font-size: 16px;
     }
-    .ciudad-foto {
-      width: 100%;
-      max-width: 700px;
-      height: auto;
-      display: block;
-      margin: 30px auto 20px auto;
-      border-radius: 14px;
-      box-shadow: 0 3px 16px rgba(0,0,0,0.15);
-    }
-    .foto-caption {
+    .header {
       text-align: center;
-      color: #555;
-      font-size: 1em;
-      margin-bottom: 30px;
-    }
-    h1, h2 {
-      color: #0F4761;
-    }
-    ul {
       margin-bottom: 20px;
     }
-    iframe {
-      border: 1px solid black;
+    .header img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     }
-    .rtl {
-      direction: rtl !important;
-      text-align: right !important;
+    .content-section {
+      background: #fff;
+      padding: 20px;
+      margin-bottom: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    }
+    h1, h2 {
+      color: #222;
+      border-bottom: 2px solid #eee;
+      padding-bottom: 10px;
+      margin-top: 0;
+    }
+    ul {
+      list-style-type: disc;
+      margin-left: 20px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
+    th, td {
+      border: 1px solid #ddd;
+      padding: 8px;
+      text-align: left;
+    }
+    th {
+      background-color: #f2f2f2;
+    }
+    .ai-section {
+      background-color: #e8f0fe; /* Un color suave para las secciones de IA */
+      border-left: 5px solid #4285f4;
+      padding: 15px;
+      margin-top: 20px;
+      border-radius: 5px;
+    }
+    .ai-response {
+      white-space: pre-wrap; /* Para mantener saltos de línea del texto generado por IA */
+      background-color: #f0f6ff;
+      border: 1px dashed #a0c3ff;
+      padding: 10px;
+      margin-top: 10px;
+      border-radius: 4px;
+    }
+    .ai-button {
+      background-color: #4285f4;
+      color: white;
+      padding: 10px 15px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+      margin-top: 10px;
+    }
+    .ai-button:hover {
+      background-color: #3367d6;
     }
   </style>
 </head>
 <body>
   <div id="language-selector">
-    <button onclick="translatePage('es')" class="language-btn">Español</button>
-    <button onclick="translatePage('he')" class="language-btn">עברית</button>
-    <a href="../index.html" class="back-link" id="back-link">⬅ Volver al itinerario</a>
+    <button class="language-btn" data-lang="es">Español</button>
+    <button class="language-btn" data-lang="he">עברית</button>
   </div>
 
-  <!-- FOTO REPRESENTATIVA DE BARILOCHE -->
-  <img src="../docs/imagenes/bariloche.jpg" alt="Centro Cívico de Bariloche" class="ciudad-foto" id="city-photo">
-  <div class="foto-caption" id="foto-caption">Centro Cívico, Bariloche</div>
+  <main>
+    <a href="../index.html" class="back-link" data-i18n="back-to-itinerary">⬅️ Volver al itinerario</a>
 
-  <h1 id="city-title">Bariloche</h1>
-  <p id="welcome-text">Bienvenidos a la sección de Bariloche.</p>
+    <div class="header">
+      <h1 data-i18n="city-name">Bariloche</h1>
+      <img src="../docs/imagenes/bariloche/bariloche.jpg" alt="Lago Nahuel Huapi y montañas, Bariloche" class="ciudad-foto" id="city-photo">
+      <p id="foto-caption" data-i18n="foto-caption-bariloche">Lago Nahuel Huapi y montañas, Bariloche</p>
+      <p id="welcome-text" data-i18n="welcome-text-bariloche">
+        San Carlos de Bariloche, la capital de los Lagos, es un destino de montaña en la Patagonia argentina, famoso por sus paisajes de bosques, lagos, montañas nevadas y, por supuesto, el chocolate. Ideal para aventuras familiares en cualquier estación.
+      </p>
+    </div>
 
-  <h2 id="main-attractions-title">Atracciones principales</h2>
-  <ul id="main-attractions-list">
-    <li><a href="https://es.wikipedia.org/wiki/Cerro_Campanario" target="_blank" id="attraction-0">Cerro Campanario</a></li>
-    <li><a href="https://es.wikipedia.org/wiki/Lago_Nahuel_Huapi" target="_blank" id="attraction-1">Lago Nahuel Huapi</a></li>
-    <li><a href="https://es.wikipedia.org/wiki/Catedral_de_San_Carlos_de_Bariloche" target="_blank" id="attraction-2">Catedral de Bariloche</a></li>
-    <li><a href="https://es.wikipedia.org/wiki/Centro_C%C3%ADvico_de_Bariloche" target="_blank" id="attraction-3">Centro Cívico</a></li>
-  </ul>
+    <div class="content-section">
+      <h2 data-i18n="dates-duration-title">Fechas y duración</h2>
+      <ul>
+        <li data-i18n="bariloche-stay">**Estadía**: 05/10 al 09/10 (5 días)</li>
+        <li data-i18n="bariloche-how-to-get-there">**Cómo llegar**: Vuelo desde Rosario / Bus de larga distancia</li>
+      </ul>
+    </div>
 
-  <h2 id="restaurant-types-title">Tipos de restaurantes</h2>
-  <ul id="restaurant-types-list">
-    <li id="rest-0">Cervecerías artesanales</li>
-    <li id="rest-1">Chocolaterías</li>
-    <li id="rest-2">Parrillas</li>
-    <li id="rest-3">Restaurantes de comida regional</li>
-  </ul>
+    <div class="content-section">
+      <h2 data-i18n="must-see-places-title">Lugares imperdibles</h2>
+      <ul>
+        <li data-i18n="bariloche-place-0">**Centro Cívico**: Corazón de la ciudad con arquitectura alpina.</li>
+        <li data-i18n="bariloche-place-1">**Lago Nahuel Huapi**: Para paseos en barco y actividades acuáticas.</li>
+        <li data-i18n="bariloche-place-2">**Circuito Chico**: Recorrido panorámico con vistas espectaculares.</li>
+        <li data-i18n="bariloche-place-3">**Cerro Catedral**: Centro de esquí en invierno, trekking y vistas en verano.</li>
+        <li data-i18n="bariloche-place-4">**Cerro Campanario**: Votado entre las mejores vistas del mundo, con aerosilla.</li>
+        <li data-i18n="bariloche-place-5">**Bosque de Arrayanes**: Un bosque único al que se llega en barco.</li>
+        <li data-i18n="bariloche-place-6">**Puerto Blest y Cascada de los Cántaros**: Excursión en barco por el lago.</li>
+      </ul>
+    </div>
 
-  <h2 id="map-title">Mapa de Bariloche</h2>
-  <iframe src="https://www.openstreetmap.org/export/embed.html?bbox=-71.353%2C-41.167%2C-71.270%2C-41.116&amp;layer=mapnik" width="100%" height="350"></iframe>
-  <br><small><a href="https://www.openstreetmap.org/#map=13/-41.1335/-71.3101" target="_blank" id="see-bigger-map">Ver mapa más grande</a></small>
+    <div class="content-section">
+      <h2 data-i18n="recommended-activities-title">Actividades recomendadas</h2>
+      <ul>
+        <li data-i18n="bariloche-activity-0">Degustación de chocolates y cervezas artesanales.</li>
+        <li data-i18n="bariloche-activity-1">Navegación por el Lago Nahuel Huapi.</li>
+        <li data-i18n="bariloche-activity-2">Trekking y senderismo (adaptados para familias).</li>
+        <li data-i18n="bariloche-activity-3">Deportes de nieve en invierno (esquí, snowboard, culipatin).</li>
+        <li data-i18n="bariloche-activity-4">Cabalgatas o canopy en los alrededores.</li>
+        <li data-i18n="bariloche-activity-5">Visita a la Colonia Suiza para probar el curanto.</li>
+        <li data-i18n="bariloche-activity-6">Recorrer el Circuito Chico en auto o bicicleta.</li>
+      </ul>
+    </div>
+
+    <div class="content-section">
+      <h2 data-i18n="gastronomy-title">Gastronomía destacada</h2>
+      <p data-i18n="gastronomy-intro-bariloche">
+        La gastronomía de Bariloche es famosa por sus chocolates, carnes de caza (ciervo, jabalí), truchas y ahumados. También hay opciones saludables y para dietas especiales.
+      </p>
+
+      <h3 data-i18n="restaurants-title">Restaurantes recomendados</h3>
+      <table>
+        <thead>
+          <tr>
+            <th data-i18n="table-restaurant">Restaurante</th>
+            <th data-i18n="table-type">Tipo</th>
+            <th data-i18n="table-gluten-free">Sin Gluten</th>
+            <th data-i18n="table-sugar-free">Sin Azúcar</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td data-i18n="bariloche-rest-0-name">El Boliche de Alberto</td>
+            <td data-i18n="bariloche-rest-0-type">Parrilla / Carnes</td>
+            <td>✔️</td>
+            <td>❌</td>
+          </tr>
+          <tr>
+            <td data-i18n="bariloche-rest-1-name">La Fonda del Tío</td>
+            <td data-i18n="bariloche-rest-1-type">Comida patagónica casera</td>
+            <td>✔️</td>
+            <td>✔️</td>
+          </tr>
+          <tr>
+            <td data-i18n="bariloche-rest-2-name">Butterfly</td>
+            <td data-i18n="bariloche-rest-2-type">Alta cocina / Trucha</td>
+            <td>✔️</td>
+            <td>✔️</td>
+          </tr>
+          <tr>
+            <td data-i18n="bariloche-rest-3-name">Rapa Nui</td>
+            <td data-i18n="bariloche-rest-3-type">Chocolatería / Cafetería</td>
+            <td>✔️</td>
+            <td>✔️</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3 data-i18n="coffees-title">Confiterías y cafés</h3>
+      <table>
+        <thead>
+          <tr>
+            <th data-i18n="table-confectionery">Confitería</th>
+            <th data-i18n="table-type">Tipo</th>
+            <th data-i18n="table-gluten-free">Sin Gluten</th>
+            <th data-i18n="table-sugar-free">Sin Azúcar</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td data-i18n="bariloche-cafe-0-name">Mamuschka</td>
+            <td data-i18n="bariloche-cafe-0-type">Chocolatería / Pastelería</td>
+            <td>✔️</td>
+            <td>✔️</td>
+          </tr>
+          <tr>
+            <td data-i18n="bariloche-cafe-1-name">Abuela Goye</td>
+            <td data-i18n="bariloche-cafe-1-type">Chocolatería / Cafetería</td>
+            <td>✔️</td>
+            <td>✔️</td>
+          </tr>
+          <tr>
+            <td data-i18n="bariloche-cafe-2-name">El Almacén de Flores</td>
+            <td data-i18n="bariloche-cafe-2-type">Café de especialidad</td>
+            <td>✔️</td>
+            <td>✔️</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="ai-section">
+      <h2 data-i18n="ai-menu-title">Sugerencias de Menú para Diabéticos</h2>
+      <button class="ai-button" data-i18n="generate-menu-suggestions" onclick="callGeminiAPI('ai-menu', 'bariloche')">Generar sugerencias de menú para Bariloche</button>
+      <div class="ai-response" id="ai-menu-response"></div>
+    </div>
+
+    <div class="content-section">
+      <h2 data-i18n="accommodation-title">Alojamiento (ejemplos)</h2>
+      <ul>
+        <li data-i18n="bariloche-acc-0">Hotel Llao Llao (lujo)</li>
+        <li data-i18n="bariloche-acc-1">Hotel Panamericano Bariloche</li>
+        <li data-i18n="bariloche-acc-2">Cabañas y complejos turísticos con actividades para niños</li>
+        <li data-i18n="bariloche-acc-3">Airbnb en el centro o cerca del Circuito Chico</li>
+      </ul>
+    </div>
+
+    <div class="ai-section">
+      <h2 data-i18n="ai-accommodation-title">Sugerencias de Alojamiento para Familias</h2>
+      <button class="ai-button" data-i18n="generate-accommodation-suggestions" onclick="callGeminiAPI('ai-accommodation', 'bariloche')">Generar sugerencias de alojamiento para Bariloche</button>
+      <div class="ai-response" id="ai-accommodation-response"></div>
+    </div>
+
+    <div class="content-section">
+      <h2 data-i18n="coordinates-title">Coordenadas aproximadas</h2>
+      <ul>
+        <li data-i18n="bariloche-coords">41° 08' S 71° 18' O</li>
+      </ul>
+    </div>
+
+    <div class="content-section">
+      <h2 data-i18n="events-agenda-title">Agenda de eventos</h2>
+      <ul>
+        <li data-i18n="bariloche-event-0">**(Consultar agenda local)**: Eventos de invierno (Fiesta Nacional de la Nieve).</li>
+        <li data-i18n="bariloche-event-1">**(Consultar agenda local)**: Festivales de música o gastronomía en otras estaciones.</li>
+        <li><a href="../docs/agenda/ariflier1970@gmail.com.ical.zip" data-i18n="download-agenda">Descargar agenda completa en formato iCal (.zip)</a></li>
+      </ul>
+    </div>
+
+    <div class="content-section">
+      <h2 data-i18n="family-tips-title">Consejos para familias</h2>
+      <ul>
+        <li data-i18n="bariloche-tip-0">Vístanse en capas (la temperatura puede variar mucho).</li>
+        <li data-i18n="bariloche-tip-1">Reserven excursiones y alojamiento con anticipación, especialmente en temporada alta.</li>
+        <li data-i18n="bariloche-tip-2">Hay muchas actividades para niños: parques de nieve, senderos fáciles, paseos en barco.</li>
+        <li data-i18n="bariloche-tip-3">La zona es muy segura para explorar en familia.</li>
+        <li data-i18n="bariloche-tip-4">Prueben los chocolates locales, pero con moderación si hay restricciones.</li>
+      </ul>
+    </div>
+
+    <div class="content-section">
+      <h2 data-i18n="budget-title">Presupuesto orientativo</h2>
+      <table>
+        <thead>
+          <tr>
+            <th data-i18n="budget-concept">Concepto</th>
+            <th data-i18n="budget-price">Precio estimado (USD)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td data-i18n="budget-accommodation">Alojamiento (noche, familia)</td>
+            <td>70–180</td>
+          </tr>
+          <tr>
+            <td data-i18n="budget-food">Comida (por día, familia)</td>
+            <td>40–90</td>
+          </tr>
+          <tr>
+            <td data-i18n="budget-transport">Transporte local (por día)</td>
+            <td>5–15</td>
+          </tr>
+          <tr>
+            <td data-i18n="budget-activities">Actividades y tours (por día)</td>
+            <td>30–80</td>
+          </tr>
+          <tr>
+            <td data-i18n="budget-attractions">Entradas museos/atracciones</td>
+            <td>0–20</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="ai-section">
+      <h2 data-i18n="ai-budget-title">Sugerencias de Presupuesto</h2>
+      <button class="ai-button" data-i18n="generate-budget-suggestions" onclick="callGeminiAPI('ai-budget', 'bariloche')">Generar sugerencias de presupuesto para Bariloche</button>
+      <div class="ai-response" id="ai-budget-response"></div>
+    </div>
+
+    <div class="content-section">
+      <h2 data-i18n="cultural-tips-title">Tips culturales</h2>
+      <ul>
+        <li data-i18n="bariloche-cultural-0">Bariloche tiene una fuerte influencia de inmigrantes suizos y alemanes, visible en su arquitectura y gastronomía.</li>
+        <li data-i18n="bariloche-cultural-1">Es un destino popular para viajes de egresados, por lo que puede haber muchos jóvenes en ciertas épocas.</li>
+        <li data-i18n="bariloche-cultural-2">La cultura de montaña es muy arraigada: respeto por la naturaleza, deportes al aire libre.</li>
+      </ul>
+    </div>
+
+    <div class="content-section">
+      <h2 data-i18n="map-title">Mapa de Bariloche</h2>
+      <p>
+        <a href="https://www.openstreetmap.org/#map=12/-41.133/-71.328" target="_blank" data-i18n="see-bigger-map">Ver mapa más grande</a>
+      </p>
+    </div>
+  </main>
 
   <script>
+    const apiKey = ""; // API Key se inyecta en Canvas
+
+    async function callGeminiAPI(type, city) {
+      const responseDiv = document.getElementById(`${type}-response`);
+      responseDiv.textContent = "Generando sugerencias...";
+
+      let prompt = "";
+      if (type === "ai-menu") {
+        prompt = `Genera 3 sugerencias de menú para un viaje familiar a ${city}, considerando opciones saludables, bajas en carbohidratos y aptas para diabéticos. Incluye un plato principal, una guarnición y una bebida, o tres opciones de comidas completas. Formatea la respuesta como una lista numerada.`;
+      } else if (type === "ai-accommodation") {
+        prompt = `Genera 3 sugerencias de alojamiento en ${city} para una familia con 2 adultos y 2 niños, priorizando comodidad, seguridad, buena ubicación y actividades para niños. Formatea la respuesta como una lista numerada con una breve descripción de cada opción.`;
+      } else if (type === "ai-budget") {
+        prompt = `Proporciona 3 consejos para optimizar el presupuesto en ${city} para una familia. Enfócate en ahorro en comida, transporte y actividades. Formatea la respuesta como una lista numerada.`;
+      }
+
+      try {
+        const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            contents: [{ parts: [{ text: prompt }] }]
+          })
+        });
+
+        if (!response.ok) {
+          const errorData = await response.json();
+          console.error('Error al llamar a la API de Gemini:', response.status, errorData);
+          responseDiv.textContent = `Error: ${errorData.error.message || response.statusText}. Asegúrate de que la API Key sea válida y de que el entorno sea Canvas.`;
+          return;
+        }
+
+        const data = await response.json();
+        if (data.candidates && data.candidates.length > 0 && data.candidates[0].content && data.candidates[0].content.parts && data.candidates[0].content.parts.length > 0) {
+          responseDiv.textContent = data.candidates[0].content.parts[0].text;
+        } else {
+          responseDiv.textContent = "No se pudo generar una respuesta. Estructura de respuesta inesperada.";
+          console.error("Estructura de respuesta inesperada del LLM:", data);
+        }
+      } catch (error) {
+        console.error("Error en la conexión con la API de Gemini:", error);
+        responseDiv.textContent = `Error de conexión: ${error.message}. Verifica tu conexión a internet o el estado del servicio.`;
+      }
+    }
+
+    // Traducciones específicas de la página
     const translations = {
       es: {
-        "city-title": "Bariloche",
-        "welcome-text": "Bienvenidos a la sección de Bariloche.",
-        "main-attractions-title": "Atracciones principales",
-        "attraction-0": "Cerro Campanario",
-        "attraction-1": "Lago Nahuel Huapi",
-        "attraction-2": "Catedral de Bariloche",
-        "attraction-3": "Centro Cívico",
-        "restaurant-types-title": "Tipos de restaurantes",
-        "rest-0": "Cervecerías artesanales",
-        "rest-1": "Chocolaterías",
-        "rest-2": "Parrillas",
-        "rest-3": "Restaurantes de comida regional",
+        "back-to-itinerary": "⬅️ Volver al itinerario",
+        "city-name": "Bariloche",
+        "foto-caption-bariloche": "Lago Nahuel Huapi y montañas, Bariloche",
+        "welcome-text-bariloche": "San Carlos de Bariloche, la capital de los Lagos, es un destino de montaña en la Patagonia argentina, famoso por sus paisajes de bosques, lagos, montañas nevadas y, por supuesto, el chocolate. Ideal para aventuras familiares en cualquier estación.",
+        "dates-duration-title": "Fechas y duración",
+        "bariloche-stay": "**Estadía**: 05/10 al 09/10 (5 días)",
+        "bariloche-how-to-get-there": "**Cómo llegar**: Vuelo desde Rosario / Bus de larga distancia",
+        "must-see-places-title": "Lugares imperdibles",
+        "bariloche-place-0": "**Centro Cívico**: Corazón de la ciudad con arquitectura alpina.",
+        "bariloche-place-1": "**Lago Nahuel Huapi**: Para paseos en barco y actividades acuáticas.",
+        "bariloche-place-2": "**Circuito Chico**: Recorrido panorámico con vistas espectaculares.",
+        "bariloche-place-3": "**Cerro Catedral**: Centro de esquí en invierno, trekking y vistas en verano.",
+        "bariloche-place-4": "**Cerro Campanario**: Votado entre las mejores vistas del mundo, con aerosilla.",
+        "bariloche-place-5": "**Bosque de Arrayanes**: Un bosque único al que se llega en barco.",
+        "bariloche-place-6": "**Puerto Blest y Cascada de los Cántaros**: Excursión en barco por el lago.",
+        "recommended-activities-title": "Actividades recomendadas",
+        "bariloche-activity-0": "Degustación de chocolates y cervezas artesanales.",
+        "bariloche-activity-1": "Navegación por el Lago Nahuel Huapi.",
+        "bariloche-activity-2": "Trekking y senderismo (adaptados para familias).",
+        "bariloche-activity-3": "Deportes de nieve en invierno (esquí, snowboard, culipatin).",
+        "bariloche-activity-4": "Cabalgatas o canopy en los alrededores.",
+        "bariloche-activity-5": "Visita a la Colonia Suiza para probar el curanto.",
+        "bariloche-activity-6": "Recorrer el Circuito Chico en auto o bicicleta.",
+        "gastronomy-title": "Gastronomía destacada",
+        "gastronomy-intro-bariloche": "La gastronomía de Bariloche es famosa por sus chocolates, carnes de caza (ciervo, jabalí), truchas y ahumados. También hay opciones saludables y para dietas especiales.",
+        "restaurants-title": "Restaurantes recomendados",
+        "table-restaurant": "Restaurante",
+        "table-type": "Tipo",
+        "table-gluten-free": "Sin Gluten",
+        "table-sugar-free": "Sin Azúcar",
+        "bariloche-rest-0-name": "El Boliche de Alberto",
+        "bariloche-rest-0-type": "Parrilla / Carnes",
+        "bariloche-rest-1-name": "La Fonda del Tío",
+        "bariloche-rest-1-type": "Comida patagónica casera",
+        "bariloche-rest-2-name": "Butterfly",
+        "bariloche-rest-2-type": "Alta cocina / Trucha",
+        "bariloche-rest-3-name": "Rapa Nui",
+        "bariloche-rest-3-type": "Chocolatería / Cafetería",
+        "coffees-title": "Confiterías y cafés",
+        "table-confectionery": "Confitería",
+        "bariloche-cafe-0-name": "Mamuschka",
+        "bariloche-cafe-0-type": "Chocolatería / Pastelería",
+        "bariloche-cafe-1-name": "Abuela Goye",
+        "bariloche-cafe-1-type": "Chocolatería / Cafetería",
+        "bariloche-cafe-2-name": "El Almacén de Flores",
+        "bariloche-cafe-2-type": "Café de especialidad",
+        "ai-menu-title": "Sugerencias de Menú para Diabéticos",
+        "generate-menu-suggestions": "Generar sugerencias de menú para Bariloche",
+        "accommodation-title": "Alojamiento (ejemplos)",
+        "bariloche-acc-0": "Hotel Llao Llao (lujo)",
+        "bariloche-acc-1": "Hotel Panamericano Bariloche",
+        "bariloche-acc-2": "Cabañas y complejos turísticos con actividades para niños",
+        "bariloche-acc-3": "Airbnb en el centro o cerca del Circuito Chico",
+        "ai-accommodation-title": "Sugerencias de Alojamiento para Familias",
+        "generate-accommodation-suggestions": "Generar sugerencias de alojamiento para Bariloche",
+        "coordinates-title": "Coordenadas aproximadas",
+        "bariloche-coords": "41° 08' S 71° 18' O",
+        "events-agenda-title": "Agenda de eventos",
+        "bariloche-event-0": "**(Consultar agenda local)**: Eventos de invierno (Fiesta Nacional de la Nieve).",
+        "bariloche-event-1": "**(Consultar agenda local)**: Festivales de música o gastronomía en otras estaciones.",
+        "download-agenda": "Descargar agenda completa en formato iCal (.zip)",
+        "family-tips-title": "Consejos para familias",
+        "bariloche-tip-0": "Vístanse en capas (la temperatura puede variar mucho).",
+        "bariloche-tip-1": "Reserven excursiones y alojamiento con anticipación, especialmente en temporada alta.",
+        "bariloche-tip-2": "Hay muchas actividades para niños: parques de nieve, senderos fáciles, paseos en barco.",
+        "bariloche-tip-3": "La zona es muy segura para explorar en familia.",
+        "bariloche-tip-4": "Prueben los chocolates locales, pero con moderación si hay restricciones.",
+        "budget-title": "Presupuesto orientativo",
+        "budget-concept": "Concepto",
+        "budget-price": "Precio estimado (USD)",
+        "budget-accommodation": "Alojamiento (noche, familia)",
+        "budget-food": "Comida (por día, familia)",
+        "budget-transport": "Transporte local (por día)",
+        "budget-activities": "Actividades y tours (por día)",
+        "budget-attractions": "Entradas museos/atracciones",
+        "ai-budget-title": "Sugerencias de Presupuesto",
+        "generate-budget-suggestions": "Generar sugerencias de presupuesto para Bariloche",
+        "cultural-tips-title": "Tips culturales",
+        "bariloche-cultural-0": "Bariloche tiene una fuerte influencia de inmigrantes suizos y alemanes, visible en su arquitectura y gastronomía.",
+        "bariloche-cultural-1": "Es un destino popular para viajes de egresados, por lo que puede haber muchos jóvenes en ciertas épocas.",
+        "bariloche-cultural-2": "La cultura de montaña es muy arraigada: respeto por la naturaleza, deportes al aire libre.",
         "map-title": "Mapa de Bariloche",
-        "see-bigger-map": "Ver mapa más grande",
-        "back-link": "⬅ Volver al itinerario",
-        "foto-caption": "Centro Cívico, Bariloche"
+        "see-bigger-map": "Ver mapa más grande"
       },
       he: {
-        "city-title": "ברילוצ'ה",
-        "welcome-text": "ברוכים הבאים למדור ברילוצ'ה.",
-        "main-attractions-title": "אטרקציות עיקריות",
-        "attraction-0": "הר קמפנריו",
-        "attraction-1": "אגם נהואל ואפי",
-        "attraction-2": "קתדרלת ברילוצ'ה",
-        "attraction-3": "המרכז האזרחי",
-        "restaurant-types-title": "סוגי מסעדות",
-        "rest-0": "מבשלות בירה מקומיות",
-        "rest-1": "חנויות שוקולד",
-        "rest-2": "מסעדות בשרים (פריז'ות)",
-        "rest-3": "מסעדות אוכל אזורי",
+        "back-to-itinerary": "⬅️ חזרה למפת המסלול",
+        "city-name": "ברילוצ'ה",
+        "foto-caption-bariloche": "אגם נאוול ואפי והרים, ברילוצ'ה",
+        "welcome-text-bariloche": "סן קרלוס דה ברילוצ'ה, בירת האגמים, היא יעד הררי בפטגוניה הארגנטינאית, מפורסמת בנופיה של יערות, אגמים, הרים מושלגים וכמובן, השוקולד. אידיאלית להרפתקאות משפחתיות בכל עונה.",
+        "dates-duration-title": "תאריכים ומשך שהייה",
+        "bariloche-stay": "**שהייה**: 05/10 עד 09/10 (5 ימים)",
+        "bariloche-how-to-get-there": "**איך מגיעים**: טיסה מרוסאריו / אוטובוס למרחקים ארוכים",
+        "must-see-places-title": "מקומות שאסור להחמיץ",
+        "bariloche-place-0": "**מרכז אזרחי (Centro Cívico)**: לב העיר עם אדריכלות אלפינית.",
+        "bariloche-place-1": "**אגם נאוול ואפי (Lago Nahuel Huapi)**: לטיולי סירה ופעילויות מים.",
+        "bariloche-place-2": "**סירקויטו צ'יקו (Circuito Chico)**: מסלול נוף פנורמי עם תצפיות מרהיבות.",
+        "bariloche-place-3": "**סרו קתדרל (Cerro Catedral)**: מרכז סקי בחורף, טרקים ונופים בקיץ.",
+        "bariloche-place-4": "**סרו קמפנריו (Cerro Campanario)**: נבחר בין הנופים הטובים בעולם, עם רכבל.",
+        "bariloche-place-5": "**יער האריינס (Bosque de Arrayanes)**: יער ייחודי אליו מגיעים בסירה.",
+        "bariloche-place-6": "**פוארטו בלסט ומפל הקנקנים (Puerto Blest y Cascada de los Cántaros)**: טיול סירה באגם.",
+        "recommended-activities-title": "פעילויות מומלצות",
+        "bariloche-activity-0": "טעימות שוקולדים ובירות בוטיק.",
+        "bariloche-activity-1": "שיט באגם נאוול ואפי.",
+        "bariloche-activity-2": "טרקים וטיולים רגליים (מותאמים למשפחות).",
+        "bariloche-activity-3": "ענפי ספורט חורף (סקי, סנובורד, מזחלות).",
+        "bariloche-activity-4": "רכיבה על סוסים או קנופי בסביבה.",
+        "bariloche-activity-5": "ביקור במושבה השוויצרית (Colonia Suiza) לטעום קוראנטו.",
+        "bariloche-activity-6": "לסייר בסירקויטו צ'יקו במכונית או באופניים.",
+        "gastronomy-title": "גסטרונומיה מומלצת",
+        "gastronomy-intro-bariloche": "המטבח של ברילוצ'ה מפורסם בזכות השוקולדים, בשר ציד (אייל, חזיר בר), דגי טרוטה ומעושנים. יש גם אפשרויות בריאותיות ולדיאטות מיוחדות.",
+        "restaurants-title": "מסעדות מומלצות",
+        "table-restaurant": "מסעדה",
+        "table-type": "סוג",
+        "table-gluten-free": "ללא גלוטן",
+        "table-sugar-free": "ללא סוכר",
+        "bariloche-rest-0-name": "אל בוליצ'ה דה אלברטו (El Boliche de Alberto)",
+        "bariloche-rest-0-type": "מסעדת בשרים / בשרים",
+        "bariloche-rest-1-name": "לה פונדה דל טיו (La Fonda del Tío)",
+        "bariloche-rest-1-type": "אוכל פטגוני ביתי",
+        "bariloche-rest-2-name": "באטרפליי (Butterfly)",
+        "bariloche-rest-2-type": "מטבח עילית / טרוטה",
+        "bariloche-rest-3-name": "ראפה נוי (Rapa Nui)",
+        "bariloche-rest-3-type": "שוקולטריה / בית קפה",
+        "coffees-title": "קונדיטוריות ובתי קפה",
+        "table-confectionery": "קונדיטוריה",
+        "bariloche-cafe-0-name": "ממוצ'קה (Mamuschka)",
+        "bariloche-cafe-0-type": "שוקולטריה / קונדיטוריה",
+        "bariloche-cafe-1-name": "אבואלה גויה (Abuela Goye)",
+        "bariloche-cafe-1-type": "שוקולטריה / בית קפה",
+        "bariloche-cafe-2-name": "אל אלמסן דה פלורס (El Almacén de Flores)",
+        "bariloche-cafe-2-type": "בית קפה מיוחד",
+        "ai-menu-title": "הצעות תפריט לסוכרתיים",
+        "generate-menu-suggestions": "צור הצעות תפריט לברילוצ'ה",
+        "accommodation-title": "לינה (דוגמאות)",
+        "bariloche-acc-0": "מלון יאו יאו (Llao Llao Hotel) (יוקרה)",
+        "bariloche-acc-1": "מלון פנאמריקן ברילוצ'ה (Panamericano Bariloche Hotel)",
+        "bariloche-acc-2": "בקתות ומתחמי נופש עם פעילויות לילדים",
+        "bariloche-acc-3": "Airbnb במרכז או ליד סירקויטו צ'יקו",
+        "ai-accommodation-title": "הצעות לינה למשפחות",
+        "generate-accommodation-suggestions": "צור הצעות לינה לברילוצ'ה",
+        "coordinates-title": "קואורדינטות משוערות",
+        "bariloche-coords": "41° 08' S 71° 18' O",
+        "events-agenda-title": "לוח אירועים",
+        "bariloche-event-0": "**(מומלץ לבדוק לו"ז מקומי)**: אירועי חורף (פסטיבל השלג הלאומי).",
+        "bariloche-event-1": "**(מומלץ לבדוק לו"ז מקומי)**: פסטיבלי מוזיקה או גסטרונומיה בעונות אחרות.",
+        "download-agenda": "הורד לוח זמנים מלא בפורמט iCal (.zip)",
+        "family-tips-title": "טיפים למשפחות",
+        "bariloche-tip-0": "התלבשו בשכבות (הטמפרטורה יכולה להשתנות מאוד).",
+        "bariloche-tip-1": "הזמינו טיולים ולינה מראש, במיוחד בעונת השיא.",
+        "bariloche-tip-2": "יש הרבה פעילויות לילדים: פארקי שלג, שבילים קלים, שיט בסירה.",
+        "bariloche-tip-3": "האזור בטוח מאוד לחקירה משפחתית.",
+        "bariloche-tip-4": "טעמו את השוקולדים המקומיים, אך במתינות אם יש מגבלות.",
+        "budget-title": "תקציב משוער",
+        "budget-concept": "קונספט",
+        "budget-price": "מחיר משוער (USD)",
+        "budget-accommodation": "לינה (לילה, משפחה)",
+        "budget-food": "אוכל (ליום, משפחה)",
+        "budget-transport": "תחבורה מקומית (ליום)",
+        "budget-activities": "פעילויות וסיורים (ליום)",
+        "budget-attractions": "כניסות למוזיאונים/אטרקציות",
+        "ai-budget-title": "הצעות לתקציב",
+        "generate-budget-suggestions": "צור הצעות לתקציב עבור ברילוצ'ה",
+        "cultural-tips-title": "טיפים תרבותיים",
+        "bariloche-cultural-0": "לברילוצ'ה השפעה חזקה של מהגרים שוויצרים וגרמנים, הנראית באדריכלות ובגסטרונומיה שלה.",
+        "bariloche-cultural-1": "זהו יעד פופולרי לטיולי סיום לימודים, ולכן ייתכנו הרבה צעירים בתקופות מסוימות.",
+        "bariloche-cultural-2": "תרבות ההרים מושרשת עמוק: כבוד לטבע, ספורט בחיק הטבע.",
         "map-title": "מפת ברילוצ'ה",
-        "see-bigger-map": "לצפייה במפה גדולה יותר",
-        "back-link": "⬅ חזרה למפת המסלול",
-        "foto-caption": "המרכז האזרחי, ברילוצ'ה"
+        "see-bigger-map": "הצג מפה גדולה יותר"
       }
     };
 
-    function translatePage(language) {
-      document.body.dir = (language === 'he') ? 'rtl' : 'ltr';
-      document.getElementById('city-title').textContent = translations[language]["city-title"];
-      document.getElementById('welcome-text').textContent = translations[language]["welcome-text"];
-      document.getElementById('main-attractions-title').textContent = translations[language]["main-attractions-title"];
-      document.getElementById('attraction-0').textContent = translations[language]["attraction-0"];
-      document.getElementById('attraction-1').textContent = translations[language]["attraction-1"];
-      document.getElementById('attraction-2').textContent = translations[language]["attraction-2"];
-      document.getElementById('attraction-3').textContent = translations[language]["attraction-3"];
-      document.getElementById('restaurant-types-title').textContent = translations[language]["restaurant-types-title"];
-      document.getElementById('rest-0').textContent = translations[language]["rest-0"];
-      document.getElementById('rest-1').textContent = translations[language]["rest-1"];
-      document.getElementById('rest-2').textContent = translations[language]["rest-2"];
-      document.getElementById('rest-3').textContent = translations[language]["rest-3"];
-      document.getElementById('map-title').textContent = translations[language]["map-title"];
-      document.getElementById('see-bigger-map').textContent = translations[language]["see-bigger-map"];
-      document.getElementById('back-link').textContent = translations[language]["back-link"];
-      document.getElementById('foto-caption').textContent = translations[language]["foto-caption"];
+    document.addEventListener('DOMContentLoaded', function() {
+      initLanguageSelector(translations); // De i18n.js
+      loadAndApplyLanguage(); // De i18n.js
+    });
+
+    // Función para cargar y aplicar el idioma guardado, sobrescribiendo si hay un parámetro de URL
+    function loadAndApplyLanguage() {
+        let lang = localStorage.getItem('idiomaPreferido') || 'es';
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.has('lang')) {
+            lang = urlParams.get('lang');
+        }
+        applyLanguage(lang);
+    }
+    // Sobreescribir el `applyLanguage` de `i18n.js` para que también actualice el título y la foto-caption
+    function applyLanguage(lang) {
+        document.documentElement.lang = lang;
+        document.querySelectorAll('[data-i18n]').forEach(element => {
+            const key = element.getAttribute('data-i18n');
+            if (translations[lang] && translations[lang][key]) {
+                let text = translations[lang][key];
+                if (text.includes('**')) {
+                    text = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+                    element.innerHTML = text;
+                } else {
+                    element.textContent = text;
+                }
+            }
+        });
+
+        document.querySelectorAll('.language-btn').forEach(btn => {
+            if (btn.dataset.lang === lang) {
+                btn.classList.add('active');
+            } else {
+                btn.classList.remove('active');
+            }
+        });
+        localStorage.setItem('idiomaPreferido', lang);
     }
   </script>
 </body>
