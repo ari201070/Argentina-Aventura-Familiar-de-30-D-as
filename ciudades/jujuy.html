@@ -3,7 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <title>Jujuy | Viaje Familiar a Argentina</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="estilos.css">
+  <script src="i18n.js"></script>
   <style>
+    /* Estilos generales del cuerpo y barra superior */
     body {
       font-family: Arial, sans-serif;
       background: #f9f9f9;
@@ -34,105 +38,559 @@
       margin-left: 20px;
       text-decoration: none;
       font-weight: bold;
-      color: #007BFF;
+      color: #007bff;
+      font-size: 16px;
     }
-    h1, h2 {
-      color: #0F4761;
-    }
-    ul {
+    .header {
+      text-align: center;
       margin-bottom: 20px;
     }
-    iframe {
-      border: 1px solid black;
+    .header img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    .content-section {
+      background: #fff;
+      padding: 20px;
+      margin-bottom: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    }
+    h1, h2 {
+      color: #222;
+      border-bottom: 2px solid #eee;
+      padding-bottom: 10px;
+      margin-top: 0;
+    }
+    ul {
+      list-style-type: disc;
+      margin-left: 20px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
+    th, td {
+      border: 1px solid #ddd;
+      padding: 8px;
+      text-align: left;
+    }
+    th {
+      background-color: #f2f2f2;
+    }
+    .ai-section {
+      background-color: #e8f0fe; /* Un color suave para las secciones de IA */
+      border-left: 5px solid #4285f4;
+      padding: 15px;
+      margin-top: 20px;
+      border-radius: 5px;
+    }
+    .ai-response {
+      white-space: pre-wrap; /* Para mantener saltos de línea del texto generado por IA */
+      background-color: #f0f6ff;
+      border: 1px dashed #a0c3ff;
+      padding: 10px;
+      margin-top: 10px;
+      border-radius: 4px;
+    }
+    .ai-button {
+      background-color: #4285f4;
+      color: white;
+      padding: 10px 15px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+      margin-top: 10px;
+    }
+    .ai-button:hover {
+      background-color: #3367d6;
     }
   </style>
 </head>
 <body>
   <div id="language-selector">
-    <button onclick="translatePage('es')" class="language-btn">Español</button>
-    <button onclick="translatePage('he')" class="language-btn">עברית</button>
-    <a href="../index.html" class="back-link" id="back-link">⬅ Volver al itinerario</a>
+    <button class="language-btn" data-lang="es">Español</button>
+    <button class="language-btn" data-lang="he">עברית</button>
   </div>
 
-  <h1 id="city-title">Jujuy</h1>
-  <p id="welcome-text">Bienvenidos a la sección de Jujuy.</p>
+  <main>
+    <a href="../index.html" class="back-link" data-i18n="back-to-itinerary">⬅️ Volver al itinerario</a>
 
-  <h2 id="main-attractions-title">Atracciones principales</h2>
-  <ul id="main-attractions-list">
-    <li><a href="https://es.wikipedia.org/wiki/Quebrada_de_Humahuaca" target="_blank" id="attraction-0">Quebrada de Humahuaca</a></li>
-    <li><a href="https://es.wikipedia.org/wiki/Cerro_de_los_Siete_Colores" target="_blank" id="attraction-1">Cerro de los Siete Colores (Purmamarca)</a></li>
-    <li><a href="https://es.wikipedia.org/wiki/Serran%C3%ADa_de_Hornocal" target="_blank" id="attraction-2">Serranías del Hornocal</a></li>
-    <li><a href="https://es.wikipedia.org/wiki/Salinas_Grandes_(Argentina)" target="_blank" id="attraction-3">Salinas Grandes</a></li>
-  </ul>
+    <div class="header">
+      <h1 data-i18n="city-name">Jujuy</h1>
+      <img src="../docs/imagenes/jujuy/jujuy.jpg" alt="Cerro de los Siete Colores, Purmamarca, Jujuy" class="ciudad-foto" id="city-photo">
+      <p id="foto-caption" data-i18n="foto-caption-jujuy">Cerro de los Siete Colores, Purmamarca, Jujuy</p>
+      <p id="welcome-text" data-i18n="welcome-text-jujuy">
+        La provincia de Jujuy, en el noroeste argentino, es una explosión de colores y cultura andina. Famosa por sus paisajes de montañas multicolores, pueblos ancestrales y ricas tradiciones, es un destino fascinante para toda la familia.
+      </p>
+    </div>
 
-  <h2 id="restaurant-types-title">Tipos de restaurantes</h2>
-  <ul id="restaurant-types-list">
-    <li id="rest-0">Peñas folclóricas</li>
-    <li id="rest-1">Comida andina</li>
-    <li id="rest-2">Cocina criolla</li>
-    <li id="rest-3">Cafés y casas de té</li>
-  </ul>
+    <div class="content-section">
+      <h2 data-i18n="dates-duration-title">Fechas y duración</h2>
+      <ul>
+        <li data-i18n="jujuy-stay">**Estadía**: 16/10 al 20/10 (5 días)</li>
+        <li data-i18n="jujuy-how-to-get-there">**Cómo llegar**: Vuelo desde Mendoza (con escala) / Bus de larga distancia.</li>
+      </ul>
+    </div>
 
-  <h2 id="map-title">Mapa de Jujuy</h2>
-  <iframe src="https://www.openstreetmap.org/export/embed.html?bbox=-65.330%2C-24.283%2C-65.176%2C-24.151&amp;layer=mapnik" width="100%" height="350"></iframe>
-  <br><small><a href="https://www.openstreetmap.org/#map=12/-24.2/-65.3" target="_blank" id="see-bigger-map">Ver mapa más grande</a></small>
+    <div class="content-section">
+      <h2 data-i18n="must-see-places-title">Lugares imperdibles</h2>
+      <ul>
+        <li data-i18n="jujuy-place-0">**Quebrada de Humahuaca**: Patrimonio de la Humanidad, con paisajes como la Paleta del Pintor en Maimará y el Cerro de los Siete Colores en Purmamarca.</li>
+        <li data-i18n="jujuy-place-1">**Purmamarca**: Pueblo pintoresco al pie del Cerro de los Siete Colores.</li>
+        <li data-i18n="jujuy-place-2">**Tilcara**: Ciudad con la Pucará (fortaleza prehispánica) y museos.</li>
+        <li data-i18n="jujuy-place-3">**Humahuaca**: Histórica ciudad con su Monumento a la Independencia y la Torre del Cabildo.</li>
+        <li data-i18n="jujuy-place-4">**Salinas Grandes**: Desierto de sal inmenso (compartido con Salta, accesible desde Purmamarca).</li>
+        <li data-i18n="jujuy-place-5">**Garganta del Diablo (Tilcara)**: Formación rocosa con cascada.</li>
+        <li data-i18n="jujuy-place-6">**San Salvador de Jujuy**: La capital, con su casco histórico y la Casa de Gobierno.</li>
+      </ul>
+    </div>
+
+    <div class="content-section">
+      <h2 data-i18n="recommended-activities-title">Actividades recomendadas</h2>
+      <ul>
+        <li data-i18n="jujuy-activity-0">Recorridos por los pueblos de la Quebrada y sus mercados artesanales.</li>
+        <li data-i18n="jujuy-activity-1">Caminatas suaves en Purmamarca o Tilcara.</li>
+        <li data-i18n="jujuy-activity-2">Visita a la Pucará de Tilcara.</li>
+        <li data-i18n="jujuy-activity-3">Excursión a Salinas Grandes (llevar protector solar y gafas de sol).</li>
+        <li data-i18n="jujuy-activity-4">Observación de estrellas en la Quebrada (poca contaminación lumínica).</li>
+        <li data-i18n="jujuy-activity-5">Disfrutar de la música folclórica y las danzas locales.</li>
+        <li data-i18n="jujuy-activity-6">Probar las empanadas jujeñas y tamales.</li>
+      </ul>
+    </div>
+
+    <div class="content-section">
+      <h2 data-i18n="gastronomy-title">Gastronomía destacada</h2>
+      <p data-i18n="gastronomy-intro-jujuy">
+        La gastronomía jujeña es una fusión de sabores andinos y criollos, con platos a base de maíz, papa, llama y cabra. Las opciones sin gluten y bajas en carbohidratos pueden requerir adaptación en platos tradicionales, pero siempre hay alternativas con carnes y verduras.
+      </p>
+
+      <h3 data-i18n="restaurants-title">Restaurantes recomendados</h3>
+      <table>
+        <thead>
+          <tr>
+            <th data-i18n="table-restaurant">Restaurante</th>
+            <th data-i18n="table-type">Tipo</th>
+            <th data-i18n="table-gluten-free">Sin Gluten</th>
+            <th data-i18n="table-sugar-free">Sin Azúcar</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td data-i18n="jujuy-rest-0-name">El Patio de la Empanada</td>
+            <td data-i18n="jujuy-rest-0-type">Comida regional / Empanadas</td>
+            <td>✔️</td>
+            <td>❌</td>
+          </tr>
+          <tr>
+            <td data-i18n="jujuy-rest-1-name">La Cocina del Colorado</td>
+            <td data-i18n="jujuy-rest-1-type">Cocina andina tradicional</td>
+            <td>✔️</td>
+            <td>✔️</td>
+          </tr>
+          <tr>
+            <td data-i18n="jujuy-rest-2-name">Killa</td>
+            <td data-i18n="jujuy-rest-2-type">Cocina de autor / Regional</td>
+            <td>✔️</td>
+            <td>✔️</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3 data-i18n="coffees-title">Confiterías y cafés</h3>
+      <table>
+        <thead>
+          <tr>
+            <th data-i18n="table-confectionery">Confitería</th>
+            <th data-i18n="table-type">Tipo</th>
+            <th data-i18n="table-gluten-free">Sin Gluten</th>
+            <th data-i18n="table-sugar-free">Sin Azúcar</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td data-i18n="jujuy-cafe-0-name">(Opciones locales)</td>
+            <td data-i18n="jujuy-cafe-0-type">Panaderías / Cafés</td>
+            <td>❌</td>
+            <td>❌</td>
+          </tr>
+          <tr>
+            <td data-i18n="jujuy-cafe-1-name">Mercados artesanales</td>
+            <td data-i18n="jujuy-cafe-1-type">Productos locales</td>
+            <td>✔️</td>
+            <td>✔️</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="ai-section">
+      <h2 data-i18n="ai-menu-title">Sugerencias de Menú para Diabéticos</h2>
+      <button class="ai-button" data-i18n="generate-menu-suggestions" onclick="callGeminiAPI('ai-menu', 'jujuy')">Generar sugerencias de menú para Jujuy</button>
+      <div class="ai-response" id="ai-menu-response"></div>
+    </div>
+
+    <div class="content-section">
+      <h2 data-i18n="accommodation-title">Alojamiento (ejemplos)</h2>
+      <ul>
+        <li data-i18n="jujuy-acc-0">Hoteles boutique en Purmamarca o Tilcara.</li>
+        <li data-i18n="jujuy-acc-1">Estancias y hosterías rurales en la Quebrada.</li>
+        <li data-i18n="jujuy-acc-2">Hoteles en San Salvador de Jujuy para mayor oferta.</li>
+        <li data-i18n="jujuy-acc-3">Airbnb en casas de adobe tradicionales.</li>
+      </ul>
+    </div>
+
+    <div class="ai-section">
+      <h2 data-i18n="ai-accommodation-title">Sugerencias de Alojamiento para Familias</h2>
+      <button class="ai-button" data-i18n="generate-accommodation-suggestions" onclick="callGeminiAPI('ai-accommodation', 'jujuy')">Generar sugerencias de alojamiento para Jujuy</button>
+      <div class="ai-response" id="ai-accommodation-response"></div>
+    </div>
+
+    <div class="content-section">
+      <h2 data-i18n="coordinates-title">Coordenadas aproximadas</h2>
+      <ul>
+        <li data-i18n="jujuy-coords-0">San Salvador de Jujuy: 24° 11' S 65° 18' O</li>
+        <li data-i18n="jujuy-coords-1">Purmamarca: 23° 44' S 65° 30' O</li>
+      </ul>
+    </div>
+
+    <div class="content-section">
+      <h2 data-i18n="events-agenda-title">Agenda de eventos</h2>
+      <ul>
+        <li data-i18n="jujuy-event-0">**(Consultar agenda local)**: Carnaval (Febrero/Marzo, muy concurrido).</li>
+        <li data-i18n="jujuy-event-1">**(Consultar agenda local)**: Festivales folclóricos y religiosos.</li>
+        <li><a href="../docs/agenda/ariflier1970@gmail.com.ical.zip" data-i18n="download-agenda">Descargar agenda completa en formato iCal (.zip)</a></li>
+      </ul>
+    </div>
+
+    <div class="content-section">
+      <h2 data-i18n="family-tips-title">Consejos para familias</h2>
+      <ul>
+        <li data-i18n="jujuy-tip-0">La altura puede afectar a algunos viajeros (San Salvador está a ~1200m, Purmamarca a ~2300m, Humahuaca a ~3000m, Salinas Grandes a ~3500m). Hidrátense bien y caminen despacio los primeros días.</li>
+        <li data-i18n="jujuy-tip-1">Lleven protector solar, sombrero y gafas de sol, la radiación solar es alta.</li>
+        <li data-i18n="jujuy-tip-2">Vístanse en capas, las temperaturas varían mucho entre el día y la noche.</li>
+        <li data-i18n="jujuy-tip-3">El alquiler de auto es recomendable para recorrer la Quebrada con libertad.</li>
+        <li data-i18n="jujuy-tip-4">Siempre tengan cambio y billetes pequeños, especialmente en mercados locales.</li>
+      </ul>
+    </div>
+
+    <div class="content-section">
+      <h2 data-i18n="budget-title">Presupuesto orientativo</h2>
+      <table>
+        <thead>
+          <tr>
+            <th data-i18n="budget-concept">Concepto</th>
+            <th data-i18n="budget-price">Precio estimado (USD)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td data-i18n="budget-accommodation">Alojamiento (noche, familia)</td>
+            <td>40–110</td>
+          </tr>
+          <tr>
+            <td data-i18n="budget-food">Comida (por día, familia)</td>
+            <td>25–65</td>
+          </tr>
+          <tr>
+            <td data-i18n="budget-transport">Transporte local (por día)</td>
+            <td>5–20</td>
+          </tr>
+          <tr>
+            <td data-i18n="budget-activities">Actividades y tours (por día)</td>
+            <td>15–50</td>
+          </tr>
+          <tr>
+            <td data-i18n="budget-attractions">Entradas museos/atracciones</td>
+            <td>0–10</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="ai-section">
+      <h2 data-i18n="ai-budget-title">Sugerencias de Presupuesto</h2>
+      <button class="ai-button" data-i18n="generate-budget-suggestions" onclick="callGeminiAPI('ai-budget', 'jujuy')">Generar sugerencias de presupuesto para Jujuy</button>
+      <div class="ai-response" id="ai-budget-response"></div>
+    </div>
+
+    <div class="content-section">
+      <h2 data-i18n="cultural-tips-title">Tips culturales</h2>
+      <ul>
+        <li data-i18n="jujuy-cultural-0">La cultura andina es muy presente: respeto a la Pachamama (Madre Tierra), rituales, música (quenas, charangos).</li>
+        <li data-i18n="jujuy-cultural-1">El idioma español con influencia quechua es común.</li>
+        <li data-i18n="jujuy-cultural-2">La artesanía local es muy rica: textiles de llama/alpaca, cerámicas, trabajos en madera.</li>
+        <li data-i18n="jujuy-cultural-3">La amabilidad de la gente es una característica destacada.</li>
+      </ul>
+    </div>
+
+    <div class="content-section">
+      <h2 data-i18n="map-title">Mapa de Jujuy</h2>
+      <p>
+        <a href="https://www.openstreetmap.org/#map=10/-23.597/-65.405" target="_blank" data-i18n="see-bigger-map">Ver mapa más grande</a>
+      </p>
+    </div>
+  </main>
 
   <script>
-    // Diccionario de traducciones español ↔ hebreo
+    const apiKey = ""; // API Key se inyecta en Canvas
+
+    async function callGeminiAPI(type, city) {
+      const responseDiv = document.getElementById(`${type}-response`);
+      responseDiv.textContent = "Generando sugerencias...";
+
+      let prompt = "";
+      if (type === "ai-menu") {
+        prompt = `Genera 3 sugerencias de menú para un viaje familiar a ${city}, considerando opciones saludables, bajas en carbohidratos y aptas para diabéticos. Incluye un plato principal, una guarnición y una bebida, o tres opciones de comidas completas. Formatea la respuesta como una lista numerada.`;
+      } else if (type === "ai-accommodation") {
+        prompt = `Genera 3 sugerencias de alojamiento en ${city} para una familia con 2 adultos y 2 niños, priorizando comodidad, seguridad, buena ubicación y actividades para niños. Formatea la respuesta como una lista numerada con una breve descripción de cada opción.`;
+      } else if (type === "ai-budget") {
+        prompt = `Proporciona 3 consejos para optimizar el presupuesto en ${city} para una familia. Enfócate en ahorro en comida, transporte y actividades. Formatea la respuesta como una lista numerada.`;
+      }
+
+      try {
+        const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            contents: [{ parts: [{ text: prompt }] }]
+          })
+        });
+
+        if (!response.ok) {
+          const errorData = await response.json();
+          console.error('Error al llamar a la API de Gemini:', response.status, errorData);
+          responseDiv.textContent = `Error: ${errorData.error.message || response.statusText}. Asegúrate de que la API Key sea válida y de que el entorno sea Canvas.`;
+          return;
+        }
+
+        const data = await response.json();
+        if (data.candidates && data.candidates.length > 0 && data.candidates[0].content && data.candidates[0].content.parts && data.candidates[0].content.parts.length > 0) {
+          responseDiv.textContent = data.candidates[0].content.parts[0].text;
+        } else {
+          responseDiv.textContent = "No se pudo generar una respuesta. Estructura de respuesta inesperada.";
+          console.error("Estructura de respuesta inesperada del LLM:", data);
+        }
+      } catch (error) {
+        console.error("Error en la conexión con la API de Gemini:", error);
+        responseDiv.textContent = `Error de conexión: ${error.message}. Verifica tu conexión a internet o el estado del servicio.`;
+      }
+    }
+
+    // Traducciones específicas de la página
     const translations = {
       es: {
-        "city-title": "Jujuy",
-        "welcome-text": "Bienvenidos a la sección de Jujuy.",
-        "main-attractions-title": "Atracciones principales",
-        "attraction-0": "Quebrada de Humahuaca",
-        "attraction-1": "Cerro de los Siete Colores (Purmamarca)",
-        "attraction-2": "Serranías del Hornocal",
-        "attraction-3": "Salinas Grandes",
-        "restaurant-types-title": "Tipos de restaurantes",
-        "rest-0": "Peñas folclóricas",
-        "rest-1": "Comida andina",
-        "rest-2": "Cocina criolla",
-        "rest-3": "Cafés y casas de té",
+        "back-to-itinerary": "⬅️ Volver al itinerario",
+        "city-name": "Jujuy",
+        "foto-caption-jujuy": "Cerro de los Siete Colores, Purmamarca, Jujuy",
+        "welcome-text-jujuy": "La provincia de Jujuy, en el noroeste argentino, es una explosión de colores y cultura andina. Famosa por sus paisajes de montañas multicolores, pueblos ancestrales y ricas tradiciones, es un destino fascinante para toda la familia.",
+        "dates-duration-title": "Fechas y duración",
+        "jujuy-stay": "**Estadía**: 16/10 al 20/10 (5 días)",
+        "jujuy-how-to-get-there": "**Cómo llegar**: Vuelo desde Mendoza (con escala) / Bus de larga distancia.",
+        "must-see-places-title": "Lugares imperdibles",
+        "jujuy-place-0": "**Quebrada de Humahuaca**: Patrimonio de la Humanidad, con paisajes como la Paleta del Pintor en Maimará y el Cerro de los Siete Colores en Purmamarca.",
+        "jujuy-place-1": "**Purmamarca**: Pueblo pintoresco al pie del Cerro de los Siete Colores.",
+        "jujuy-place-2": "**Tilcara**: Ciudad con la Pucará (fortaleza prehispánica) y museos.",
+        "jujuy-place-3": "**Humahuaca**: Histórica ciudad con su Monumento a la Independencia y la Torre del Cabildo.",
+        "jujuy-place-4": "**Salinas Grandes**: Desierto de sal inmenso (compartido con Salta, accesible desde Purmamarca).",
+        "jujuy-place-5": "**Garganta del Diablo (Tilcara)**: Formación rocosa con cascada.",
+        "jujuy-place-6": "**San Salvador de Jujuy**: La capital, con su casco histórico y la Casa de Gobierno.",
+        "recommended-activities-title": "Actividades recomendadas",
+        "jujuy-activity-0": "Recorridos por los pueblos de la Quebrada y sus mercados artesanales.",
+        "jujuy-activity-1": "Caminatas suaves en Purmamarca o Tilcara.",
+        "jujuy-activity-2": "Visita a la Pucará de Tilcara.",
+        "jujuy-activity-3": "Excursión a Salinas Grandes (llevar protector solar y gafas de sol).",
+        "jujuy-activity-4": "Observación de estrellas en la Quebrada (poca contaminación lumínica).",
+        "jujuy-activity-5": "Disfrutar de la música folclórica y las danzas locales.",
+        "jujuy-activity-6": "Probar las empanadas jujeñas y tamales.",
+        "gastronomy-title": "Gastronomía destacada",
+        "gastronomy-intro-jujuy": "La gastronomía jujeña es una fusión de sabores andinos y criollos, con platos a base de maíz, papa, llama y cabra. Las opciones sin gluten y bajas en carbohidratos pueden requerir adaptación en platos tradicionales, pero siempre hay alternativas con carnes y verduras.",
+        "restaurants-title": "Restaurantes recomendados",
+        "table-restaurant": "Restaurante",
+        "table-type": "Tipo",
+        "table-gluten-free": "Sin Gluten",
+        "table-sugar-free": "Sin Azúcar",
+        "jujuy-rest-0-name": "El Patio de la Empanada",
+        "jujuy-rest-0-type": "Comida regional / Empanadas",
+        "jujuy-rest-1-name": "La Cocina del Colorado",
+        "jujuy-rest-1-type": "Cocina andina tradicional",
+        "jujuy-rest-2-name": "Killa",
+        "jujuy-rest-2-type": "Cocina de autor / Regional",
+        "coffees-title": "Confiterías y cafés",
+        "table-confectionery": "Confitería",
+        "jujuy-cafe-0-name": "(Opciones locales)",
+        "jujuy-cafe-0-type": "Panaderías / Cafés",
+        "jujuy-cafe-1-name": "Mercados artesanales",
+        "jujuy-cafe-1-type": "Productos locales",
+        "ai-menu-title": "Sugerencias de Menú para Diabéticos",
+        "generate-menu-suggestions": "Generar sugerencias de menú para Jujuy",
+        "accommodation-title": "Alojamiento (ejemplos)",
+        "jujuy-acc-0": "Hoteles boutique en Purmamarca o Tilcara.",
+        "jujuy-acc-1": "Estancias y hosterías rurales en la Quebrada.",
+        "jujuy-acc-2": "Hoteles en San Salvador de Jujuy para mayor oferta.",
+        "jujuy-acc-3": "Airbnb en casas de adobe tradicionales.",
+        "ai-accommodation-title": "Sugerencias de Alojamiento para Familias",
+        "generate-accommodation-suggestions": "Generar sugerencias de alojamiento para Jujuy",
+        "coordinates-title": "Coordenadas aproximadas",
+        "jujuy-coords-0": "San Salvador de Jujuy: 24° 11' S 65° 18' O",
+        "jujuy-coords-1": "Purmamarca: 23° 44' S 65° 30' O",
+        "events-agenda-title": "Agenda de eventos",
+        "jujuy-event-0": "**(Consultar agenda local)**: Carnaval (Febrero/Marzo, muy concurrido).",
+        "jujuy-event-1": "**(Consultar agenda local)**: Festivales folclóricos y religiosos.",
+        "download-agenda": "Descargar agenda completa en formato iCal (.zip)",
+        "family-tips-title": "Consejos para familias",
+        "jujuy-tip-0": "La altura puede afectar a algunos viajeros (San Salvador está a ~1200m, Purmamarca a ~2300m, Humahuaca a ~3000m, Salinas Grandes a ~3500m). Hidrátense bien y caminen despacio los primeros días.",
+        "jujuy-tip-1": "Lleven protector solar, sombrero y gafas de sol, la radiación solar es alta.",
+        "jujuy-tip-2": "Vístanse en capas, las temperaturas varían mucho entre el día y la noche.",
+        "jujuy-tip-3": "El alquiler de auto es recomendable para recorrer la Quebrada con libertad.",
+        "jujuy-tip-4": "Siempre tengan cambio y billetes pequeños, especialmente en mercados locales.",
+        "budget-title": "Presupuesto orientativo",
+        "budget-concept": "Concepto",
+        "budget-price": "Precio estimado (USD)",
+        "budget-accommodation": "Alojamiento (noche, familia)",
+        "budget-food": "Comida (por día, familia)",
+        "budget-transport": "Transporte local (por día)",
+        "budget-activities": "Actividades y tours (por día)",
+        "budget-attractions": "Entradas museos/atracciones",
+        "ai-budget-title": "Sugerencias de Presupuesto",
+        "generate-budget-suggestions": "Generar sugerencias de presupuesto para Jujuy",
+        "cultural-tips-title": "Tips culturales",
+        "jujuy-cultural-0": "La cultura andina es muy presente: respeto a la Pachamama (Madre Tierra), rituales, música (quenas, charangos).",
+        "jujuy-cultural-1": "El idioma español con influencia quechua es común.",
+        "jujuy-cultural-2": "La artesanía local es muy rica: textiles de llama/alpaca, cerámicas, trabajos en madera.",
+        "jujuy-cultural-3": "La amabilidad de la gente es una característica destacada.",
         "map-title": "Mapa de Jujuy",
-        "see-bigger-map": "Ver mapa más grande",
-        "back-link": "⬅ Volver al itinerario"
+        "see-bigger-map": "Ver mapa más grande"
       },
       he: {
-        "city-title": "חוחוי",
-        "welcome-text": "ברוכים הבאים למדור חוחוי.",
-        "main-attractions-title": "אטרקציות עיקריות",
-        "attraction-0": "קניון הומאוואקה",
-        "attraction-1": "הר שבעת הצבעים (פורמאמרקה)",
-        "attraction-2": "רכס הורנוקאל",
-        "attraction-3": "סאלינס גראנדס",
-        "restaurant-types-title": "סוגי מסעדות",
-        "rest-0": "פניה פולקלורית",
-        "rest-1": "מטבח אנדי",
-        "rest-2": "מטבח קריויו",
-        "rest-3": "בתי קפה ובתי תה",
+        "back-to-itinerary": "⬅️ חזרה למפת המסלול",
+        "city-name": "חוחוי",
+        "foto-caption-jujuy": "הר שבעת הצבעים, פורממרקה, חוחוי",
+        "welcome-text-jujuy": "מחוז חוחוי, בצפון-מערב ארגנטינה, הוא פיצוץ של צבעים ותרבות אנדאית. מפורסם בנופיו של הרים צבעוניים, כפרים עתיקים ומסורות עשירות, זהו יעד מרתק לכל המשפחה.",
+        "dates-duration-title": "תאריכים ומשך שהייה",
+        "jujuy-stay": "**שהייה**: 16/10 עד 20/10 (5 ימים)",
+        "jujuy-how-to-get-there": "**איך מגיעים**: טיסה ממנדוסה (עם עצירה) / אוטובוס למרחקים ארוכים.",
+        "must-see-places-title": "מקומות שאסור להחמיץ",
+        "jujuy-place-0": "**קבראדה דה אומהואקה (Quebrada de Humahuaca)**: אתר מורשת עולמית, עם נופים כמו פלטת הצייר במאימרה (Maimará) והר שבעת הצבעים בפורממרקה (Purmamarca).",
+        "jujuy-place-1": "**פורממרקה (Purmamarca)**: עיירה ציורית למרגלות הר שבעת הצבעים.",
+        "jujuy-place-2": "**טילקארה (Tilcara)**: עיר עם הפוקארה (מבצר פרה-היסטורי) ומוזיאונים.",
+        "jujuy-place-3": "**אומהואקה (Humahuaca)**: עיר היסטורית עם אנדרטת העצמאות ומגדל הקבילדו.",
+        "jujuy-place-4": "**סלינס גרנדס (Salinas Grandes)**: מדבר מלח עצום (משותף לסלטה, נגיש מפורממרקה).",
+        "jujuy-place-5": "**גרונקה דל דיאבלו (Garganta del Diablo) (טילקארה)**: תצורת סלע עם מפל.",
+        "jujuy-place-6": "**סן סלבדור דה חוחוי (San Salvador de Jujuy)**: הבירה, עם מרכזה ההיסטורי ובית הממשלה.",
+        "recommended-activities-title": "פעילויות מומלצות",
+        "jujuy-activity-0": "סיורים בכפרים של הקבראדה ובשווקי האומנים שלהם.",
+        "jujuy-activity-1": "טיולים רגליים קלים בפורממרקה או טילקארה.",
+        "jujuy-activity-2": "ביקור בפוקארה דה טילקארה.",
+        "jujuy-activity-3": "טיול לסלינס גרנדס (לקחת קרם הגנה ומשקפי שמש).",
+        "jujuy-activity-4": "תצפית כוכבים בקבראדה (זיהום אור נמוך).",
+        "jujuy-activity-5": "ליהנות ממוזיקה פולקלורית וריקודים מקומיים.",
+        "jujuy-activity-6": "לטעום את האמפנדות החוחויניות והטאמאלים.",
+        "gastronomy-title": "גסטרונומיה מומלצת",
+        "gastronomy-intro-jujuy": "המטבח החוחויני הוא שילוב של טעמים אנדאיים וקריאולים, עם מנות מבוססות תירס, תפוח אדמה, יאמה ועז. אפשרויות ללא גלוטן וללא פחמימות עשויות לדרוש התאמה במנות מסורתיות, אך תמיד יש חלופות עם בשרים וירקות.",
+        "restaurants-title": "מסעדות מומלצות",
+        "table-restaurant": "מסעדה",
+        "table-type": "סוג",
+        "table-gluten-free": "ללא גלוטן",
+        "table-sugar-free": "ללא סוכר",
+        "jujuy-rest-0-name": "אל פאטיו דה לה אמפנדה (El Patio de la Empanada)",
+        "jujuy-rest-0-type": "אוכל אזורי / אמפנדות",
+        "jujuy-rest-1-name": "לה קוצ'ינה דל קולוראדו (La Cocina del Colorado)",
+        "jujuy-rest-1-type": "מטבח אנדאי מסורתי",
+        "jujuy-rest-2-name": "קילה (Killa)",
+        "jujuy-rest-2-type": "מטבח שף / אזורי",
+        "coffees-title": "קונדיטוריות ובתי קפה",
+        "table-confectionery": "קונדיטוריה",
+        "jujuy-cafe-0-name": "(אפשרויות מקומיות)",
+        "jujuy-cafe-0-type": "מאפיות / בתי קפה",
+        "jujuy-cafe-1-name": "שווקי אומנים",
+        "jujuy-cafe-1-type": "תוצרת מקומית",
+        "ai-menu-title": "הצעות תפריט לסוכרתיים",
+        "generate-menu-suggestions": "צור הצעות תפריט עבור חוחוי",
+        "accommodation-title": "לינה (דוגמאות)",
+        "jujuy-acc-0": "מלונות בוטיק בפורממרקה או טילקארה.",
+        "jujuy-acc-1": "אחוזות ואכסניות כפריות בקבראדה.",
+        "jujuy-acc-2": "מלונות בסן סלבדור דה חוחוי להיצע רחב יותר.",
+        "jujuy-acc-3": "Airbnb בבתי אדמה מסורתיים.",
+        "ai-accommodation-title": "הצעות לינה למשפחות",
+        "generate-accommodation-suggestions": "צור הצעות לינה לחוחוי",
+        "coordinates-title": "קואורדינטות משוערות",
+        "jujuy-coords-0": "סן סלבדור דה חוחוי: 24° 11' S 65° 18' O",
+        "jujuy-coords-1": "פורממרקה: 23° 44' S 65° 30' O",
+        "events-agenda-title": "לוח אירועים",
+        "jujuy-event-0": "**(מומלץ לבדוק לו"ז מקומי)**: קרנבל (פברואר/מרץ, עמוס מאוד).",
+        "jujuy-event-1": "**(מומלץ לבדוק לו"ז מקומי)**: פסטיבלי פולקלור ודת.",
+        "download-agenda": "הורד לוח זמנים מלא בפורמט iCal (.zip)",
+        "family-tips-title": "טיפים למשפחות",
+        "jujuy-tip-0": "הגובה עלול להשפיע על חלק מהמטיילים (סן סלבדור נמצאת ב-~1200 מ', פורממרקה ב-~2300 מ', אומהואקה ב-~3000 מ', סלינס גרנדס ב-~3500 מ'). שתו הרבה מים ולכו לאט בימים הראשונים.",
+        "jujuy-tip-1": "קחו קרם הגנה, כובע ומשקפי שמש, קרינת השמש גבוהה.",
+        "jujuy-tip-2": "התלבשו בשכבות, הטמפרטורות משתנות מאוד בין יום ללילה.",
+        "jujuy-tip-3": "מומלץ לשכור רכב כדי לסייר בקבראדה בחופשיות.",
+        "jujuy-tip-4": "תמיד שיהיה לכם כסף קטן ושטרות בערכים נמוכים, במיוחד בשווקים מקומיים.",
+        "budget-title": "תקציב משוער",
+        "budget-concept": "קונספט",
+        "budget-price": "מחיר משוער (USD)",
+        "budget-accommodation": "לינה (לילה, משפחה)",
+        "budget-food": "אוכל (ליום, משפחה)",
+        "budget-transport": "תחבורה מקומית (ליום)",
+        "budget-activities": "פעילויות וסיורים (ליום)",
+        "budget-attractions": "כניסות למוזיאונים/אטרקציות",
+        "ai-budget-title": "הצעות לתקציב",
+        "generate-budget-suggestions": "צור הצעות לתקציב עבור חוחוי",
+        "cultural-tips-title": "טיפים תרבותיים",
+        "jujuy-cultural-0": "התרבות האנדאית נוכחת מאוד: כבוד לפצ'אמאמה (אמא אדמה), טקסים, מוזיקה (חלילי קנה, צ'רנגו).",
+        "jujuy-cultural-1": "השפה הספרדית עם השפעה קצ'ואית נפוצה.",
+        "jujuy-cultural-2": "האומנות המקומית עשירה מאוד: טקסטיל של יאמה/אלפקה, קרמיקה, עבודות עץ.",
+        "jujuy-cultural-3": "האדיבות של האנשים היא מאפיין בולט.",
         "map-title": "מפת חוחוי",
-        "see-bigger-map": "לצפייה במפה גדולה יותר",
-        "back-link": "⬅ חזרה למפת המסלול"
+        "see-bigger-map": "הצג מפה גדולה יותר"
       }
     };
 
-    function translatePage(language) {
-      document.body.dir = (language === 'he') ? 'rtl' : 'ltr';
-      document.getElementById('city-title').textContent = translations[language]["city-title"];
-      document.getElementById('welcome-text').textContent = translations[language]["welcome-text"];
-      document.getElementById('main-attractions-title').textContent = translations[language]["main-attractions-title"];
-      document.getElementById('attraction-0').textContent = translations[language]["attraction-0"];
-      document.getElementById('attraction-1').textContent = translations[language]["attraction-1"];
-      document.getElementById('attraction-2').textContent = translations[language]["attraction-2"];
-      document.getElementById('attraction-3').textContent = translations[language]["attraction-3"];
-      document.getElementById('restaurant-types-title').textContent = translations[language]["restaurant-types-title"];
-      document.getElementById('rest-0').textContent = translations[language]["rest-0"];
-      document.getElementById('rest-1').textContent = translations[language]["rest-1"];
-      document.getElementById('rest-2').textContent = translations[language]["rest-2"];
-      document.getElementById('rest-3').textContent = translations[language]["rest-3"];
-      document.getElementById('map-title').textContent = translations[language]["map-title"];
-      document.getElementById('see-bigger-map').textContent = translations[language]["see-bigger-map"];
-      document.getElementById('back-link').textContent = translations[language]["back-link"];
+    document.addEventListener('DOMContentLoaded', function() {
+      initLanguageSelector(translations); // De i18n.js
+      loadAndApplyLanguage(); // De i18n.js
+    });
+
+    // Función para cargar y aplicar el idioma guardado, sobrescribiendo si hay un parámetro de URL
+    function loadAndApplyLanguage() {
+        let lang = localStorage.getItem('idiomaPreferido') || 'es';
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.has('lang')) {
+            lang = urlParams.get('lang');
+        }
+        applyLanguage(lang);
+    }
+    // Sobreescribir el `applyLanguage` de `i18n.js` para que también actualice el título y la foto-caption
+    function applyLanguage(lang) {
+        document.documentElement.lang = lang;
+        document.querySelectorAll('[data-i18n]').forEach(element => {
+            const key = element.getAttribute('data-i18n');
+            if (translations[lang] && translations[lang][key]) {
+                let text = translations[lang][key];
+                if (text.includes('**')) {
+                    text = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+                    element.innerHTML = text;
+                } else {
+                    element.textContent = text;
+                }
+            }
+        });
+
+        document.querySelectorAll('.language-btn').forEach(btn => {
+            if (btn.dataset.lang === lang) {
+                btn.classList.add('active');
+            } else {
+                btn.classList.remove('active');
+            }
+        });
+        localStorage.setItem('idiomaPreferido', lang);
     }
   </script>
 </body>
