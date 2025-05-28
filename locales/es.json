@@ -1,21 +1,49 @@
-{
-  "titulo": "Bienvenido a la Aventura Argentina",
-  "ciudad_rosario": "Rosario",
-  "volver_itinerario": "⬅ Volver al itinerario",
-  "idioma": "Idioma:",
-  "espanol": "Español",
-  "hebreo": "Hebreo",
-  "bienvenida_rosario": "Bienvenidos a la sección de Rosario.",
-  "atracciones_principales": "Atracciones principales",
-  "monumento_bandera": "Monumento Nacional a la Bandera",
-  "parque_independencia": "Parque Independencia",
-  "costanera_parana": "Costanera y Río Paraná",
-  "macro": "Museo de Arte Contemporáneo (MACRO)",
-  "tipos_restaurantes": "Tipos de restaurantes",
-  "parrillas": "Parrillas",
-  "pizzerias": "Pizzerías",
-  "heladerias": "Heladerías artesanales",
-  "bares": "Bares y cervecerías",
-  "mapa_rosario": "Mapa de Rosario",
-  "ver_mapa_grande": "Ver mapa más grande"
-}
+    cat <<EOF > locales/es.json
+    {
+      "idioma": "Idioma:",
+      "moneda": "Moneda:",
+      "tituloPrincipal": "Itinerario Familiar por Argentina",
+      "bienvenidaPrincipal": "¡Bienvenidos! Haz clic en cada ciudad para ver información, mapas y recomendaciones.",
+      "ciudades": "Ciudades y Destinos",
+      "transporte": "Transporte entre ciudades",
+      "desde": "Desde",
+      "hasta": "Hasta",
+      "medio": "Medio",
+      "tiempo": "Tiempo",
+      "precio": "Precio aprox.",
+      "compania": "Compañía",
+      "volverAlItinerario": "⬅ Volver al itinerario",
+      "atraccionesPrincipales": "Atracciones principales",
+      "descubriCorrientes": "Descubrí CORRIENTES",
+      "mapaInteractivoTitulo": "Mapa Interactivo del Viaje Familiar",
+      "mapaInteractivoBienvenida": "Recorre el itinerario familiar por Argentina. Haz clic en cada ciudad para detalles.",
+      "menu": [
+        { "archivo": "buenosaires.html", "nombre": "Buenos Aires" },
+        { "archivo": "rosario.html", "nombre": "Rosario" },
+        { "archivo": "bariloche.html", "nombre": "Bariloche" },
+        { "archivo": "mendoza.html", "nombre": "Mendoza" },
+        { "archivo": "malargue.html", "nombre": "Malargüe" },
+        { "archivo": "jujuy.html", "nombre": "Jujuy" },
+        { "archivo": "iguazu.html", "nombre": "Iguazú" },
+        { "archivo": "corrientes.html", "nombre": "Corrientes" },
+        { "archivo": "ibera.html", "nombre": "Iberá" },
+        { "archivo": "mapa.html", "nombre": "Mapa Interactivo" }
+      ],
+      "tablaTransporte": [
+        ["Buenos Aires", "Rosario", "Bus", "4 h", 20000, "<a href=\"https://busplus.com.ar/\" target=\"_blank\">BusPlus</a>"],
+        ["Rosario", "Mendoza", "Bus", "13 h", 50000, "<a href=\"https://www.andesmar.com/\" target=\"_blank\">Andesmar</a>"],
+        ["Mendoza", "Malargüe", "Bus", "6 h", 18000, "<a href=\"https://www.catainternacional.com/\" target=\"_blank\">CATA</a>"],
+        ["Malargüe", "Jujuy", "Vuelo + Bus", "10 h", 110000, "<a href=\"https://www.centraldepasajes.com.ar/cdp/pasajes-micro/mendoza/san-salvador-de-jujuy\" target=\"_blank\">Pasajes de micro baratos</a>"],
+        ["Jujuy", "Iguazú", "Vuelo", "2 h", 85000, "<a href=\"https://www.aerolineas.com.ar/\" target=\"_blank\">Aerolineas Argentinas</a>"],
+        ["Iguazú", "Corrientes", "Bus", "9 h", 40000, "<a href=\"https://www.crucerodelnorte.com.ar/\" target=\"_blank\">Crucero del Norte</a>"],
+        ["Corrientes", "Esteros del Iberá", "Remis/Transfer", "4 h", 60000, "<a href=\"https://corrientes.tur.ar/producto/esterosdelibera/\" target=\"_blank\">Esteros del Iberá</a>"]
+      ],
+      "ciudadBuenosAires": "Buenos Aires",
+      "bienvenidaBuenosAires": "Bienvenidos a la sección de Buenos Aires.",
+      "fotoCaptionBuenosAires": "Obelisco de Buenos Aires",
+      "ciudadRosario": "Rosario",
+      "bienvenidaRosario": "Bienvenidos a la sección de Rosario.",
+      "fotoCaptionRosario": "Monumento Nacional a la Bandera, Rosario"
+    }
+    EOF
+    
