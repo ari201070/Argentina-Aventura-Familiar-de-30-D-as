@@ -2,8 +2,12 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Cataratas del Iguazú | Viaje Familiar a Argentina</title>
+  <title>Puerto Iguazú | Viaje Familiar a Argentina</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="estilos.css">
+  <script src="i18n.js"></script>
   <style>
+    /* Estilos generales del cuerpo y barra superior */
     body {
       font-family: Arial, sans-serif;
       background: #f9f9f9;
@@ -34,106 +38,112 @@
       margin-left: 20px;
       text-decoration: none;
       font-weight: bold;
-      color: #007BFF;
+      color: #007bff;
+      font-size: 16px;
     }
-    h1, h2 {
-      color: #0F4761;
-    }
-    ul {
+    .header {
+      text-align: center;
       margin-bottom: 20px;
     }
-    iframe {
-      border: 1px solid black;
+    .header img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    .content-section {
+      background: #fff;
+      padding: 20px;
+      margin-bottom: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    }
+    h1, h2 {
+      color: #222;
+      border-bottom: 2px solid #eee;
+      padding-bottom: 10px;
+      margin-top: 0;
+    }
+    ul {
+      list-style-type: disc;
+      margin-left: 20px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
+    th, td {
+      border: 1px solid #ddd;
+      padding: 8px;
+      text-align: left;
+    }
+    th {
+      background-color: #f2f2f2;
+    }
+    .ai-section {
+      background-color: #e8f0fe; /* Un color suave para las secciones de IA */
+      border-left: 5px solid #4285f4;
+      padding: 15px;
+      margin-top: 20px;
+      border-radius: 5px;
+    }
+    .ai-response {
+      white-space: pre-wrap; /* Para mantener saltos de línea del texto generado por IA */
+      background-color: #f0f6ff;
+      border: 1px dashed #a0c3ff;
+      padding: 10px;
+      margin-top: 10px;
+      border-radius: 4px;
+    }
+    .ai-button {
+      background-color: #4285f4;
+      color: white;
+      padding: 10px 15px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+      margin-top: 10px;
+    }
+    .ai-button:hover {
+      background-color: #3367d6;
     }
   </style>
 </head>
 <body>
   <div id="language-selector">
-    <button onclick="translatePage('es')" class="language-btn">Español</button>
-    <button onclick="translatePage('he')" class="language-btn">עברית</button>
-    <a href="../index.html" class="back-link" id="back-link">⬅ Volver al itinerario</a>
+    <button class="language-btn" data-lang="es">Español</button>
+    <button class="language-btn" data-lang="he">עברית</button>
   </div>
 
-  <h1 id="city-title">Cataratas del Iguazú</h1>
-  <p id="welcome-text">Bienvenidos a la sección de Cataratas del Iguazú.</p>
+  <main>
+    <a href="../index.html" class="back-link" data-i18n="back-to-itinerary">⬅️ Volver al itinerario</a>
 
-  <h2 id="main-attractions-title">Atracciones principales</h2>
-  <ul id="main-attractions-list">
-    <li><a href="https://es.wikipedia.org/wiki/Cataratas_del_Iguaz%C3%BA" target="_blank" id="attraction-0">Parque Nacional Iguazú y Cataratas</a></li>
-    <li><a href="https://es.wikipedia.org/wiki/Garganta_del_Diablo" target="_blank" id="attraction-1">Garganta del Diablo</a></li>
-    <li><a href="https://es.wikipedia.org/wiki/Paseo_Superior_y_Paseo_Inferior" target="_blank" id="attraction-2">Paseos Superior e Inferior</a></li>
-    <li><a href="https://es.wikipedia.org/wiki/Isla_San_Mart%C3%ADn" target="_blank" id="attraction-3">Isla San Martín</a></li>
-  </ul>
+    <div class="header">
+      <h1 data-i18n="city-name">Puerto Iguazú</h1>
+      <img src="../docs/imagenes/iguazu/iguazu.jpg" alt="Cataratas del Iguazú" class="ciudad-foto" id="city-photo">
+      <p id="foto-caption" data-i18n="foto-caption-iguazu">Cataratas del Iguazú</p>
+      <p id="welcome-text" data-i18n="welcome-text-iguazu">
+        Puerto Iguazú es la ciudad argentina que sirve de puerta de entrada a las majestuosas Cataratas del Iguazú, una de las Siete Maravillas Naturales del Mundo y Patrimonio de la Humanidad. Un destino selvático e imperdible para toda la familia.
+      </p>
+    </div>
 
-  <h2 id="restaurant-types-title">Tipos de restaurantes</h2>
-  <ul id="restaurant-types-list">
-    <li id="rest-0">Parrillas</li>
-    <li id="rest-1">Restaurantes regionales</li>
-    <li id="rest-2">Buffets en el parque</li>
-    <li id="rest-3">Cafés y casas de té</li>
-  </ul>
+    <div class="content-section">
+      <h2 data-i18n="dates-duration-title">Fechas y duración</h2>
+      <ul>
+        <li data-i18n="iguazu-stay">**Estadía**: 20/10 al 24/10 (5 días)</li>
+        <li data-i18n="iguazu-how-to-get-there">**Cómo llegar**: Vuelo desde Jujuy (con escala en Buenos Aires) / Bus de larga distancia.</li>
+      </ul>
+    </div>
 
-  <h2 id="map-title">Mapa de Cataratas del Iguazú</h2>
-  <iframe src="https://www.openstreetmap.org/export/embed.html?bbox=-54.478%2C-25.707%2C-54.438%2C-25.664&amp;layer=mapnik" width="100%" height="350"></iframe>
-  <br><small><a href="https://www.openstreetmap.org/#map=14/-25.686/-54.458" target="_blank" id="see-bigger-map">Ver mapa más grande</a></small>
-
-  <script>
-    // Diccionario de traducciones español ↔ hebreo
-    const translations = {
-      es: {
-        "city-title": "Cataratas del Iguazú",
-        "welcome-text": "Bienvenidos a la sección de Cataratas del Iguazú.",
-        "main-attractions-title": "Atracciones principales",
-        "attraction-0": "Parque Nacional Iguazú y Cataratas",
-        "attraction-1": "Garganta del Diablo",
-        "attraction-2": "Paseos Superior e Inferior",
-        "attraction-3": "Isla San Martín",
-        "restaurant-types-title": "Tipos de restaurantes",
-        "rest-0": "Parrillas",
-        "rest-1": "Restaurantes regionales",
-        "rest-2": "Buffets en el parque",
-        "rest-3": "Cafés y casas de té",
-        "map-title": "Mapa de Cataratas del Iguazú",
-        "see-bigger-map": "Ver mapa más grande",
-        "back-link": "⬅ Volver al itinerario"
-      },
-      he: {
-        "city-title": "מפלי איגואסו",
-        "welcome-text": "ברוכים הבאים למדור מפלי איגואסו.",
-        "main-attractions-title": "אטרקציות עיקריות",
-        "attraction-0": "הפארק הלאומי ומפלי איגואסו",
-        "attraction-1": "גרגנטה דל דיאבלו",
-        "attraction-2": "מסלול עליון ותחתון",
-        "attraction-3": "אי סן מרטין",
-        "restaurant-types-title": "סוגי מסעדות",
-        "rest-0": "מסעדות בשרים (פריז'ות)",
-        "rest-1": "מסעדות אזוריות",
-        "rest-2": "בופה בפארק",
-        "rest-3": "בתי קפה ובתי תה",
-        "map-title": "מפת מפלי איגואסו",
-        "see-bigger-map": "לצפייה במפה גדולה יותר",
-        "back-link": "⬅ חזרה למפת המסלול"
-      }
-    };
-
-    function translatePage(language) {
-      document.body.dir = (language === 'he') ? 'rtl' : 'ltr';
-      document.getElementById('city-title').textContent = translations[language]["city-title"];
-      document.getElementById('welcome-text').textContent = translations[language]["welcome-text"];
-      document.getElementById('main-attractions-title').textContent = translations[language]["main-attractions-title"];
-      document.getElementById('attraction-0').textContent = translations[language]["attraction-0"];
-      document.getElementById('attraction-1').textContent = translations[language]["attraction-1"];
-      document.getElementById('attraction-2').textContent = translations[language]["attraction-2"];
-      document.getElementById('attraction-3').textContent = translations[language]["attraction-3"];
-      document.getElementById('restaurant-types-title').textContent = translations[language]["restaurant-types-title"];
-      document.getElementById('rest-0').textContent = translations[language]["rest-0"];
-      document.getElementById('rest-1').textContent = translations[language]["rest-1"];
-      document.getElementById('rest-2').textContent = translations[language]["rest-2"];
-      document.getElementById('rest-3').textContent = translations[language]["rest-3"];
-      document.getElementById('map-title').textContent = translations[language]["map-title"];
-      document.getElementById('see-bigger-map').textContent = translations[language]["see-bigger-map"];
-      document.getElementById('back-link').textContent = translations[language]["back-link"];
-    }
-  </script>
-</body>
-</html>
+    <div class="content-section">
+      <h2 data-i18n="must-see-places-title">Lugares imperdibles</h2>
+      <ul>
+        <li data-i18n="iguazu-place-0">**Parque Nacional Iguazú (lado argentino)**: Con pasarelas sobre las cataratas, la Garganta del Diablo y el Tren Ecológico.</li>
+        <li data-i18n="iguazu-place-1">**Parque Nacional do Iguaçu (lado brasileño)**: Ofrece una vista panorámica impresionante de las cataratas.</li>
+        <li data-i18n="iguazu-place-2">**Hito de las Tres Fronteras**: Punto de encuentro de Argentina, Brasil y Paraguay.</li>
+        <li data-i18n="iguazu-place-3">**Güira Oga (Refugio de Animales Silvestres)**: Centro de rescate y rehabilitación de fauna.</li>
+        <li data-i18n="iguazu-place-4">**Jardín de los Picaflores**: Un lugar mágico para observar colibríes de cerca.</li>
+        <li data-i18n="iguazu-place-5">**Aripuca**: Un emprendimiento turístico cultural que revaloriza el bosque misionero.</li>
+        <li data-i1
