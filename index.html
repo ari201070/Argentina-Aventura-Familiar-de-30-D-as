@@ -5,6 +5,7 @@
   <title>Itinerario Familiar por Argentina</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
+    /* Estilos generales del cuerpo y barra superior */
     body {
       font-family: Arial, sans-serif;
       background: #f7f7f7;
@@ -40,6 +41,8 @@
       border-color: #6d7fc9;
       font-weight: bold;
     }
+
+    /* Estilos del contenido principal */
     main {
       max-width: 1100px;
       margin: 0 auto;
@@ -50,6 +53,8 @@
       margin-top: 18px;
     }
     h1 { margin-top: 0; }
+
+    /* Estilos del menú de ciudades */
     ul#menu-ciudades {
       margin: 0 0 18px 0;
       padding: 0 0 0 18px;
@@ -67,6 +72,8 @@
       color: #3f7edb;
       text-decoration: underline;
     }
+
+    /* Estilos de la tabla de transporte */
     table {
       border-collapse: collapse;
       width: 100%;
@@ -83,12 +90,16 @@
       background: #e6f0fa;
       font-weight: bold;
     }
+
+    /* Estilos de la atribución de la API */
     .attribution {
       font-size:12px;
       color:#888;
       text-align: right;
       margin-top: 16px;
     }
+
+    /* Estilos de la sección de atracciones de Corrientes */
     .corrientes-atracciones {
       margin-top: 32px;
       background: #f2f7fa;
@@ -112,6 +123,8 @@
     .corrientes-atracciones a:hover {
       text-decoration: underline;
     }
+
+    /* Media queries para responsividad */
     @media (max-width: 800px) {
       main { padding: 12px 2vw; }
       .top-bar { padding: 10px 2vw 0 2vw; }
@@ -121,7 +134,6 @@
   </style>
 </head>
 <body>
-  <!-- Barra superior: selector de idioma y moneda -->
   <div class="top-bar">
     <span data-i18n="idioma">Idioma:</span>
     <button id="btn-es" onclick="cambiarIdioma('es')">Español</button>
@@ -138,12 +150,10 @@
 
     <h2 data-i18n="ciudades">Ciudades y Destinos</h2>
 
-    <!-- Menú de ciudades -->
     <ul id="menu-ciudades"></ul>
 
     <h2 data-i18n="transporte">Transporte entre ciudades</h2>
 
-    <!-- Tabla de transporte -->
     <table>
       <thead>
         <tr>
@@ -158,7 +168,6 @@
       <tbody id="tabla-transporte"></tbody>
     </table>
 
-    <!-- Atracciones principales Corrientes -->
     <div class="corrientes-atracciones" id="corrientes-atracciones" style="display:none;">
       <h3>Atracciones principales</h3>
       <ul>
@@ -176,7 +185,7 @@
   </main>
 
   <script>
-    // Diccionario de traducción
+    // Diccionario de traducción para español y hebreo
     const traducciones = {
       es: {
         idioma: "Idioma:",
@@ -252,102 +261,131 @@
       }
     };
 
-    // Tasas de cambio (se actualizan al cargar la página)
+    // Tasas de cambio iniciales (se actualizan al cargar la página)
     let tasas = {
       ARS: 1,
-      USD: 1000,
-      ILS: 110
+      USD: 1000, // Valor de ejemplo, se actualizará
+      ILS: 110   // Valor de ejemplo, se actualizará
     };
+    // Símbolos de moneda
     const simbolos = {
       ARS: "$",
       USD: "US$",
       ILS: "₪"
     };
 
-    let idiomaActual = 'es';
-    let monedaActual = 'ARS';
+    let idiomaActual = 'es'; // Idioma predeterminado
+    let monedaActual = 'ARS'; // Moneda predeterminada
 
-    // Obtenemos tasas de cambio reales desde ExchangeRate-API
+    // Función para obtener tasas de cambio reales desde ExchangeRate-API
     function actualizarTasas(callback) {
+      // Usamos open.er-api.com para obtener tasas de cambio, ya que Polygon.io requiere API Key y exchangerate.host tiene límites.
       fetch('https://open.er-api.com/v6/latest/USD')
         .then(response => response.json())
         .then(data => {
+          // Si la API responde con éxito, actualizamos las tasas
           if (data && data.result === "success") {
             tasas.ARS = data.rates.ARS;
-            tasas.USD = 1;
+            tasas.USD = 1; // La base es USD
             tasas.ILS = data.rates.ILS;
           }
+          // Ejecutamos el callback una vez que las tasas se hayan actualizado (o si falló la carga)
           if (typeof callback === "function") callback();
         })
-        .catch(() => {
-          // Si falla, sigue con los valores por defecto
+        .catch(error => {
+          // En caso de error (ej. sin conexión), usamos los valores por defecto
+          console.error("Error al obtener tasas de cambio:", error);
           if (typeof callback === "function") callback();
         });
     }
 
+    // Función para cambiar el idioma de la página
     function cambiarIdioma(idioma) {
       idiomaActual = idioma;
+      // Actualiza todos los elementos con el atributo data-i18n
       document.querySelectorAll('[data-i18n]').forEach(el => {
         const key = el.getAttribute('data-i18n');
         el.textContent = traducciones[idioma][key];
       });
-      renderMenu();
-      renderTabla();
-      mostrarAtraccionesCorrientes();
+      renderMenu(); // Vuelve a renderizar el menú con el nuevo idioma
+      renderTabla(); // Vuelve a renderizar la tabla con el nuevo idioma
+      mostrarAtraccionesCorrientes(); // Asegura que la sección de Corrientes se actualice
+      // Ajusta la dirección del texto para hebreo (RTL) o español (LTR)
       document.body.dir = (idioma === 'he') ? 'rtl' : 'ltr';
+      // Actualiza el estado activo de los botones de idioma
       document.getElementById('btn-es').classList.toggle('active', idioma === 'es');
       document.getElementById('btn-he').classList.toggle('active', idioma === 'he');
+      // Guarda la preferencia de idioma en localStorage
+      localStorage.setItem('idiomaPreferido', idioma);
     }
 
+    // Función para cambiar la moneda de visualización
     function cambiarMoneda(moneda) {
       monedaActual = moneda;
+      // Actualiza el estado activo de los botones de moneda
       document.getElementById('btn-ars').classList.toggle('active', moneda === 'ARS');
       document.getElementById('btn-usd').classList.toggle('active', moneda === 'USD');
       document.getElementById('btn-ils').classList.toggle('active', moneda === 'ILS');
-      renderTabla();
+      renderTabla(); // Vuelve a renderizar la tabla con la nueva moneda
+      // Guarda la preferencia de moneda en localStorage
+      localStorage.setItem('monedaPreferida', moneda);
     }
 
+    // Función para renderizar el menú de ciudades dinámicamente
     function renderMenu() {
       const menu = document.getElementById('menu-ciudades');
-      menu.innerHTML = '';
-      const menuData = traducciones[idiomaActual].menu;
-      const isMapa = window.location.pathname.includes('mapa.html');
+      menu.innerHTML = ''; // Limpia el menú existente
+      const menuData = traducciones[idiomaActual].menu; // Obtiene los datos del menú para el idioma actual
+      const isMapa = window.location.pathname.includes('mapa.html'); // Verifica si la página actual es el mapa
+
+      // Agrega cada ciudad al menú
       menuData.forEach((ciudad) => {
         const li = document.createElement('li');
+        // Los enlaces apuntan a la carpeta 'ciudades'
         li.innerHTML = `<a href="ciudades/${ciudad.archivo}">${ciudad.nombre}</a>`;
         menu.appendChild(li);
       });
+
+      // Si estamos en la página del mapa, agrega el botón "Volver a la página principal"
       if (isMapa) {
         const li = document.createElement('li');
+        // El enlace para volver apunta a la raíz (index.html)
         li.innerHTML = `<a href="../index.html">${traducciones[idiomaActual].volver}</a>`;
         menu.appendChild(li);
       }
+      // Ajusta la alineación y dirección del texto del menú según el idioma
       menu.style.textAlign = (idiomaActual === 'he') ? 'right' : 'left';
       menu.style.direction = (idiomaActual === 'he') ? 'rtl' : 'ltr';
     }
 
+    // Función para renderizar la tabla de transporte dinámicamente
     function renderTabla() {
       const tbody = document.getElementById('tabla-transporte');
-      tbody.innerHTML = '';
+      tbody.innerHTML = ''; // Limpia la tabla existente
       traducciones[idiomaActual].tabla.forEach(fila => {
         const tr = document.createElement('tr');
         fila.forEach((celda, j) => {
           const td = document.createElement('td');
-          // Columna de precio (índice 4)
+          // Columna de precio (índice 4 en el array de la tabla)
           if (j === 4) {
-            let valorARS = Number(celda);
-            let simbolo = simbolos[monedaActual];
-            let valorConvertido = valorARS;
-            if (monedaActual === 'USD') valorConvertido = (valorARS / tasas.ARS).toFixed(2);
-            if (monedaActual === 'ILS') valorConvertido = (valorARS / tasas.ARS * tasas.ILS).toFixed(2);
-            if (monedaActual === 'ARS') valorConvertido = valorARS;
-            td.textContent = `${simbolo} ${valorConvertido}`;
+            let valorARS = Number(celda); // El valor original siempre está en ARS
+            let simbolo = simbolos[monedaActual]; // Obtiene el símbolo de la moneda actual
+            let valorConvertido = valorARS; // Valor por defecto en ARS
+
+            // Realiza la conversión según la moneda seleccionada
+            if (monedaActual === 'USD') {
+              valorConvertido = (valorARS / tasas.ARS).toFixed(2);
+            } else if (monedaActual === 'ILS') {
+              // Conversión ARS -> USD -> ILS
+              valorConvertido = (valorARS / tasas.ARS * tasas.ILS).toFixed(2);
+            }
+            td.textContent = `${simbolo} ${valorConvertido}`; // Muestra el valor convertido con su símbolo
           }
-          // Columna "Compañía" (índice 5) mantiene el enlace original
+          // Columna "Compañía" (índice 5) mantiene el HTML original con el enlace
           else if (j === 5) {
             td.innerHTML = celda;
           }
-          // Otras columnas
+          // Otras columnas simplemente muestran el texto
           else {
             td.textContent = celda;
           }
@@ -357,26 +395,38 @@
       });
     }
 
-    // Mostrar sección de atracciones solo en Corrientes
+    // Función para mostrar/ocultar la sección de atracciones de Corrientes
     function mostrarAtraccionesCorrientes() {
-      const menu = traducciones[idiomaActual].menu;
+      const corrientesAtraccionesDiv = document.getElementById("corrientes-atracciones");
+      // Verifica si la URL actual termina en "corrientes.html" (ignorando mayúsculas/minúsculas y subdirectorios)
       let currentPage = window.location.pathname.toLowerCase();
       let corrientesPage = "corrientes.html";
+
       if (
         currentPage.endsWith("/" + corrientesPage) ||
         currentPage.endsWith("/ciudades/" + corrientesPage)
       ) {
-        document.getElementById("corrientes-atracciones").style.display = "block";
+        corrientesAtraccionesDiv.style.display = "block"; // Muestra la sección
       } else {
-        document.getElementById("corrientes-atracciones").style.display = "none";
+        corrientesAtraccionesDiv.style.display = "none"; // Oculta la sección
       }
     }
 
-    // Inicialización: obtiene tasas y luego renderiza todo
-    actualizarTasas(function() {
-      cambiarIdioma('es');
-      cambiarMoneda('ARS');
-      mostrarAtraccionesCorrientes();
+    // Inicialización de la página al cargar el DOM
+    document.addEventListener('DOMContentLoaded', function() {
+      // Carga las preferencias de idioma y moneda desde localStorage
+      const idiomaGuardado = localStorage.getItem('idiomaPreferido');
+      const monedaGuardada = localStorage.getItem('monedaPreferida');
+
+      // Actualiza las tasas de cambio y luego renderiza la página
+      actualizarTasas(function() {
+        // Aplica el idioma guardado o 'es' por defecto
+        cambiarIdioma(idiomaGuardado || 'es');
+        // Aplica la moneda guardada o 'ARS' por defecto
+        cambiarMoneda(monedaGuardada || 'ARS');
+        // Llama a esta función para asegurar que la sección de Corrientes se muestre correctamente al cargar
+        mostrarAtraccionesCorrientes();
+      });
     });
   </script>
 </body>
