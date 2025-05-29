@@ -2,14 +2,16 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Itinerario Familiar por Argentina</title>
+  <title data-i18n="page-title">Itinerario Familiar por Argentina</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
+    /* Estilos generales del cuerpo y barra superior */
     body {
       font-family: Arial, sans-serif;
       background: #f7f7f7;
       margin: 0;
       padding: 0 0 40px 0;
+      color: #333;
     }
     .top-bar {
       display: flex;
@@ -21,6 +23,7 @@
       position: sticky;
       top: 0;
       z-index: 100;
+      flex-wrap: wrap; /* Para que los botones se ajusten en pantallas pequeñas */
     }
     .top-bar span {
       font-size: 15px;
@@ -41,612 +44,734 @@
       font-weight: bold;
     }
     main {
-      max-width: 1100px;
-      margin: 0 auto;
+      max-width: 960px;
+      margin: 20px auto;
+      padding: 0 15px;
+    }
+    h1 {
+      text-align: center;
+      color: #0F4761;
+      margin-bottom: 10px;
+    }
+    .intro-text {
+      text-align: center;
+      margin-bottom: 30px;
+      font-size: 1.1em;
+      color: #555;
+    }
+
+    /* Estilos de las tarjetas de ciudad */
+    .city-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 25px;
+      margin-top: 30px;
+    }
+    .city-card {
       background: #fff;
-      border-radius: 8px;
-      padding: 30px 28px 24px 28px;
-      box-shadow: 0 2px 8px #0001;
-      margin-top: 18px;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      cursor: pointer;
+      transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+      display: flex;
+      flex-direction: column;
     }
-    h1 { margin-top: 0; }
-    ul#menu-ciudades {
-      margin: 0 0 18px 0;
-      padding: 0 0 0 18px;
-      font-size: 18px;
+    .city-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
     }
-    ul#menu-ciudades li {
-      margin-bottom: 3px;
-    }
-    ul#menu-ciudades a {
-      text-decoration: none;
-      color: #2553a2;
-      transition: color 0.2s;
-    }
-    ul#menu-ciudades a:hover {
-      color: #3f7edb;
-      text-decoration: underline;
-    }
-    table {
-      border-collapse: collapse;
+    .city-card img {
       width: 100%;
-      margin-top: 18px;
-      background: #f7fbff;
+      height: 180px;
+      object-fit: cover;
+      display: block;
+      border-bottom: 1px solid #eee;
     }
-    th, td {
-      border: 1px solid #b3c7e6;
-      padding: 8px 10px;
-      text-align: left;
-      font-size: 16px;
+    .city-card-content {
+      padding: 15px;
+      flex-grow: 1; /* Para que el contenido ocupe el espacio restante */
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
     }
-    th {
-      background: #e6f0fa;
-      font-weight: bold;
-    }
-    .attribution {
-      font-size:12px;
-      color:#888;
-      text-align: right;
-      margin-top: 16px;
-    }
-    .corrientes-atracciones {
-      margin-top: 32px;
-      background: #f2f7fa;
-      padding: 18px 16px;
-      border-radius: 6px;
-      max-width: 600px;
-    }
-    .corrientes-atracciones h3 {
+    .city-card h2 {
       margin-top: 0;
-      margin-bottom: 8px;
-      color: #2176d2;
+      margin-bottom: 10px;
+      color: #0F4761;
+      font-size: 1.4em;
     }
-    .corrientes-atracciones ul {
-      padding-left: 20px;
-      margin: 0;
+    .city-card p {
+      font-size: 0.95em;
+      color: #666;
+      line-height: 1.4;
+      margin-bottom: 15px;
     }
-    .corrientes-atracciones a {
-      color: #2176d2;
+    .city-card .details-link {
+      display: inline-block;
+      margin-top: auto; /* Empuja el enlace hacia abajo */
+      color: #007BFF;
       text-decoration: none;
+      font-weight: bold;
+      align-self: flex-start; /* Alinea el enlace a la izquierda */
     }
-    .corrientes-atracciones a:hover {
+    .city-card .details-link:hover {
       text-decoration: underline;
     }
 
-    /* ESTILO DE SECCIONES ADICIONALES DE LA IMAGEN */
-    .custom-section {
-      max-width: 1100px;
-      margin: 25px auto 0 auto;
-      background: #fff;
-      border-radius: 18px;
-      box-shadow: 0 2px 8px #0001;
-      padding: 24px 32px 20px 32px;
-      margin-bottom: 28px;
-    }
-    .custom-section h2 {
+    /* Estilos del Modal */
+    #modal-detalle {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0,0,0,0.6);
+      z-index: 1000;
       display: flex;
       align-items: center;
-      font-size: 1.3em;
-      font-weight: 700;
-      margin: 0 0 18px 0;
+      justify-content: center;
+      padding: 15px; /* Padding para pantallas pequeñas */
+      box-sizing: border-box; /* Incluir padding en el ancho/alto */
     }
-    .custom-section h2 i {
-      margin-right: 10px;
-      font-size: 1.1em;
-    }
-    .conversor-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr 1.1fr;
-      gap: 14px;
-    }
-    @media (max-width: 900px) {
-      .custom-section, main { padding: 12px 2vw; }
-      .conversor-grid { grid-template-columns: 1fr; }
-    }
-    .custom-label {
-      font-weight: 500;
-      margin-bottom: 5px;
-      display: block;
-    }
-    .custom-input, .custom-select {
+    #modal-detalle .modal-content-wrapper {
+      background: #fff;
+      border-radius: 12px;
+      max-width: 600px; /* Ancho máximo del modal */
       width: 100%;
-      padding: 9px 10px;
-      border: 1px solid #ccc;
-      border-radius: 6px;
-      font-size: 15px;
+      padding: 25px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.25);
+      position: relative;
+      max-height: 90vh; /* Altura máxima para scroll */
+      overflow-y: auto; /* Scroll si el contenido es muy largo */
       box-sizing: border-box;
-      margin-bottom: 0;
     }
-    .custom-btn {
-      background: #5D5CDE;
-      color: #fff;
-      border-radius: 6px;
-      border: none;
-      padding: 10px 0;
-      font-size: 16px;
-      font-weight: bold;
-      cursor: pointer;
-      transition: background 0.2s;
-      width: 100%;
-      margin-top: 0;
-    }
-    .custom-btn:hover { background: #4a49b0; }
-    .custom-btn:disabled { background: #a6a6d4; cursor: not-allowed; }
-
-    .packing-controls {
-      display: flex;
-      gap: 10px;
-      margin-bottom: 16px;
-    }
-    .packing-controls .custom-btn {
-      width: auto;
-      padding: 0 18px;
-      height: 38px;
-    }
-    .packing-controls .custom-select {
-      width: 130px;
-    }
-    .packing-controls .custom-input {
-      flex: 1;
-      min-width: 140px;
-    }
-    .packing-lists {
-      margin-top: 6px;
-    }
-    .packing-lists h4 {
-      margin: 8px 0 3px 0;
-      font-weight: 600;
-    }
-    .packing-lists ul {
-      list-style: none;
-      padding-left: 0;
-      margin: 0 0 7px 0;
-    }
-    .packing-lists li {
-      padding: 2px 0;
-      font-size: 15px;
-    }
-    .packing-lists button {
+    #modal-detalle .close-button {
+      position: absolute;
+      top: 10px;
+      right: 15px;
       background: none;
       border: none;
-      color: #c00;
-      font-size: 15px;
-      margin-left: 8px;
+      font-size: 2em;
       cursor: pointer;
+      color: #555;
+      line-height: 1; /* Eliminar espacio extra */
     }
-    .ai-section label {
-      display: block;
-      margin-bottom: 8px;
-      font-size: 15px;
-      color: #333;
+    #modal-detalle .close-button:hover {
+      color: #000;
     }
-    .ai-section textarea {
+    #modal-detalle img.modal-main-image {
       width: 100%;
-      border: 1px solid #ccc;
-      border-radius: 6px;
-      font-size: 15px;
-      padding: 8px 10px;
-      resize: vertical;
-      min-height: 60px;
-      margin-bottom: 10px;
-      box-sizing: border-box;
+      border-radius: 10px;
+      margin-bottom: 15px;
+      height: 220px; /* Altura fija para la imagen principal del modal */
+      object-fit: cover;
     }
-    .ai-section .custom-btn {
+    #modal-detalle h2 {
       margin-top: 0;
-      margin-right: 10px;
+      color: #0F4761;
+      text-align: left; /* Alineación del título del modal */
+      font-size: 1.8em;
+      margin-bottom: 10px;
     }
-    .ai-section .ai-btns {
-      display: flex;
-      gap: 7px;
-      align-items: center;
+    #modal-detalle h3 {
+      color: #2176d2;
+      margin-top: 20px;
+      margin-bottom: 8px;
+      font-size: 1.3em;
     }
-    .ai-section .clear-btn {
-      background: #666;
-      color: #fff;
-      border-radius: 6px;
-      border: none;
-      padding: 10px 16px;
-      font-size: 22px;
+    #modal-detalle p, #modal-detalle ul {
+      font-size: 1em;
+      line-height: 1.5;
+      color: #444;
+      margin-bottom: 10px;
+    }
+    #modal-detalle ul {
+      padding-left: 20px;
+    }
+    #modal-detalle ul li {
+      margin-bottom: 5px;
+    }
+    #modal-detalle a {
+      color: #007BFF;
+      text-decoration: none;
       font-weight: bold;
+    }
+    #modal-detalle a:hover {
+      text-decoration: underline;
+    }
+    #modal-detalle .gallery {
+      display: flex;
+      gap: 10px;
+      overflow-x: auto; /* Scroll horizontal para la galería */
+      padding: 10px 0;
+      -webkit-overflow-scrolling: touch; /* Suavizar scroll en iOS */
+      scrollbar-width: thin; /* Firefox */
+      scrollbar-color: #ccc #f1f1f1; /* Firefox */
+    }
+    #modal-detalle .gallery::-webkit-scrollbar {
+      height: 8px;
+    }
+    #modal-detalle .gallery::-webkit-scrollbar-thumb {
+      background-color: #ccc;
+      border-radius: 10px;
+    }
+    #modal-detalle .gallery::-webkit-scrollbar-track {
+      background-color: #f1f1f1;
+    }
+    #modal-detalle .gallery img {
+      width: 150px; /* Ancho fijo para las miniaturas */
+      height: 100px; /* Altura fija para las miniaturas */
+      object-fit: cover;
+      border-radius: 8px;
+      flex-shrink: 0; /* Evita que las imágenes se encojan */
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    #modal-detalle iframe {
+      width: 100%;
+      height: 200px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      margin-top: 15px;
+    }
+
+    /* Estilos para las secciones de IA dentro del modal */
+    .ai-section {
+      background: #e6f0fa;
+      padding: 20px;
+      border-radius: 8px;
+      margin-top: 25px; /* Espacio entre secciones */
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    .ai-section h3 {
+      color: #2176d2;
+      margin-top: 0;
+      margin-bottom: 10px;
+    }
+    .ai-button {
+      background-color: #4CAF50; /* Green */
+      color: white;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 5px;
       cursor: pointer;
-      transition: background 0.2s;
+      font-size: 16px;
+      transition: background-color 0.3s ease;
+      display: block;
+      margin: 15px auto 0 auto; /* Centrar botón y espacio arriba */
+      max-width: 300px;
     }
-    .ai-section .clear-btn:hover { background: #444; }
-    .ai-section .ai-response {
-      background: #f8f8fa;
-      border-radius: 6px;
-      padding: 12px;
-      margin-top: 10px;
+    .ai-button:hover {
+      background-color: #45a049;
+    }
+    .ai-button:disabled {
+      background-color: #cccccc;
+      cursor: not-allowed;
+    }
+    .ai-response {
+      margin-top: 20px;
+      padding: 15px;
+      background-color: #ffffff;
+      border: 1px solid #d0e0f0;
+      border-radius: 5px;
+      white-space: pre-wrap; /* Para respetar saltos de línea del LLM */
       font-size: 15px;
-      color: #333;
+      line-height: 1.6;
+      min-height: 50px;
     }
-    .ai-section .ai-loading {
-      font-size: 15px;
-      color: #7d7deb;
+    .ai-loading {
+      text-align: center;
+      font-style: italic;
+      color: #666;
       margin-top: 10px;
     }
-    .custom-section small {
-      color: #888;
-      font-size: 12px;
+
+
+    /* Estilos RTL para hebreo */
+    .rtl {
+      direction: rtl !important;
+      text-align: right !important;
+    }
+    .rtl .city-card-content, .rtl #modal-detalle h2, .rtl #modal-detalle h3, .rtl #modal-detalle p, .rtl #modal-detalle ul {
+      text-align: right;
+    }
+    .rtl .city-card .details-link {
+      align-self: flex-end; /* Alinea el enlace a la derecha en RTL */
+    }
+    .rtl ul {
+      padding-right: 20px;
+      padding-left: 0;
     }
   </style>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body>
-  <!-- Barra superior: selector de idioma y moneda -->
   <div class="top-bar">
     <span data-i18n="idioma">Idioma:</span>
-    <button id="btn-es" onclick="cambiarIdioma('es')">Español</button>
-    <button id="btn-he" onclick="cambiarIdioma('he')">עברית</button>
+    <button onclick="translatePage('es')" class="language-btn" id="btn-es">Español</button>
+    <button onclick="translatePage('he')" class="language-btn" id="btn-he">עברית</button>
     <span data-i18n="moneda">Moneda:</span>
-    <button id="btn-ars" onclick="cambiarMoneda('ARS')">ARS</button>
-    <button id="btn-usd" onclick="cambiarMoneda('USD')">USD</button>
-    <button id="btn-ils" onclick="cambiarMoneda('ILS')">ILS</button>
-  </div>
+    <button id="btn-ars" onclick="cambiarMoneda('ARS')" class="currency-btn">ARS</button>
+    <button id="btn-usd" onclick="cambiarMoneda('USD')" class="currency-btn">USD</button>
+    <button id="btn-ils" onclick="cambiarMoneda('ILS')" class="currency-btn">ILS</button>
+    </div>
 
   <main>
-    <h1 data-i18n="titulo">Itinerario Familiar por Argentina</h1>
-    <p data-i18n="bienvenida">¡Bienvenidos! Haz clic en cada ciudad para ver información, mapas y recomendaciones.</p>
+    <h1 data-i18n="main-title">Argentina: Aventura Familiar de 30 Días</h1>
+    <p class="intro-text" data-i18n="main-intro">
+      Planifica tu viaje inolvidable por Argentina con esta guía completa.
+      Descubre itinerarios, actividades, alojamientos y consejos para disfrutar en familia.
+    </p>
 
-    <h2 data-i18n="ciudades">Ciudades y Destinos</h2>
+    <div class="city-grid" id="city-grid">
+      </div>
 
-    <!-- Menú de ciudades -->
-    <ul id="menu-ciudades"></ul>
+    <div class="section-container">
+      <h2 data-i18n="map-page-title">Mapa Interactivo del Itinerario</h2>
+      <p class="foto-caption" data-i18n="map-intro-main-page">Visualiza las principales rutas de tu viaje y consulta las distancias y tiempos estimados.</p>
 
-    <h2 data-i18n="transporte">Opciones de transporte</h2>
-
-    <!-- Tabla de transporte -->
-    <table>
-      <thead>
-        <tr>
-          <th data-i18n="desde">Desde</th>
-          <th data-i18n="hasta">Hasta</th>
-          <th data-i18n="medio">Medio</th>
-          <th data-i18n="tiempo">Tiempo</th>
-          <th data-i18n="precio">Precio aprox.</th>
-          <th data-i18n="compania">Compañía</th>
-        </tr>
-      </thead>
-      <tbody id="tabla-transporte"></tbody>
-    </table>
-
-    <!-- Atracciones principales Corrientes -->
-    <div class="corrientes-atracciones" id="corrientes-atracciones" style="display:none;">
-      <h3>Atracciones principales</h3>
-      <ul>
-        <li>
-          <a href="https://corrientes.tur.ar/producto/esterosdelibera/" target="_blank">
-            Descubrí CORRIENTES
-          </a>
-        </li>
-      </ul>
+      <div class="map-container">
+        <img src="docs/imagenes/mapa_argentina.jpg" alt="Mapa del itinerario de Argentina" class="map-photo" onerror="this.src='https://placehold.co/800x450/cccccc/333333?text=Mapa+Itinerario'">
+      </div>
+      <small style="display:block; text-align:center; margin-bottom: 20px;"><a href="ciudades/mapa.html" target="_blank" id="see-bigger-map" data-i18n="see-bigger-map">Ver mapa detallado y tiempos de viaje</a></small>
     </div>
 
-    <div class="attribution">
-      Powered by <a href="https://www.exchangerate-api.com" target="_blank">ExchangeRate-API.com</a>
-    </div>
+    <section style="margin-top: 40px; text-align: center; color: #777;">
+      <h2 data-i18n="interactive-modules-title">Módulos Interactivos</h2>
+      <p data-i18n="interactive-modules-text">Conversor de moneda, lista de equipaje y consulta a IA disponibles próximamente.</p>
+    </section>
 
-    <!-- SECCIONES ADICIONALES DE LA IMAGEN -->
-    <div class="custom-section" id="conversor-section">
-      <h2><i class="fas fa-dollar-sign" style="color:#27c257;"></i> Conversor de moneda</h2>
-      <div class="conversor-grid">
-        <div>
-          <label class="custom-label" for="conv-cantidad">Cantidad</label>
-          <input type="number" id="conv-cantidad" class="custom-input" value="100">
-        </div>
-        <div>
-          <label class="custom-label" for="conv-de">De</label>
-          <select id="conv-de" class="custom-select">
-            <option value="ARS">ARS (Peso Argentino)</option>
-            <option value="USD">USD (Dólar US)</option>
-            <option value="EUR">EUR (Euro)</option>
-            <option value="ILS">ILS (Shekel)</option>
-          </select>
-        </div>
-        <div>
-          <label class="custom-label" for="conv-a">A</label>
-          <select id="conv-a" class="custom-select">
-            <option value="USD">USD (Dólar US)</option>
-            <option value="ARS">ARS (Peso Argentino)</option>
-            <option value="EUR">EUR (Euro)</option>
-            <option value="ILS">ILS (Shekel)</option>
-          </select>
-        </div>
-        <div style="display:flex;align-items:end;">
-          <button class="custom-btn" id="conv-btn">Convertir</button>
-        </div>
-      </div>
-      <div style="margin:13px 0 0 0;font-size:16px;">
-        <span id="conv-resultado" style="font-weight:bold;"></span>
-      </div>
-      <div style="margin-top:8px;"><small>Fuente: <a href="https://polygon.io/" target="_blank">Polygon.io</a></small></div>
-    </div>
-
-    <div class="custom-section" id="packing-section">
-      <h2><i class="fas fa-suitcase-rolling" style="color:#f9a825;"></i> Lista de equipaje</h2>
-      <div class="packing-controls">
-        <button class="custom-btn" id="packing-add">Agregar</button>
-        <select class="custom-select" id="packing-type">
-          <option value="esencial">Esenciales</option>
-          <option value="opcional">Opcionales</option>
-        </select>
-        <input class="custom-input" id="packing-input" placeholder="¿Qué más llevás?">
-      </div>
-      <div class="packing-lists">
-        <h4>Esenciales</h4>
-        <ul id="packing-list-esencial"></ul>
-        <h4>Opcionales</h4>
-        <ul id="packing-list-opcional"></ul>
-      </div>
-    </div>
-
-    <div class="custom-section ai-section" id="ai-section">
-      <h2><i class="fas fa-robot" style="color:#6d7fc9;"></i> Consulta a la IA</h2>
-      <label for="ai-input">Escribí tu pregunta sobre Argentina, el viaje, consejos, etc.</label>
-      <textarea id="ai-input" placeholder="¿Qué querés saber?"></textarea>
-      <div class="ai-btns">
-        <button class="custom-btn" id="ai-ask">Preguntar</button>
-        <button class="clear-btn" id="ai-clear" title="Limpiar">×</button>
-      </div>
-      <div id="ai-loading" class="ai-loading" style="display:none;">Consultando IA...</div>
-      <div id="ai-response" class="ai-response" style="display:none;"></div>
-    </div>
   </main>
 
+  <div id="modal-detalle">
+    <div class="modal-content-wrapper">
+      <button class="close-button" onclick="cerrarModal()">×</button>
+      <div id="contenido-modal">
+        </div>
+    </div>
+  </div>
+
   <script>
-    // --- Diccionario de traducción ---
-    const traducciones = {
+    // Diccionario de traducciones español ↔ hebreo
+    const translations = {
       es: {
-        idioma: "Idioma:",
-        moneda: "Moneda:",
-        titulo: "Itinerario Familiar por Argentina",
-        bienvenida: "¡Bienvenidos! Haz clic en cada ciudad para ver información, mapas y recomendaciones.",
-        ciudades: "Ciudades y Destinos",
-        transporte: "Opciones de transporte",
-        desde: "Desde",
-        hasta: "Hasta",
-        medio: "Medio",
-        tiempo: "Tiempo",
-        precio: "Precio aprox.",
-        compania: "Compañía",
-        volver: "Volver a la página principal",
-        menu: [
-          { archivo: "buenosaires.html", nombre: "Buenos Aires" },
-          { archivo: "rosario.html", nombre: "Rosario" },
-          { archivo: "bariloche.html", nombre: "Bariloche" },
-          { archivo: "mendoza.html", nombre: "Mendoza" },
-          { archivo: "malargue.html", nombre: "Malargüe" },
-          { archivo: "jujuy.html", nombre: "Jujuy" },
-          { archivo: "iguazu.html", nombre: "Iguazú" },
-          { archivo: "corrientes.html", nombre: "Corrientes" },
-          { archivo: "ibera.html", nombre: "Iberá" },
-          { archivo: "mapa.html", nombre: "Mapa Interactivo" }
-        ],
-        tabla: [
-          ["Buenos Aires", "Rosario", "Bus", "4 h", 20000, {nombre: "BusPlus", link: "https://busplus.com.ar/"}],
-          ["Rosario", "Mendoza", "Bus", "13 h", 50000, {nombre: "Andesmar", link: "https://www.andesmar.com/"}],
-          ["Mendoza", "Malargüe", "Bus", "6 h", 18000, {nombre: "CATA", link: "https://www.catainternacional.com/"}],
-          ["Malargüe", "Jujuy", "Vuelo + Bus", "10 h", 110000, {nombre: "Pasajes de micro baratos", link: "https://www.centraldepasajes.com.ar/cdp/pasajes-micro/mendoza/san-salvador-de-jujuy"}],
-          ["Jujuy", "Iguazú", "Vuelo", "2 h", 85000, {nombre: "Aerolineas Argentinas", link: "https://www.aerolineas.com.ar/"}],
-          ["Iguazú", "Corrientes", "Bus", "9 h", 40000, {nombre: "Crucero del Norte", link: "https://www.crucerodelnorte.com.ar/"}],
-          ["Corrientes", "Esteros del Iberá", "Remis/Transfer", "4 h", 60000, {nombre: "Esteros del Iberá", link: "https://corrientes.tur.ar/producto/esterosdelibera/"}]
-        ]
+        "page-title": "Itinerario Familiar por Argentina",
+        "idioma": "Idioma:",
+        "moneda": "Moneda:",
+        "main-title": "Argentina: Aventura Familiar de 30 Días",
+        "main-intro": "Planifica tu viaje inolvidable por Argentina con esta guía completa. Descubre itinerarios, actividades, alojamientos y consejos para disfrutar en familia.",
+        "interactive-modules-title": "Módulos Interactivos",
+        "interactive-modules-text": "Conversor de moneda, lista de equipaje y consulta a IA disponibles próximamente.",
+        "map-page-title": "Mapa Interactivo del Itinerario",
+        "map-intro-main-page": "Visualiza las principales rutas de tu viaje y consulta las distancias y tiempos estimados.",
+        "see-bigger-map": "Ver mapa detallado y tiempos de viaje",
+        "read-more": "Leer más",
+        "modal-activities-title": "Actividades e Itinerario",
+        "modal-accommodation-title": "Alojamiento",
+        "modal-restaurants-title": "Restaurantes",
+        "modal-health-title": "Salud",
+        "modal-transport-title": "Transporte",
+        "modal-gallery-title": "Galería de Imágenes",
+        "modal-map-title": "Mapa",
+        "modal-full-itinerary-link": "Ver itinerario completo de la ciudad",
+        "modal-coming-soon": "Próximamente más detalles...",
+        "booking-link": "Reserva en Booking",
+        "airbnb-link": "Reserva en Airbnb",
+        "general-tripadvisor-link": "Ver opciones en TripAdvisor",
+        "general-googlemaps-link": "Ver en Google Maps",
+        "general-website-link": "Visitar sitio web",
+        "general-transport-link": "Ver opciones de transporte",
+
+        // Nuevas claves de traducción para las funciones de IA
+        "ai-menu-title": "Generador de Menú Saludable ✨",
+        "ai-menu-description": "Obtén sugerencias de menú para un día completo (desayuno, almuerzo, cena) adaptadas para dietas bajas en carbohidratos, aptas para diabéticos y, si es posible, sin gluten, inspiradas en la gastronomía local.",
+        "generate-menu-button": "Generar Menú",
+        "ai-accommodation-title": "Sugerencias de Alojamiento con IA 🏨",
+        "ai-accommodation-description": "Obtén recomendaciones de alojamiento, considerando opciones familiares, seguras y bien ubicadas.",
+        "generate-accommodation-button": "Generar Sugerencias",
+        "ai-family-tips-title": "Consejos Adicionales para Familias con IA 👨‍👩‍👧‍👦",
+        "ai-family-tips-description": "Recibe consejos personalizados para disfrutar en familia, incluyendo actividades, seguridad y logística.",
+        "generate-family-tips-button": "Generar Consejos",
+        "ai-budget-title": "Análisis de Presupuesto con IA 💰",
+        "ai-budget-description": "Obtén un análisis y desglose del presupuesto orientativo para tu estadía, con posibles optimizaciones.",
+        "generate-budget-button": "Analizar Presupuesto",
+        "ai-loading": "Generando...",
+        "ai-error": "Error al generar la respuesta. Por favor, inténtalo de nuevo más tarde."
       },
       he: {
-        idioma: "שפה:",
-        moneda: "מטבע:",
-        titulo: "מסלול משפחתי בארגנטינה",
-        bienvenida: "ברוכים הבאים! לחצו על כל עיר למידע, מפות והמלצות.",
-        ciudades: "ערים ויעדים",
-        transporte: "אפשרויות תחבורה",
-        desde: "מוצא",
-        hasta: "יעד",
-        medio: "אמצעי",
-        tiempo: "משך",
-        precio: "מחיר משוער",
-        compania: "חברה",
-        volver: "חזרה לעמוד הראשי",
-        menu: [
-          { archivo: "buenosaires.html", nombre: "בואנוס איירס" },
-          { archivo: "rosario.html", nombre: "רוסאריו" },
-          { archivo: "bariloche.html", nombre: "ברילוצ'ה" },
-          { archivo: "mendoza.html", nombre: "מנדוסה" },
-          { archivo: "malargue.html", nombre: "מלארגואה" },
-          { archivo: "jujuy.html", nombre: "חוחוי" },
-          { archivo: "iguazu.html", nombre: "איגואסו" },
-          { archivo: "corrientes.html", nombre: "קוריינטס" },
-          { archivo: "ibera.html", nombre: "איברה" },
-          { archivo: "mapa.html", nombre: "מפת המסלול" }
-        ],
-        tabla: [
-          ["בואנוס איירס", "רוסאריו", "אוטובוס", "4 ש׳", 20000, {nombre: "BusPlus", link: "https://busplus.com.ar/"}],
-          ["רוסאריו", "מנדוסה", "אוטובוס", "13 ש׳", 50000, {nombre: "Andesmar", link: "https://www.andesmar.com/"}],
-          ["מנדוסה", "מלארגואה", "אוטובוס", "6 ש׳", 18000, {nombre: "CATA", link: "https://www.catainternacional.com/"}],
-          ["מלארגואה", "חוחוי", "טיסה + אוטובוס", "10 ש׳", 110000, {nombre: "Pasajes de micro baratos", link: "https://www.centraldepasajes.com.ar/cdp/pasajes-micro/mendoza/san-salvador-de-jujuy"}],
-          ["חוחוי", "איגואסו", "טיסה", "2 ש׳", 85000, {nombre: "Aerolineas Argentinas", link: "https://www.aerolineas.com.ar/"}],
-          ["איגואסו", "קוריינטס", "אוטובוס", "9 ש׳", 40000, {nombre: "Crucero del Norte", link: "https://www.crucerodelnorte.com.ar/"}],
-          ["קוריינטס", "אסטרוס דה איברה", "רמיס/הסעה", "4 ש׳", 60000, {nombre: "Esteros del Iberá", link: "https://corrientes.tur.ar/producto/esterosdelibera/"}]
-        ]
+        "page-title": "ארגנטינה: הרפתקה משפחתית של 30 יום",
+        "idioma": "שפה:",
+        "moneda": "מטבע:",
+        "main-title": "ארגנטינה: הרפתקה משפחתית של 30 יום",
+        "main-intro": "תכננו את הטיול הבלתי נשכח שלכם בארגנטינה עם המדריך המלא הזה. גלו מסלולים, פעילויות, מקומות לינה וטיפים לבילוי משפחתי.",
+        "interactive-modules-title": "מודולים אינטראקטיביים",
+        "interactive-modules-text": "ממיר מטבע, רשימת ציוד וייעוץ AI יהיו זמינים בקרוב.",
+        "map-page-title": "מפת המסלול האינטראקטיבית",
+        "map-intro-main-page": "צפו במסלולים העיקריים של הטיול ובמרחקים וזמנים משוערים.",
+        "see-bigger-map": "צפו במפה מפורטת וזמני נסיעה",
+        "read-more": "קרא עוד",
+        "modal-activities-title": "פעילויות ומסלול",
+        "modal-accommodation-title": "לינה",
+        "modal-restaurants-title": "מסעדות",
+        "modal-health-title": "בריאות",
+        "modal-transport-title": "תחבורה",
+        "modal-gallery-title": "גלריית תמונות",
+        "modal-map-title": "מפה",
+        "modal-full-itinerary-link": "צפו במסלול המלא של העיר",
+        "modal-coming-soon": "פרטים נוספים בקרוב...",
+        "booking-link": "הזמן בבוקינג",
+        "airbnb-link": "הזמן ב-Airbnb",
+        "general-tripadvisor-link": "צפה באפשרויות ב-TripAdvisor",
+        "general-googlemaps-link": "צפה במפות גוגל",
+        "general-website-link": "בקר באתר",
+        "general-transport-link": "צפה באפשרויות תחבורה",
+
+        // Nuevas claves de traducción para las funciones de IA
+        "ai-menu-title": "מחולל תפריט בריא ✨",
+        "ai-menu-description": "קבלו הצעות לתפריט יומי (ארוחת בוקר, צהריים, ערב) המותאמות לדיאטות דלות פחמימות, מתאימות לסוכרתיים, ואם אפשר, ללא גלוטן, בהשראת הגסטרונומיה המקומית.",
+        "generate-menu-button": "צור תפריט",
+        "ai-accommodation-title": "הצעות לינה עם AI 🏨",
+        "ai-accommodation-description": "קבלו המלצות לינה, תוך התחשבות באפשרויות ידידותיות למשפחות, בטוחות וממוקמות היטב.",
+        "generate-accommodation-button": "צור הצעות",
+        "ai-family-tips-title": "טיפים נוספים למשפחות עם AI 👨‍👩‍👧‍👦",
+        "ai-family-tips-description": "קבלו טיפים מותאמים אישית לבילוי משפחתי, כולל פעילויות, בטיחות ולוגיסטיקה.",
+        "generate-family-tips-button": "צור טיפים",
+        "ai-budget-title": "ניתוח תקציב עם AI 💰",
+        "ai-budget-description": "קבלו ניתוח ופירוט של התקציב המשוער לשהותכם, עם אופטימיזציות אפשריות.",
+        "generate-budget-button": "נתח תקציב",
+        "ai-loading": "מייצר...",
+        "ai-error": "שגיאה ביצירת התשובה. אנא נסו שוב מאוחר יותר."
       }
     };
 
     // Tasas de cambio (se actualizan al cargar la página)
     let tasas = {
       ARS: 1,
-      USD: 1000,
-      EUR: 1.06,
-      ILS: 110
+      USD: 1000, // Valor de ejemplo, se actualizará
+      ILS: 110   // Valor de ejemplo, se actualizará
     };
+    // Símbolos de moneda
     const simbolos = {
       ARS: "$",
       USD: "US$",
-      EUR: "€",
       ILS: "₪"
     };
 
-    let idiomaActual = 'es';
-    let monedaActual = 'ARS';
+    let idiomaActual = 'es'; // Idioma predeterminado
+    let monedaActual = 'ARS'; // Moneda predeterminada
 
+    // Lista de ciudades con sus datos clave
+    const citiesData = [
+      { id: "buenosaires", name: "Buenos Aires", description: "Capital vibrante de Argentina, famosa por su cultura, arquitectura y gastronomía.", image: "docs/imagenes/buenosaires.jpg" },
+      { id: "rosario", name: "Rosario", description: "Cuna de la bandera argentina, con una hermosa costanera y vida cultural activa.", image: "docs/imagenes/rosario.jpg" },
+      { id: "bariloche", name: "Bariloche", description: "Corazón de la Patagonia andina, ideal para aventura y paisajes de ensueño.", image: "docs/imagenes/bariloche.jpg" },
+      { id: "mendoza", name: "Mendoza", description: "Tierra del sol y del buen vino, con imponentes paisajes cordilleranos.", image: "docs/imagenes/mendoza.jpg" },
+      { id: "malargue", name: "Malargüe", description: "Puerta de entrada a la aventura en el sur mendocino, con formaciones geológicas únicas.", image: "docs/imagenes/malargue.jpg" },
+      { id: "jujuy", name: "Jujuy", description: "Provincia del norte argentino, rica en cultura andina y paisajes coloridos.", image: "docs/imagenes/jujuy.jpg" },
+      { id: "iguazu", name: "Iguazú", description: "Hogar de una de las maravillas naturales del mundo: las Cataratas del Iguazú.", image: "docs/imagenes/iguazu.jpg" },
+      { id: "corrientes", name: "Corrientes", description: "Ciudad costera con fuerte identidad cultural, cuna del chamamé y puerta a los Esteros del Iberá.", image: "docs/imagenes/corrientes.jpg" },
+      { id: "ibera", name: "Iberá", description: "Uno de los humedales más grandes del mundo, un paraíso de biodiversidad y ecoturismo.", image: "docs/imagenes/ibera.jpg" }
+    ];
+
+    // Función para obtener tasas de cambio reales desde ExchangeRate-API
     function actualizarTasas(callback) {
       fetch('https://open.er-api.com/v6/latest/USD')
         .then(response => response.json())
         .then(data => {
           if (data && data.result === "success") {
             tasas.ARS = data.rates.ARS;
-            tasas.USD = 1;
-            tasas.EUR = data.rates.EUR;
+            tasas.USD = 1; // USD es la base
             tasas.ILS = data.rates.ILS;
           }
           if (typeof callback === "function") callback();
         })
         .catch(() => {
+          // Si falla, sigue con los valores por defecto
           if (typeof callback === "function") callback();
         });
     }
 
-    function cambiarIdioma(idioma) {
-      idiomaActual = idioma;
+    function translatePage(language) {
+      idiomaActual = language; // Actualiza la variable global idiomaActual
+      document.body.dir = (language === 'he') ? 'rtl' : 'ltr';
+      document.title = translations[language]["page-title"];
+
       document.querySelectorAll('[data-i18n]').forEach(el => {
         const key = el.getAttribute('data-i18n');
-        el.textContent = traducciones[idioma][key];
+        if (translations[language][key]) { // Asegurarse de que la clave exista
+          el.textContent = translations[language][key];
+        }
       });
-      renderMenu();
-      renderTabla();
-      mostrarAtraccionesCorrientes();
-      document.body.dir = (idioma === 'he') ? 'rtl' : 'ltr';
-      document.getElementById('btn-es').classList.toggle('active', idioma === 'es');
-      document.getElementById('btn-he').classList.toggle('active', idioma === 'he');
+      // Actualiza el estado activo de los botones de idioma
+      document.getElementById('btn-es').classList.toggle('active', language === 'es');
+      document.getElementById('btn-he').classList.toggle('active', language === 'he');
+      // Guarda la preferencia de idioma en localStorage
+      localStorage.setItem('idiomaPreferido', language);
+      // Re-renderizar las tarjetas para asegurar que las descripciones se traduzcan
+      renderCityCards();
     }
 
     function cambiarMoneda(moneda) {
-      monedaActual = moneda;
+      monedaActual = moneda; // Actualiza la variable global monedaActual
       document.getElementById('btn-ars').classList.toggle('active', moneda === 'ARS');
       document.getElementById('btn-usd').classList.toggle('active', moneda === 'USD');
       document.getElementById('btn-ils').classList.toggle('active', moneda === 'ILS');
-      renderTabla();
+      // Guarda la preferencia de moneda en localStorage
+      localStorage.setItem('monedaPreferida', moneda);
+      // No hay precios en esta página, solo tiempos, por lo que no es necesario re-renderizar nada más.
     }
 
-    function renderMenu() {
-      const menu = document.getElementById('menu-ciudades');
-      menu.innerHTML = '';
-      const menuData = traducciones[idiomaActual].menu;
-      menuData.forEach((ciudad) => {
-        const li = document.createElement('li');
-        li.innerHTML = `<a href="ciudades/${ciudad.archivo}">${ciudad.nombre}</a>`;
-        menu.appendChild(li);
-      });
-      menu.style.textAlign = (idiomaActual === 'he') ? 'right' : 'left';
-      menu.style.direction = (idiomaActual === 'he') ? 'rtl' : 'ltr';
+    // Función para cargar los datos detallados de una ciudad desde el JSON
+    async function loadCityDetails(cityId) {
+      const currentLanguage = localStorage.getItem('idiomaPreferido') || 'es';
+      try {
+        // Asegúrate de que la ruta al JSON sea correcta si el archivo está en otro lugar
+        const response = await fetch(`locales/${currentLanguage}.json`);
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const data = await response.json();
+        return data[cityId]; // Retorna el objeto completo de la ciudad
+      } catch (error) {
+        console.error("Error loading city details JSON:", error);
+        return null;
+      }
     }
 
-    function renderTabla() {
-      const tbody = document.getElementById('tabla-transporte');
-      tbody.innerHTML = '';
-      traducciones[idiomaActual].tabla.forEach(fila => {
-        const tr = document.createElement('tr');
-        fila.forEach((celda, j) => {
-          const td = document.createElement('td');
-          // Columna de precio (índice 4)
-          if (j === 4) {
-            let valorARS = Number(celda);
-            let simbolo = simbolos[monedaActual];
-            let valorConvertido = valorARS;
-            if (monedaActual === 'USD') valorConvertido = (valorARS / tasas.ARS).toFixed(2);
-            if (monedaActual === 'ILS') valorConvertido = (valorARS / tasas.ARS * tasas.ILS).toFixed(2);
-            if (monedaActual === 'EUR') valorConvertido = (valorARS / tasas.ARS * tasas.EUR).toFixed(2);
-            if (monedaActual === 'ARS') valorConvertido = valorARS;
-            td.textContent = `${simbolo} ${valorConvertido}`;
-          }
-          // Columna "Compañía" (índice 5) muestra el nombre como link
-          else if (j === 5 && typeof celda === 'object' && celda.nombre && celda.link) {
-            td.innerHTML = `<a href="${celda.link}" target="_blank">${celda.nombre}</a>`;
-          }
-          // Otras columnas
-          else {
-            td.textContent = celda;
-          }
-          tr.appendChild(td);
-        });
-        tbody.appendChild(tr);
-      });
-    }
+    // Función genérica para llamar a la API de Gemini
+    async function callGeminiAPI(promptKey, responseDivId, buttonId, loadingIndicatorId, cityId) {
+      const button = document.getElementById(buttonId);
+      const loadingIndicator = document.getElementById(loadingIndicatorId);
+      const responseDiv = document.getElementById(responseDivId);
 
-    function mostrarAtraccionesCorrientes() {
-      let currentPage = window.location.pathname.toLowerCase();
-      let corrientesPage = "corrientes.html";
-      if (
-        currentPage.endsWith("/" + corrientesPage) ||
-        currentPage.endsWith("/ciudades/" + corrientesPage)
-      ) {
-        document.getElementById("corrientes-atracciones").style.display = "block";
+      button.disabled = true;
+      loadingIndicator.style.display = 'block';
+      responseDiv.textContent = ''; // Limpiar respuesta anterior
+
+      const currentLanguage = localStorage.getItem('idiomaPreferido') || 'es';
+      const cityDetails = await loadCityDetails(cityId); // Cargar detalles de la ciudad para el prompt
+
+      let promptText = translations[currentLanguage][promptKey];
+
+      // Personalizar el prompt con el nombre de la ciudad
+      if (cityDetails && cityDetails.cityName) {
+        promptText = promptText.replace("[CITY_NAME]", cityDetails.cityName);
       } else {
-        document.getElementById("corrientes-atracciones").style.display = "none";
+        // Fallback si no se encuentra el nombre de la ciudad
+        promptText = promptText.replace("[CITY_NAME]", "la ciudad");
+      }
+
+      if (!promptText) {
+        responseDiv.textContent = translations[currentLanguage]["ai-error"];
+        console.error(`Error: Prompt con clave '${promptKey}' no encontrado para el idioma '${currentLanguage}'.`);
+        button.disabled = false;
+        loadingIndicator.style.display = 'none';
+        return;
+      }
+
+      let chatHistory = [];
+      chatHistory.push({ role: "user", parts: [{ text: promptText }] });
+
+      const payload = {
+        contents: chatHistory,
+        generationConfig: {
+            responseMimeType: "text/plain"
+        }
+      };
+
+      const apiKey = ""; // La clave API se proporcionará en tiempo de ejecución por el entorno Canvas
+      const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+
+      try {
+        const response = await fetch(apiUrl, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+
+        const result = await response.json();
+
+        if (result.candidates && result.candidates.length > 0 &&
+            result.candidates[0].content && result.candidates[0].content.parts &&
+            result.candidates[0].content.parts.length > 0) {
+          const text = result.candidates[0].content.parts[0].text;
+          responseDiv.textContent = text;
+        } else {
+          responseDiv.textContent = translations[currentLanguage]["ai-error"];
+          console.error("Estructura de respuesta inesperada del LLM:", result);
+        }
+      } catch (error) {
+        responseDiv.textContent = translations[currentLanguage]["ai-error"];
+        console.error("Error al llamar a la API de Gemini:", error);
+      } finally {
+        button.disabled = false;
+        loadingIndicator.style.display = 'none';
       }
     }
 
-    // --- Conversor de moneda ---
-    document.getElementById('conv-btn').onclick = function() {
-      const monto = parseFloat(document.getElementById('conv-cantidad').value) || 0;
-      const de = document.getElementById('conv-de').value;
-      const a = document.getElementById('conv-a').value;
-      let resultado = monto;
-      if (de !== a && tasas[de] && tasas[a]) {
-        resultado = monto / tasas[de] * tasas[a];
+    // Función para mostrar el modal con los detalles de la ciudad
+    async function mostrarDetalle(cityId) {
+      const details = await loadCityDetails(cityId);
+      const modalContentDiv = document.getElementById('contenido-modal');
+      const modal = document.getElementById('modal-detalle');
+
+      if (!details) {
+        modalContentDiv.innerHTML = `<p>${translations[idiomaActual]["modal-coming-soon"]}</p>`;
+        modal.style.display = 'flex';
+        return;
       }
-      document.getElementById('conv-resultado').innerText = `${simbolos[a] || a} ${resultado.toLocaleString(undefined, {maximumFractionDigits:2})}`;
-    };
 
-    // --- Lista de equipaje ---
-    let packingList = {esencial: [], opcional: []};
+      // Construir la galería de imágenes
+      const galleryHtml = details.imageGallery.map(imgSrc => `
+        <img src="${imgSrc}" alt="${details.cityName}" onerror="this.src='https://placehold.co/150x100/cccccc/333333?text=Img'" />
+      `).join('');
 
-    function actualizarPackingLists() {
-      document.getElementById('packing-list-esencial').innerHTML =
-        packingList.esencial.map(item =>
-          `<li>${item} <button onclick="eliminarPacking('esencial','${item.replace(/'/g,"\\'")}')">✖</button></li>`
-        ).join('');
-      document.getElementById('packing-list-opcional').innerHTML =
-        packingList.opcional.map(item =>
-          `<li>${item} <button onclick="eliminarPacking('opcional','${item.replace(/'/g,"\\'")}')">✖</button></li>`
-        ).join('');
+      // Construir la lista de restaurantes
+      const restaurantsHtml = details.restaurants.map(rest => `
+        <li><a href="${rest.link}" target="_blank">${rest.name}</a></li>
+      `).join('');
+
+      modalContentDiv.innerHTML = `
+        <img src="${details.mainImage}" alt="${details.cityName}" class="modal-main-image" onerror="this.src='https://placehold.co/600x220/cccccc/333333?text=Imagen+Principal'" />
+        <h2>${details.cityName}</h2>
+        <p>${details.welcomeText}</p>
+
+        <h3>${translations[idiomaActual]["modal-activities-title"]}</h3>
+        <ul>
+          ${details.activities.map(activity => `<li>${activity}</li>`).join('')}
+        </ul>
+
+        <h3>${translations[idi18n_actual]["modal-accommodation-title"]}</h3>
+        <p>
+          ${details.accommodation.text}
+          <br>
+          <a href="${details.accommodation.bookingLink}" target="_blank">${translations[idiomaActual]["booking-link"]}</a>
+          &nbsp;|&nbsp;
+          <a href="${details.accommodation.airbnbLink}" target="_blank">${translations[idiomaActual]["airbnb-link"]}</a>
+        </p>
+
+        <h3>${translations[idiomaActual]["modal-restaurants-title"]}</h3>
+        <ul>
+          ${restaurantsHtml}
+        </ul>
+
+        <h3>${translations[idiomaActual]["modal-health-title"]}</h3>
+        <p>${details.health}</p>
+
+        <h3>${translations[idiomaActual]["modal-transport-title"]}</h3>
+        <p>
+          ${details.transport.text}
+          <br>
+          <a href="${details.transport.link}" target="_blank">${translations[idiomaActual]["general-transport-link"]}</a>
+        </p>
+
+        <h3>${translations[idiomaActual]["modal-gallery-title"]}</h3>
+        <div class="gallery">
+          ${galleryHtml}
+        </div>
+
+        <h3>${translations[idiomaActual]["modal-map-title"]}</h3>
+        <iframe src="${details.mapEmbed}" style="border:1px solid #ccc; width:100%; height:200px; border-radius:8px;" allowfullscreen="" loading="lazy"></iframe>
+
+        <div class="ai-section">
+          <h3 data-i18n="ai-menu-title">${translations[idiomaActual]["ai-menu-title"]}</h3>
+          <p data-i18n="ai-menu-description">${translations[idiomaActual]["ai-menu-description"]}</p>
+          <button class="ai-button" id="generate-menu-btn" data-i18n="generate-menu-button">${translations[idiomaActual]["generate-menu-button"]}</button>
+          <div class="ai-loading" id="ai-menu-loading-indicator" style="display:none;" data-i18n="ai-loading">${translations[idiomaActual]["ai-loading"]}</div>
+          <div class="ai-response" id="ai-menu-response"></div>
+        </div>
+
+        <div class="ai-section">
+          <h3 data-i18n="ai-accommodation-title">${translations[idiomaActual]["ai-accommodation-title"]}</h3>
+          <p data-i18n="ai-accommodation-description">${translations[idiomaActual]["ai-accommodation-description"]}</p>
+          <button class="ai-button" id="generate-accommodation-btn" data-i18n="generate-accommodation-button">${translations[idiomaActual]["generate-accommodation-button"]}</button>
+          <div class="ai-loading" id="ai-accommodation-loading-indicator" style="display:none;" data-i18n="ai-loading">${translations[idiomaActual]["ai-loading"]}</div>
+          <div class="ai-response" id="ai-accommodation-response"></div>
+        </div>
+
+        <div class="ai-section">
+          <h3 data-i18n="ai-family-tips-title">${translations[idiomaActual]["ai-family-tips-title"]}</h3>
+          <p data-i18n="ai-family-tips-description">${translations[idiomaActual]["ai-family-tips-description"]}</p>
+          <button class="ai-button" id="generate-family-tips-btn" data-i18n="generate-family-tips-button">${translations[idiomaActual]["generate-family-tips-button"]}</button>
+          <div class="ai-loading" id="ai-family-tips-loading-indicator" style="display:none;" data-i18n="ai-loading">${translations[idiomaActual]["ai-loading"]}</div>
+          <div class="ai-response" id="ai-family-tips-response"></div>
+        </div>
+
+        <div class="ai-section">
+          <h3 data-i18n="ai-budget-title">${translations[idiomaActual]["ai-budget-title"]}</h3>
+          <p data-i18n="ai-budget-description">${translations[idiomaActual]["ai-budget-description"]}</p>
+          <button class="ai-button" id="generate-budget-btn" data-i18n="generate-budget-button">${translations[idiomaActual]["generate-budget-button"]}</button>
+          <div class="ai-loading" id="ai-budget-loading-indicator" style="display:none;" data-i18n="ai-loading">${translations[idiomaActual]["ai-loading"]}</div>
+          <div class="ai-response" id="ai-budget-response"></div>
+        </div>
+
+        <a href="ciudades/${cityId}.html" style="color:#007BFF; text-decoration:underline; display:block; margin-top:20px; text-align:center;" target="_blank">
+          ${translations[idiomaActual]["modal-full-itinerary-link"]}
+        </a>
+      `;
+
+      modal.style.display = 'flex';
+      // Asegurarse de que el scroll del modal esté al inicio
+      modalContentDiv.scrollTop = 0;
+
+      // Asocia los eventos click a los botones de IA *después* de que el contenido del modal se haya renderizado
+      // Pasa el cityId a la función callGeminiAPI para que el prompt sea específico de la ciudad
+      document.getElementById('generate-menu-btn').onclick = () =>
+        callGeminiAPI('ai-menu-prompt', 'ai-menu-response', 'generate-menu-btn', 'ai-menu-loading-indicator', cityId);
+      document.getElementById('generate-accommodation-btn').onclick = () =>
+        callGeminiAPI('ai-accommodation-prompt', 'ai-accommodation-response', 'generate-accommodation-btn', 'ai-accommodation-loading-indicator', cityId);
+      document.getElementById('generate-family-tips-btn').onclick = () =>
+        callGeminiAPI('ai-family-tips-prompt', 'ai-family-tips-response', 'generate-family-tips-btn', 'ai-family-tips-loading-indicator', cityId);
+      document.getElementById('generate-budget-btn').onclick = () =>
+        callGeminiAPI('ai-budget-prompt', 'ai-budget-response', 'generate-budget-btn', 'ai-budget-loading-indicator', cityId);
     }
-    document.getElementById('packing-add').onclick = function() {
-      const tipo = document.getElementById('packing-type').value;
-      const item = document.getElementById('packing-input').value.trim();
-      if (item && !packingList[tipo].includes(item)) {
-        packingList[tipo].push(item);
-        actualizarPackingLists();
-        document.getElementById('packing-input').value = "";
-      }
-    };
-    window.eliminarPacking = function(tipo, item) {
-      packingList[tipo] = packingList[tipo].filter(x => x !== item);
-      actualizarPackingLists();
-    };
 
-    // --- Consulta a la IA (demo) ---
-    document.getElementById('ai-ask').onclick = function() {
-      const pregunta = document.getElementById('ai-input').value.trim();
-      if (!pregunta) return;
-      document.getElementById('ai-response').style.display = 'none';
-      document.getElementById('ai-loading').style.display = 'block';
-      setTimeout(() => {
-        document.getElementById('ai-loading').style.display = 'none';
-        document.getElementById('ai-response').style.display = 'block';
-        document.getElementById('ai-response').innerText =
-          "Esta es una respuesta simulada. Integra una API de IA para respuestas reales.";
-      }, 1500);
-    };
-    document.getElementById('ai-clear').onclick = function() {
-      document.getElementById('ai-input').value = '';
-      document.getElementById('ai-response').style.display = 'none';
-    };
+    function cerrarModal() {
+      document.getElementById('modal-detalle').style.display = 'none';
+    }
 
-    // Inicialización
-    actualizarTasas(function() {
-      cambiarIdioma('es');
-      cambiarMoneda('ARS');
-      mostrarAtraccionesCorrientes();
-      actualizarPackingLists();
+    // Función para renderizar las tarjetas de ciudad
+    function renderCityCards() {
+      const cityGrid = document.getElementById('city-grid');
+      cityGrid.innerHTML = ''; // Limpiar cuadrícula existente
+
+      citiesData.forEach(city => {
+        const card = document.createElement('div');
+        card.classList.add('city-card');
+        card.setAttribute('onclick', `mostrarDetalle('${city.id}')`);
+
+        // Usar la descripción traducida para la tarjeta
+        const cityDescriptionKey = `${city.id}Description`; // Asumiendo que tendrás una clave de descripción en tu JSON
+        const displayedDescription = translations[idiomaActual][cityDescriptionKey] || city.description;
+
+
+        card.innerHTML = `
+          <img src="${city.image}" alt="${city.name}" onerror="this.src='https://placehold.co/300x180/cccccc/333333?text=${city.name}'">
+          <div class="city-card-content">
+            <h2>${city.name}</h2>
+            <p>${displayedDescription}</p>
+            <a href="ciudades/${city.id}.html" class="details-link" data-i18n="read-more" target="_blank">${translations[idiomaActual]["read-more"]}</a>
+          </div>
+        `;
+        cityGrid.appendChild(card);
+      });
+    }
+
+    // Inicialización de la página al cargar el DOM
+    document.addEventListener('DOMContentLoaded', function() {
+      // Carga las preferencias de idioma y moneda desde localStorage
+      const idiomaGuardado = localStorage.getItem('idiomaPreferido');
+      const monedaGuardada = localStorage.getItem('monedaPreferida');
+
+      // Actualiza las tasas de cambio y luego renderiza todo
+      actualizarTasas(function() {
+        // Aplica el idioma guardado o 'es' por defecto
+        translatePage(idiomaGuardado || 'es');
+        // Aplica la moneda guardada o 'ARS' por defecto
+        cambiarMoneda(monedaGuardada || 'ARS');
+        // Renderiza las tarjetas de ciudad inicialmente
+        renderCityCards();
+      });
     });
   </script>
 </body>
