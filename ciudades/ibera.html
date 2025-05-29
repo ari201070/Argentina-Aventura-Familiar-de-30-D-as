@@ -2,8 +2,10 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Esteros del Iberá | Viaje Familiar a Argentina</title>
+  <title data-i18n="page-title">Esteros del Iberá | Viaje Familiar a Argentina</title>
+  <link rel="stylesheet" href="estilos.css">
   <style>
+    /* Estilos generales del cuerpo y barra superior */
     body {
       font-family: Arial, sans-serif;
       background: #f9f9f9;
@@ -20,15 +22,23 @@
       padding: 5px;
       border-radius: 5px;
       box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+      display: flex; /* Para alinear los botones de idioma y moneda */
+      align-items: center;
+      gap: 10px; /* Espacio entre elementos */
     }
-    .language-btn {
+    .language-btn, .currency-btn { /* Clase unificada para botones de control */
       font-weight: bold;
       padding: 8px 12px;
-      margin: 0 5px;
+      margin: 0 2px;
       border: none;
       border-radius: 4px;
       cursor: pointer;
       background-color: #f0f0f0;
+    }
+    .language-btn.active, .currency-btn.active {
+      background: #e6eaff;
+      border-color: #6d7fc9;
+      font-weight: bold;
     }
     .back-link {
       margin-left: 20px;
@@ -36,104 +46,691 @@
       font-weight: bold;
       color: #007BFF;
     }
-    h1, h2 {
+    /* Estilos para la foto de la ciudad */
+    .ciudad-foto {
+      width: 100%;
+      max-width: 700px;
+      height: auto;
+      display: block;
+      margin: 30px auto 20px auto;
+      border-radius: 14px;
+      box-shadow: 0 3px 16px rgba(0,0,0,0.15);
+    }
+    .foto-caption {
+      text-align: center;
+      color: #555;
+      font-size: 1em;
+      margin-bottom: 30px;
+    }
+    h1, h2, h3 { /* Agregado h3 para subsecciones */
       color: #0F4761;
     }
     ul {
       margin-bottom: 20px;
+      padding-left: 25px; /* Ajuste para listas */
+    }
+    ul li {
+      margin-bottom: 5px;
     }
     iframe {
       border: 1px solid black;
+      width: 100%; /* Asegura que el mapa sea responsive */
+      max-width: 700px; /* Limita el ancho máximo del mapa */
+      display: block;
+      margin: 20px auto; /* Centra el mapa */
+    }
+    /* Estilos para tablas añadidas */
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      max-width: 700px; /* Limita el ancho máximo de las tablas */
+      margin: 20px auto;
+      background: #f7fbff;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    th, td {
+      border: 1px solid #b3c7e6;
+      padding: 10px 15px;
+      text-align: left;
+      font-size: 16px;
+    }
+    th {
+      background: #e6f0fa;
+      font-weight: bold;
+    }
+    .rtl {
+      direction: rtl !important;
+      text-align: right !important;
+    }
+    .rtl ul {
+      padding-right: 25px;
+      padding-left: 0;
+    }
+
+    /* Estilos para las secciones de IA */
+    .ai-section {
+      background: #e6f0fa;
+      padding: 20px;
+      border-radius: 8px;
+      margin: 30px auto;
+      max-width: 700px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    .ai-section h2 {
+      color: #2176d2;
+      margin-top: 0;
+    }
+    .ai-button {
+      background-color: #4CAF50; /* Green */
+      color: white;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: background-color 0.3s ease;
+      display: block;
+      margin: 15px auto;
+      max-width: 300px;
+    }
+    .ai-button:hover {
+      background-color: #45a049;
+    }
+    .ai-button:disabled {
+      background-color: #cccccc;
+      cursor: not-allowed;
+    }
+    .ai-response {
+      margin-top: 20px;
+      padding: 15px;
+      background-color: #ffffff;
+      border: 1px solid #d0e0f0;
+      border-radius: 5px;
+      white-space: pre-wrap;
+      font-size: 15px;
+      line-height: 1.6;
+      min-height: 50px;
+    }
+    .ai-loading {
+      text-align: center;
+      font-style: italic;
+      color: #666;
+      margin-top: 10px;
     }
   </style>
 </head>
 <body>
   <div id="language-selector">
-    <button onclick="translatePage('es')" class="language-btn">Español</button>
-    <button onclick="translatePage('he')" class="language-btn">עברית</button>
-    <a href="../index.html" class="back-link" id="back-link">⬅ Volver al itinerario</a>
+    <span data-i18n="idioma">Idioma:</span>
+    <button onclick="translatePage('es')" class="language-btn" id="btn-es">Español</button>
+    <button onclick="translatePage('he')" class="language-btn" id="btn-he">עברית</button>
+    <span data-i18n="moneda">Moneda:</span>
+    <button id="btn-ars" onclick="cambiarMoneda('ARS')" class="currency-btn">ARS</button>
+    <button id="btn-usd" onclick="cambiarMoneda('USD')" class="currency-btn">USD</button>
+    <button id="btn-ils" onclick="cambiarMoneda('ILS')" class="currency-btn">ILS</button>
+    <a href="../index.html" class="back-link" id="back-link" data-i18n="back-link">⬅ Volver al itinerario</a>
   </div>
 
-  <h1 id="city-title">Esteros del Iberá</h1>
-  <p id="welcome-text">Bienvenidos a la sección de Esteros del Iberá.</p>
+  <img src="../docs/imagenes/ibera/ibera.jpg"
+       alt="Paisaje de los Esteros del Iberá"
+       class="ciudad-foto" id="city-photo" onerror="this.src='https://placehold.co/700x400/cccccc/333333?text=Imagen+Ibera'">
+  <div class="foto-caption" id="foto-caption" data-i18n="foto-caption">Paisaje de los Esteros del Iberá con fauna silvestre</div>
 
-  <h2 id="main-attractions-title">Atracciones principales</h2>
+  <h1 id="city-title" data-i18n="city-title">Esteros del Iberá</h1>
+  <p id="welcome-text" data-i18n="welcome-text">Los Esteros del Iberá son uno de los humedales más importantes del mundo y el segundo más grande de Sudamérica. Es un paraíso de biodiversidad y un lugar ideal para el ecoturismo familiar, donde se puede observar fauna silvestre en su hábitat natural. El acceso principal turístico es Colonia Carlos Pellegrini.</p>
+
+  <h2 data-i18n="dates-duration-title">Fechas y duración</h2>
+  <ul>
+    <li data-i18n="stay-duration">**Estadía**: 27/10 al 29/10 (3 días)</li>
+    <li data-i18n="how-to-arrive">**Cómo llegar**: Desde Corrientes o Posadas en bus/transfer/auto a Colonia Carlos Pellegrini.</li>
+  </ul>
+
+  <h2 id="main-attractions-title" data-i18n="main-attractions-title">Lugares imperdibles</h2>
   <ul id="main-attractions-list">
-    <li><a href="https://es.wikipedia.org/wiki/Esteros_del_Iber%C3%A1" target="_blank" id="attraction-0">Reserva Natural Iberá</a></li>
-    <li><a href="https://es.wikipedia.org/wiki/Colonia_Carlos_Pellegrini" target="_blank" id="attraction-1">Colonia Carlos Pellegrini</a></li>
-    <li><a href="https://es.wikipedia.org/wiki/Fauna_de_Argentina#Esteros_del_Iber%C3%A1" target="_blank" id="attraction-2">Avistaje de fauna (carpinchos, yacarés, aves)</a></li>
-    <li><a href="https://es.wikipedia.org/wiki/Lagunas_del_Iber%C3%A1" target="_blank" id="attraction-3">Lagunas y paseos en lancha</a></li>
+    <li><a href="https://es.wikipedia.org/wiki/Laguna_Iber%C3%A1" target="_blank" id="attraction-0" data-i18n="attraction-0">Laguna Iberá</a></li>
+    <li><a href="https://www.parquesnacionales.gob.ar/areas-protegidas/region-litoral/ibera/" target="_blank" id="attraction-1" data-i18n="attraction-1">Pasarelas de la Laguna Iberá</a></li>
+    <li><a href="https://www.argentina.travel/#!/es/destino/esteros-del-ibera" target="_blank" id="attraction-2" data-i18n="attraction-2">Centro de Interpretación de los Esteros</a></li>
+    <li><a href="https://www.argentina.travel/#!/es/destino/esteros-del-ibera" target="_blank" id="attraction-3" data-i18n="attraction-3">Miradores de aves</a></li>
+    <li><a href="https://es.wikipedia.org/wiki/Colonia_Carlos_Pellegrini" target="_blank" id="attraction-4" data-i18n="attraction-4">Pueblo de Colonia Carlos Pellegrini</a></li>
+    <li><a href="https://www.parquesnacionales.gob.ar/areas-protegidas/region-litoral/ibera/" target="_blank" id="attraction-5" data-i18n="attraction-5">Senderos de interpretación ambiental</a></li>
   </ul>
 
-  <h2 id="restaurant-types-title">Tipos de restaurantes</h2>
-  <ul id="restaurant-types-list">
-    <li id="rest-0">Comida regional</li>
-    <li id="rest-1">Parrillas</li>
-    <li id="rest-2">Restaurantes familiares</li>
-    <li id="rest-3">Cafés y casas de té</li>
+  <h2 data-i18n="recommended-activities-title">Actividades recomendadas</h2>
+  <ul>
+    <li data-i18n="rec-activity-0">Safaris en lancha por la Laguna Iberá para avistar yacarés, carpinchos, ciervos de los pantanos y aves.</li>
+    <li data-i18n="rec-activity-1">Caminatas guiadas por los senderos para observar la fauna terrestre.</li>
+    <li data-i18n="rec-activity-2">Safaris nocturnos (opcional, para ver animales de hábitos nocturnos).</li>
+    <li data-i18n="rec-activity-3">Cabalgatas por los alrededores (para edades adecuadas).</li>
+    <li data-i18n="rec-activity-4">Paseos en canoa o kayak (en zonas permitidas y con guía).</li>
+    <li data-i18n="rec-activity-5">Avistaje de aves.</li>
+    <li data-i18n="rec-activity-6">Disfrutar de la tranquilidad y el contacto con la naturaleza.</li>
   </ul>
 
-  <h2 id="map-title">Mapa de Esteros del Iberá</h2>
-  <iframe src="https://www.openstreetmap.org/export/embed.html?bbox=-58.812%2C-28.974%2C-57.980%2C-28.257&amp;layer=mapnik" width="100%" height="350"></iframe>
-  <br><small><a href="https://www.openstreetmap.org/#map=10/-28.6/-58.4" target="_blank" id="see-bigger-map">Ver mapa más grande</a></small>
+  <h2 data-i18n="gastronomy-title">Gastronomía destacada</h2>
+  <p data-i18n="gastronomy-intro">La gastronomía en Iberá se basa en la cocina casera y regional, con ingredientes frescos de la zona. Las posadas suelen ofrecer pensión completa con platos típicos, a menudo adaptándose a necesidades dietéticas específicas si se avisa con antelación.</p>
+  <h3 data-i18n="restaurants-title">Restaurantes recomendados (Generalmente en Posadas)</h3>
+  <table>
+    <thead>
+      <tr>
+        <th data-i18n="table-restaurant">Restaurante</th>
+        <th data-i18n="table-type">Tipo</th>
+        <th data-i18n="table-gluten-free">Sin Gluten</th>
+        <th data-i18n="table-sugar-free">Sin Azúcar</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a href="https://www.posadadelalaguna.com.ar/" target="_blank">Posada de la Laguna</a></td>
+        <td data-i18n="restaurant-type-0">Comida casera / Regional</td>
+        <td data-i18n="yes-symbol">✔️</td>
+        <td data-i18n="yes-symbol">✔️</td>
+      </tr>
+      <tr>
+        <td><a href="https://www.irupelodge.com.ar/" target="_blank">Irupé Lodge</a></td>
+        <td data-i18n="restaurant-type-1">Comida casera / Regional</td>
+        <td data-i18n="yes-symbol">✔️</td>
+        <td data-i18n="yes-symbol">✔️</td>
+      </tr>
+      <tr>
+        <td><a href="https://www.tripadvisor.com.ar/Restaurant_Review-g312803-d10103700-Reviews-Rincon_del_Carpincho-Colonia_Carlos_Pellegrini_Province_of_Corrientes_Litoral.html" target="_blank">Rincón del Carpincho</a></td>
+        <td data-i18n="restaurant-type-2">Comida casera / Regional</td>
+        <td data-i18n="yes-symbol">✔️</td>
+        <td data-i18n="yes-symbol">✔️</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 data-i18n="cafes-title">Confiterías y cafés</h3>
+  <table>
+    <thead>
+      <tr>
+        <th data-i18n="table-cafe">Confitería</th>
+        <th data-i18n="table-type">Tipo</th>
+        <th data-i18n="table-gluten-free">Sin Gluten</th>
+        <th data-i18n="table-sugar-free">Sin Azúcar</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td data-i18n="cafe-type-0">(Opciones limitadas)</td>
+        <td data-i18n="cafe-type-1">Principalmente en posadas</td>
+        <td data-i18n="yes-symbol">✔️</td>
+        <td data-i18n="yes-symbol">✔️</td>
+      </tr>
+      <tr>
+        <td data-i18n="cafe-type-2">Minimercados</td>
+        <td data-i18n="cafe-type-3">Para abastecerse</td>
+        <td data-i18n="yes-symbol">✔️</td>
+        <td data-i18n="yes-symbol">✔️</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="ai-section">
+    <h2 data-i18n="ai-menu-title">Generador de Menú Saludable ✨</h2>
+    <p data-i18n="ai-menu-description">Obtén sugerencias de menú para un día completo (desayuno, almuerzo, cena) adaptadas para dietas bajas en carbohidratos, aptas para diabéticos y, si es posible, sin gluten, inspiradas en la gastronomía de Esteros del Iberá.</p>
+    <button class="ai-button" id="generate-menu-btn" data-i18n="generate-menu-button">Generar Menú</button>
+    <div class="ai-loading" id="ai-menu-loading-indicator" style="display:none;" data-i18n="ai-loading">Generando menú...</div>
+    <div class="ai-response" id="ai-menu-response"></div>
+  </div>
+
+  <div class="ai-section">
+    <h2 data-i18n="ai-accommodation-title">Sugerencias de Alojamiento con IA 🏨</h2>
+    <p data-i18n="ai-accommodation-description">Obtén recomendaciones de alojamiento en Esteros del Iberá, considerando opciones familiares, seguras y bien ubicadas.</p>
+    <button class="ai-button" id="generate-accommodation-btn" data-i18n="generate-accommodation-button">Generar Sugerencias</button>
+    <div class="ai-loading" id="ai-accommodation-loading-indicator" style="display:none;" data-i18n="ai-loading">Generando sugerencias...</div>
+    <div class="ai-response" id="ai-accommodation-response"></div>
+  </div>
+
+  <div class="ai-section">
+    <h2 data-i18n="ai-family-tips-title">Consejos Adicionales para Familias con IA 👨‍👩‍👧‍👦</h2>
+    <p data-i18n="ai-family-tips-description">Recibe consejos personalizados para disfrutar Esteros del Iberá en familia, incluyendo actividades, seguridad y logística.</p>
+    <button class="ai-button" id="generate-family-tips-btn" data-i18n="generate-family-tips-button">Generar Consejos</button>
+    <div class="ai-loading" id="ai-family-tips-loading-indicator" style="display:none;" data-i18n="ai-loading">Generando consejos...</div>
+    <div class="ai-response" id="ai-family-tips-response"></div>
+  </div>
+
+  <div class="ai-section">
+    <h2 data-i18n="ai-budget-title">Análisis de Presupuesto con IA 💰</h2>
+    <p data-i18n="ai-budget-description">Obtén un análisis y desglose del presupuesto orientativo para tu estadía en Esteros del Iberá, con posibles optimizaciones.</p>
+    <button class="ai-button" id="generate-budget-btn" data-i18n="generate-budget-button">Analizar Presupuesto</button>
+    <div class="ai-loading" id="ai-budget-loading-indicator" style="display:none;" data-i18n="ai-loading">Analizando presupuesto...</div>
+    <div class="ai-response" id="ai-budget-response"></div>
+  </div>
+
+  <h2 data-i18n="accommodation-title">Alojamiento (ejemplos)</h2>
+  <ul>
+    <li data-i18n="accommodation-0">Posada de la Laguna</li>
+    <li data-i18n="accommodation-1">Irupé Lodge</li>
+    <li data-i18n="accommodation-2">Cabañas y hospedajes rurales en Colonia Carlos Pellegrini</li>
+    <li data-i18n="accommodation-3">Camping (para los más aventureros).</li>
+  </ul>
+
+  <h2 data-i18n="coordinates-title">Coordenadas aproximadas</h2>
+  <p data-i18n="coordinates-text">Colonia Carlos Pellegrini: 28° 32' S 57° 11' O</p>
+
+  <h2 data-i18n="events-agenda-title">Agenda de eventos</h2>
+  <ul>
+    <li data-i18n="event-0">**(Consultar agenda local)**: El foco es la naturaleza y la vida silvestre.</li>
+    <li data-i18n="event-1">**(Consultar agenda local)**: Posibles charlas o talleres sobre conservación.</li>
+    <li><a href="../docs/agenda/ariflier1970@gmail.com.ical.zip" target="_blank" data-i18n="download-agenda">Descargar agenda completa en formato iCal (.zip)</a></li>
+  </ul>
+
+  <h2 data-i18n="family-tips-title">Consejos para familias</h2>
+  <ul>
+    <li data-i18n="family-tip-0">**Repelente de insectos es ABSOLUTAMENTE CRUCIAL.** Llevar en gran cantidad.</li>
+    <li data-i18n="family-tip-1">Protector solar, sombrero y ropa de manga larga para protegerse del sol y los insectos.</li>
+    <li data-i18n="family-tip-2">Binoculares para observar aves y fauna.</li>
+    <li data-i18n="family-tip-3">Reserven alojamiento y excursiones con mucha anticipación, la oferta es limitada.</li>
+    <li data-i18n="family-tip-4">La mayoría de las actividades son al aire libre; estén preparados para diferentes condiciones climáticas.</li>
+    <li data-i18n="family-tip-5">Ideal para niños interesados en la naturaleza y los animales.</li>
+  </ul>
+
+  <h2 data-i18n="budget-title">Presupuesto orientativo</h2>
+  <table>
+    <thead>
+      <tr>
+        <th data-i18n="budget-concept">Concepto</th>
+        <th data-i18n="budget-price">Precio estimado (USD)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td data-i18n="budget-concept-0">Alojamiento (noche, familia)</td>
+        <td data-i18n="budget-price-0">70–200+ (incl. excursiones/comidas)</td>
+      </tr>
+      <tr>
+        <td data-i18n="budget-concept-1">Comida (por día, familia)</td>
+        <td data-i18n="budget-price-1">Incluido en posada (generalmente)</td>
+      </tr>
+      <tr>
+        <td data-i18n="budget-concept-2">Transporte local (por día)</td>
+        <td data-i18n="budget-price-2">0–10 (dentro del pueblo)</td>
+      </tr>
+      <tr>
+        <td data-i18n="budget-concept-3">Actividades y tours (por día)</td>
+        <td data-i18n="budget-price-3">50–100+ (según excursiones)</td>
+      </tr>
+      <tr>
+        <td data-i18n="budget-concept-4">Entradas museos/atracciones</td>
+        <td data-i18n="budget-price-4">0–10</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2 data-i18n="cultural-tips-title">Tips culturales</h2>
+  <ul>
+    <li data-i18n="cultural-tip-0">La cultura guaraní y el respeto por la naturaleza son muy fuertes.</li>
+    <li data-i18n="cultural-tip-1">El ritmo de vida es tranquilo y en contacto con la naturaleza.</li>
+    <li data-i18n="cultural-tip-2">La hospitalidad de los lugareños es destacada.</li>
+    <li data-i18n="cultural-tip-3">Aprender algunas palabras en guaraní puede ser divertido para los niños.</li>
+  </ul>
+
+  <h2 id="map-title" data-i18n="map-title">Mapa de Esteros del Iberá (Colonia Carlos Pellegrini)</h2>
+  <iframe src="https://www.openstreetmap.org/export/embed.html?bbox=-57.25%2C-28.6%2C-57.05%2C-28.4&amp;layer=mapnik" width="100%" height="350"></iframe>
+  <br><small><a href="https://www.openstreetmap.org/#map=13/-28.537/-57.140" target="_blank" id="see-bigger-map" data-i18n="see-bigger-map">Ver mapa más grande</a></small>
 
   <script>
     // Diccionario de traducciones español ↔ hebreo
     const translations = {
       es: {
+        "page-title": "Esteros del Iberá | Viaje Familiar a Argentina",
+        "idioma": "Idioma:",
+        "moneda": "Moneda:",
         "city-title": "Esteros del Iberá",
-        "welcome-text": "Bienvenidos a la sección de Esteros del Iberá.",
-        "main-attractions-title": "Atracciones principales",
-        "attraction-0": "Reserva Natural Iberá",
-        "attraction-1": "Colonia Carlos Pellegrini",
-        "attraction-2": "Avistaje de fauna (carpinchos, yacarés, aves)",
-        "attraction-3": "Lagunas y paseos en lancha",
-        "restaurant-types-title": "Tipos de restaurantes",
-        "rest-0": "Comida regional",
-        "rest-1": "Parrillas",
-        "rest-2": "Restaurantes familiares",
-        "rest-3": "Cafés y casas de té",
-        "map-title": "Mapa de Esteros del Iberá",
-        "see-bigger-map": "Ver mapa más grande",
-        "back-link": "⬅ Volver al itinerario"
+        "welcome-text": "Los Esteros del Iberá son uno de los humedales más importantes del mundo y el segundo más grande de Sudamérica. Es un paraíso de biodiversidad y un lugar ideal para el ecoturismo familiar, donde se puede observar fauna silvestre en su hábitat natural. El acceso principal turístico es Colonia Carlos Pellegrini.",
+        "foto-caption": "Paisaje de los Esteros del Iberá con fauna silvestre",
+        "dates-duration-title": "Fechas y duración",
+        "stay-duration": "**Estadía**: 27/10 al 29/10 (3 días)",
+        "how-to-arrive": "**Cómo llegar**: Desde Corrientes o Posadas en bus/transfer/auto a Colonia Carlos Pellegrini.",
+        "main-attractions-title": "Lugares imperdibles",
+        "attraction-0": "Laguna Iberá",
+        "attraction-1": "Pasarelas de la Laguna Iberá",
+        "attraction-2": "Centro de Interpretación de los Esteros",
+        "attraction-3": "Miradores de aves",
+        "attraction-4": "Pueblo de Colonia Carlos Pellegrini",
+        "attraction-5": "Senderos de interpretación ambiental",
+        "recommended-activities-title": "Actividades recomendadas",
+        "rec-activity-0": "Safaris en lancha por la Laguna Iberá para avistar yacarés, carpinchos, ciervos de los pantanos y aves.",
+        "rec-activity-1": "Caminatas guiadas por los senderos para observar la fauna terrestre.",
+        "rec-activity-2": "Safaris nocturnos (opcional, para ver animales de hábitos nocturnos).",
+        "rec-activity-3": "Cabalgatas por los alrededores (para edades adecuadas).",
+        "rec-activity-4": "Paseos en canoa o kayak (en zonas permitidas y con guía).",
+        "rec-activity-5": "Avistaje de aves.",
+        "rec-activity-6": "Disfrutar de la tranquilidad y el contacto con la naturaleza.",
+        "gastronomy-title": "Gastronomía destacada",
+        "gastronomy-intro": "La gastronomía en Iberá se basa en la cocina casera y regional, con ingredientes frescos de la zona. Las posadas suelen ofrecer pensión completa con platos típicos, a menudo adaptándose a necesidades dietéticas específicas si se avisa con antelación.",
+        "restaurants-title": "Restaurantes recomendados (Generalmente en Posadas)",
+        "table-restaurant": "Restaurante",
+        "table-type": "Tipo",
+        "table-gluten-free": "Sin Gluten",
+        "table-sugar-free": "Sin Azúcar",
+        "restaurant-type-0": "Comida casera / Regional",
+        "restaurant-type-1": "Comida casera / Regional",
+        "restaurant-type-2": "Comida casera / Regional",
+        "cafes-title": "Confiterías y cafés",
+        "table-cafe": "Confitería",
+        "cafe-type-0": "(Opciones limitadas)",
+        "cafe-type-1": "Principalmente en posadas",
+        "cafe-type-2": "Minimercados",
+        "cafe-type-3": "Para abastecerse",
+        "yes-symbol": "✔️",
+        "no-symbol": "❌",
+        "ai-menu-title": "Generador de Menú Saludable ✨",
+        "ai-menu-description": "Obtén sugerencias de menú para un día completo (desayuno, almuerzo, cena) adaptadas para dietas bajas en carbohidratos, aptas para diabéticos y, si es posible, sin gluten, inspiradas en la gastronomía de Esteros del Iberá.",
+        "generate-menu-button": "Generar Menú",
+        "ai-loading": "Generando menú...",
+        "ai-error": "Error al generar el menú. Por favor, inténtalo de nuevo más tarde.",
+        "ai-menu-prompt": "Genera un plan de menú de un día (desayuno, almuerzo, cena) para una familia que visita Esteros del Iberá, Argentina. Las opciones deben ser aptas para diabéticos, bajas en carbohidratos y, si es posible, sin gluten. Incluye ejemplos de platos típicos de la región (pescados, carnes de caza) adaptados a estas restricciones dietéticas. Formatea la respuesta en párrafos claros para cada comida.",
+        "ai-accommodation-title": "Sugerencias de Alojamiento con IA 🏨",
+        "ai-accommodation-description": "Obtén recomendaciones de alojamiento en Esteros del Iberá, considerando opciones familiares, seguras y bien ubicadas.",
+        "generate-accommodation-button": "Generar Sugerencias",
+        "ai-accommodation-prompt": "Genera 3-5 sugerencias de alojamiento en Esteros del Iberá, Argentina, ideales para una familia con 2 hijos. Considera opciones seguras, bien ubicadas y con servicios adecuados para familias (ej. pensión completa, excursiones). Incluye diferentes tipos de alojamiento como posadas o lodges. Formatea la respuesta con viñetas.",
+        "ai-family-tips-title": "Consejos Adicionales para Familias con IA 👨‍👩‍👧‍👦",
+        "ai-family-tips-description": "Recibe consejos personalizados para disfrutar Esteros del Iberá en familia, incluyendo actividades, seguridad y logística.",
+        "generate-family-tips-button": "Generar Consejos",
+        "ai-family-tips-prompt": "Proporciona 5 consejos prácticos y personalizados para una familia con niños que visita Esteros del Iberá, Argentina. Los consejos deben cubrir aspectos como actividades para niños, seguridad en la naturaleza (insectos, fauna), opciones de transporte familiar, y cómo aprovechar al máximo la estadía. Formatea la respuesta con viñetas.",
+        "ai-budget-title": "Análisis de Presupuesto con IA 💰",
+        "ai-budget-description": "Obtén un análisis y desglose del presupuesto orientativo para tu estadía en Esteros del Iberá, con posibles optimizaciones.",
+        "generate-budget-button": "Analizar Presupuesto",
+        "ai-budget-prompt": "Analiza el siguiente presupuesto orientativo para una familia en Esteros del Iberá (USD): Alojamiento (noche): 70-200+ (incl. excursiones/comidas), Comida (día): Incluido en posada (generalmente), Transporte local (día): 0-10 (dentro del pueblo), Actividades (día): 50-100+ (según excursiones), Entradas: 0-10. Proporciona un desglose estimado por día y por categoría, y sugiere 2-3 formas de optimizar o ahorrar en este presupuesto sin sacrificar la experiencia familiar. Formatea la respuesta en párrafos.",
+        "accommodation-title": "Alojamiento (ejemplos)",
+        "accommodation-0": "Posada de la Laguna",
+        "accommodation-1": "Irupé Lodge",
+        "accommodation-2": "Cabañas y hospedajes rurales en Colonia Carlos Pellegrini",
+        "accommodation-3": "Camping (para los más aventureros).",
+        "coordinates-title": "Coordenadas aproximadas",
+        "coordinates-text": "Colonia Carlos Pellegrini: 28° 32' S 57° 11' O",
+        "events-agenda-title": "Agenda de eventos",
+        "event-0": "**(Consultar agenda local)**: El foco es la naturaleza y la vida silvestre.",
+        "event-1": "**(Consultar agenda local)**: Posibles charlas o talleres sobre conservación.",
+        "download-agenda": "Descargar agenda completa en formato iCal (.zip)",
+        "family-tips-title": "Consejos para familias",
+        "family-tip-0": "**Repelente de insectos es ABSOLUTAMENTE CRUCIAL.** Llevar en gran cantidad.",
+        "family-tip-1": "Protector solar, sombrero y ropa de manga larga para protegerse del sol y los insectos.",
+        "family-tip-2": "Binoculares para observar aves y fauna.",
+        "family-tip-3": "Reserven alojamiento y excursiones con mucha anticipación, la oferta es limitada.",
+        "family-tip-4": "La mayoría de las actividades son al aire libre; estén preparados para diferentes condiciones climáticas.",
+        "family-tip-5": "Ideal para niños interesados en la naturaleza y los animales.",
+        "budget-title": "Presupuesto orientativo",
+        "budget-concept": "Concepto",
+        "budget-price": "Precio estimado (USD)",
+        "budget-concept-0": "Alojamiento (noche, familia)",
+        "budget-price-0": "70–200+ (incl. excursiones/comidas)",
+        "budget-concept-1": "Comida (por día, familia)",
+        "budget-price-1": "Incluido en posada (generalmente)",
+        "budget-concept-2": "Transporte local (por día)",
+        "budget-price-2": "0–10 (dentro del pueblo)",
+        "budget-concept-3": "Actividades y tours (por día)",
+        "budget-price-3": "50–100+ (según excursiones)",
+        "budget-concept-4": "Entradas museos/atracciones",
+        "budget-price-4": "0–10",
+        "cultural-tips-title": "Tips culturales",
+        "cultural-tip-0": "La cultura guaraní y el respeto por la naturaleza son muy fuertes.",
+        "cultural-tip-1": "El ritmo de vida es tranquilo y en contacto con la naturaleza.",
+        "cultural-tip-2": "La hospitalidad de los lugareños es destacada.",
+        "cultural-tip-3": "Aprender algunas palabras en guaraní puede ser divertido para los niños.",
+        "map-title": "Mapa de Esteros del Iberá (Colonia Carlos Pellegrini)",
+        "see-bigger-map": "לצפייה במפה גדולה יותר",
+        "back-link": "⬅ חזרה למפת המסלול"
       },
       he: {
+        "page-title": "אסטרוס דל איברה | טיול משפחתי בארגנטינה",
+        "idioma": "שפה:",
+        "moneda": "מטבע:",
         "city-title": "אסטרוס דל איברה",
-        "welcome-text": "ברוכים הבאים למדור אסטרוס דל איברה.",
-        "main-attractions-title": "אטרקציות עיקריות",
-        "attraction-0": "שמורת הטבע איברה",
-        "attraction-1": "קולוניה קרלוס פלגריני",
-        "attraction-2": "תצפית על חיות בר (קפיברות, תנינים, עופות)",
-        "attraction-3": "אגמים ושיט בסירה",
-        "restaurant-types-title": "סוגי מסעדות",
-        "rest-0": "מאכלים אזוריים",
-        "rest-1": "מסעדות בשרים (פריז'ות)",
-        "rest-2": "מסעדות משפחתיות",
-        "rest-3": "בתי קפה ובתי תה",
-        "map-title": "מפת אסטרוס דל איברה",
+        "welcome-text": "אסטרוס דל איברה הם אחד מאזורי הביצות החשובים בעולם והשני בגודלו בדרום אמריקה. זהו גן עדן של מגוון ביולוגי ומקום אידיאלי לתיירות אקולוגית משפחתית, שבו ניתן לצפות בחיות בר בסביבתן הטבעית. נקודת הגישה התיירותית העיקרית היא קולוניה קרלוס פלגריני.",
+        "foto-caption": "נוף של אסטרוס דל איברה עם חיות בר",
+        "dates-duration-title": "תאריכים ומשך שהייה",
+        "stay-duration": "**שהייה**: 27/10 עד 29/10 (3 ימים)",
+        "how-to-arrive": "**איך מגיעים**: מקוריינטס או פוסאדס באוטובוס/הסעה/רכב לקולוניה קרלוס פלגריני.",
+        "main-attractions-title": "מקומות שאסור לפספס",
+        "attraction-0": "לגונת איברה",
+        "attraction-1": "שבילי העץ של לגונת איברה",
+        "attraction-2": "מרכז המבקרים של אסטרוס",
+        "attraction-3": "נקודות תצפית לציפורים",
+        "attraction-4": "הכפר קולוניה קרלוס פלגריני",
+        "attraction-5": "שבילי פרשנות סביבתית",
+        "recommended-activities-title": "פעילויות מומלצות",
+        "rec-activity-0": "ספארי בסירה בלגונת איברה לצפייה ביאקארים, קפיבארות, איילי ביצות וציפורים.",
+        "rec-activity-1": "טיולים רגליים מודרכים בשבילים לצפייה בחיות היבשה.",
+        "rec-activity-2": "ספארי לילה (אופציונלי, לצפייה בחיות ליליות).",
+        "rec-activity-3": "רכיבה על סוסים בסביבה (לגילאים מתאימים).",
+        "rec-activity-4": "שיט בקאנו או קיאק (באזורים מותרים ועם מדריך).",
+        "rec-activity-5": "צפייה בציפורים.",
+        "rec-activity-6": "ליהנות מהשלווה והמגע עם הטבע.",
+        "gastronomy-title": "גסטרונומיה מומלצת",
+        "gastronomy-intro": "הגסטרונומיה באיברה מבוססת על מטבח ביתי ואזורי, עם מרכיבים טריים מהאזור. הפוסאדות מציעות בדרך כלל פנסיון מלא עם מנות טיפוסיות, ולעתים קרובות מתאימות את עצמן לצרכים תזונתיים ספציפיים אם מודיעים מראש.",
+        "restaurants-title": "מסעדות מומלצות (בדרך כלל בפוסאדות)",
+        "table-restaurant": "מסעדה",
+        "table-type": "סוג",
+        "table-gluten-free": "ללא גלוטן",
+        "table-sugar-free": "ללא סוכר",
+        "restaurant-type-0": "אוכל ביתי / אזורי",
+        "restaurant-type-1": "אוכל ביתי / אזורי",
+        "restaurant-type-2": "אוכל ביתי / אזורי",
+        "cafes-title": "קונדיטוריות ובתי קפה",
+        "table-cafe": "קונדיטוריה",
+        "cafe-type-0": "(אפשרויות מוגבלות)",
+        "cafe-type-1": "בעיקר בפוסאדות",
+        "cafe-type-2": "מינימרקטים",
+        "cafe-type-3": "להצטיידות",
+        "yes-symbol": "✔️",
+        "no-symbol": "❌",
+        "ai-menu-title": "מחולל תפריט בריא ✨",
+        "ai-menu-description": "קבלו הצעות לתפריט יומי (ארוחת בוקר, צהריים, ערב) המותאמות לדיאטות דלות פחמימות, מתאימות לסוכרתיים, ואם אפשר, ללא גלוטן, בהשראת הגסטרונומיה של אסטרוס דל איברה.",
+        "generate-menu-button": "צור תפריט",
+        "ai-loading": "מייצר תפריט...",
+        "ai-error": "שגיאה ביצירת התפריט. אנא נסו שוב מאוחר יותר.",
+        "ai-menu-prompt": "צור תוכנית תפריט יומית (ארוחת בוקר, צהריים, ערב) למשפחה המבקרת באסטרוס דל איברה, ארגנטינה. האפשרויות צריכות להיות מתאימות לסוכרתיים, דלות פחמימות, ואם אפשר, ללא גלוטן. כלול דוגמאות למנות טיפוסיות מהאזור (דגים, בשר ציד) המותאמות למגבלות תזונתיות אלו. פרמט את התשובה בפסקאות ברורות לכל ארוחה.",
+        "ai-accommodation-title": "הצעות לינה עם AI 🏨",
+        "ai-accommodation-description": "קבלו המלצות לינה באסטרוס דל איברה, תוך התחשבות באפשרויות ידידותיות למשפחות, בטוחות וממוקמות היטב.",
+        "generate-accommodation-button": "צור הצעות",
+        "ai-accommodation-prompt": "צור 3-5 הצעות לינה באסטרוס דל איברה, ארגנטינה, אידיאליות למשפחה עם 2 ילדים. קח בחשבון אפשרויות בטוחות, ממוקמות היטב ועם שירותים מתאימים למשפחות (למשל, פנסיון מלא, טיולים). כלול סוגי לינה שונים כמו פוסאדות או לודג'ים. פרמט את התשובה עם נקודות.",
+        "ai-family-tips-title": "טיפים נוספים למשפחות עם AI 👨‍👩‍👧‍👦",
+        "ai-family-tips-description": "קבלו טיפים מותאמים אישית לבילוי באסטרוס דל איברה עם המשפחה, כולל פעילויות, בטיחות ולוגיסטיקה.",
+        "generate-family-tips-button": "צור טיפים",
+        "ai-family-tips-prompt": "ספק 5 טיפים מעשיים ומותאמים אישית למשפחה עם ילדים המבקרת באסטרוס דל איברה, ארגנטינה. הטיפים צריכים לכסות היבטים כמו פעילויות לילדים, בטיחות בטבע (חרקים, חיות בר), אפשרויות תחבורה משפחתיות וכיצד להפיק את המרב מהשהייה. פרמט את התשובה עם נקודות.",
+        "ai-budget-title": "ניתוח תקציב עם AI 💰",
+        "ai-budget-description": "קבלו ניתוח ופירוט של התקציב המשוער לשהותכם באסטרוס דל איברה, עם אופטימיזציות אפשריות.",
+        "generate-budget-button": "נתח תקציב",
+        "ai-budget-prompt": "נתח את התקציב המשוער הבא למשפחה באסטרוס דל איברה (USD): לינה (לילה): 70-200+ (כולל טיולים/ארוחות), אוכל (יום): כלול בפוסאדה (בדרך כלל), תחבורה מקומית (יום): 0-10 (בתוך הכפר), פעילויות (יום): 50-100+ (לפי טיולים), כניסות: 0-10. ספק פירוט משוער ליום ולפי קטגוריה, והצע 2-3 דרכים לייעל או לחסוך בתקציב זה מבלי לוותר על החוויה המשפחתית. פרמט את התשובה בפסקאות.",
+        "accommodation-title": "לינה (דוגמאות)",
+        "accommodation-0": "פוסאדה דה לה לגונה",
+        "accommodation-1": "אירופה לודג'",
+        "accommodation-2": "בקתות ואירוח כפרי בקולוניה קרלוס פלגריני",
+        "accommodation-3": "קמפינג (לאמיצים יותר).",
+        "coordinates-title": "קואורדינטות משוערות",
+        "coordinates-text": "קולוניה קרלוס פלגריני: 28° 32' S 57° 11' O",
+        "events-agenda-title": "לוח אירועים",
+        "event-0": "**(בדקו לוח אירועים מקומי)**: הדגש הוא על הטבע וחיות הבר.",
+        "event-1": "**(בדקו לוח אירועים מקומי)**: הרצאות או סדנאות אפשריות על שימור.",
+        "download-agenda": "הורד את לוח האירועים המלא בפורמט iCal (.zip)",
+        "family-tips-title": "טיפים למשפחות",
+        "family-tip-0": "**דוחה יתושים הוא חיוני לחלוטין.** קחו כמות גדולה.",
+        "family-tip-1": "קרם הגנה, כובע ובגדים ארוכים כדי להגן מפני השמש והחרקים.",
+        "family-tip-2": "משקפת לצפייה בציפורים ובחיות בר.",
+        "family-tip-3": "הזמינו לינה וטיולים זמן רב מראש, ההיצע מוגבל.",
+        "family-tip-4": "רוב הפעילויות הן בחיק הטבע; היו מוכנים לתנאי מזג אוויר משתנים.",
+        "family-tip-5": "אידיאלי לילדים המתעניינים בטבע ובחיות.",
+        "budget-title": "תקציב משוער",
+        "budget-concept": "מושג",
+        "budget-price": "מחיר משוער (USD)",
+        "budget-concept-0": "לינה (לילה, משפחה)",
+        "budget-price-0": "70–200+ (כולל טיולים/ארוחות)",
+        "budget-concept-1": "אוכל (ליום, משפחה)",
+        "budget-price-1": "כלול בפוסאדה (בדרך כלל)",
+        "budget-concept-2": "תחבורה מקומית (ליום)",
+        "budget-price-2": "0–10 (בתוך הכפר)",
+        "budget-concept-3": "פעילויות וסיורים (ליום)",
+        "budget-price-3": "50–100+ (לפי טיולים)",
+        "budget-concept-4": "כניסות למוזיאונים/אטרקציות",
+        "budget-price-4": "0–10",
+        "cultural-tips-title": "טיפים תרבותיים",
+        "cultural-tip-0": "תרבות הגוארני והכבוד לטבע חזקים מאוד.",
+        "cultural-tip-1": "קצב החיים רגוע ובמגע עם הטבע.",
+        "cultural-tip-2": "אירוחם של המקומיים בולט.",
+        "cultural-tip-3": "לימוד כמה מילים בגוארני יכול להיות כיף לילדים.",
+        "map-title": "מפת אסטרוס דל איברה (קולוניה קרלוס פלגריני)",
         "see-bigger-map": "לצפייה במפה גדולה יותר",
         "back-link": "⬅ חזרה למפת המסלול"
       }
     };
 
-    function translatePage(language) {
-      document.body.dir = (language === 'he') ? 'rtl' : 'ltr';
-      document.getElementById('city-title').textContent = translations[language]["city-title"];
-      document.getElementById('welcome-text').textContent = translations[language]["welcome-text"];
-      document.getElementById('main-attractions-title').textContent = translations[language]["main-attractions-title"];
-      document.getElementById('attraction-0').textContent = translations[language]["attraction-0"];
-      document.getElementById('attraction-1').textContent = translations[language]["attraction-1"];
-      document.getElementById('attraction-2').textContent = translations[language]["attraction-2"];
-      document.getElementById('attraction-3').textContent = translations[language]["attraction-3"];
-      document.getElementById('restaurant-types-title').textContent = translations[language]["restaurant-types-title"];
-      document.getElementById('rest-0').textContent = translations[language]["rest-0"];
-      document.getElementById('rest-1').textContent = translations[language]["rest-1"];
-      document.getElementById('rest-2').textContent = translations[language]["rest-2"];
-      document.getElementById('rest-3').textContent = translations[language]["rest-3"];
-      document.getElementById('map-title').textContent = translations[language]["map-title"];
-      document.getElementById('see-bigger-map').textContent = translations[language]["see-bigger-map"];
-      document.getElementById('back-link').textContent = translations[language]["back-link"];
+    // Tasas de cambio (se actualizan al cargar la página)
+    let tasas = {
+      ARS: 1,
+      USD: 1000, // Valor de ejemplo, se actualizará
+      ILS: 110   // Valor de ejemplo, se actualizará
+    };
+    // Símbolos de moneda
+    const simbolos = {
+      ARS: "$",
+      USD: "US$",
+      ILS: "₪"
+    };
+
+    let idiomaActual = 'es'; // Idioma predeterminado
+    let monedaActual = 'ARS'; // Moneda predeterminada
+
+    // Función para obtener tasas de cambio reales desde ExchangeRate-API
+    function actualizarTasas(callback) {
+      fetch('https://open.er-api.com/v6/latest/USD')
+        .then(response => response.json())
+        .then(data => {
+          if (data && data.result === "success") {
+            tasas.ARS = data.rates.ARS;
+            tasas.USD = 1;
+            tasas.ILS = data.rates.ILS;
+          }
+          if (typeof callback === "function") callback();
+        })
+        .catch(() => {
+          // Si falla, sigue con los valores por defecto
+          if (typeof callback === "function") callback();
+        });
     }
+
+    function translatePage(language) {
+      idiomaActual = language; // Actualiza la variable global idiomaActual
+      document.body.dir = (language === 'he') ? 'rtl' : 'ltr';
+      document.title = translations[language]["page-title"];
+
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (translations[language][key]) { // Asegurarse de que la clave exista
+          if (key.includes('event-') || key.includes('stay-duration') || key.includes('how-to-arrive')) {
+            el.innerHTML = translations[language][key];
+          } else {
+            el.textContent = translations[language][key];
+          }
+        }
+      });
+      // Actualiza el estado activo de los botones de idioma
+      document.getElementById('btn-es').classList.toggle('active', language === 'es');
+      document.getElementById('btn-he').classList.toggle('active', language === 'he');
+      // Guarda la preferencia de idioma en localStorage
+      localStorage.setItem('idiomaPreferido', language);
+    }
+
+    function cambiarMoneda(moneda) {
+      monedaActual = moneda; // Actualiza la variable global monedaActual
+      document.getElementById('btn-ars').classList.toggle('active', moneda === 'ARS');
+      document.getElementById('btn-usd').classList.toggle('active', moneda === 'USD');
+      document.getElementById('btn-ils').classList.toggle('active', moneda === 'ILS');
+      // Guarda la preferencia de moneda en localStorage
+      localStorage.setItem('monedaPreferida', moneda);
+      // No hay tablas de precios dinámicas en esta página de ciudad, pero si se agregaran, se llamarían aquí.
+    }
+
+    // Función genérica para llamar a la API de Gemini
+    async function callGeminiAPI(promptKey, responseDivId, buttonId, loadingIndicatorId) {
+      const button = document.getElementById(buttonId);
+      const loadingIndicator = document.getElementById(loadingIndicatorId);
+      const responseDiv = document.getElementById(responseDivId);
+
+      button.disabled = true;
+      loadingIndicator.style.display = 'block';
+      responseDiv.textContent = ''; // Limpiar respuesta anterior
+
+      const currentLanguage = localStorage.getItem('idiomaPreferido') || 'es';
+      // Asegurarse de que el prompt se obtiene correctamente del diccionario
+      const promptText = translations[currentLanguage][promptKey];
+
+      if (!promptText) {
+        responseDiv.textContent = translations[currentLanguage]["ai-error"] + " (Prompt no encontrado)";
+        console.error(`Error: Prompt con clave '${promptKey}' no encontrado para el idioma '${currentLanguage}'.`);
+        button.disabled = false;
+        loadingIndicator.style.display = 'none';
+        return;
+      }
+
+      let chatHistory = [];
+      chatHistory.push({ role: "user", parts: [{ text: promptText }] });
+
+      const payload = {
+        contents: chatHistory,
+        generationConfig: {
+            responseMimeType: "text/plain"
+        }
+      };
+
+      const apiKey = ""; // La clave API se proporcionará en tiempo de ejecución por el entorno Canvas
+      const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+
+      try {
+        const response = await fetch(apiUrl, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+
+        const result = await response.json();
+
+        if (result.candidates && result.candidates.length > 0 &&
+            result.candidates[0].content && result.candidates[0].content.parts &&
+            result.candidates[0].content.parts.length > 0) {
+          const text = result.candidates[0].content.parts[0].text;
+          responseDiv.textContent = text;
+        } else {
+          responseDiv.textContent = translations[currentLanguage]["ai-error"];
+          console.error("Estructura de respuesta inesperada del LLM:", result);
+        }
+      } catch (error) {
+        responseDiv.textContent = translations[currentLanguage]["ai-error"];
+        console.error("Error al llamar a la API de Gemini:", error);
+      } finally {
+        button.disabled = false;
+        loadingIndicator.style.display = 'none';
+      }
+    }
+
+    // Inicialización de la página al cargar el DOM
+    document.addEventListener('DOMContentLoaded', function() {
+      // Carga las preferencias de idioma y moneda desde localStorage
+      const idiomaGuardado = localStorage.getItem('idiomaPreferido');
+      const monedaGuardada = localStorage.getItem('monedaPreferida');
+
+      // Aplica el idioma guardado o 'es' por defecto
+      translatePage(idiomaGuardado || 'es');
+      // Aplica la moneda guardada o 'ARS' por defecto
+      cambiarMoneda(monedaGuardada || 'ARS');
+
+      // Asocia los eventos click a los botones de IA
+      document.getElementById('generate-menu-btn').addEventListener('click', () =>
+        callGeminiAPI('ai-menu-prompt', 'ai-menu-response', 'generate-menu-btn', 'ai-menu-loading-indicator')
+      );
+      document.getElementById('generate-accommodation-btn').addEventListener('click', () =>
+        callGeminiAPI('ai-accommodation-prompt', 'ai-accommodation-response', 'generate-accommodation-btn', 'ai-accommodation-loading-indicator')
+      );
+      document.getElementById('generate-family-tips-btn').addEventListener('click', () =>
+        callGeminiAPI('ai-family-tips-prompt', 'ai-family-tips-response', 'generate-family-tips-btn', 'ai-family-tips-loading-indicator')
+      );
+      document.getElementById('generate-budget-btn').addEventListener('click', () =>
+        callGeminiAPI('ai-budget-prompt', 'ai-budget-response', 'generate-budget-btn', 'ai-budget-loading-indicator')
+      );
+    });
   </script>
 </body>
 </html>
