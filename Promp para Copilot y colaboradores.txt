@@ -16,34 +16,36 @@ Toda nueva instrucción debe agregarse en este archivo, bajo el tema correspondi
 
 ---
 
-## 2. Estructura del proyecto y carpetas
-
-```
 / (raíz del proyecto)
-├── index.html                         # Página principal del itinerario
-├── Promp para github.txt              # Archivo de reglas original (NO BORRAR)
-├── Promp-organizado-por-temas.txt     # Este archivo, versión ordenada y ampliable
+├── index.html
+├── Promp para github.txt
+├── Promp-organizado-por-temas.txt
 ├── docs/
 │   ├── imagenes/
-│   │   ├── buenosaires.jpg
-│   │   ├── rosario.jpg
-│   │   ├── bariloche.jpg
-│   │   ├── ... (más imágenes por ciudad, en minúsculas y sin espacios)
+│   │   ├── buenosaires/
+│   │   │   └── buenosaires.jpg
+│   │   ├── rosario/
+│   │   │   └── Monumento-a-la-Bandera-1024x768.jpg
+│   │   ├── bariloche/
+│   │   │   └── emilio-lujan-HhobdGoYzaA-unsplash.jpg
+│   │   └── ...
 │   └── ... (otros recursos/documentos de apoyo, PDFs, Excel, etc.)
 ├── ciudades/
 │   ├── buenosaires.html
 │   ├── rosario.html
 │   ├── bariloche.html
-│   ├── ... (todas las ciudades y mapa interactivo) ...
-├── css/   # Opcional, estilos compartidos
-├── js/    # Opcional, scripts JS compartidos
+│   └── ...
+├── css/
+│   └── main.css
+├── js/
+│   └── main.js
 ├── locales/
 │   ├── es.json
 │   └── he.json
 ├── README.md
-├── data/  # Datos estructurados (JSON, CSV)
-└── ... (otros archivos como favicon, licencia, etc.)
-```
+└── data/
+    └── ... (datos estructurados, JSON, CSV)
+
 - Todas las imágenes deben estar en `docs/imagenes/` y llamarse igual al nombre de la ciudad en minúsculas, sin espacios, con extensión `.jpg` (o `.png` si aplica).
 - Todas las páginas de ciudad y el mapa están en la carpeta `ciudades/`.
 - Archivos auxiliares/documentación en `docs/`.
