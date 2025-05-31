@@ -2,748 +2,240 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title data-i18n="page-title">Corrientes | Viaje Familiar a Argentina</title>
-  <link rel="stylesheet" href="estilos.css">
-  <style>
-    /* Estilos generales del cuerpo y barra superior */
-    body {
-      font-family: Arial, sans-serif;
-      background: #f9f9f9;
-      color: #333;
-      margin: 20px;
-      transition: direction 0.3s;
-    }
-    #language-selector {
-      position: fixed;
-      top: 20px;
-      right: 20px;
-      z-index: 1000;
-      background-color: rgba(255,255,255,0.8);
-      padding: 5px;
-      border-radius: 5px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-      display: flex; /* Para alinear los botones de idioma y moneda */
-      align-items: center;
-      gap: 10px; /* Espacio entre elementos */
-    }
-    .language-btn, .currency-btn { /* Clase unificada para botones de control */
-      font-weight: bold;
-      padding: 8px 12px;
-      margin: 0 2px;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-      background-color: #f0f0f0;
-    }
-    .language-btn.active, .currency-btn.active {
-      background: #e6eaff;
-      border-color: #6d7fc9;
-      font-weight: bold;
-    }
-    .back-link {
-      margin-left: 20px;
-      text-decoration: none;
-      font-weight: bold;
-      color: #007BFF;
-    }
-    /* Estilos para la foto de la ciudad */
-    .ciudad-foto {
-      width: 100%;
-      max-width: 700px;
-      height: auto;
-      display: block;
-      margin: 30px auto 20px auto;
-      border-radius: 14px;
-      box-shadow: 0 3px 16px rgba(0,0,0,0.15);
-    }
-    .foto-caption {
-      text-align: center;
-      color: #555;
-      font-size: 1em;
-      margin-bottom: 30px;
-    }
-    h1, h2, h3 { /* Agregado h3 para subsecciones */
-      color: #0F4761;
-    }
-    ul {
-      margin-bottom: 20px;
-      padding-left: 25px; /* Ajuste para listas */
-    }
-    ul li {
-      margin-bottom: 5px;
-    }
-    iframe {
-      border: 1px solid black;
-      width: 100%; /* Asegura que el mapa sea responsive */
-      max-width: 700px; /* Limita el ancho máximo del mapa */
-      display: block;
-      margin: 20px auto; /* Centra el mapa */
-    }
-    /* Estilos para tablas añadidas */
-    table {
-      border-collapse: collapse;
-      width: 100%;
-      max-width: 700px; /* Limita el ancho máximo de las tablas */
-      margin: 20px auto;
-      background: #f7fbff;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-      border-radius: 8px;
-      overflow: hidden;
-    }
-    th, td {
-      border: 1px solid #b3c7e6;
-      padding: 10px 15px;
-      text-align: left;
-      font-size: 16px;
-    }
-    th {
-      background: #e6f0fa;
-      font-weight: bold;
-    }
-    .rtl {
-      direction: rtl !important;
-      text-align: right !important;
-    }
-    .rtl ul {
-      padding-right: 25px;
-      padding-left: 0;
-    }
-
-    /* Estilos para las secciones de IA */
-    .ai-section {
-      background: #e6f0fa;
-      padding: 20px;
-      border-radius: 8px;
-      margin: 30px auto;
-      max-width: 700px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    }
-    .ai-section h2 {
-      color: #2176d2;
-      margin-top: 0;
-    }
-    .ai-button {
-      background-color: #4CAF50; /* Green */
-      color: white;
-      padding: 12px 20px;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      font-size: 16px;
-      transition: background-color 0.3s ease;
-      display: block;
-      margin: 15px auto;
-      max-width: 300px;
-    }
-    .ai-button:hover {
-      background-color: #45a049;
-    }
-    .ai-button:disabled {
-      background-color: #cccccc;
-      cursor: not-allowed;
-    }
-    .ai-response {
-      margin-top: 20px;
-      padding: 15px;
-      background-color: #ffffff;
-      border: 1px solid #d0e0f0;
-      border-radius: 5px;
-      white-space: pre-wrap;
-      font-size: 15px;
-      line-height: 1.6;
-      min-height: 50px;
-    }
-    .ai-loading {
-      text-align: center;
-      font-style: italic;
-      color: #666;
-      margin-top: 10px;
-    }
-  </style>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title data-key="corrientes_title">Corrientes</title>
+  <link rel="stylesheet" href="../css/main.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 </head>
 <body>
-  <div id="language-selector">
-    <span data-i18n="idioma">Idioma:</span>
-    <button onclick="translatePage('es')" class="language-btn" id="btn-es">Español</button>
-    <button onclick="translatePage('he')" class="language-btn" id="btn-he">עברית</button>
-    <span data-i18n="moneda">Moneda:</span>
-    <button id="btn-ars" onclick="cambiarMoneda('ARS')" class="currency-btn">ARS</button>
-    <button id="btn-usd" onclick="cambiarMoneda('USD')" class="currency-btn">USD</button>
-    <button id="btn-ils" onclick="cambiarMoneda('ILS')" class="currency-btn">ILS</button>
-    <a href="../index.html" class="back-link" id="back-link" data-i18n="back-link">⬅ Volver al itinerario</a>
+  <!-- Barra superior fija -->
+  <div class="top-bar">
+    <button class="btn-back" onclick="window.location.href='../index.html'">
+      <i class="fas fa-arrow-left"></i> <span data-key="volverAlItinerario">Volver al itinerario</span>
+    </button>
+    <span data-key="idioma">Idioma:</span>
+    <button class="btn-lang" data-lang="es" id="btn-es">Español</button>
+    <button class="btn-lang" data-lang="he" id="btn-he">עברית</button>
+    <span data-key="moneda">Moneda:</span>
+    <button class="btn-currency" data-currency="ARS" id="btn-ars">ARS</button>
+    <button class="btn-currency" data-currency="USD" id="btn-usd">USD</button>
+    <button class="btn-currency" data-currency="ILS" id="btn-ils">ILS</button>
+    <button class="btn-currency" data-currency="EUR" id="btn-eur">EUR</button>
   </div>
 
-  <img src="../docs/imagenes/corrientes/fachy-marin-A5xJay6N_fI-unsplash.jpg"
-       alt="Costanera de Corrientes"
-       class="ciudad-foto" id="city-photo" onerror="this.src='https://placehold.co/700x400/cccccc/333333?text=Imagen+Corrientes'">
-  <div class="foto-caption" id="foto-caption" data-i18n="foto-caption">Costanera de Corrientes al atardecer</div>
+  <div class="main-container">
+    <h1 data-key="corrientes_title">Corrientes</h1>
+    <!-- Foto de portada -->
+    <img src="../docs/imagenes/corrientes.jpg" alt="Corrientes" class="ciudad-foto">
+    <p class="foto-caption" data-key="corrientes_foto_caption">Río Paraná y Costanera de Corrientes</p>
 
-  <h1 id="city-title" data-i18n="city-title">Corrientes</h1>
-  <p id="welcome-text" data-i18n="welcome-text">Corrientes, la ciudad de las "Siete Corrientes", se ubica a orillas del río Paraná y es un centro cultural vibrante, conocido por su carnaval, chamamé y rica historia. Es una puerta de entrada a los Esteros del Iberá.</p>
+    <!-- Introducción -->
+    <section>
+      <h2 data-key="intro_title">Introducción</h2>
+      <p data-key="corrientes_intro_md">
+        Corrientes, la ciudad de las "Siete Corrientes", se ubica a orillas del río Paraná y es un centro cultural vibrante, conocido por su carnaval, chamamé y rica historia. Es una puerta de entrada a los Esteros del Iberá.
+      </p>
+    </section>
 
-  <h2 data-i18n="dates-duration-title">Fechas y duración</h2>
-  <ul>
-    <li data-i18n="stay-duration">**Estadía**: 24/10 al 27/10 (4 días) y 29/10 (1 día)</li>
-    <li data-i18n="how-to-arrive">**Cómo llegar**: Vuelo desde Iguazú / Bus de larga distancia.</li>
-  </ul>
+    <!-- Actividades recomendadas -->
+    <section>
+      <h2 data-key="actividades_title">Actividades recomendadas</h2>
+      <ul>
+        <li data-key="corrientes_act1_md">Pasear por la Costanera General San Martín (Sur y Norte), especialmente al atardecer.</li>
+        <li data-key="corrientes_act2">Disfrutar de las playas urbanas del Paraná.</li>
+        <li data-key="corrientes_act3_md">Visitar el casco histórico, sus iglesias y la Manzana Franciscana.</li>
+        <li data-key="corrientes_act4_md">Explorar el Museo Provincial de Bellas Artes "Dr. Juan Ramón Vidal" y el Museo del Carnaval.</li>
+        <li data-key="corrientes_act5_md">Excursión de día completo a los Esteros del Iberá (reservar con anticipación).</li>
+        <li data-key="corrientes_act6_new">Disfrutar de un espectáculo de chamamé (música típica).</li>
+        <li data-key="corrientes_act7_new">Explorar los mercados artesanales para comprar productos locales.</li>
+        <li data-key="corrientes_act8_new">Pesca deportiva en el río Paraná (con guías habilitados).</li>
+      </ul>
+    </section>
 
-  <h2 id="main-attractions-title" data-i18n="main-attractions-title">Lugares imperdibles</h2>
-  <ul id="main-attractions-list">
-    <li><a href="https://es.wikipedia.org/wiki/Costanera_de_Corrientes" target="_blank" id="attraction-0" data-i18n="attraction-0">Costanera General San Martín</a></li>
-    <li><a href="https://es.wikipedia.org/wiki/Puente_General_Manuel_Belgrano" target="_blank" id="attraction-1" data-i18n="attraction-1">Puente General Belgrano</a></li>
-    <li><a href="https://museos.cultura.gob.ar/museo_de_bellas_artes_dr_juan_ramon_vidal-s117" target="_blank" id="attraction-2" data-i18n="attraction-2">Museo Provincial de Bellas Artes "Dr. Juan Ramón Vidal"</a></li>
-    <li><a href="https://teatrovera.gob.ar/" target="_blank" id="attraction-3" data-i18n="attraction-3">Teatro Oficial Juan de Vera</a></li>
-    <li><a href="https://www.corrientes.gob.ar/turismo/manzana-franciscana" target="_blank" id="attraction-4" data-i18n="attraction-4">Manzana Franciscana</a></li>
-    <li><a href="https://carnaval.corrientes.gob.ar/" target="_blank" id="attraction-5" data-i18n="attraction-5">Carnaval de Corrientes</a></li>
-    <li><a href="https://es.wikipedia.org/wiki/Parque_Mitre_(Corrientes)" target="_blank" id="attraction-6" data-i18n="attraction-6">Parque Mitre</a></li>
-  </ul>
+    <!-- Gastronomía -->
+    <section>
+      <h2 data-key="gastronomia_title">Gastronomía</h2>
+      <p data-key="corrientes_gast_intro">La gastronomía correntina está fuertemente influenciada por el río, con platos a base de pescado (dorado, surubí, pacú), y la tradición guaraní (mandioca, chipá, mbejú). Hay opciones para todos los gustos.</p>
+      <ul>
+        <li data-key="corrientes_gast1">Prueba el chipá, mbejú y especialidades de pescado de río como pacú, surubí o dorado.</li>
+        <li data-key="corrientes_gast2">Opciones bajas en carbohidratos: parrillas con variedad de carnes, pescados a la plancha o al horno, y ensaladas frescas.</li>
+        <li data-key="corrientes_gast3_elmariscal">Recomendado: <a href="https://www.instagram.com/restauranteelmariscal/" target="_blank">El Mariscal</a> (pescados y opciones sin TACC).</li>
+        <li data-key="corrientes_gast4_larosita">Recomendado: La Rosita (cocina casera, con opciones sin gluten y sin azúcar).</li>
+        <li data-key="corrientes_gast5_elsolar">Recomendado: El Solar del Paraná (pescados de río y cocina regional).</li>
+      </ul>
+    </section>
 
-  <h2 data-i18n="recommended-activities-title">Actividades recomendadas</h2>
-  <ul>
-    <li data-i18n="rec-activity-0">Paseos y deportes en la Costanera.</li>
-    <li data-i18n="rec-activity-1">Visita al casco histórico y sus iglesias.</li>
-    <li data-i18n="rec-activity-2">Disfrutar de un espectáculo de chamamé (música típica).</li>
-    <li data-i18n="rec-activity-3">Explorar los mercados artesanales para comprar productos de cuero o cerámica.</li>
-    <li data-i18n="rec-activity-4">Pesca deportiva en el río Paraná (con guías habilitados).</li>
-    <li data-i18n="rec-activity-5">Visitar el Museo del Carnaval (en temporada baja).</li>
-    <li data-i18n="rec-activity-6">Excursión de día completo a los Esteros del Iberá desde Corrientes (aunque pernoctar allí es lo ideal).</li>
-  </ul>
+    <!-- Alojamiento -->
+    <section>
+      <h2 data-key="alojamiento_title">Alojamiento recomendado</h2>
+      <ul>
+        <li data-key="corrientes_aloja1">Hotel La Alondra (boutique, familiar, pileta)</li>
+        <li data-key="corrientes_aloja2">Donsuites Apart Hotel (ideal con niños, cerca de la costanera)</li>
+        <li data-key="corrientes_aloja3_md">Hotel de Turismo Corrientes</li>
+        <li data-key="corrientes_aloja4_md">Hostal del Río</li>
+        <li data-key="corrientes_aloja5_md">Apartamentos en el centro o cerca de la Costanera</li>
+        <li data-key="corrientes_aloja6_md">Opciones en Airbnb en barrios residenciales</li>
+      </ul>
+    </section>
 
-  <h2 data-i18n="gastronomy-title">Gastronomía destacada</h2>
-  <p data-i18n="gastronomy-intro">La gastronomía correntina está fuertemente influenciada por el río, con platos a base de pescado (dorado, surubí, pacú), y la tradición guaraní (mandioca, chipá). Hay opciones para todos los gustos, incluyendo parrillas y cocina internacional.</p>
-  <h3 data-i18n="restaurants-title">Restaurantes recomendados</h3>
-  <table>
-    <thead>
-      <tr>
-        <th data-i18n="table-restaurant">Restaurante</th>
-        <th data-i18n="table-type">Tipo</th>
-        <th data-i18n="table-gluten-free">Sin Gluten</th>
-        <th data-i18n="table-sugar-free">Sin Azúcar</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a href="https://www.tripadvisor.com.ar/Restaurants-g312794-Corrientes_Province_of_Corrientes_Litoral.html" target="_blank">La Parrilla del Tío</a></td>
-        <td data-i18n="restaurant-type-0">Parrilla / Carnes</td>
-        <td data-i18n="yes-symbol">✔️</td>
-        <td data-i18n="no-symbol">❌</td>
-      </tr>
-      <tr>
-        <td><a href="https://www.tripadvisor.com.ar/Restaurants-g312794-Corrientes_Province_of_Corrientes_Litoral.html" target="_blank">Pizzería La Previa</a></td>
-        <td data-i18n="restaurant-type-1">Pizzería</td>
-        <td data-i18n="no-symbol">❌</td>
-        <td data-i18n="no-symbol">❌</td>
-      </tr>
-      <tr>
-        <td><a href="https://www.tripadvisor.com.ar/Restaurants-g312794-Corrientes_Province_of_Corrientes_Litoral.html" target="_blank">El Solar del Paraná</a></td>
-        <td data-i18n="restaurant-type-2">Pescados de río / Regional</td>
-        <td data-i18n="yes-symbol">✔️</td>
-        <td data-i18n="no-symbol">❌</td>
-      </tr>
-      <tr>
-        <td><a href="https://www.tripadvisor.com.ar/Restaurants-g312794-Corrientes_Province_of_Corrientes_Litoral.html" target="_blank">La Rosita</a></td>
-        <td data-i18n="restaurant-type-3">Cocina casera</td>
-        <td data-i18n="yes-symbol">✔️</td>
-        <td data-i18n="yes-symbol">✔️</td>
-      </tr>
-    </tbody>
-  </table>
-  <h3 data-i18n="cafes-title">Confiterías y cafés</h3>
-  <table>
-    <thead>
-      <tr>
-        <th data-i18n="table-cafe">Confitería</th>
-        <th data-i18n="table-type">Tipo</th>
-        <th data-i18n="table-gluten-free">Sin Gluten</th>
-        <th data-i18n="table-sugar-free">Sin Azúcar</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a href="https://www.tripadvisor.com.ar/Restaurants-g312794-Corrientes_Province_of_Corrientes_Litoral.html" target="_blank">La Biela (local)</a></td>
-        <td data-i18n="cafe-type-0">Cafetería / Repostería</td>
-        <td data-i18n="no-symbol">❌</td>
-        <td data-i18n="no-symbol">❌</td>
-      </tr>
-      <tr>
-        <td><a href="https://www.cafemartinez.com/" target="_blank">Café Martínez</a></td>
-        <td data-i18n="cafe-type-1">Cafetería (cadena)</td>
-        <td data-i18n="yes-symbol">✔️</td>
-        <td data-i18n="yes-symbol">✔️</td>
-      </tr>
-      <tr>
-        <td data-i18n="cafe-type-2">Panaderías locales</td>
-        <td data-i18n="cafe-type-3">Chipá, productos regionales</td>
-        <td data-i18n="yes-symbol">✔️</td>
-        <td data-i18n="yes-symbol">✔️</td>
-      </tr>
-    </tbody>
-  </table>
+    <!-- Agenda de eventos -->
+    <section>
+      <h2 data-key="agenda_title">Agenda de eventos</h2>
+      <ul>
+        <li data-key="corrientes_event1_md">Carnavales Correntinos (generalmente enero-febrero, consultar fechas exactas).</li>
+        <li data-key="corrientes_event2_md">Festival Nacional del Chamamé (generalmente en enero).</li>
+        <li data-key="corrientes_event3">Feria de Artesanías Regionales (consultar fechas).</li>
+        <li data-key="corrientes_event4_ical">
+            <span data-key="descargar_agenda_ical">Descargar agenda completa en formato iCal (.zip):</span>
+            <a href="../docs/agenda/ariflier1970@gmail.com.ical.zip" download data-key="agenda_ical_link_text">ariflier1970@gmail.com.ical.zip</a>
+        </li>
+      </ul>
+    </section>
 
-  <div class="ai-section">
-    <h2 data-i18n="ai-menu-title">Generador de Menú Saludable ✨</h2>
-    <p data-i18n="ai-menu-description">Obtén sugerencias de menú para un día completo (desayuno, almuerzo, cena) adaptadas para dietas bajas en carbohidratos, aptas para diabéticos y, si es posible, sin gluten, inspiradas en la gastronomía de Corrientes.</p>
-    <button class="ai-button" id="generate-menu-btn" data-i18n="generate-menu-button">Generar Menú</button>
-    <div class="ai-loading" id="ai-menu-loading-indicator" style="display:none;" data-i18n="ai-loading">Generando menú...</div>
-    <div class="ai-response" id="ai-menu-response"></div>
+    <!-- Atracciones -->
+    <section>
+      <h2 data-key="atracciones_title">Atracciones</h2>
+      <ul>
+        <li data-key="corrientes_atr1">Costanera General San Martín (Sur y Norte)</li>
+        <li data-key="corrientes_atr2">Catedral de Corrientes</li>
+        <li data-key="corrientes_atr3">Parque Mitre</li>
+        <li data-key="corrientes_atr4">Puente General Belgrano (vistas panorámicas)</li>
+        <li data-key="corrientes_atr5">Playas Arazaty y Malvinas</li>
+        <li data-key="corrientes_atr6_new">Museo Provincial de Bellas Artes "Dr. Juan Ramón Vidal"</li>
+        <li data-key="corrientes_atr7_new">Teatro Oficial Juan de Vera</li>
+        <li data-key="corrientes_atr8_new">Manzana Franciscana (complejo histórico-religioso)</li>
+      </ul>
+    </section>
+
+    <!-- Presupuesto orientativo -->
+    <section>
+      <h2 data-key="presupuesto_title">Presupuesto orientativo</h2>
+      <ul>
+        <li data-key="corrientes_pres1">Alojamiento: ARS 40.000 - 80.000 por noche (familia)</li>
+        <li data-key="corrientes_pres2">Comidas: ARS 8.000 - 20.000 por persona por comida principal</li>
+        <li data-key="corrientes_pres3">Excursión a Iberá (desde Corrientes): ARS 60.000 - 90.000 por persona (varía según operador y servicios)</li>
+        <li data-key="corrientes_pres4">Transporte urbano (colectivo): ARS 800 - 1000 por tramo (aproximado)</li>
+      </ul>
+    </section>
+
+    <!-- Consejos para familias -->
+    <section>
+      <h2 data-key="consejos_title">Consejos para familias</h2>
+      <ul>
+        <li data-key="corrientes_tip1_md">Llevar repelente de insectos y protector solar siempre.</li>
+        <li data-key="corrientes_tip2_md">Usar ropa ligera, sombrero, especialmente en verano.</li>
+        <li data-key="corrientes_tip3_md">Reservar excursiones (especialmente a Iberá) con anticipación.</li>
+        <li data-key="corrientes_tip4_md">Consultar la agenda de eventos local para aprovechar actividades culturales y festivales.</li>
+        <li data-key="corrientes_tip5_md">En verano, evitar la exposición solar directa en horarios de máxima radiación (mediodía).</li>
+        <li data-key="corrientes_tip6_new">Disfruten de la Costanera al atardecer, es un paseo muy popular y agradable.</li>
+        <li data-key="corrientes_tip7_new">Consideren un paseo en lancha para ver la ciudad desde el río.</li>
+      </ul>
+    </section>
+
+    <!-- Tips culturales -->
+    <section>
+      <h2 data-key="cultural_tips_title">Tips culturales</h2>
+      <ul>
+        <li data-key="corrientes_cult1_chamame">El chamamé es el ritmo musical y danza por excelencia de la provincia; intenten escuchar o ver un espectáculo.</li>
+        <li data-key="corrientes_cult2_guarani">El guaraní es un idioma cooficial y su influencia se siente en el dialecto local y nombres de lugares.</li>
+        <li data-key="corrientes_cult3_virgen">La devoción a la Virgen de Itatí es muy fuerte en la región.</li>
+        <li data-key="corrientes_cult4_terere">El tereré (mate frío con hierbas yuyos) es una bebida muy popular, especialmente en verano. ¡Anímense a probarlo!</li>
+      </ul>
+    </section>
+
+    <!-- Mapa de Corrientes -->
+    <section>
+        <h2 data-key="map_title">Mapa de Corrientes</h2>
+        <p><a href="https://www.openstreetmap.org/#map=13/-27.468/-58.835" target="_blank" data-key="corrientes_map_link_text">Ver mapa de Corrientes en OpenStreetMap</a></p>
+    </section>
+
+    <!-- Lista de equipaje (checklist y borrar) -->
+    <div class="custom-section" id="packing-section">
+      <h2><i class="fas fa-suitcase-rolling" style="color:#f9a825;"></i> <span data-key="packing_title">Lista de equipaje</span></h2>
+      <div class="packing-controls">
+        <button class="custom-btn" id="packing-add" data-key="packing_add">Agregar</button>
+        <select class="custom-select" id="packing-type">
+          <option value="esencial" data-key="packing_essential">Esenciales</option>
+          <option value="opcional" data-key="packing_optional">Opcionales</option>
+        </select>
+        <input class="custom-input" id="packing-input" placeholder="¿Qué más llevás?" data-key="packing_placeholder">
+      </div>
+      <div class="packing-lists">
+        <h4 data-key="packing_essential">Esenciales</h4>
+        <ul id="packing-list-esencial"></ul>
+        <h4 data-key="packing_optional">Opcionales</h4>
+        <ul id="packing-list-opcional"></ul>
+      </div>
+    </div>
   </div>
 
-  <div class="ai-section">
-    <h2 data-i18n="ai-accommodation-title">Sugerencias de Alojamiento con IA 🏨</h2>
-    <p data-i18n="ai-accommodation-description">Obtén recomendaciones de alojamiento en Corrientes, considerando opciones familiares, seguras y bien ubicadas.</p>
-    <button class="ai-button" id="generate-accommodation-btn" data-i18n="generate-accommodation-button">Generar Sugerencias</button>
-    <div class="ai-loading" id="ai-accommodation-loading-indicator" style="display:none;" data-i18n="ai-loading">Generando sugerencias...</div>
-    <div class="ai-response" id="ai-accommodation-response"></div>
-  </div>
+  <footer class="footer">
+    <p>© 2025 Viaje Familiar Argentina</p>
+  </footer>
 
-  <div class="ai-section">
-    <h2 data-i18n="ai-family-tips-title">Consejos Adicionales para Familias con IA 👨‍👩‍👧‍👦</h2>
-    <p data-i18n="ai-family-tips-description">Recibe consejos personalizados para disfrutar Corrientes en familia, incluyendo actividades, seguridad y logística.</p>
-    <button class="ai-button" id="generate-family-tips-btn" data-i18n="generate-family-tips-button">Generar Consejos</button>
-    <div class="ai-loading" id="ai-family-tips-loading-indicator" style="display:none;" data-i18n="ai-loading">Generando consejos...</div>
-    <div class="ai-response" id="ai-family-tips-response"></div>
-  </div>
-
-  <div class="ai-section">
-    <h2 data-i18n="ai-budget-title">Análisis de Presupuesto con IA 💰</h2>
-    <p data-i18n="ai-budget-description">Obtén un análisis y desglose del presupuesto orientativo para tu estadía en Corrientes, con posibles optimizaciones.</p>
-    <button class="ai-button" id="generate-budget-btn" data-i18n="generate-budget-button">Analizar Presupuesto</button>
-    <div class="ai-loading" id="ai-budget-loading-indicator" style="display:none;" data-i18n="ai-loading">Analizando presupuesto...</div>
-    <div class="ai-response" id="ai-budget-response"></div>
-  </div>
-
-  <h2 data-i18n="accommodation-title">Alojamiento (ejemplos)</h2>
-  <ul>
-    <li data-i18n="accommodation-0">Hotel de Turismo Corrientes</li>
-    <li data-i18n="accommodation-1">Hostal del Río</li>
-    <li data-i18n="accommodation-2">Apartamentos en el centro o cerca de la Costanera</li>
-    <li data-i18n="accommodation-3">Airbnb en barrios residenciales.</li>
-  </ul>
-
-  <h2 data-i18n="coordinates-title">Coordenadas aproximadas</h2>
-  <p data-i18n="coordinates-text">27° 28' S 58° 49' O</p>
-
-  <h2 data-i18n="events-agenda-title">Agenda de eventos</h2>
-  <ul>
-    <li data-i18n="event-0">**(Consultar agenda local)**: Festival Nacional del Chamamé (Enero).</li>
-    <li data-i18n="event-1">**(Consultar agenda local)**: Carnavales correntinos (Enero/Febrero).</li>
-    <li><a href="../docs/agenda/ariflier1970@gmail.com.ical.zip" target="_blank" data-i18n="download-agenda">Descargar agenda completa en formato iCal (.zip)</a></li>
-  </ul>
-
-  <h2 data-i18n="family-tips-title">Consejos para familias</h2>
-  <ul>
-    <li data-i18n="family-tip-0">La ciudad es cálida y húmeda; lleven ropa ligera, sombrero y protector solar.</li>
-    <li data-i18n="family-tip-1">Es fundamental llevar repelente de insectos, especialmente si planean estar cerca del río.</li>
-    <li data-i18n="family-tip-2">Disfruten de la Costanera al atardecer, es un paseo muy popular.</li>
-    <li data-i18n="family-tip-3">Los correntinos son muy amables y hospitalarios.</li>
-    <li data-i18n="family-tip-4">Consideren un viaje en lancha para ver la ciudad desde el río.</li>
-  </ul>
-
-  <h2 data-i18n="budget-title">Presupuesto orientativo</h2>
-  <table>
-    <thead>
-      <tr>
-        <th data-i18n="budget-concept">Concepto</th>
-        <th data-i18n="budget-price">Precio estimado (USD)</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td data-i18n="budget-concept-0">Alojamiento (noche, familia)</td>
-        <td data-i18n="budget-price-0">40–100</td>
-      </tr>
-      <tr>
-        <td data-i18n="budget-concept-1">Comida (por día, familia)</td>
-        <td data-i18n="budget-price-1">25–60</td>
-      </tr>
-      <tr>
-        <td data-i18n="budget-concept-2">Transporte local (por día)</td>
-        <td data-i18n="budget-price-2">3–10</td>
-      </tr>
-      <tr>
-        <td data-i18n="budget-concept-3">Actividades y tours (por día)</td>
-        <td data-i18n="budget-price-3">10–40</td>
-      </tr>
-      <tr>
-        <td data-i18n="budget-concept-4">Entradas museos/atracciones</td>
-        <td data-i18n="budget-price-4">0–10</td>
-      </tr>
-    </tbody>
-  </table>
-
-  <h2 data-i18n="cultural-tips-title">Tips culturales</h2>
-  <ul>
-    <li data-i18n="cultural-tip-0">El chamamé es el ritmo musical y danza por excelencia de la provincia.</li>
-    <li data-i18n="cultural-tip-1">El guaraní es un idioma cooficial y su influencia se siente en el dialecto local.</li>
-    <li data-i18n="cultural-tip-2">La devoción a la Virgen de Itatí es muy fuerte.</li>
-    <li data-i18n="cultural-tip-3">El tereré (mate frío) es una bebida muy popular, especialmente en verano.</li>
-  </ul>
-
-  <h2 id="map-title" data-i18n="map-title">Mapa de Corrientes</h2>
-  <iframe src="https://www.openstreetmap.org/export/embed.html?bbox=-59.0%2C-27.5%2C-58.7%2C-27.3&amp;layer=mapnik" width="100%" height="350"></iframe>
-  <br><small><a href="https://www.openstreetmap.org/#map=13/-27.468/-58.835" target="_blank" id="see-bigger-map" data-i18n="see-bigger-map">Ver mapa más grande</a></small>
-
+  <script src="../js/main.js"></script>
   <script>
-    // Diccionario de traducciones español ↔ hebreo
-    const translations = {
-      es: {
-        "page-title": "Corrientes | Viaje Familiar a Argentina",
-        "idioma": "Idioma:",
-        "moneda": "Moneda:",
-        "city-title": "Corrientes",
-        "welcome-text": "Corrientes, la ciudad de las \"Siete Corrientes\", se ubica a orillas del río Paraná y es un centro cultural vibrante, conocido por su carnaval, chamamé y rica historia. Es una puerta de entrada a los Esteros del Iberá.",
-        "foto-caption": "Costanera de Corrientes al atardecer",
-        "dates-duration-title": "Fechas y duración",
-        "stay-duration": "**Estadía**: 24/10 al 27/10 (4 días) y 29/10 (1 día)",
-        "how-to-arrive": "**Cómo llegar**: Vuelo desde Iguazú / Bus de larga distancia.",
-        "main-attractions-title": "Lugares imperdibles",
-        "attraction-0": "Costanera General San Martín",
-        "attraction-1": "Puente General Belgrano",
-        "attraction-2": "Museo Provincial de Bellas Artes \"Dr. Juan Ramón Vidal\"",
-        "attraction-3": "Teatro Oficial Juan de Vera",
-        "attraction-4": "Manzana Franciscana",
-        "attraction-5": "Carnaval de Corrientes",
-        "attraction-6": "Parque Mitre",
-        "recommended-activities-title": "Actividades recomendadas",
-        "rec-activity-0": "Paseos y deportes en la Costanera.",
-        "rec-activity-1": "Visita al casco histórico y sus iglesias.",
-        "rec-activity-2": "Disfrutar de un espectáculo de chamamé (música típica).",
-        "rec-activity-3": "Explorar los mercados artesanales para comprar productos de cuero o cerámica.",
-        "rec-activity-4": "Pesca deportiva en el río Paraná (con guías habilitados).",
-        "rec-activity-5": "Visitar el Museo del Carnaval (en temporada baja).",
-        "rec-activity-6": "Excursión de día completo a los Esteros del Iberá desde Corrientes (aunque pernoctar allí es lo ideal).",
-        "gastronomy-title": "Gastronomía destacada",
-        "gastronomy-intro": "La gastronomía correntina está fuertemente influenciada por el río, con platos a base de pescado (dorado, surubí, pacú), y la tradición guaraní (mandioca, chipá). Hay opciones para todos los gustos, incluyendo parrillas y cocina internacional.",
-        "restaurants-title": "Restaurantes recomendados",
-        "table-restaurant": "Restaurante",
-        "table-type": "Tipo",
-        "table-gluten-free": "Sin Gluten",
-        "table-sugar-free": "Sin Azúcar",
-        "restaurant-type-0": "Parrilla / Carnes",
-        "restaurant-type-1": "Pizzería",
-        "restaurant-type-2": "Pescados de río / Regional",
-        "restaurant-type-3": "Cocina casera",
-        "cafes-title": "Confiterías y cafés",
-        "table-cafe": "Confitería",
-        "cafe-type-0": "Cafetería / Repostería",
-        "cafe-type-1": "Cafetería (cadena)",
-        "cafe-type-2": "Panaderías locales",
-        "cafe-type-3": "Chipá, productos regionales",
-        "yes-symbol": "✔️",
-        "no-symbol": "❌",
-        "ai-menu-title": "Generador de Menú Saludable ✨",
-        "ai-menu-description": "Obtén sugerencias de menú para un día completo (desayuno, almuerzo, cena) adaptadas para dietas bajas en carbohidratos, aptas para diabéticos y, si es posible, sin gluten, inspiradas en la gastronomía de Corrientes.",
-        "generate-menu-button": "Generar Menú",
-        "ai-loading": "Generando menú...",
-        "ai-error": "Error al generar el menú. Por favor, inténtalo de nuevo más tarde.",
-        "ai-menu-prompt": "Genera un plan de menú de un día (desayuno, almuerzo, cena) para una familia que visita Corrientes, Argentina. Las opciones deben ser aptas para diabéticos, bajas en carbohidratos y, si es posible, sin gluten. Incluye ejemplos de platos típicos correntinos (pescados de río, chipá) adaptados a estas restricciones dietéticas. Formatea la respuesta en párrafos claros para cada comida.",
-        "ai-accommodation-title": "Sugerencias de Alojamiento con IA 🏨",
-        "ai-accommodation-description": "Obtén recomendaciones de alojamiento en Corrientes, considerando opciones familiares, seguras y bien ubicadas.",
-        "generate-accommodation-button": "Generar Sugerencias",
-        "ai-accommodation-prompt": "Genera 3-5 sugerencias de alojamiento en Corrientes, Argentina, ideales para una familia con 2 hijos. Considera opciones seguras, bien ubicadas y con servicios adecuados para familias. Incluye diferentes tipos de alojamiento como hoteles, hostales o apartamentos. Formatea la respuesta con viñetas.",
-        "ai-family-tips-title": "Consejos Adicionales para Familias con IA 👨‍👩‍👧‍👦",
-        "ai-family-tips-description": "Recibe consejos personalizados para disfrutar Corrientes en familia, incluyendo actividades, seguridad y logística.",
-        "generate-family-tips-button": "Generar Consejos",
-        "ai-family-tips-prompt": "Proporciona 5 consejos prácticos y personalizados para una familia con niños que visita Corrientes, Argentina. Los consejos deben cubrir aspectos como actividades para niños, seguridad en la ciudad, opciones de transporte familiar, y cómo aprovechar al máximo la estadía. Formatea la respuesta con viñetas.",
-        "ai-budget-title": "Análisis de Presupuesto con IA 💰",
-        "ai-budget-description": "Obtén un análisis y desglose del presupuesto orientativo para tu estadía en Corrientes, con posibles optimizaciones.",
-        "generate-budget-button": "Analizar Presupuesto",
-        "ai-budget-prompt": "Analiza el siguiente presupuesto orientativo para una familia en Corrientes (USD): Alojamiento (noche): 40-100, Comida (día): 25-60, Transporte local (día): 3-10, Actividades (día): 10-40, Entradas: 0-10. Proporciona un desglose estimado por día y por categoría, y sugiere 2-3 formas de optimizar o ahorrar en este presupuesto sin sacrificar la experiencia familiar. Formatea la respuesta en párrafos.",
-        "accommodation-title": "Alojamiento (ejemplos)",
-        "accommodation-0": "Hotel de Turismo Corrientes",
-        "accommodation-1": "Hostal del Río",
-        "accommodation-2": "Apartamentos en el centro o cerca de la Costanera",
-        "accommodation-3": "Airbnb en barrios residenciales.",
-        "coordinates-title": "Coordenadas aproximadas",
-        "coordinates-text": "27° 28' S 58° 49' O",
-        "events-agenda-title": "Agenda de eventos",
-        "event-0": "**(Consultar agenda local)**: Festival Nacional del Chamamé (Enero).",
-        "event-1": "**(Consultar agenda local)**: Carnavales correntinos (Enero/Febrero).",
-        "download-agenda": "Descargar agenda completa en formato iCal (.zip)",
-        "family-tips-title": "Consejos para familias",
-        "family-tip-0": "La ciudad es cálida y húmeda; lleven ropa ligera, sombrero y protector solar.",
-        "family-tip-1": "Es fundamental llevar repelente de insectos, especialmente si planean estar cerca del río.",
-        "family-tip-2": "Disfruten de la Costanera al atardecer, es un paseo muy popular.",
-        "family-tip-3": "Los correntinos son muy amables y hospitalarios.",
-        "family-tip-4": "Consideren un viaje en lancha para ver la ciudad desde el río.",
-        "budget-title": "Presupuesto orientativo",
-        "budget-concept": "Concepto",
-        "budget-price": "Precio estimado (USD)",
-        "budget-concept-0": "Alojamiento (noche, familia)",
-        "budget-price-0": "40–100",
-        "budget-concept-1": "Comida (por día, familia)",
-        "budget-price-1": "25–60",
-        "budget-concept-2": "Transporte local (por día)",
-        "budget-price-2": "3–10",
-        "budget-concept-3": "Actividades y tours (por día)",
-        "budget-price-3": "10–40",
-        "budget-concept-4": "Entradas museos/atracciones",
-        "budget-price-4": "0–10",
-        "cultural-tips-title": "Tips culturales",
-        "cultural-tip-0": "El chamamé es el ritmo musical y danza por excelencia de la provincia.",
-        "cultural-tip-1": "El guaraní es un idioma cooficial y su influencia se siente en el dialecto local.",
-        "cultural-tip-2": "La devoción a la Virgen de Itatí es muy fuerte.",
-        "cultural-tip-3": "El tereré (mate frío) es una bebida muy popular, especialmente en verano.",
-        "map-title": "Mapa de Corrientes",
-        "see-bigger-map": "Ver mapa más grande",
-        "back-link": "⬅ Volver al itinerario"
-      },
-      he: {
-        "page-title": "קוריינטס | טיול משפחתי בארגנטינה",
-        "idioma": "שפה:",
-        "moneda": "מטבע:",
-        "city-title": "קוריינטס",
-        "welcome-text": "קוריינטס, עיר \"שבעת הזרמים\", ממוקמת על גדות נהר הפאראנה והיא מרכז תרבותי תוסס, ידועה בקרנבל שלה, בצ'אמאמה ובהיסטוריה העשירה שלה. היא שער הכניסה לאסטרוס דל איברה.",
-        "foto-caption": "טיילת קוריינטס בשקיעה",
-        "dates-duration-title": "תאריכים ומשך שהייה",
-        "stay-duration": "**שהייה**: 24/10 עד 27/10 (4 ימים) ו-29/10 (יום אחד)",
-        "how-to-arrive": "**איך מגיעים**: טיסה מאיגואסו / אוטובוס למרחקים ארוכים.",
-        "main-attractions-title": "מקומות שאסור לפספס",
-        "attraction-0": "טיילת סן מרטין הכללית",
-        "attraction-1": "גשר גנרל בלגרנו",
-        "attraction-2": "המוזיאון הפרובינציאלי לאמנויות יפות \"ד\"ר חואן רמון וידאל\"",
-        "attraction-3": "תיאטרון חואן דה ורה הרשמי",
-        "attraction-4": "הרובע הפרנציסקני",
-        "attraction-5": "קרנבל קוריינטס",
-        "attraction-6": "פארק מיטרה",
-        "recommended-activities-title": "פעילויות מומלצות",
-        "rec-activity-0": "טיולים וספורט בטיילת.",
-        "rec-activity-1": "ביקור בעיר העתיקה ובכנסיותיה.",
-        "rec-activity-2": "ליהנות ממופע צ'אמאמה (מוזיקה טיפוסית).",
-        "rec-activity-3": "לחקור את שווקי האומנים לרכישת מוצרי עור או קרמיקה.",
-        "rec-activity-4": "דיג ספורטיבי בנהר הפאראנה (עם מדריכים מורשים).",
-        "rec-activity-5": "לבקר במוזיאון הקרנבל (בעונה שקטה).",
-        "rec-activity-6": "טיול יום מלא לאסטרוס דל איברה מקוריינטס (אם כי לינה שם היא אידיאלית).",
-        "gastronomy-title": "גסטרונומיה מומלצת",
-        "gastronomy-intro": "הגסטרונומיה של קוריינטס מושפעת מאוד מהנהר, עם מנות מבוססות דגים (דוראדו, סורובי, פאקו), וממסורת הגוארני (מנדיוקה, צ'יפה). ישנן אפשרויות לכל הטעמים, כולל מסעדות בשרים ומטבח בינלאומי.",
-        "restaurants-title": "מסעדות מומלצות",
-        "table-restaurant": "מסעדה",
-        "table-type": "סוג",
-        "table-gluten-free": "ללא גלוטן",
-        "table-sugar-free": "ללא סוכר",
-        "restaurant-type-0": "מסעדת בשרים / בשרים",
-        "restaurant-type-1": "פיצריה",
-        "restaurant-type-2": "דגי נהר / אזורי",
-        "restaurant-type-3": "מטבח ביתי",
-        "cafes-title": "קונדיטוריות ובתי קפה",
-        "table-cafe": "קונדיטוריה",
-        "cafe-type-0": "בית קפה / מאפים",
-        "cafe-type-1": "בית קפה (רשת)",
-        "cafe-type-2": "מאפיות מקומיות",
-        "cafe-type-3": "צ'יפה, מוצרים אזוריים",
-        "yes-symbol": "✔️",
-        "no-symbol": "❌",
-        "ai-menu-title": "מחולל תפריט בריא ✨",
-        "ai-menu-description": "קבלו הצעות לתפריט יומי (ארוחת בוקר, צהריים, ערב) המותאמות לדיאטות דלות פחמימות, מתאימות לסוכרתיים, ואם אפשר, ללא גלוטן, בהשראת הגסטרונומיה של קוריינטס.",
-        "generate-menu-button": "צור תפריט",
-        "ai-loading": "מייצר תפריט...",
-        "ai-error": "שגיאה ביצירת התפריט. אנא נסו שוב מאוחר יותר.",
-        "ai-menu-prompt": "צור תוכנית תפריט יומית (ארוחת בוקר, צהריים, ערב) למשפחה המבקרת בקוריינטס, ארגנטינה. האפשרויות צריכות להיות מתאימות לסוכרתיים, דלות פחmiנmiות, ואם אפשר, ללא גלוטן. כלול דוגמאות למנות טיפוסיות מקוריינטס (דגי נהר, צ'יפה) המותאמות למגבלות תזונתיות אלו. פרמט את התשובה בפסקאות ברורות לכל ארוחה.",
-        "ai-accommodation-title": "הצעות לינה עם AI 🏨",
-        "ai-accommodation-description": "קבלו המלצות לינה בקוריינטס, תוך התחשבות באפשרויות ידידותיות למשפחות, בטוחות וממוקמות היטב.",
-        "generate-accommodation-button": "צור הצעות",
-        "ai-accommodation-prompt": "צור 3-5 הצעות לינה בקוריינטס, ארגנטינה, אידיאליות למשפחה עם 2 ילדים. קח בחשבון אפשרויות בטוחות, ממוקמות היטב ועם שירותים מתאימים למשפחות. כלול סוגי לינה שונים כמו בתי מלון, הוסטלים או דירות. פרמט את התשובה עם נקודות.",
-        "ai-family-tips-title": "טיפים נוספים למשפחות עם AI 👨‍👩‍👧‍👦",
-        "ai-family-tips-description": "קבלו טיפים מותאמים אישית לבילוי בקוריינטס עם המשפחה, כולל פעילויות, בטיחות ולוגיסטיקה.",
-        "generate-family-tips-button": "צור טיפים",
-        "ai-family-tips-prompt": "ספק 5 טיפים מעשיים ומותאמים אישית למשפחה עם ילדים המבקרת בקוריינטס, ארגנטינה. הטיפים צריכים לכסות היבטים כמו פעילויות לילדים, בטיחות בעיר, אפשרויות תחבורה משפחתיות וכיצד להפיק את המרב מהשהייה. פרמט את התשובה עם נקודות.",
-        "ai-budget-title": "ניתוח תקציב עם AI 💰",
-        "ai-budget-description": "קבלו ניתוח ופירוט של התקציב המשוער לשהותכם בקוריינטס, עם אופטימיזציות אפשריות.",
-        "generate-budget-button": "נתח תקציב",
-        "ai-budget-prompt": "נתח את התקציב המשוער הבא למשפחה בקוריינטס (USD): לינה (לילה): 40-100, אוכל (יום): 25-60, תחבורה מקומית (יום): 3-10, פעividades (día): 10-40, Entradas: 0-10. Proporciona un desglose estimado por día y por categoría, y sugiere 2-3 formas de optimizar o ahorrar en este presupuesto sin sacrificar la experiencia familiar. Formatea la respuesta en párrafos.",
-        "accommodation-title": "לינה (דוגמאות)",
-        "accommodation-0": "מלון תיירות קוריינטס",
-        "accommodation-1": "הוסטל דל ריו",
-        "accommodation-2": "דירות במרכז או ליד הטיילת",
-        "accommodation-3": "Airbnb בשכונות מגורים.",
-        "coordinates-title": "קואורדינטות משוערות",
-        "coordinates-text": "27° 28' S 58° 49' O",
-        "events-agenda-title": "לוח אירועים",
-        "event-0": "**(בדקו לוח אירועים מקומי)**: פסטיבל הצ'אמאמה הלאומי (ינואר).",
-        "event-1": "**(בדקו לוח אירועים מקומי)**: קרנבלים קוריינטים (ינואר/פברואר).",
-        "download-agenda": "הורד את לוח האירועים המלא בפורמט iCal (.zip)",
-        "family-tips-title": "טיפים למשפחות",
-        "family-tip-0": "העיר חמה ולחה; קחו בגדים קלים, כובע וקרם הגנה.",
-        "family-tip-1": "חיוני לקחת דוחה יתושים, במיוחד אם אתם מתכננים להיות ליד הנהר.",
-        "family-tip-2": "תהנו מהטיילת בשקיעה, זהו טיול פופולרי מאוד.",
-        "family-tip-3": "תושבי קוריינטס מאוד אדיבים ומארחים.",
-        "family-tip-4": "שקלו שיט בסירה כדי לראות את העיר מהנהר.",
-        "budget-title": "תקציב משוער",
-        "budget-concept": "מושג",
-        "budget-price": "מחיר משוער (USD)",
-        "budget-concept-0": "לינה (לילה, משפחה)",
-        "budget-price-0": "40–100",
-        "budget-concept-1": "אוכל (ליום, משפחה)",
-        "budget-price-1": "25–60",
-        "budget-concept-2": "תחבורה מקומית (ליום)",
-        "budget-price-2": "3–10",
-        "budget-concept-3": "פעילויות וסיורים (ליום)",
-        "budget-price-3": "10–40",
-        "budget-concept-4": "כניסות למוזיאונים/אטרקציות",
-        "budget-price-4": "0–10",
-        "cultural-tips-title": "טיפים תרבותיים",
-        "cultural-tip-0": "הצ'אמאמה הוא קצב המוזיקה והריקוד המצוין של המחוז.",
-        "cultural-tip-1": "הגוארני היא שפה רשמית והשפעתה ניכרת בניב המקומי.",
-        "cultural-tip-2": "המסירות למריה מאיטטי חזקה מאוד.",
-        "cultural-tip-3": "הטררה (מאטה קר) הוא משקה פופולרי מאוד, במיוחד בקיץ.",
-        "map-title": "מפת קוריינטס",
-        "see-bigger-map": "לצפייה במפה גדולה יותר",
-        "back-link": "⬅ חזרה למפת המסלול"
-      }
-    };
-
-    // Tasas de cambio (se actualizan al cargar la página)
-    let tasas = {
-      ARS: 1,
-      USD: 1000, // Valor de ejemplo, se actualizará
-      ILS: 110   // Valor de ejemplo, se actualizará
-    };
-    // Símbolos de moneda
-    const simbolos = {
-      ARS: "$",
-      USD: "US$",
-      ILS: "₪"
-    };
-
-    let idiomaActual = 'es'; // Idioma predeterminado
-    let monedaActual = 'ARS'; // Moneda predeterminada
-
-    // Función para obtener tasas de cambio reales desde ExchangeRate-API
-    function actualizarTasas(callback) {
-      fetch('https://open.er-api.com/v6/latest/USD')
-        .then(response => response.json())
-        .then(data => {
-          if (data && data.result === "success") {
-            tasas.ARS = data.rates.ARS;
-            tasas.USD = 1;
-            tasas.ILS = data.rates.ILS;
-          }
-          if (typeof callback === "function") callback();
-        })
-        .catch(() => {
-          // Si falla, sigue con los valores por defecto
-          if (typeof callback === "function") callback();
+    // --- PACKING LIST: checklist y borrar ---
+    function renderPackingListCiudad() {
+      const listEsencial = document.getElementById('packing-list-esencial');
+      const listOpcional = document.getElementById('packing-list-opcional');
+      listEsencial.innerHTML = '';
+      listOpcional.innerHTML = '';
+      const packingList = JSON.parse(localStorage.getItem('packingListCorrientes')) || {esencial:[], opcional:[]};
+      ['esencial', 'opcional'].forEach(type => {
+        packingList[type].forEach((item, idx) => {
+          const li = document.createElement('li');
+          li.innerHTML = `
+            <input type="checkbox" class="packing-check" ${item.checked ? 'checked' : ''} data-type="${type}" data-idx="${idx}">
+            <span class="packing-item" style="text-decoration:${item.checked?'line-through':'none'}">${item.text}</span>
+            <button class="packing-delete" data-type="${type}" data-idx="${idx}" title="Borrar"><i class="fas fa-trash"></i></button>
+          `;
+          if(type === 'esencial') listEsencial.appendChild(li);
+          else listOpcional.appendChild(li);
         });
-    }
-
-    function translatePage(language) {
-      idiomaActual = language; // Actualiza la variable global idiomaActual
-      document.body.dir = (language === 'he') ? 'rtl' : 'ltr';
-      document.title = translations[language]["page-title"];
-
-      document.querySelectorAll('[data-i18n]').forEach(el => {
-        const key = el.getAttribute('data-i18n');
-        if (translations[language][key]) { // Asegurarse de que la clave exista
-          if (key.includes('event-') || key.includes('stay-duration') || key.includes('how-to-arrive')) {
-            el.innerHTML = translations[language][key];
-          } else {
-            el.textContent = translations[language][key];
-          }
-        }
       });
-      // Actualiza el estado activo de los botones de idioma
-      document.getElementById('btn-es').classList.toggle('active', language === 'es');
-      document.getElementById('btn-he').classList.toggle('active', language === 'he');
-      // Guarda la preferencia de idioma en localStorage
-      localStorage.setItem('idiomaPreferido', language);
-    }
-
-    function cambiarMoneda(moneda) {
-      monedaActual = moneda; // Actualiza la variable global monedaActual
-      document.getElementById('btn-ars').classList.toggle('active', moneda === 'ARS');
-      document.getElementById('btn-usd').classList.toggle('active', moneda === 'USD');
-      document.getElementById('btn-ils').classList.toggle('active', moneda === 'ILS');
-      // Guarda la preferencia de moneda en localStorage
-      localStorage.setItem('monedaPreferida', moneda);
-      // No hay tablas de precios dinámicas en esta página de ciudad, pero si se agregaran, se llamarían aquí.
-    }
-
-    // Función genérica para llamar a la API de Gemini
-    async function callGeminiAPI(promptKey, responseDivId, buttonId, loadingIndicatorId) {
-      const button = document.getElementById(buttonId);
-      const loadingIndicator = document.getElementById(loadingIndicatorId);
-      const responseDiv = document.getElementById(responseDivId);
-
-      button.disabled = true;
-      loadingIndicator.style.display = 'block';
-      responseDiv.textContent = ''; // Limpiar respuesta anterior
-
-      const currentLanguage = localStorage.getItem('idiomaPreferido') || 'es';
-      // Asegurarse de que el prompt se obtiene correctamente del diccionario
-      const promptText = translations[currentLanguage][promptKey];
-
-      if (!promptText) {
-        responseDiv.textContent = translations[currentLanguage]["ai-error"] + " (Prompt no encontrado)";
-        console.error(`Error: Prompt con clave '${promptKey}' no encontrado para el idioma '${currentLanguage}'.`);
-        button.disabled = false;
-        loadingIndicator.style.display = 'none';
-        return;
-      }
-
-      let chatHistory = [];
-      chatHistory.push({ role: "user", parts: [{ text: promptText }] });
-
-      const payload = {
-        contents: chatHistory,
-        generationConfig: {
-            responseMimeType: "text/plain"
-        }
-      };
-
-      const apiKey = ""; // La clave API se proporcionará en tiempo de ejecución por el entorno Canvas
-      const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
-
-      try {
-        const response = await fetch(apiUrl, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(payload)
+      // Eventos de check
+      document.querySelectorAll('.packing-check').forEach(chk => {
+        chk.addEventListener('change', function() {
+          const type = this.dataset.type, idx = this.dataset.idx;
+          const packingList = JSON.parse(localStorage.getItem('packingListCorrientes')) || {esencial:[], opcional:[]};
+          packingList[type][idx].checked = this.checked;
+          localStorage.setItem('packingListCorrientes', JSON.stringify(packingList));
+          renderPackingListCiudad();
         });
-
-        const result = await response.json();
-
-        if (result.candidates && result.candidates.length > 0 &&
-            result.candidates[0].content && result.candidates[0].content.parts &&
-            result.candidates[0].content.parts.length > 0) {
-          const text = result.candidates[0].content.parts[0].text;
-          responseDiv.textContent = text;
-        } else {
-          responseDiv.textContent = translations[currentLanguage]["ai-error"];
-          console.error("Estructura de respuesta inesperada del LLM:", result);
-        }
-      } catch (error) {
-        responseDiv.textContent = translations[currentLanguage]["ai-error"];
-        console.error("Error al llamar a la API de Gemini:", error);
-      } finally {
-        button.disabled = false;
-        loadingIndicator.style.display = 'none';
-      }
+      });
+      // Eventos de borrar
+      document.querySelectorAll('.packing-delete').forEach(btn => {
+        btn.addEventListener('click', function() {
+          const type = this.dataset.type, idx = this.dataset.idx;
+          const packingList = JSON.parse(localStorage.getItem('packingListCorrientes')) || {esencial:[], opcional:[]};
+          packingList[type].splice(idx,1);
+          localStorage.setItem('packingListCorrientes', JSON.stringify(packingList));
+          renderPackingListCiudad();
+        });
+      });
     }
+    renderPackingListCiudad();
 
-    // Inicialización de la página al cargar el DOM
-    document.addEventListener('DOMContentLoaded', function() {
-      // Carga las preferencias de idioma y moneda desde localStorage
-      const idiomaGuardado = localStorage.getItem('idiomaPreferido');
-      const monedaGuardada = localStorage.getItem('monedaPreferida');
+    // Agregar ítem al presionar Enter
+    document.getElementById('packing-input').addEventListener('keypress', function(e) {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        document.getElementById('packing-add').click();
+      }
+    });
 
-      // Aplica el idioma guardado o 'es' por defecto
-      translatePage(idiomaGuardado || 'es');
-      // Aplica la moneda guardada o 'ARS' por defecto
-      cambiarMoneda(monedaGuardada || 'ARS');
-
-      // Asocia los eventos click a los botones de IA
-      document.getElementById('generate-menu-btn').addEventListener('click', () =>
-        callGeminiAPI('ai-menu-prompt', 'ai-menu-response', 'generate-menu-btn', 'ai-menu-loading-indicator')
-      );
-      document.getElementById('generate-accommodation-btn').addEventListener('click', () =>
-        callGeminiAPI('ai-accommodation-prompt', 'ai-accommodation-response', 'generate-accommodation-btn', 'ai-accommodation-loading-indicator')
-      );
-      document.getElementById('generate-family-tips-btn').addEventListener('click', () =>
-        callGeminiAPI('ai-family-tips-prompt', 'ai-family-tips-response', 'generate-family-tips-btn', 'ai-family-tips-loading-indicator')
-      );
-      document.getElementById('generate-budget-btn').addEventListener('click', () =>
-        callGeminiAPI('ai-budget-prompt', 'ai-budget-response', 'generate-budget-btn', 'ai-budget-loading-indicator')
-      );
+    document.getElementById('packing-add').addEventListener('click', () => {
+      const type = document.getElementById('packing-type').value;
+      const input = document.getElementById('packing-input');
+      const value = input.value.trim();
+      if(value) {
+        const packingList = JSON.parse(localStorage.getItem('packingListCorrientes')) || {esencial:[], opcional:[]};
+        packingList[type].push({text: value, checked: false});
+        localStorage.setItem('packingListCorrientes', JSON.stringify(packingList));
+        renderPackingListCiudad();
+        input.value = '';
+      }
     });
   </script>
 </body>
