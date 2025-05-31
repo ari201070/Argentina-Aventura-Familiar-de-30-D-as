@@ -2,431 +2,187 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Itinerario Familiar por Argentina</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <style>
-    /* Estilos generales del cuerpo y barra superior */
-    body {
-      font-family: Arial, sans-serif;
-      background: #f7f7f7;
-      margin: 0;
-      padding: 0 0 40px 0;
-    }
-    .top-bar {
-      display: flex;
-      justify-content: flex-end;
-      align-items: center;
-      gap: 18px;
-      padding: 16px 24px 0 24px;
-      background: #f7f7f7;
-      position: sticky;
-      top: 0;
-      z-index: 100;
-    }
-    .top-bar span {
-      font-size: 15px;
-      color: #222;
-    }
-    .top-bar button {
-      padding: 4px 12px;
-      margin-left: 2px;
-      border: 1px solid #bbb;
-      background: #fff;
-      border-radius: 4px;
-      cursor: pointer;
-      font-size: 15px;
-    }
-    .top-bar button.active {
-      background: #e6eaff;
-      border-color: #6d7fc9;
-      font-weight: bold;
-    }
-
-    /* Estilos del contenido principal */
-    main {
-      max-width: 1100px;
-      margin: 0 auto;
-      background: #fff;
-      border-radius: 8px;
-      padding: 30px 28px 24px 28px;
-      box-shadow: 0 2px 8px #0001;
-      margin-top: 18px;
-    }
-    h1 { margin-top: 0; }
-
-    /* Estilos del menú de ciudades */
-    ul#menu-ciudades {
-      margin: 0 0 18px 0;
-      padding: 0 0 0 18px;
-      font-size: 18px;
-    }
-    ul#menu-ciudades li {
-      margin-bottom: 3px;
-    }
-    ul#menu-ciudades a {
-      text-decoration: none;
-      color: #2553a2;
-      transition: color 0.2s;
-    }
-    ul#menu-ciudades a:hover {
-      color: #3f7edb;
-      text-decoration: underline;
-    }
-
-    /* Estilos de la tabla de transporte */
-    table {
-      border-collapse: collapse;
-      width: 100%;
-      margin-top: 18px;
-      background: #f7fbff;
-    }
-    th, td {
-      border: 1px solid #b3c7e6;
-      padding: 8px 10px;
-      text-align: left;
-      font-size: 16px;
-    }
-    th {
-      background: #e6f0fa;
-      font-weight: bold;
-    }
-
-    /* Estilos de la atribución de la API */
-    .attribution {
-      font-size:12px;
-      color:#888;
-      text-align: right;
-      margin-top: 16px;
-    }
-
-    /* Estilos de la sección de atracciones de Corrientes */
-    .corrientes-atracciones {
-      margin-top: 32px;
-      background: #f2f7fa;
-      padding: 18px 16px;
-      border-radius: 6px;
-      max-width: 600px;
-    }
-    .corrientes-atracciones h3 {
-      margin-top: 0;
-      margin-bottom: 8px;
-      color: #2176d2;
-    }
-    .corrientes-atracciones ul {
-      padding-left: 20px;
-      margin: 0;
-    }
-    .corrientes-atracciones a {
-      color: #2176d2;
-      text-decoration: none;
-    }
-    .corrientes-atracciones a:hover {
-      text-decoration: underline;
-    }
-
-    /* Media queries para responsividad */
-    @media (max-width: 800px) {
-      main { padding: 12px 2vw; }
-      .top-bar { padding: 10px 2vw 0 2vw; }
-      th, td { font-size: 14px; }
-      ul#menu-ciudades { font-size: 16px; }
-    }
-  </style>
+  <title data-key="tituloPrincipal">Itinerario Familiar por Argentina</title>
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.css" />
 </head>
 <body>
+  <!-- Barra superior: selector de idioma y moneda -->
   <div class="top-bar">
-    <span data-i18n="idioma">Idioma:</span>
-    <button id="btn-es" onclick="cambiarIdioma('es')">Español</button>
-    <button id="btn-he" onclick="cambiarIdioma('he')">עברית</button>
-    <span data-i18n="moneda">Moneda:</span>
-    <button id="btn-ars" onclick="cambiarMoneda('ARS')">ARS</button>
-    <button id="btn-usd" onclick="cambiarMoneda('USD')">USD</button>
-    <button id="btn-ils" onclick="cambiarMoneda('ILS')">ILS</button>
+    <span data-key="idioma">Idioma:</span>
+    <button class="btn-lang" data-lang="es" id="btn-es">Español</button>
+    <button class="btn-lang" data-lang="he" id="btn-he">עברית</button>
+    <span data-key="moneda">Moneda:</span>
+    <button class="btn-currency" data-currency="ARS" id="btn-ars">ARS</button>
+    <button class="btn-currency" data-currency="USD" id="btn-usd">USD</button>
+    <button class="btn-currency" data-currency="ILS" id="btn-ils">ILS</button>
+    <button class="btn-currency" data-currency="EUR" id="btn-eur">EUR</button>
   </div>
 
-  <main>
-    <h1 data-i18n="titulo">Itinerario Familiar por Argentina</h1>
-    <p data-i18n="bienvenida">¡Bienvenidos! Haz clic en cada ciudad para ver información, mapas y recomendaciones.</p>
+  <div class="main-container">
+    <h1 data-key="tituloPrincipal">Itinerario Familiar por Argentina</h1>
+    <p data-key="bienvenidaPrincipal">¡Bienvenidos! Haz clic en cada ciudad para ver información, mapas y recomendaciones.</p>
 
-    <h2 data-i18n="ciudades">Ciudades y Destinos</h2>
+    <!-- Tarjetas de ciudades -->
+    <div class="cards-container">
+      <div class="card card-buenosaires">
+        <div class="card-content">
+          <h3 data-key="buenosaires_title">Buenos Aires</h3>
+          <button class="btn-visit" data-page="ciudades/buenosaires.html" data-key="explore_btn">Explorar más detalles</button>
+        </div>
+      </div>
+      <div class="card card-rosario">
+        <div class="card-content">
+          <h3 data-key="rosario_title">Rosario</h3>
+          <button class="btn-visit" data-page="ciudades/rosario.html" data-key="explore_btn">Explorar más detalles</button>
+        </div>
+      </div>
+      <div class="card card-bariloche">
+        <div class="card-content">
+          <h3 data-key="bariloche_title">Bariloche</h3>
+          <button class="btn-visit" data-page="ciudades/bariloche.html" data-key="explore_btn">Explorar más detalles</button>
+        </div>
+      </div>
+      <div class="card card-mendoza">
+        <div class="card-content">
+          <h3 data-key="mendoza_title">Mendoza</h3>
+          <button class="btn-visit" data-page="ciudades/mendoza.html" data-key="explore_btn">Explorar más detalles</button>
+        </div>
+      </div>
+      <div class="card card-malargue">
+        <div class="card-content">
+          <h3 data-key="malargue_title">Malargüe</h3>
+          <button class="btn-visit" data-page="ciudades/malargue.html" data-key="explore_btn">Explorar más detalles</button>
+        </div>
+      </div>
+      <div class="card card-jujuy">
+        <div class="card-content">
+          <h3 data-key="jujuy_title">Jujuy</h3>
+          <button class="btn-visit" data-page="ciudades/jujuy.html" data-key="explore_btn">Explorar más detalles</button>
+        </div>
+      </div>
+      <div class="card card-iguazu">
+        <div class="card-content">
+          <h3 data-key="iguazu_title">Iguazú</h3>
+          <button class="btn-visit" data-page="ciudades/iguazu.html" data-key="explore_btn">Explorar más detalles</button>
+        </div>
+      </div>
+      <div class="card card-corrientes">
+        <div class="card-content">
+          <h3 data-key="corrientes_title">Corrientes</h3>
+          <button class="btn-visit" data-page="ciudades/corrientes.html" data-key="explore_btn">Explorar más detalles</button>
+        </div>
+      </div>
+      <div class="card card-ibera">
+        <div class="card-content">
+          <h3 data-key="ibera_title">Iberá</h3>
+          <button class="btn-visit" data-page="ciudades/ibera.html" data-key="explore_btn">Explorar más detalles</button>
+        </div>
+      </div>
+    </div>
 
-    <ul id="menu-ciudades"></ul>
-
-    <h2 data-i18n="transporte">Transporte entre ciudades</h2>
-
-    <table>
+    <!-- Tabla de transporte entre ciudades -->
+    <h2 data-key="transporte">Transporte entre ciudades</h2>
+    <table class="table-transporte" id="tabla-transporte">
       <thead>
         <tr>
-          <th data-i18n="desde">Desde</th>
-          <th data-i18n="hasta">Hasta</th>
-          <th data-i18n="medio">Medio</th>
-          <th data-i18n="tiempo">Tiempo</th>
-          <th data-i18n="precio">Precio aprox.</th>
-          <th data-i18n="compania">Compañía</th>
+          <th data-key="desde">Desde</th>
+          <th data-key="hasta">Hasta</th>
+          <th data-key="medio">Medio</th>
+          <th data-key="tiempo">Tiempo</th>
+          <th data-key="precio">Precio aprox.</th>
+          <th data-key="compania">Compañía</th>
         </tr>
       </thead>
-      <tbody id="tabla-transporte"></tbody>
+      <tbody>
+        <!-- Se rellena por JS -->
+      </tbody>
     </table>
 
-    <div class="corrientes-atracciones" id="corrientes-atracciones" style="display:none;">
-      <h3>Atracciones principales</h3>
-      <ul>
-        <li>
-          <a href="https://corrientes.tur.ar/producto/esterosdelibera/" target="_blank">
-            Descubrí CORRIENTES
-          </a>
-        </li>
-      </ul>
+    <!-- Mapa interactivo -->
+    <h2 data-key="mapaInteractivoTitulo">Mapa Interactivo del Viaje Familiar</h2>
+    <p data-key="mapaInteractivoBienvenida">Recorre el itinerario familiar por Argentina. Haz clic en cada ciudad para detalles.</p>
+    <div id="map" style="height: 400px; border-radius: 12px; margin-bottom: 30px;"></div>
+
+    <!-- Lista de equipaje -->
+    <div class="custom-section" id="packing-section">
+      <h2><i class="fas fa-suitcase-rolling" style="color:#f9a825;"></i> <span data-key="packing_title">Lista de equipaje</span></h2>
+      <div class="packing-controls">
+        <button class="custom-btn" id="packing-add" data-key="packing_add">Agregar</button>
+        <select class="custom-select" id="packing-type">
+          <option value="esencial" data-key="packing_essential">Esenciales</option>
+          <option value="opcional" data-key="packing_optional">Opcionales</option>
+        </select>
+        <input class="custom-input" id="packing-input" placeholder="¿Qué más llevás?" data-key="packing_placeholder">
+      </div>
+      <div class="packing-lists">
+        <h4 data-key="packing_essential">Esenciales</h4>
+        <ul id="packing-list-esencial"></ul>
+        <h4 data-key="packing_optional">Opcionales</h4>
+        <ul id="packing-list-opcional"></ul>
+      </div>
     </div>
 
-    <div class="attribution">
-      Powered by <a href="https://www.exchangerate-api.com" target="_blank">ExchangeRate-API.com</a>
+    <!-- Consulta a IA -->
+    <div class="custom-section" id="ia-section">
+      <h2><i class="fas fa-robot" style="color:#7c6ae5;"></i> <span data-key="iaTitulo">Consulta a IA</span></h2>
+      <textarea id="iaQuestion" placeholder="Haz tu pregunta sobre el viaje..." data-key="iaPlaceholder"></textarea>
+      <button id="iaSubmit" data-key="consultarBtn">Consultar</button>
+      <div id="iaResponse" style="margin-top: 10px;"></div>
     </div>
-  </main>
 
+    <!-- Conversor de moneda moderno -->
+    <div class="custom-section" id="currency-section">
+      <h2><i class="fas fa-coins" style="color:#7c6ae5;"></i> <span data-key="conversorTitulo">Conversor de moneda</span></h2>
+      <form id="currencyForm">
+        <input type="number" step="0.01" min="0" id="amount" placeholder="Monto" required>
+        <select id="fromCurrency">
+          <option value="ARS">ARS</option>
+          <option value="USD">USD</option>
+          <option value="EUR">EUR</option>
+          <option value="ILS">ILS</option>
+        </select>
+        <span>→</span>
+        <select id="toCurrency">
+          <option value="ARS">ARS</option>
+          <option value="USD">USD</option>
+          <option value="EUR">EUR</option>
+          <option value="ILS">ILS</option>
+        </select>
+        <button type="submit" data-key="convertirBtn">Convertir</button>
+      </form>
+      <div id="result" style="margin-top: 10px; font-weight: bold;"></div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <p>© 2025 Viaje Familiar Argentina</p>
+  </footer>
+
+  <script src="js/main.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js"></script>
   <script>
-    // Diccionario de traducción para español y hebreo
-    const traducciones = {
-      es: {
-        idioma: "Idioma:",
-        moneda: "Moneda:",
-        titulo: "Itinerario Familiar por Argentina",
-        bienvenida: "¡Bienvenidos! Haz clic en cada ciudad para ver información, mapas y recomendaciones.",
-        ciudades: "Ciudades y Destinos",
-        transporte: "Transporte entre ciudades",
-        desde: "Desde",
-        hasta: "Hasta",
-        medio: "Medio",
-        tiempo: "Tiempo",
-        precio: "Precio aprox.",
-        compania: "Compañía",
-        volver: "Volver a la página principal",
-        menu: [
-          { archivo: "buenosaires.html", nombre: "Buenos Aires" },
-          { archivo: "rosario.html", nombre: "Rosario" },
-          { archivo: "bariloche.html", nombre: "Bariloche" },
-          { archivo: "mendoza.html", nombre: "Mendoza" },
-          { archivo: "malargue.html", nombre: "Malargüe" },
-          { archivo: "jujuy.html", nombre: "Jujuy" },
-          { archivo: "iguazu.html", nombre: "Iguazú" },
-          { archivo: "corrientes.html", nombre: "Corrientes" },
-          { archivo: "ibera.html", nombre: "Iberá" },
-          { archivo: "mapa.html", nombre: "Mapa Interactivo" }
-        ],
-        tabla: [
-          ["Buenos Aires", "Rosario", "Bus", "4 h", 20000, '<a href="https://busplus.com.ar/" target="_blank">BusPlus</a>'],
-          ["Rosario", "Mendoza", "Bus", "13 h", 50000, '<a href="https://www.andesmar.com/" target="_blank">Andesmar</a>'],
-          ["Mendoza", "Malargüe", "Bus", "6 h", 18000, '<a href="https://www.catainternacional.com/" target="_blank">CATA</a>'],
-          ["Malargüe", "Jujuy", "Vuelo + Bus", "10 h", 110000, '<a href="https://www.centraldepasajes.com.ar/cdp/pasajes-micro/mendoza/san-salvador-de-jujuy" target="_blank">Pasajes de micro baratos</a>'],
-          ["Jujuy", "Iguazú", "Vuelo", "2 h", 85000, '<a href="https://www.aerolineas.com.ar/" target="_blank">Aerolineas Argentinas</a>'],
-          ["Iguazú", "Corrientes", "Bus", "9 h", 40000, '<a href="https://www.crucerodelnorte.com.ar/" target="_blank">Crucero del Norte</a>'],
-          ["Corrientes", "Esteros del Iberá", "Remis/Transfer", "4 h", 60000, '<a href="https://corrientes.tur.ar/producto/esterosdelibera/" target="_blank">Esteros del Iberá</a>']
-        ]
-      },
-      he: {
-        idioma: "שפה:",
-        moneda: "מטבע:",
-        titulo: "מסלול משפחתי בארגנטינה",
-        bienvenida: "ברוכים הבאים! לחצו על כל עיר למידע, מפות והמלצות.",
-        ciudades: "ערים ויעדים",
-        transporte: "תחבורה בין ערים",
-        desde: "מוצא",
-        hasta: "יעד",
-        medio: "אמצעי",
-        tiempo: "משך",
-        precio: "מחיר משוער",
-        compania: "חברה",
-        volver: "חזרה לעמוד הראשי",
-        menu: [
-          { archivo: "buenosaires.html", nombre: "בואנוס איירס" },
-          { archivo: "rosario.html", nombre: "רוסאריו" },
-          { archivo: "bariloche.html", nombre: "ברילוצ'ה" },
-          { archivo: "mendoza.html", nombre: "מנדוסה" },
-          { archivo: "malargue.html", nombre: "מלארגואה" },
-          { archivo: "jujuy.html", nombre: "חוחוי" },
-          { archivo: "iguazu.html", nombre: "איגואסו" },
-          { archivo: "corrientes.html", nombre: "קוריינטס" },
-          { archivo: "ibera.html", nombre: "איברה" },
-          { archivo: "mapa.html", nombre: "מפת המסלול" }
-        ],
-        tabla: [
-          ["בואנוס איירס", "רוסאריו", "אוטובוס", "4 ש׳", 20000, '<a href="https://busplus.com.ar/" target="_blank">BusPlus</a>'],
-          ["רוסאריו", "מנדוסה", "אוטובוס", "13 ש׳", 50000, '<a href="https://www.andesmar.com/" target="_blank">Andesmar</a>'],
-          ["מנדוסה", "מלארגואה", "אוטובוס", "6 ש׳", 18000, '<a href="https://www.catainternacional.com/" target="_blank">CATA</a>'],
-          ["מלארגואה", "חוחוי", "טיסה + אוטובוס", "10 ש׳", 110000, '<a href="https://www.centraldepasajes.com.ar/cdp/pasajes-micro/mendoza/san-salvador-de-jujuy" target="_blank">Pasajes de micro baratos</a>'],
-          ["חוחוי", "איגואסו", "טיסה", "2 ש׳", 85000, '<a href="https://www.aerolineas.com.ar/" target="_blank">Aerolineas Argentinas</a>'],
-          ["איגואסו", "קוריינטס", "אוטובוס", "9 ש׳", 40000, '<a href="https://www.crucerodelnorte.com.ar/" target="_blank">Crucero del Norte</a>'],
-          ["קוריינטס", "אסטרוס דה איברה", "רמיס/הסעה", "4 ש׳", 60000, '<a href="https://corrientes.tur.ar/producto/esterosdelibera/" target="_blank">Esteros del Iberá</a>']
-        ]
-      }
-    };
-
-    // Tasas de cambio iniciales (se actualizan al cargar la página)
-    let tasas = {
-      ARS: 1,
-      USD: 1000, // Valor de ejemplo, se actualizará
-      ILS: 110   // Valor de ejemplo, se actualizará
-    };
-    // Símbolos de moneda
-    const simbolos = {
-      ARS: "$",
-      USD: "US$",
-      ILS: "₪"
-    };
-
-    let idiomaActual = 'es'; // Idioma predeterminado
-    let monedaActual = 'ARS'; // Moneda predeterminada
-
-    // Función para obtener tasas de cambio reales desde ExchangeRate-API
-    function actualizarTasas(callback) {
-      // Usamos open.er-api.com para obtener tasas de cambio, ya que Polygon.io requiere API Key y exchangerate.host tiene límites.
-      fetch('https://open.er-api.com/v6/latest/USD')
-        .then(response => response.json())
-        .then(data => {
-          // Si la API responde con éxito, actualizamos las tasas
-          if (data && data.result === "success") {
-            tasas.ARS = data.rates.ARS;
-            tasas.USD = 1; // La base es USD
-            tasas.ILS = data.rates.ILS;
-          }
-          // Ejecutamos el callback una vez que las tasas se hayan actualizado (o si falló la carga)
-          if (typeof callback === "function") callback();
-        })
-        .catch(error => {
-          // En caso de error (ej. sin conexión), usamos los valores por defecto
-          console.error("Error al obtener tasas de cambio:", error);
-          if (typeof callback === "function") callback();
-        });
-    }
-
-    // Función para cambiar el idioma de la página
-    function cambiarIdioma(idioma) {
-      idiomaActual = idioma;
-      // Actualiza todos los elementos con el atributo data-i18n
-      document.querySelectorAll('[data-i18n]').forEach(el => {
-        const key = el.getAttribute('data-i18n');
-        el.textContent = traducciones[idioma][key];
-      });
-      renderMenu(); // Vuelve a renderizar el menú con el nuevo idioma
-      renderTabla(); // Vuelve a renderizar la tabla con el nuevo idioma
-      mostrarAtraccionesCorrientes(); // Asegura que la sección de Corrientes se actualice
-      // Ajusta la dirección del texto para hebreo (RTL) o español (LTR)
-      document.body.dir = (idioma === 'he') ? 'rtl' : 'ltr';
-      // Actualiza el estado activo de los botones de idioma
-      document.getElementById('btn-es').classList.toggle('active', idioma === 'es');
-      document.getElementById('btn-he').classList.toggle('active', idioma === 'he');
-      // Guarda la preferencia de idioma en localStorage
-      localStorage.setItem('idiomaPreferido', idioma);
-    }
-
-    // Función para cambiar la moneda de visualización
-    function cambiarMoneda(moneda) {
-      monedaActual = moneda;
-      // Actualiza el estado activo de los botones de moneda
-      document.getElementById('btn-ars').classList.toggle('active', moneda === 'ARS');
-      document.getElementById('btn-usd').classList.toggle('active', moneda === 'USD');
-      document.getElementById('btn-ils').classList.toggle('active', moneda === 'ILS');
-      renderTabla(); // Vuelve a renderizar la tabla con la nueva moneda
-      // Guarda la preferencia de moneda en localStorage
-      localStorage.setItem('monedaPreferida', moneda);
-    }
-
-    // Función para renderizar el menú de ciudades dinámicamente
-    function renderMenu() {
-      const menu = document.getElementById('menu-ciudades');
-      menu.innerHTML = ''; // Limpia el menú existente
-      const menuData = traducciones[idiomaActual].menu; // Obtiene los datos del menú para el idioma actual
-      const isMapa = window.location.pathname.includes('mapa.html'); // Verifica si la página actual es el mapa
-
-      // Agrega cada ciudad al menú
-      menuData.forEach((ciudad) => {
-        const li = document.createElement('li');
-        // Los enlaces apuntan a la carpeta 'ciudades'
-        li.innerHTML = `<a href="ciudades/${ciudad.archivo}">${ciudad.nombre}</a>`;
-        menu.appendChild(li);
-      });
-
-      // Si estamos en la página del mapa, agrega el botón "Volver a la página principal"
-      if (isMapa) {
-        const li = document.createElement('li');
-        // El enlace para volver apunta a la raíz (index.html)
-        li.innerHTML = `<a href="../index.html">${traducciones[idiomaActual].volver}</a>`;
-        menu.appendChild(li);
-      }
-      // Ajusta la alineación y dirección del texto del menú según el idioma
-      menu.style.textAlign = (idiomaActual === 'he') ? 'right' : 'left';
-      menu.style.direction = (idiomaActual === 'he') ? 'rtl' : 'ltr';
-    }
-
-    // Función para renderizar la tabla de transporte dinámicamente
-    function renderTabla() {
-      const tbody = document.getElementById('tabla-transporte');
-      tbody.innerHTML = ''; // Limpia la tabla existente
-      traducciones[idiomaActual].tabla.forEach(fila => {
-        const tr = document.createElement('tr');
-        fila.forEach((celda, j) => {
-          const td = document.createElement('td');
-          // Columna de precio (índice 4 en el array de la tabla)
-          if (j === 4) {
-            let valorARS = Number(celda); // El valor original siempre está en ARS
-            let simbolo = simbolos[monedaActual]; // Obtiene el símbolo de la moneda actual
-            let valorConvertido = valorARS; // Valor por defecto en ARS
-
-            // Realiza la conversión según la moneda seleccionada
-            if (monedaActual === 'USD') {
-              valorConvertido = (valorARS / tasas.ARS).toFixed(2);
-            } else if (monedaActual === 'ILS') {
-              // Conversión ARS -> USD -> ILS
-              valorConvertido = (valorARS / tasas.ARS * tasas.ILS).toFixed(2);
-            }
-            td.textContent = `${simbolo} ${valorConvertido}`; // Muestra el valor convertido con su símbolo
-          }
-          // Columna "Compañía" (índice 5) mantiene el HTML original con el enlace
-          else if (j === 5) {
-            td.innerHTML = celda;
-          }
-          // Otras columnas simplemente muestran el texto
-          else {
-            td.textContent = celda;
-          }
-          tr.appendChild(td);
-        });
-        tbody.appendChild(tr);
-      });
-    }
-
-    // Función para mostrar/ocultar la sección de atracciones de Corrientes
-    function mostrarAtraccionesCorrientes() {
-      const corrientesAtraccionesDiv = document.getElementById("corrientes-atracciones");
-      // Verifica si la URL actual termina en "corrientes.html" (ignorando mayúsculas/minúsculas y subdirectorios)
-      let currentPage = window.location.pathname.toLowerCase();
-      let corrientesPage = "corrientes.html";
-
-      if (
-        currentPage.endsWith("/" + corrientesPage) ||
-        currentPage.endsWith("/ciudades/" + corrientesPage)
-      ) {
-        corrientesAtraccionesDiv.style.display = "block"; // Muestra la sección
-      } else {
-        corrientesAtraccionesDiv.style.display = "none"; // Oculta la sección
-      }
-    }
-
-    // Inicialización de la página al cargar el DOM
-    document.addEventListener('DOMContentLoaded', function() {
-      // Carga las preferencias de idioma y moneda desde localStorage
-      const idiomaGuardado = localStorage.getItem('idiomaPreferido');
-      const monedaGuardada = localStorage.getItem('monedaPreferida');
-
-      // Actualiza las tasas de cambio y luego renderiza la página
-      actualizarTasas(function() {
-        // Aplica el idioma guardado o 'es' por defecto
-        cambiarIdioma(idiomaGuardado || 'es');
-        // Aplica la moneda guardada o 'ARS' por defecto
-        cambiarMoneda(monedaGuardada || 'ARS');
-        // Llama a esta función para asegurar que la sección de Corrientes se muestre correctamente al cargar
-        mostrarAtraccionesCorrientes();
-      });
+    // Mapa interactivo
+    const map = L.map('map').setView([-34.5, -63], 4.2);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; OpenStreetMap contributors'
+    }).addTo(map);
+    const destinations = [
+      { name: 'Buenos Aires', coords: [-34.6118, -58.3960] },
+      { name: 'Rosario', coords: [-32.9442, -60.6505] },
+      { name: 'Bariloche', coords: [-41.1335, -71.3103] },
+      { name: 'Mendoza', coords: [-32.8908, -68.8272] },
+      { name: 'Malargüe', coords: [-35.4757, -69.5840] },
+      { name: 'Jujuy', coords: [-24.1858, -65.2995] },
+      { name: 'Iguazú', coords: [-25.5952, -54.5732] },
+      { name: 'Corrientes', coords: [-27.4691, -58.8309] },
+      { name: 'Iberá', coords: [-28.2649, -57.4316] }
+    ];
+    destinations.forEach(dest => {
+      L.marker(dest.coords).addTo(map)
+        .bindPopup(dest.name);
     });
   </script>
 </body>
