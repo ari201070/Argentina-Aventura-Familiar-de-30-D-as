@@ -129,7 +129,7 @@
     <div class="custom-section" id="ia-section">
       <h2><i class="fas fa-robot" style="color:#7c6ae5;"></i> <span data-key="iaTitulo">Consulta a IA</span></h2>
       <textarea id="iaQuestion" placeholder="Haz tu pregunta sobre el viaje..." data-key="iaPlaceholder"></textarea>
-      <button id="iaSubmit" data-key="consultarBtn">Consultar</button>
+      <button id="iaSubmit" class="custom-btn" data-key="consultarBtn">Consultar</button>
       <div id="iaResponse" style="margin-top: 10px;"></div>
     </div>
 
@@ -137,21 +137,21 @@
     <div class="custom-section" id="currency-section">
       <h2><i class="fas fa-coins" style="color:#7c6ae5;"></i> <span data-key="conversorTitulo">Conversor de moneda</span></h2>
       <form id="currencyForm">
-        <input type="number" step="0.01" min="0" id="amount" placeholder="Monto" required>
-        <select id="fromCurrency">
+        <input type="number" step="0.01" min="0" id="amount" placeholder="Monto" required class="custom-input">
+        <select id="fromCurrency" class="custom-select">
           <option value="ARS">ARS</option>
           <option value="USD">USD</option>
           <option value="EUR">EUR</option>
           <option value="ILS">ILS</option>
         </select>
         <span>→</span>
-        <select id="toCurrency">
+        <select id="toCurrency" class="custom-select">
           <option value="ARS">ARS</option>
           <option value="USD">USD</option>
           <option value="EUR">EUR</option>
           <option value="ILS">ILS</option>
         </select>
-        <button type="submit" data-key="convertirBtn">Convertir</button>
+        <button type="submit" class="custom-btn" data-key="convertirBtn">Convertir</button>
       </form>
       <div id="result" style="margin-top: 10px; font-weight: bold;"></div>
     </div>
@@ -165,7 +165,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js"></script>
   <script>
     // Mapa interactivo
-    const map = L.map('map').setView([-34.5, -63], 4.2);
+    const map = L.map('map').setView([-34.5, -63], 4.2); // Ajusta la vista inicial si es necesario
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '&copy; OpenStreetMap contributors'
     }).addTo(map);
@@ -178,7 +178,7 @@
       { name: 'Jujuy', coords: [-24.1858, -65.2995] },
       { name: 'Iguazú', coords: [-25.5952, -54.5732] },
       { name: 'Corrientes', coords: [-27.4691, -58.8309] },
-      { name: 'Iberá', coords: [-28.2649, -57.4316] }
+      { name: 'Iberá', coords: [-28.2649, -57.4316] } // Coordenadas aproximadas para Esteros del Iberá
     ];
     destinations.forEach(dest => {
       L.marker(dest.coords).addTo(map)
