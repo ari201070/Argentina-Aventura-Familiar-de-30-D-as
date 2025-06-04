@@ -32,8 +32,11 @@ Toda nueva instrucción debe agregarse en este archivo, bajo el tema correspondi
 │   └── ... (otros recursos/documentos de apoyo, PDFs, Excel, etc.)
 ├── ciudades/
 │   ├── buenosaires.html
+│   ├── buenosaires.md 
 │   ├── rosario.html
+│   ├── rosario.md 
 │   ├── bariloche.html
+│   ├── bariloche.md 
 │   └── ...
 ├── css/
 │   └── main.css
