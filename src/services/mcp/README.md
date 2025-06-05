@@ -17,3 +17,9 @@ Este módulo implementa una capa de abstracción (Model Context Protocol) para i
 
 ## Ejemplo de uso
 
+
+## Mejoras futuras
+
+- **Mock de IA**: Respuestas simuladas cuando la API falla.
+- **Caché de respuestas de IA**: Guardar respuestas frecuentes en `localStorage`.
+- **Sincronización automática**: Actualizar caché cuando vuelva la conexión.
