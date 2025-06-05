@@ -1,27 +1,31 @@
 // src/services/mcp/mcpServer.ts
 
 import express from 'express';
+import { askGemini, convertCurrency } from '../apiService';
+import { Language } from '../types';
 
 const app = express();
 app.use(express.json());
 
-// Ejemplo de herramienta MCP
+// Ejemplo de herramienta MCP para conversión de moneda
 app.post('/tool/convertCurrency', async (req, res) => {
   const { amount, from, to } = req.body;
-  // Aquí iría la lógica de conversión de moneda (como en tu apiService.ts)
-  // ...
-  res.json({ result: amount * 1.2 }); // Ejemplo simplificado
+  const result = await convertCurrency(amount, from, to);
+  if (result !== null) {
+    res.json({ result });
+  } else {
+    res.status(500).json({ error: "Could not convert currency." });
+  }
 });
 
-// Ejemplo de herramienta MCP para IA
+// Ejemplo de herramienta MCP para consulta a IA
 app.post('/tool/askAI', async (req, res) => {
   const { prompt, language } = req.body;
-  // Aquí iría la lógica de consulta a Gemini (como en tu apiService.ts)
-  // ...
-  res.json({ answer: "Respuesta de ejemplo." });
+  const answer = await askGemini(prompt, language);
+  res.json({ answer });
 });
 
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`MCP Server running on http://localhost:${PORT}`);
 });
