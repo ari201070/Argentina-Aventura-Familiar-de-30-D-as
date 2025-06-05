@@ -312,6 +312,26 @@ Documentar en README o en la carpeta /docs/ cómo se integra y configura cada m�
 Si hay dudas sobre cómo o dónde integrar MCP, consultar antes de avanzar.
 
 15. Comandos útiles de Git y Bash (recordatorio rápido)
+Si ahora estás en
+
+text
+flier@yt-flier2016 MINGW64 ~
+$
+y quieres llegar a
+
+text
+~/Documents/GitHub/Argentina-Aventura-Familiar-de-30-D-as
+después del símbolo $ escribes:
+
+bash
+cd ~/Documents/GitHub/Argentina-Aventura-Familiar-de-30-D-as
+
+Resumen:
+Después de $ escribes:
+
+bash
+cd ~/Documents/GitHub/Argentina-Aventura-Familiar-de-30-D-as
+
 ls — Lista los archivos y carpetas del directorio actual.
 
 cd [carpeta] — Cambia al directorio indicado.
