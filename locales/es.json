@@ -1,53 +1,110 @@
-
 {
-  "tituloPrincipal": "Itinerario Familiar por Argentina",
-  "bienvenidaPrincipal": "¡Bienvenidos! Haz clic en cada ciudad para ver información, mapas y recomendaciones.",
-  "idioma": "Idioma:",
-  "moneda": "Moneda:",
-  "buenosaires_title": "Buenos Aires",
-  "rosario_title": "Rosario",
-  "bariloche_title": "Bariloche",
-  "mendoza_title": "Mendoza",
-  "malargue_title": "Malargüe",
-  "jujuy_title": "Jujuy",
-  "iguazu_title": "Iguazú",
-  "corrientes_title": "Corrientes",
-  "ibera_title": "Iberá",
-  "explore_btn": "Explorar más detalles",
-  "transporte": "Transporte entre ciudades",
-  "desde": "Desde",
-  "hasta": "Hasta",
-  "medio": "Medio",
-  "tiempo": "Tiempo",
-  "precio": "Precio aprox.",
-  "compania": "Compañía",
-  "mapaInteractivoTitulo": "Mapa Interactivo del Viaje Familiar",
-  "mapaInteractivoBienvenida": "Recorre el itinerario familiar por Argentina. Haz clic en cada ciudad para detalles.",
-  "packing_title": "Lista de equipaje",
-  "packing_add": "Agregar",
-  "packing_essential": "Esenciales",
-  "packing_optional": "Opcionales",
-  "packing_placeholder": "¿Qué más llevás?",
-  "conversorTitulo": "Conversor de moneda",
-  "convertirBtn": "Convertir",
-  "iaTitulo": "Consulta a IA",
-  "iaPlaceholder": "Haz tu pregunta sobre el viaje...",
-  "consultarBtn": "Consultar",
-  "ia_response_prefix": "Respuesta simulada de IA:",
-  "tablaTransporte": [
-    ["Buenos Aires", "Rosario", "Bus", "4 h", 20000, "<a href='https://busplus.com.ar/' target='_blank'>BusPlus</a>"],
-    ["Rosario", "Mendoza", "Bus", "13 h", 50000, "<a href='https://www.andesmar.com/' target='_blank'>Andesmar</a>"],
-    ["Mendoza", "Malargüe", "Bus", "6 h", 18000, "<a href='https://www.catainternacional.com/' target='_blank'>CATA</a>"],
-    ["Malargüe", "Jujuy", "Vuelo + Bus", "10 h", 110000, "<a href='https://www.centraldepasajes.com.ar/cdp/pasajes-micro/mendoza/san-salvador-de-jujuy' target='_blank'>Pasajes de micro baratos</a>"],
-    ["Jujuy", "Iguazú", "Vuelo", "2 h", 85000, "<a href='https://www.aerolineas.com.ar/' target='_blank'>Aerolineas Argentinas</a>"],
-    ["Iguazú", "Corrientes", "Bus", "9 h", 40000, "<a href='https://www.crucerodelnorte.com.ar/' target='_blank'>Crucero del Norte</a>"],
-    ["Corrientes", "Iberá", "Remis/Transfer", "4 h", 60000, "<a href='https://corrientes.tur.ar/producto/esterosdelibera/' target='_blank'>Esteros del Iberá Turismo</a>"]
-  ],
-  "welcome": "Bienvenido a la App React",
-  "backToItinerary": "Volver al Itinerario Principal",
-  "aiQueryTitle": "Consulta a IA (React)",
-  "aiQueryButtonAsk": "Consultar IA",
-  "aiQueryButtonLoading": "Cargando...",
-  "aiQueryErrorEmpty": "La pregunta no puede estar vacía.",
-  "aiQueryMockResponsePrefix": "Respuesta simulada (React):"
+  "welcome.title": "Bienvenido a tu viaje por Argentina",
+  "currencyConverter.title": "Conversor de moneda",
+  "convert": "Convertir",
+  "packingList.title": "Lista de equipaje",
+  "addItem": "Agregar",
+  "aiQuery.title": "Consulta a IA",
+  "backToItinerary": "⬅ Volver al itinerario",
+  "exploreDetails": "Explorar más detalles",
+  "transport": {
+    "from": "Origen",
+    "to": "Destino",
+    "company": "Compañía"
+  },
+  "rosario": {
+    "title": "Rosario",
+    "introduction": {
+      "title": "Introducción",
+      "text": "Rosario es una ciudad vibrante en la costa del Río Paraná, conocida por su historia, cultura y vida nocturna. Ideal para familias con niños y adultos mayores."
+    },
+    "activities": {
+      "title": "Actividades recomendadas",
+      "1": "Visitar el Monumento a la Bandera",
+      "2": "Pasear por la Costanera Central",
+      "3": "Explorar el Parque de la Independencia",
+      "4": "Visitar el Museo de Arte Contemporáneo (MACRO)"
+    },
+    "food": {
+      "title": "Gastronomía",
+      "description": "Rosario ofrece opciones como restaurantes familiares, parrillas tradicionales y heladerías artesanales.",
+      "1": "Rock&Fellers (consultar Sin TACC)",
+      "2": "Heladerías locales",
+      "3": "Pizzerías familiares"
+    },
+    "accommodation": {
+      "title": "Alojamiento sugerido",
+      "text": "Apartamentos céntricos o cerca del río (Pichincha). Recomendamos:",
+      "1": "Hotel NH Collection Rosario",
+      "2": "Departamentos en zona Pichincha"
+    },
+    "agenda": {
+      "title": "Agenda de eventos",
+      "1": "Mercado de San Miguel (domingos)",
+      "2": "Fiesta Nacional de la Biela (abril)",
+      "3": "Feria de Productos Regionales (septiembre)"
+    },
+    "transport": {
+      "title": "Transporte",
+      "text": "Rosario cuenta con transporte público accesible y taxis económicos. Recomendamos:",
+      "1": "Tren metropolitano (conexión con aeropuerto)",
+      "2": "Apps de viaje (Uber, Didi)"
+    }
+  },
+  "buenosaires": {
+    "title": "Buenos Aires",
+    "description": "Capital cultural con parques y museos.",
+    "introduction": {
+      "text": "Buenos Aires es la capital de Argentina, conocida por su arquitectura europea, vida cultural y gastronomía."
+    }
+  },
+  "bariloche": {
+    "title": "San Carlos de Bariloche",
+    "description": "Aventura en los Andes patagónicos.",
+    "introduction": {
+      "text": "Bariloche es un destino ideal para amantes de la naturaleza, con lagos, montañas y actividades al aire libre."
+    }
+  },
+  "mendoza": {
+    "title": "Mendoza",
+    "description": "Ruta del vino y montañas.",
+    "introduction": {
+      "text": "Mendoza es famosa por sus viñedos, vinos y paisajes andinos."
+    }
+  },
+  "malargue": {
+    "title": "Malargüe",
+    "description": "Aventura en la cordillera de los Andes.",
+    "introduction": {
+      "text": "Malargüe ofrece paisajes desérticos y actividades de aventura en la montaña."
+    }
+  },
+  "jujuy": {
+    "title": "Jujuy",
+    "description": "Colores de la Quebrada de Humahuaca.",
+    "introduction": {
+      "text": "Jujuy es conocida por sus paisajes multicolores y cultura andina."
+    }
+  },
+  "iguazu": {
+    "title": "Puerto Iguazú",
+    "description": "Cataratas y naturaleza imponente.",
+    "introduction": {
+      "text": "Iguazú es famoso por sus cataratas y selva tropical."
+    }
+  },
+  "corrientes": {
+    "title": "Corrientes",
+    "description": "Cultura chamamecera y humedales.",
+    "introduction": {
+      "text": "Corrientes combina tradiciones culturales con paisajes de ríos y humedales."
+    }
+  },
+  "ibera": {
+    "title": "Esteros del Iberá",
+    "description": "Reservas naturales y fauna única.",
+    "introduction": {
+      "text": "Iberá es un paraíso natural con fauna única y actividades de ecoturismo."
+    }
+  }
 }

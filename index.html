@@ -28,54 +28,63 @@
     <!-- Tarjetas de ciudades -->
     <div class="cards-container">
       <div class="card card-buenosaires">
+        <img src="docs/imagenes/buenosaires/buenosaires.jpg" alt="Buenos Aires" class="city-card-img">
         <div class="card-content">
           <h3 data-key="buenosaires_title">Buenos Aires</h3>
           <button class="btn-visit" data-page="ciudades/buenosaires.html" data-key="explore_btn">Explorar más detalles</button>
         </div>
       </div>
       <div class="card card-rosario">
+        <img src="docs/imagenes/rosario/Monumento-a-la-Bandera-1024x768.jpg" alt="Rosario" class="city-card-img">
         <div class="card-content">
           <h3 data-key="rosario_title">Rosario</h3>
           <button class="btn-visit" data-page="ciudades/rosario.html" data-key="explore_btn">Explorar más detalles</button>
         </div>
       </div>
       <div class="card card-bariloche">
+        <img src="docs/imagenes/bariloche/emilio-lujan-HhobdGoYzaA-unsplash.jpg" alt="Bariloche" class="city-card-img">
         <div class="card-content">
           <h3 data-key="bariloche_title">Bariloche</h3>
           <button class="btn-visit" data-page="ciudades/bariloche.html" data-key="explore_btn">Explorar más detalles</button>
         </div>
       </div>
       <div class="card card-mendoza">
+        <img src="docs/imagenes/mendoza/mendoza.jpg" alt="Mendoza" class="city-card-img">
         <div class="card-content">
           <h3 data-key="mendoza_title">Mendoza</h3>
           <button class="btn-visit" data-page="ciudades/mendoza.html" data-key="explore_btn">Explorar más detalles</button>
         </div>
       </div>
       <div class="card card-malargue">
+        <img src="docs/imagenes/malargue/malargue.jpg" alt="Malargüe" class="city-card-img">
         <div class="card-content">
           <h3 data-key="malargue_title">Malargüe</h3>
           <button class="btn-visit" data-page="ciudades/malargue.html" data-key="explore_btn">Explorar más detalles</button>
         </div>
       </div>
       <div class="card card-jujuy">
+        <img src="docs/imagenes/jujuy/jujuy.jpg" alt="Jujuy" class="city-card-img">
         <div class="card-content">
           <h3 data-key="jujuy_title">Jujuy</h3>
           <button class="btn-visit" data-page="ciudades/jujuy.html" data-key="explore_btn">Explorar más detalles</button>
         </div>
       </div>
       <div class="card card-iguazu">
+        <img src="docs/imagenes/iguazu/iguazu.jpg" alt="Iguazú" class="city-card-img">
         <div class="card-content">
           <h3 data-key="iguazu_title">Iguazú</h3>
           <button class="btn-visit" data-page="ciudades/iguazu.html" data-key="explore_btn">Explorar más detalles</button>
         </div>
       </div>
       <div class="card card-corrientes">
+        <img src="docs/imagenes/corrientes/corrientes.jpg" alt="Corrientes" class="city-card-img">
         <div class="card-content">
           <h3 data-key="corrientes_title">Corrientes</h3>
           <button class="btn-visit" data-page="ciudades/corrientes.html" data-key="explore_btn">Explorar más detalles</button>
         </div>
       </div>
       <div class="card card-ibera">
+        <img src="docs/imagenes/ibera/ibera.jpg" alt="Iberá" class="city-card-img">
         <div class="card-content">
           <h3 data-key="ibera_title">Iberá</h3>
           <button class="btn-visit" data-page="ciudades/ibera.html" data-key="explore_btn">Explorar más detalles</button>
@@ -164,43 +173,21 @@
   <script src="js/main.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js"></script>
   <script>
-    // Mapa interactivo
-    const map = L.map('map').setView([-34.5, -63], 4.2); // Ajusta la vista inicial si es necesario
+    // Redirección correcta al hacer click en "Explorar más detalles"
+    document.addEventListener("DOMContentLoaded", function() {
+      document.querySelectorAll(".btn-visit").forEach(function(btn) {
+        btn.addEventListener("click", function() {
+          const page = btn.getAttribute("data-page");
+          if (page) window.location.href = page;
+        });
+      });
+    });
 
-    const tileLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    // Mapa interactivo (igual que antes)
+    const map = L.map('map').setView([-34.5, -63], 4.2);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '&copy; OpenStreetMap contributors'
-    });
-
-    let mapErrorMessageDisplayed = false;
-    tileLayer.on('tileerror', function(errorEvent) { // Changed 'error' to 'errorEvent' to avoid conflict with any global 'error'
-      console.error('Tile load error:', errorEvent);
-      if (!mapErrorMessageDisplayed) {
-        mapErrorMessageDisplayed = true;
-        const mapDiv = document.getElementById('map');
-        if (mapDiv) {
-          const errorMessageDiv = document.createElement('div');
-          errorMessageDiv.style.position = 'absolute';
-          errorMessageDiv.style.top = '50%';
-          errorMessageDiv.style.left = '50%';
-          errorMessageDiv.style.transform = 'translate(-50%, -50%)';
-          errorMessageDiv.style.padding = '10px';
-          errorMessageDiv.style.backgroundColor = 'rgba(255, 255, 255, 0.9)'; // Slightly more opaque
-          errorMessageDiv.style.color = 'black';
-          errorMessageDiv.style.border = '1px solid red';
-          errorMessageDiv.style.borderRadius = '5px'; // Added border radius
-          errorMessageDiv.style.zIndex = '1000'; // Ensure it's on top
-          errorMessageDiv.style.textAlign = 'center'; // Center text
-          errorMessageDiv.textContent = 'Map tiles could not be loaded. Please check your internet connection or try again later.';
-          // Consider adding a data-key here if translations are set up for dynamic elements:
-          // errorMessageDiv.setAttribute('data-key', 'map_tile_error');
-          // And then call a translate function if available for dynamically added elements.
-          mapDiv.appendChild(errorMessageDiv);
-        }
-      }
-    });
-
-    tileLayer.addTo(map);
-
+    }).addTo(map);
     const destinations = [
       { name: 'Buenos Aires', coords: [-34.6118, -58.3960] },
       { name: 'Rosario', coords: [-32.9442, -60.6505] },
@@ -210,7 +197,7 @@
       { name: 'Jujuy', coords: [-24.1858, -65.2995] },
       { name: 'Iguazú', coords: [-25.5952, -54.5732] },
       { name: 'Corrientes', coords: [-27.4691, -58.8309] },
-      { name: 'Iberá', coords: [-28.2649, -57.4316] } // Coordenadas aproximadas para Esteros del Iberá
+      { name: 'Iberá', coords: [-28.2649, -57.4316] }
     ];
     destinations.forEach(dest => {
       L.marker(dest.coords).addTo(map)
