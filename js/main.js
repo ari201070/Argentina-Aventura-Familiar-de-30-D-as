@@ -11,7 +11,7 @@ const TRANSPORTE = [
     medio: "Bus",
     tiempo: "4:30 h",
     precio: "ARS 12.000",
-    compania: '<a href="https://www.busbud.com/es/bus-companies/chevallier" target="_blank">Chevallier</a>'
+    compania: '<a href="https://www.busbud.com/es/bus-companies/chevallier" target="_blank" rel="noopener noreferrer">Chevallier</a>'
   },
   {
     desde: "Rosario",
@@ -19,7 +19,7 @@ const TRANSPORTE = [
     medio: "Vuelo",
     tiempo: "2:30 h",
     precio: "USD 120",
-    compania: '<a href="https://www.aerolineas.com.ar/" target="_blank">Aerolíneas Argentinas</a>'
+    compania: '<a href="https://www.aerolineas.com.ar/" target="_blank" rel="noopener noreferrer">Aerolíneas Argentinas</a>'
   },
   {
     desde: "Bariloche",
@@ -27,7 +27,7 @@ const TRANSPORTE = [
     medio: "Vuelo",
     tiempo: "2:00 h",
     precio: "USD 130",
-    compania: '<a href="https://www.aerolineas.com.ar/" target="_blank">Aerolíneas Argentinas</a>'
+    compania: '<a href="https://www.aerolineas.com.ar/" target="_blank" rel="noopener noreferrer">Aerolíneas Argentinas</a>'
   },
   {
     desde: "Mendoza",
@@ -35,15 +35,15 @@ const TRANSPORTE = [
     medio: "Bus",
     tiempo: "5:00 h",
     precio: "ARS 10.000",
-    compania: '<a href="https://www.cata.com.ar/" target="_blank">CATA Internacional</a>'
+    compania: '<a href="https://www.cata.com.ar/" target="_blank" rel="noopener noreferrer">CATA Internacional</a>'
   },
   {
     desde: "Malargüe",
     hasta: "Jujuy",
     medio: "Vuelo + Bus",
-    tiempo: "10:00 h (via Mendoza/Salta)",
+    tiempo: "10:00 h (vía Mendoza/Salta)",
     precio: "USD 200",
-    compania: '<a href="https://www.aerolineas.com.ar/" target="_blank">Aerolíneas Argentinas</a> + Bus'
+    compania: '<a href="https://www.aerolineas.com.ar/" target="_blank" rel="noopener noreferrer">Aerolíneas Argentinas</a> + Bus'
   },
   {
     desde: "Jujuy",
@@ -51,7 +51,7 @@ const TRANSPORTE = [
     medio: "Vuelo",
     tiempo: "2:00 h (escala Buenos Aires)",
     precio: "USD 140",
-    compania: '<a href="https://www.aerolineas.com.ar/" target="_blank">Aerolíneas Argentinas</a>'
+    compania: '<a href="https://www.aerolineas.com.ar/" target="_blank" rel="noopener noreferrer">Aerolíneas Argentinas</a>'
   },
   {
     desde: "Iguazú",
@@ -59,7 +59,7 @@ const TRANSPORTE = [
     medio: "Bus",
     tiempo: "8:00 h",
     precio: "ARS 10.000",
-    compania: '<a href="https://www.crucerodelnorte.com.ar/" target="_blank">Crucero del Norte</a>'
+    compania: '<a href="https://www.crucerodelnorte.com.ar/" target="_blank" rel="noopener noreferrer">Crucero del Norte</a>'
   },
   {
     desde: "Corrientes",
@@ -75,26 +75,51 @@ const TRANSPORTE = [
     medio: "Bus nocturno",
     tiempo: "11:00 h",
     precio: "ARS 18.000",
-    compania: '<a href="https://www.eldoradobus.com.ar/" target="_blank">El Dorado Bus</a>'
+    compania: '<a href="https://www.eldoradobus.com.ar/" target="_blank" rel="noopener noreferrer">El Dorado Bus</a>'
   }
 ];
 
+/**
+ * Renderiza la tabla de transporte entre ciudades de forma segura, eficiente y mantenible.
+ */
 function renderTablaTransporte() {
   const tbody = document.querySelector('#tabla-transporte tbody');
-  if (!tbody) return;
+  if (!tbody) {
+    console.warn('No se encontró el tbody de la tabla de transporte.');
+    return;
+  }
+
   tbody.innerHTML = '';
+  if (!Array.isArray(TRANSPORTE) || TRANSPORTE.length === 0) {
+    const tr = document.createElement('tr');
+    const td = document.createElement('td');
+    td.colSpan = 6;
+    td.textContent = 'No hay datos de transporte disponibles.';
+    tr.appendChild(td);
+    tbody.appendChild(tr);
+    return;
+  }
+
+  // Usar DocumentFragment para optimizar el renderizado
+  const fragment = document.createDocumentFragment();
+  const keys = ['desde', 'hasta', 'medio', 'tiempo', 'precio'];
+
   TRANSPORTE.forEach(row => {
     const tr = document.createElement('tr');
-    tr.innerHTML = `
-      <td>${row.desde}</td>
-      <td>${row.hasta}</td>
-      <td>${row.medio}</td>
-      <td>${row.tiempo}</td>
-      <td>${row.precio}</td>
-      <td>${row.compania}</td>
-    `;
-    tbody.appendChild(tr);
+    keys.forEach(key => {
+      const td = document.createElement('td');
+      td.textContent = row[key] || ''; // Seguridad: evita undefined
+      tr.appendChild(td);
+    });
+    // La columna 'compania' puede contener HTML seguro
+    const tdCompania = document.createElement('td');
+    tdCompania.innerHTML = row.compania || '';
+    tr.appendChild(tdCompania);
+
+    fragment.appendChild(tr);
   });
+
+  tbody.appendChild(fragment);
 }
 
 document.addEventListener('DOMContentLoaded', renderTablaTransporte);
@@ -139,6 +164,6 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 // ========== OTROS MÓDULOS INTERACTIVOS (ejemplo: lista de equipaje, IA, conversor de moneda) ==========
-// Agrega tus módulos interactivos aquí según los lineamientos del promp/README.
+// Agrega aquí otros módulos según los lineamientos del promp.
 
 // ========== FIN ==========
