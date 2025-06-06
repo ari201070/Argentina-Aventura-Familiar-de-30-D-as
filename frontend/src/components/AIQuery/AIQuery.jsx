@@ -1,63 +1,52 @@
 import React, { useState } from 'react';
-import { useTranslation } from 'react-i18next';
 import './AIQuery.css';
-import { getAIResponse } from '../../services/mcp/aiService.js';
+import { useTranslation } from 'react-i18next';
+
+const IA_MOCK_RESPONSE = {
+  es: "¡Gracias por tu consulta! Pronto tendrás una respuesta personalizada sobre tu viaje familiar en Argentina.",
+  he: "תודה על פנייתך! תקבל בקרוב תשובה מותאמת למסלול המשפחתי שלך בארגנטינה."
+};
 
 function AIQuery() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [question, setQuestion] = useState('');
   const [response, setResponse] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = async () => {
-    // The empty question check is now handled by the service,
-    // but good to keep client-side validation too for immediate feedback if desired.
-    // For this refactor, we'll rely on the service's check primarily.
-    // if (!question.trim()) {
-    //   setError('Please enter a question before submitting.');
-    //   setResponse('');
-    //   return;
-    // }
-
-    setIsLoading(true);
+  const handleQuery = async (e) => {
+    e.preventDefault();
+    setLoading(true);
     setResponse('');
-    setError('');
-
-    try {
-      const result = await getAIResponse(question, t); // Pass t function
-      setResponse(result.answer);
-    } catch (err) {
-      // The error message from the service should now be translated
-      setError(err.message || t('aiQueryErrorEmpty')); // Fallback, though service should provide translated error
-    } finally {
-      setIsLoading(false);
-    }
+    // Simulación de llamada a IA (mock)
+    setTimeout(() => {
+      setResponse(IA_MOCK_RESPONSE[i18n.language] || IA_MOCK_RESPONSE['es']);
+      setLoading(false);
+    }, 1200);
   };
 
   return (
-    <div className="ai-query-container">
-      <h2>{t('aiQueryTitle')}</h2>
-      <textarea
-        value={question}
-        onChange={(e) => setQuestion(e.target.value)}
-        placeholder="Ask the AI something..." // This could be t('aiQueryPlaceholder') if added
-        disabled={isLoading}
-      />
-      <button onClick={handleSubmit} disabled={isLoading}>
-        {isLoading ? t('aiQueryButtonLoading') : t('aiQueryButtonAsk')}
-      </button>
-
-      {error && (
-        <div className="ai-query-error">
-          {error}
-        </div>
-      )}
-
+    <div className="aiquery-container">
+      <h2>{t('aiQueryTitle') || 'Consulta a IA'}</h2>
+      <form onSubmit={handleQuery}>
+        <textarea
+          className="aiquery-textarea"
+          value={question}
+          onChange={e => setQuestion(e.target.value)}
+          placeholder={t('aiQueryPlaceholder') || "Escribe tu pregunta sobre el viaje..."}
+          disabled={loading}
+          required
+        />
+        <button
+          className="aiquery-btn"
+          type="submit"
+          disabled={loading || !question.trim()}
+        >
+          {loading ? t('aiQueryLoading') || 'Consultando...' : t('aiQueryBtn') || 'Consultar'}
+        </button>
+      </form>
       {response && (
-        <div className="ai-query-response">
-          <strong>AI's Answer:</strong>
-          <p>{response}</p>
+        <div className="aiquery-response">
+          {response}
         </div>
       )}
     </div>
