@@ -2,744 +2,310 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title data-i18n="page-title">Buenos Aires | Viaje Familiar a Argentina</title>
+  <title data-key="buenosaires_title">Buenos Aires | Viaje Familiar a Argentina</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../css/main.css">
   <link rel="stylesheet" href="estilos.css">
-  <style>
-    /* Estilos generales del cuerpo y barra superior */
-    body {
-      font-family: Arial, sans-serif;
-      background: #f9f9f9;
-      color: #333;
-      margin: 20px;
-      transition: direction 0.3s;
-    }
-    #language-selector {
-      position: fixed;
-      top: 20px;
-      right: 20px;
-      z-index: 1000;
-      background-color: rgba(255,255,255,0.8);
-      padding: 5px;
-      border-radius: 5px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-      display: flex; /* Para alinear los botones de idioma y moneda */
-      align-items: center;
-      gap: 10px; /* Espacio entre elementos */
-    }
-    .language-btn, .currency-btn { /* Clase unificada para botones de control */
-      font-weight: bold;
-      padding: 8px 12px;
-      margin: 0 2px;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-      background-color: #f0f0f0;
-    }
-    .language-btn.active, .currency-btn.active {
-      background: #e6eaff;
-      border-color: #6d7fc9;
-      font-weight: bold;
-    }
-    .back-link {
-      margin-left: 20px;
-      text-decoration: none;
-      font-weight: bold;
-      color: #007BFF;
-    }
-    /* Estilos para la foto de la ciudad */
-    .ciudad-foto {
-      width: 100%;
-      max-width: 700px;
-      height: auto;
-      display: block;
-      margin: 30px auto 20px auto;
-      border-radius: 14px;
-      box-shadow: 0 3px 16px rgba(0,0,0,0.15);
-    }
-    .foto-caption {
-      text-align: center;
-      color: #555;
-      font-size: 1em;
-      margin-bottom: 30px;
-    }
-    h1, h2, h3 { /* Agregado h3 para subsecciones */
-      color: #0F4761;
-    }
-    ul {
-      margin-bottom: 20px;
-      padding-left: 25px; /* Ajuste para listas */
-    }
-    ul li {
-      margin-bottom: 5px;
-    }
-    iframe {
-      border: 1px solid black;
-      width: 100%; /* Asegura que el mapa sea responsive */
-      max-width: 700px; /* Limita el ancho máximo del mapa */
-      display: block;
-      margin: 20px auto; /* Centra el mapa */
-    }
-    /* Estilos para tablas añadidas */
-    table {
-      border-collapse: collapse;
-      width: 100%;
-      max-width: 700px; /* Limita el ancho máximo de las tablas */
-      margin: 20px auto; /* Centra la tabla */
-      background: #f7fbff;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-      border-radius: 8px;
-      overflow: hidden; /* Para que los bordes redondeados se apliquen bien */
-    }
-    th, td {
-      border: 1px solid #b3c7e6;
-      padding: 10px 15px;
-      text-align: left;
-      font-size: 16px;
-    }
-    th {
-      background: #e6f0fa;
-      font-weight: bold;
-    }
-    .rtl {
-      direction: rtl !important;
-      text-align: right !important;
-    }
-    .rtl ul {
-      padding-right: 25px;
-      padding-left: 0;
-    }
-
-    /* Estilos para las secciones de IA */
-    .ai-section {
-      background: #e6f0fa;
-      padding: 20px;
-      border-radius: 8px;
-      margin: 30px auto;
-      max-width: 700px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    }
-    .ai-section h2 {
-      color: #2176d2;
-      margin-top: 0;
-    }
-    .ai-button {
-      background-color: #4CAF50; /* Green */
-      color: white;
-      padding: 12px 20px;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      font-size: 16px;
-      transition: background-color 0.3s ease;
-      display: block; /* Para que ocupe todo el ancho y se centre */
-      margin: 15px auto;
-      max-width: 300px;
-    }
-    .ai-button:hover {
-      background-color: #45a049;
-    }
-    .ai-button:disabled {
-      background-color: #cccccc;
-      cursor: not-allowed;
-    }
-    .ai-response {
-      margin-top: 20px;
-      padding: 15px;
-      background-color: #ffffff;
-      border: 1px solid #d0e0f0;
-      border-radius: 5px;
-      white-space: pre-wrap; /* Para preservar saltos de línea del LLM */
-      font-size: 15px;
-      line-height: 1.6;
-      min-height: 50px; /* Para que no se colapse */
-    }
-    .ai-loading {
-      text-align: center;
-      font-style: italic;
-      color: #666;
-      margin-top: 10px;
-    }
-  </style>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 </head>
 <body>
-  <div id="language-selector">
-    <span data-i18n="idioma">Idioma:</span>
-    <button onclick="translatePage('es')" class="language-btn" id="btn-es">Español</button>
-    <button onclick="translatePage('he')" class="language-btn" id="btn-he">עברית</button>
-    <span data-i18n="moneda">Moneda:</span>
-    <button id="btn-ars" onclick="cambiarMoneda('ARS')" class="currency-btn">ARS</button>
-    <button id="btn-usd" onclick="cambiarMoneda('USD')" class="currency-btn">USD</button>
-    <button id="btn-ils" onclick="cambiarMoneda('ILS')" class="currency-btn">ILS</button>
-    <a href="../index.html" class="back-link" id="back-link" data-i18n="back-link">⬅ Volver al itinerario</a>
+  <!-- Barra superior fija -->
+  <div class="top-bar">
+    <span data-key="idioma">Idioma:</span>
+    <button class="btn-lang" data-lang="es" id="btn-es">Español</button>
+    <button class="btn-lang" data-lang="he" id="btn-he">עברית</button>
+    <span data-key="moneda">Moneda:</span>
+    <button class="btn-currency" data-currency="ARS" id="btn-ars">ARS</button>
+    <button class="btn-currency" data-currency="USD" id="btn-usd">USD</button>
+    <button class="btn-currency" data-currency="ILS" id="btn-ils">ILS</button>
+    <button class="btn-currency" data-currency="EUR" id="btn-eur">EUR</button>
+    <a href="../index.html" class="btn-back" id="volver-itinerario"><span data-key="volver">⬅ Volver al itinerario</span></a>
   </div>
 
-  <img src="../docs/imagenes/buenosaires/buenosaires.jpg"
-       alt="Obelisco de Buenos Aires"
-       class="ciudad-foto" id="city-photo">
-  <div class="foto-caption" id="foto-caption" data-i18n="foto-caption">Obelisco de Buenos Aires</div>
+  <div class="main-container">
+    <!-- Portada -->
+    <div class="city-cover">
+      <img src="../docs/imagenes/buenosaires/cualquiernombre.jpg" alt="Buenos Aires" class="city-cover-img">
+    </div>
+    <h1 data-key="buenosaires_title">Buenos Aires</h1>
+    <p data-key="buenosaires_intro">
+      Buenos Aires es la capital de la República Argentina, una ciudad cosmopolita, vibrante y con muchísimas propuestas para disfrutar en familia.
+    </p>
+    
+    <section>
+      <h2 data-key="fechas_duracion">Fechas y duración</h2>
+      <ul>
+        <li data-key="estadias_ba"><b>Estadía:</b> 28/09 al 02/10 (5 días) y 29/10 (1 día)</li>
+        <li data-key="como_llegar_ba"><b>Cómo llegar:</b> Llegada internacional (<a href="https://www.aa2000.com.ar/ezeiza" target="_blank">EZE</a>/<a href="https://www.aa2000.com.ar/aeroparque" target="_blank">AEP</a>) / Vuelo desde Corrientes para la última noche</li>
+      </ul>
+    </section>
 
-  <h1 id="city-title" data-i18n="city-title">Buenos Aires</h1>
-  <p id="welcome-text" data-i18n="welcome-text">Buenos Aires es la capital de la República Argentina, una ciudad cosmopolita, vibrante y con muchísimas propuestas para disfrutar en familia.</p>
+    <section>
+      <h2 data-key="lugares_imperdibles">Lugares imperdibles</h2>
+      <ul>
+        <li data-key="obelisco"><a href="https://es.wikipedia.org/wiki/Obelisco_de_Buenos_Aires" target="_blank"><b>Obelisco</b> y Avenida 9 de Julio</a></li>
+        <li data-key="teatro_colon"><a href="https://teatrocolon.org.ar/es" target="_blank"><b>Teatro Colón</b> (visitas guiadas)</a></li>
+        <li data-key="caminito"><a href="https://es.wikipedia.org/wiki/Caminito" target="_blank"><b>Caminito</b> y el colorido barrio de La Boca</a></li>
+        <li data-key="palermo"><a href="https://es.wikipedia.org/wiki/Palermo_(Buenos_Aires)" target="_blank"><b>Palermo</b>: bosques, <a href="https://jardinjapones.org.ar/" target="_blank">Jardín Japonés</a>, museos, cafés y tiendas</a></li>
+        <li data-key="planetario"><a href="https://planetario.buenosaires.gob.ar/" target="_blank"><b>Planetario Galileo Galilei</b></a></li>
+        <li data-key="puerto_madero"><a href="https://es.wikipedia.org/wiki/Puerto_Madero" target="_blank"><b>Puerto Madero</b> y <a href="https://buenosaires.gob.ar/ambienteyespaciopublico/reservaecologicacostanera" target="_blank">Reserva Ecológica</a></a></li>
+        <li data-key="museo_bellas_artes"><a href="https://www.bellasartes.gob.ar/" target="_blank"><b>Museo Nacional de Bellas Artes</b></a></li>
+        <li data-key="recoleta"><a href="https://turismo.buenosaires.gob.ar/es/otros-lugares/cementerio-de-la-recoleta" target="_blank"><b>Recoleta</b>: Cementerio histórico, feria de artesanos y cafés</a></li>
+        <li data-key="plaza_mayo"><a href="https://es.wikipedia.org/wiki/Plaza_de_Mayo" target="_blank"><b>Plaza de Mayo</b> y <a href="https://www.casarosada.gob.ar/" target="_blank">Casa Rosada</a></a></li>
+        <li data-key="campanopolis"><a href="https://campanopolis.com.ar/" target="_blank"><b>Campanópolis</b> (aldea mágica a las afueras de Buenos Aires)</a></li>
+      </ul>
+    </section>
 
-  <h2 data-i18n="dates-duration-title">Fechas y duración</h2>
-  <ul>
-    <li data-i18n="stay-duration">**Estadía**: 28/09 al 02/10 (5 días) y 29/10 (1 día)</li>
-    <li data-i18n="how-to-arrive">**Cómo llegar**: Llegada internacional (EZE/AEP) / Vuelo desde Corrientes para la última noche</li>
-  </ul>
+    <section>
+      <h2 data-key="actividades_recomendadas">Actividades recomendadas</h2>
+      <ul>
+        <li data-key="tango"><a href="https://turismo.buenosaires.gob.ar/es/article/tango-en-buenos-aires" target="_blank">Tango y espectáculos típicos</a> (San Telmo o La Boca)</li>
+        <li data-key="tours"><a href="https://turismo.buenosaires.gob.ar/es/article/tours-guiados-gratis" target="_blank">Tours guiados a pie</a> o <a href="https://www.bikingbuenosaires.com/" target="_blank">en bicicleta</a></li>
+        <li data-key="picnic_palermo"><a href="https://es.wikipedia.org/wiki/Bosques_de_Palermo" target="_blank">Picnic en los bosques de Palermo</a></li>
+        <li data-key="museos_ferias"><a href="https://turismo.buenosaires.gob.ar/es/article/museos-en-buenos-aires" target="_blank">Visita a museos</a> y <a href="https://turismo.buenosaires.gob.ar/es/article/ferias-de-artesan%C3%ADas" target="_blank">ferias artesanales</a></li>
+        <li data-key="paseo_barco"><a href="https://www.sturla.com.ar/" target="_blank">Paseo en barco por el Río de la Plata</a> (Puerto Madero)</li>
+      </ul>
+    </section>
 
-  <h2 id="main-attractions-title" data-i18n="main-attractions-title">Lugares imperdibles</h2>
-  <ul id="main-attractions-list">
-    <li><a href="https://es.wikipedia.org/wiki/Obelisco_de_Buenos_Aires" target="_blank" id="attraction-0" data-i18n="attraction-0">Obelisco y Avenida 9 de Julio</a></li>
-    <li><a href="https://teatrocolon.org.ar/es" target="_blank" id="attraction-1" data-i18n="attraction-1">Teatro Colón (visitas guiadas)</a></li>
-    <li><a href="https://es.wikipedia.org/wiki/Caminito" target="_blank" id="attraction-2" data-i18n="attraction-2">Caminito y el colorido barrio de La Boca</a></li>
-    <li><a href="https://es.wikipedia.org/wiki/Palermo_(Buenos_Aires)" target="_blank" id="attraction-3" data-i18n="attraction-3">Palermo: bosques, Jardín Japonés, museos, cafés y tiendas</a></li>
-    <li><a href="https://planetario.buenosaires.gob.ar/" target="_blank" id="attraction-4" data-i18n="attraction-4">Planetario Galileo Galilei</a></li>
-    <li><a href="https://es.wikipedia.org/wiki/Puerto_Madero" target="_blank" id="attraction-5" data-i18n="attraction-5">Puerto Madero y Reserva Ecológica</a></li>
-    <li><a href="https://www.bellasartes.gob.ar/" target="_blank" id="attraction-6" data-i18n="attraction-6">Museo Nacional de Bellas Artes</a></li>
-    <li><a href="https://turismo.buenosaires.gob.ar/es/otros-lugares/cementerio-de-la-recoleta" target="_blank" id="attraction-7" data-i18n="attraction-7">Recoleta: Cementerio histórico, feria de artesanos y cafés</a></li>
-    <li><a href="https://es.wikipedia.org/wiki/Plaza_de_Mayo" target="_blank" id="attraction-8" data-i18n="attraction-8">Plaza de Mayo y Casa Rosada</a></li>
-  </ul>
+    <section>
+      <h2 data-key="gastronomia_destacada">Gastronomía destacada</h2>
+      <p data-key="gastronomia_ba">La ciudad ofrece desde parrillas tradicionales hasta restaurantes gourmet, opciones vegetarianas/veganas y cafeterías históricas.</p>
+      <h3 data-key="restaurantes_recomendados">Restaurantes recomendados</h3>
+      <table class="table-restaurantes">
+        <thead>
+          <tr>
+            <th data-key="table-restaurant">Restaurante</th>
+            <th data-key="table-type">Tipo</th>
+            <th data-key="table-gluten-free">Sin Gluten</th>
+            <th data-key="table-sugar-free">Sin Azúcar</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><a href="https://www.parrilladonjulio.com/" target="_blank">Don Julio</a></td>
+            <td data-key="parrillas_tradicionales">Parrilla clásica</td>
+            <td data-key="yes-symbol">✔️</td>
+            <td data-key="no-symbol">❌</td>
+          </tr>
+          <tr>
+            <td><a href="https://www.sacro.restaurant/" target="_blank">Sacro</a></td>
+            <td data-key="vegano_gourmet">Vegano gourmet</td>
+            <td data-key="yes-symbol">✔️</td>
+            <td data-key="yes-symbol">✔️</td>
+          </tr>
+          <tr>
+            <td><a href="https://www.biorestaurante.com/" target="_blank">Bio Restaurante</a></td>
+            <td data-key="organico">Orgánico</td>
+            <td data-key="yes-symbol">✔️</td>
+            <td data-key="yes-symbol">✔️</td>
+          </tr>
+          <tr>
+            <td><a href="https://parurestaurant.com/" target="_blank">Paru Inkas Sushi & Grill</a></td>
+            <td data-key="fusion_peruano_japonesa">Fusión Peruano-Japonesa</td>
+            <td data-key="yes-symbol">✔️</td>
+            <td data-key="no-symbol">❌</td>
+          </tr>
+        </tbody>
+      </table>
+      <h3 data-key="cafes-title">Confiterías y cafés</h3>
+      <table class="table-cafes">
+        <thead>
+          <tr>
+            <th data-key="table-cafe">Confitería</th>
+            <th data-key="table-type">Tipo</th>
+            <th data-key="table-gluten-free">Sin Gluten</th>
+            <th data-key="table-sugar-free">Sin Azúcar</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><a href="https://www.cafetortoni.com.ar/" target="_blank">Café Tortoni</a></td>
+            <td data-key="cafe-type-0">Histórico / Clásico</td>
+            <td data-key="no-symbol">❌</td>
+            <td data-key="no-symbol">❌</td>
+          </tr>
+          <tr>
+            <td><a href="https://www.havanna.com.ar/" target="_blank">Havanna</a></td>
+            <td data-key="cafe-type-1">Alfajores / Café</td>
+            <td data-key="yes-symbol">✔️</td>
+            <td data-key="yes-symbol">✔️</td>
+          </tr>
+          <tr>
+            <td><a href="https://www.confiteriaideal.com/" target="_blank">Confitería Ideal</a></td>
+            <td data-key="cafe-type-2">Repostería Tradicional</td>
+            <td data-key="no-symbol">❌</td>
+            <td data-key="no-symbol">❌</td>
+          </tr>
+        </tbody>
+      </table>
+      <h3 data-key="tipos_restaurantes">Tipos de restaurantes</h3>
+      <ul>
+        <li data-key="parrillas_tradicionales">Parrillas tradicionales</li>
+        <li data-key="comida_internacional">Comida internacional</li>
+        <li data-key="opciones_vegetarianas">Opciones vegetarianas y veganas</li>
+        <li data-key="cafeterias_historicas">Cafeterías históricas</li>
+      </ul>
+    </section>
 
-  <h2 data-i18n="recommended-activities-title">Actividades recomendadas</h2>
-  <ul>
-    <li data-i18n="rec-activity-0">Tango y espectáculos típicos (San Telmo o La Boca)</li>
-    <li data-i18n="rec-activity-1">Tours guiados a pie o en bicicleta</li>
-    <li data-i18n="rec-activity-2">Picnic en los bosques de Palermo</li>
-    <li data-i18n="rec-activity-3">Visita a museos y ferias artesanales</li>
-    <li data-i18n="rec-activity-4">Paseo en barco por el Río de la Plata (Puerto Madero)</li>
-  </ul>
+    <section>
+      <h2 data-key="alojamiento">Alojamiento (ejemplos)</h2>
+      <ul>
+        <li><a href="https://www.alvearpalace.com/" target="_blank" data-key="alojamiento-0">Alvear Palace</a></li>
+        <li><a href="https://www.hotelmadero.com/" target="_blank" data-key="alojamiento-1">Madero</a></li>
+        <li><a href="https://all.accor.com/hotel/3253/index.es.shtml" target="_blank" data-key="alojamiento-2">Ibis</a></li>
+        <li><a href="https://www.airbnb.com.ar/s/Palermo--Buenos-Aires--Argentina/homes" target="_blank" data-key="alojamiento-3">Airbnb Palermo</a></li>
+      </ul>
+    </section>
 
-  <h2 data-i18n="gastronomy-title">Gastronomía destacada</h2>
-  <p data-i18n="gastronomy-intro">La ciudad ofrece desde parrillas tradicionales hasta restaurantes gourmet, opciones vegetarianas/veganas y cafeterías históricas.</p>
-  <h3 data-i18n="restaurants-title">Restaurantes recomendados</h3>
-  <table>
-    <thead>
-      <tr>
-        <th data-i18n="table-restaurant">Restaurante</th>
-        <th data-i18n="table-type">Tipo</th>
-        <th data-i18n="table-gluten-free">Sin Gluten</th>
-        <th data-i18n="table-sugar-free">Sin Azúcar</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a href="https://www.parrilladonjulio.com/" target="_blank">Don Julio</a></td>
-        <td data-i18n="restaurant-type-0">Parrilla clásica</td>
-        <td data-i18n="yes-symbol">✔️</td>
-        <td data-i18n="no-symbol">❌</td>
-      </tr>
-      <tr>
-        <td><a href="https://www.sacro.restaurant/" target="_blank">Sacro</a></td>
-        <td data-i18n="restaurant-type-1">Vegano gourmet</td>
-        <td data-i18n="yes-symbol">✔️</td>
-        <td data-i18n="yes-symbol">✔️</td>
-      </tr>
-      <tr>
-        <td><a href="https://www.biorestaurante.com/" target="_blank">Bio Restaurante</a></td>
-        <td data-i18n="restaurant-type-2">Orgánico</td>
-        <td data-i18n="yes-symbol">✔️</td>
-        <td data-i18n="yes-symbol">✔️</td>
-      </tr>
-      <tr>
-        <td><a href="https://parurestaurant.com/" target="_blank">Paru Inkas Sushi & Grill</a></td>
-        <td data-i18n="restaurant-type-3">Fusión Peruano-Japonesa</td>
-        <td data-i18n="yes-symbol">✔️</td>
-        <td data-i18n="no-symbol">❌</td>
-      </tr>
-    </tbody>
-  </table>
-  <h3 data-i18n="cafes-title">Confiterías y cafés</h3>
-  <table>
-    <thead>
-      <tr>
-        <th data-i18n="table-cafe">Confitería</th>
-        <th data-i18n="table-type">Tipo</th>
-        <th data-i18n="table-gluten-free">Sin Gluten</th>
-        <th data-i18n="table-sugar-free">Sin Azúcar</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a href="https://www.cafetortoni.com.ar/" target="_blank">Café Tortoni</a></td>
-        <td data-i18n="cafe-type-0">Histórico / Clásico</td>
-        <td data-i18n="no-symbol">❌</td>
-        <td data-i18n="no-symbol">❌</td>
-      </tr>
-      <tr>
-        <td><a href="https://www.havanna.com.ar/" target="_blank">Havanna</a></td>
-        <td data-i18n="cafe-type-1">Alfajores / Café</td>
-        <td data-i18n="yes-symbol">✔️</td>
-        <td data-i18n="yes-symbol">✔️</td>
-      </tr>
-      <tr>
-        <td><a href="https://www.confiteriaideal.com/" target="_blank">Confitería Ideal</a></td>
-        <td data-i18n="cafe-type-2">Repostería Tradicional</td>
-        <td data-i18n="no-symbol">❌</td>
-        <td data-i18n="no-symbol">❌</td>
-      </tr>
-    </tbody>
-  </table>
+    <section>
+      <h2 data-key="coordenadas">Coordenadas aproximadas</h2>
+      <ul>
+        <li data-key="coord_ba"><a href="https://www.openstreetmap.org/#map=12/-34.60/-58.45" target="_blank">34° 36' S 58° 22' 48" W</a></li>
+      </ul>
+    </section>
 
-  <div class="ai-section">
-    <h2 data-i18n="ai-menu-title">Generador de Menú Saludable ✨</h2>
-    <p data-i18n="ai-menu-description">Obtén sugerencias de menú para un día completo (desayuno, almuerzo, cena) adaptadas para dietas bajas en carbohidratos, aptas para diabéticos y, si es posible, sin gluten, inspiradas en la gastronomía de Buenos Aires.</p>
-    <button class="ai-button" id="generate-menu-btn" data-i18n="generate-menu-button">Generar Menú</button>
-    <div class="ai-loading" id="ai-menu-loading-indicator" style="display:none;" data-i18n="ai-loading">Generando menú...</div>
-    <div class="ai-response" id="ai-menu-response"></div>
+    <section>
+      <h2 data-key="agenda_eventos">Agenda de eventos</h2>
+      <ul>
+        <li><b>29/09/2025:</b> <span data-key="festival_tango">Festival de Tango al aire libre en <a href="https://turismo.buenosaires.gob.ar/es/otros-lugares/plaza-dorrego" target="_blank">Plaza Dorrego</a></span></li>
+        <li><b>01/10/2025:</b> <span data-key="noche_museos">Noche de los Museos (<a href="https://lanochedelosmuseos.gob.ar/" target="_blank">entrada libre en museos seleccionados</a>)</span></li>
+        <li>
+          <a href="../docs/agenda/ariflier1970@gmail.com.ical.zip" target="_blank" data-key="descargar_agenda">Descargar agenda completa en formato iCal (.zip)</a>
+        </li>
+      </ul>
+    </section>
+
+    <section>
+      <h2 data-key="consejos_familias">Consejos para familias</h2>
+      <ul>
+        <li data-key="zonas_turisticas_ba">Las zonas turísticas son seguras y están bien conectadas por <a href="https://www.argentina.gob.ar/sube" target="_blank">transporte público (tarjeta SUBE)</a>.</li>
+        <li data-key="actividades_gratis_ba">Hay muchas actividades gratuitas y para todas las edades.</li>
+        <li data-key="fines_semana_ba">Los fines de semana suelen haber <a href="https://turismo.buenosaires.gob.ar/es/article/ferias-de-artesan%C3%ADas" target="_blank">espectáculos callejeros y ferias</a>.</li>
+        <li data-key="alojamiento_reserva_ba">Se recomienda reservar alojamiento con anticipación en <a href="https://turismo.buenosaires.gob.ar/es/article/palermo" target="_blank">Palermo</a> o <a href="https://turismo.buenosaires.gob.ar/es/article/recoleta" target="_blank">Recoleta</a>.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2 data-key="presupuesto_orientativo">Presupuesto orientativo</h2>
+      <table class="table-presupuesto">
+        <thead>
+          <tr>
+            <th data-key="concepto">Concepto</th>
+            <th data-key="precio_estimado">Precio estimado (USD)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td data-key="alojamiento_familia">Alojamiento (noche, familia)</td>
+            <td>50–120</td>
+          </tr>
+          <tr>
+            <td data-key="comida_familia">Comida (por día, familia)</td>
+            <td>30–70</td>
+          </tr>
+          <tr>
+            <td data-key="transporte_publico">Transporte público (por día)</td>
+            <td>3–5</td>
+          </tr>
+          <tr>
+            <td data-key="actividades_tours">Actividades y tours (por día)</td>
+            <td>20–50</td>
+          </tr>
+          <tr>
+            <td data-key="entradas_museos">Entradas museos/atracciones</td>
+            <td>0–15</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2 data-key="tips_culturales">Tips culturales</h2>
+      <ul>
+        <li data-key="idioma_oficial_ba">El idioma oficial es español (rioplatense, muy amigable).</li>
+        <li data-key="beso_mejilla_ba">Es común saludar con un beso en la mejilla.</li>
+        <li data-key="horarios_comida_ba">Los horarios de comida suelen ser más tarde que en otros países (cena desde las 21:00).</li>
+        <li data-key="mate_ba"><a href="https://es.wikipedia.org/wiki/Mate_(infusi%C3%B3n)" target="_blank">El mate</a> es la infusión nacional.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2 data-key="mapa_ba">Mapa de Buenos Aires</h2>
+      <iframe src="https://www.openstreetmap.org/export/embed.html?bbox=-58.531%2C-34.705%2C-58.335%2C-34.526&amp;layer=mapnik" width="100%" height="350"></iframe>
+      <br>
+      <small>
+        <a href="https://www.openstreetmap.org/#map=12/-34.60/-58.45" target="_blank" data-key="ver_mapa_grande">Ver mapa más grande</a>
+      </small>
+    </section>
+
+    <!-- Módulos de IA mock (simulación) -->
+    <section class="ai-section">
+      <h2 data-key="ai-menu-title">Generador de Menú Saludable ✨</h2>
+      <p data-key="ai-menu-description">Obtén sugerencias de menú para un día completo (desayuno, almuerzo, cena) adaptadas para dietas bajas en carbohidratos, aptas para diabéticos y, si es posible, sin gluten, inspiradas en la gastronomía de Buenos Aires.</p>
+      <button class="ai-button" id="generate-menu-btn" data-key="generate-menu-button">Generar Menú</button>
+      <div class="ai-loading" id="ai-menu-loading-indicator" style="display:none;" data-key="ai-loading">Generando menú...</div>
+      <div class="ai-response" id="ai-menu-response"></div>
+    </section>
+    <section class="ai-section">
+      <h2 data-key="ai-accommodation-title">Sugerencias de Alojamiento con IA 🏨</h2>
+      <p data-key="ai-accommodation-description">Obtén recomendaciones de alojamiento en Buenos Aires, considerando opciones familiares, seguras y bien ubicadas.</p>
+      <button class="ai-button" id="generate-accommodation-btn" data-key="generate-accommodation-button">Generar Sugerencias</button>
+      <div class="ai-loading" id="ai-accommodation-loading-indicator" style="display:none;" data-key="ai-loading">Generando sugerencias...</div>
+      <div class="ai-response" id="ai-accommodation-response"></div>
+    </section>
+    <section class="ai-section">
+      <h2 data-key="ai-family-tips-title">Consejos Adicionales para Familias con IA 👨‍👩‍👧‍👦</h2>
+      <p data-key="ai-family-tips-description">Recibe consejos personalizados para disfrutar Buenos Aires en familia, incluyendo actividades, seguridad y logística.</p>
+      <button class="ai-button" id="generate-family-tips-btn" data-key="generate-family-tips-button">Generar Consejos</button>
+      <div class="ai-loading" id="ai-family-tips-loading-indicator" style="display:none;" data-key="ai-loading">Generando consejos...</div>
+      <div class="ai-response" id="ai-family-tips-response"></div>
+    </section>
+    <section class="ai-section">
+      <h2 data-key="ai-budget-title">Análisis de Presupuesto con IA 💰</h2>
+      <p data-key="ai-budget-description">Obtén un análisis y desglose del presupuesto orientativo para tu estadía en Buenos Aires, con posibles optimizaciones.</p>
+      <button class="ai-button" id="generate-budget-btn" data-key="generate-budget-button">Analizar Presupuesto</button>
+      <div class="ai-loading" id="ai-budget-loading-indicator" style="display:none;" data-key="ai-loading">Analizando presupuesto...</div>
+      <div class="ai-response" id="ai-budget-response"></div>
+    </section>
   </div>
 
-  <div class="ai-section">
-    <h2 data-i18n="ai-accommodation-title">Sugerencias de Alojamiento con IA 🏨</h2>
-    <p data-i18n="ai-accommodation-description">Obtén recomendaciones de alojamiento en Buenos Aires, considerando opciones familiares, seguras y bien ubicadas.</p>
-    <button class="ai-button" id="generate-accommodation-btn" data-i18n="generate-accommodation-button">Generar Sugerencias</button>
-    <div class="ai-loading" id="ai-accommodation-loading-indicator" style="display:none;" data-i18n="ai-loading">Generando sugerencias...</div>
-    <div class="ai-response" id="ai-accommodation-response"></div>
-  </div>
+  <footer class="footer">
+    <p>© 2025 Viaje Familiar Argentina</p>
+  </footer>
 
-  <div class="ai-section">
-    <h2 data-i18n="ai-family-tips-title">Consejos Adicionales para Familias con IA 👨‍👩‍👧‍👦</h2>
-    <p data-i18n="ai-family-tips-description">Recibe consejos personalizados para disfrutar Buenos Aires en familia, incluyendo actividades, seguridad y logística.</p>
-    <button class="ai-button" id="generate-family-tips-btn" data-i18n="generate-family-tips-button">Generar Consejos</button>
-    <div class="ai-loading" id="ai-family-tips-loading-indicator" style="display:none;" data-i18n="ai-loading">Generando consejos...</div>
-    <div class="ai-response" id="ai-family-tips-response"></div>
-  </div>
-
-  <div class="ai-section">
-    <h2 data-i18n="ai-budget-title">Análisis de Presupuesto con IA 💰</h2>
-    <p data-i18n="ai-budget-description">Obtén un análisis y desglose del presupuesto orientativo para tu estadía en Buenos Aires, con posibles optimizaciones.</p>
-    <button class="ai-button" id="generate-budget-btn" data-i18n="generate-budget-button">Analizar Presupuesto</button>
-    <div class="ai-loading" id="ai-budget-loading-indicator" style="display:none;" data-i18n="ai-loading">Analizando presupuesto...</div>
-    <div class="ai-response" id="ai-budget-response"></div>
-  </div>
-
-  <h2 data-i18n="accommodation-title">Alojamiento (ejemplos)</h2>
-  <ul>
-    <li data-i18n="accommodation-0">Alvear Palace</li>
-    <li data-i18n="accommodation-1">Madero</li>
-    <li data-i18n="accommodation-2">Ibis</li>
-    <li data-i18n="accommodation-3">Airbnb Palermo</li>
-  </ul>
-
-  <h2 data-i18n="coordinates-title">Coordenadas aproximadas</h2>
-  <p data-i18n="coordinates-text">34° 36' S 58° 22' 48" W</p>
-
-  <h2 data-i18n="events-agenda-title">Agenda de eventos</h2>
-  <ul>
-    <li data-i18n="event-0">**29/09/2025**: Festival de Tango al aire libre en Plaza Dorrego</li>
-    <li data-i18n="event-1">**01/10/2025**: Noche de los Museos (entrada libre en museos seleccionados)</li>
-    <li><a href="../docs/agenda/ariflier1970@gmail.com.ical.zip" target="_blank" data-i18n="download-agenda">Descargar agenda completa en formato iCal (.zip)</a></li>
-  </ul>
-
-  <h2 data-i18n="family-tips-title">Consejos para familias</h2>
-  <ul>
-    <li data-i18n="family-tip-0">Las zonas turísticas son seguras y están bien conectadas por transporte público (tarjeta SUBE).</li>
-    <li data-i18n="family-tip-1">Hay muchas actividades gratuitas y para todas las edades.</li>
-    <li data-i18n="family-tip-2">Los fines de semana suelen haber espectáculos callejeros y ferias.</li>
-    <li data-i18n="family-tip-3">Se recomienda reservar alojamiento con anticipación en Palermo o Recoleta.</li>
-  </ul>
-
-  <h2 data-i18n="budget-title">Presupuesto orientativo</h2>
-  <table>
-    <thead>
-      <tr>
-        <th data-i18n="budget-concept">Concepto</th>
-        <th data-i18n="budget-price">Precio estimado (USD)</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td data-i18n="budget-concept-0">Alojamiento (noche, familia)</td>
-        <td data-i18n="budget-price-0">50–120</td>
-      </tr>
-      <tr>
-        <td data-i18n="budget-concept-1">Comida (por día, familia)</td>
-        <td data-i18n="budget-price-1">30–70</td>
-      </tr>
-      <tr>
-        <td data-i18n="budget-concept-2">Transporte público (por día)</td>
-        <td data-i18n="budget-price-2">3–5</td>
-      </tr>
-      <tr>
-        <td data-i18n="budget-concept-3">Actividades y tours (por día)</td>
-        <td data-i18n="budget-price-3">20–50</td>
-      </tr>
-      <tr>
-        <td data-i18n="budget-concept-4">Entradas museos/atracciones</td>
-        <td data-i18n="budget-price-4">0–15</td>
-      </tr>
-    </tbody>
-  </table>
-
-  <h2 data-i18n="cultural-tips-title">Tips culturales</h2>
-  <ul>
-    <li data-i18n="cultural-tip-0">El idioma oficial es español (rioplatense, muy amigable).</li>
-    <li data-i18n="cultural-tip-1">Es común saludar con un beso en la mejilla.</li>
-    <li data-i18n="cultural-tip-2">Los horarios de comida suelen ser más tarde que en otros países (cena desde las 21:00).</li>
-    <li data-i18n="cultural-tip-3">El mate es la infusión nacional.</li>
-  </ul>
-
-  <h2 id="map-title" data-i18n="map-title">Mapa de Buenos Aires</h2>
-  <iframe src="https://www.openstreetmap.org/export/embed.html?bbox=-58.531%2C-34.705%2C-58.335%2C-34.526&amp;layer=mapnik" width="100%" height="350"></iframe>
-  <br><small><a href="https://www.openstreetmap.org/#map=12/-34.60/-58.45" target="_blank" id="see-bigger-map" data-i18n="see-bigger-map">Ver mapa más grande</a></small>
-
+  <!-- Traducción y lógica centralizada -->
+  <script src="../js/i18n.js"></script>
+  <!-- Mock IA para pruebas offline -->
   <script>
-    // Diccionario de traducciones español ↔ hebreo
-    const translations = {
-      es: {
-        "page-title": "Buenos Aires | Viaje Familiar a Argentina",
-        "idioma": "Idioma:",
-        "moneda": "Moneda:",
-        "city-title": "Buenos Aires",
-        "welcome-text": "Buenos Aires es la capital de la República Argentina, una ciudad cosmopolita, vibrante y con muchísimas propuestas para disfrutar en familia.",
-        "foto-caption": "Obelisco de Buenos Aires",
-        "dates-duration-title": "Fechas y duración",
-        "stay-duration": "**Estadía**: 28/09 al 02/10 (5 días) y 29/10 (1 día)",
-        "how-to-arrive": "**Cómo llegar**: Llegada internacional (EZE/AEP) / Vuelo desde Corrientes para la última noche",
-        "main-attractions-title": "Lugares imperdibles",
-        "attraction-0": "Obelisco y Avenida 9 de Julio",
-        "attraction-1": "Teatro Colón (visitas guiadas)",
-        "attraction-2": "Caminito y el colorido barrio de La Boca",
-        "attraction-3": "Palermo: bosques, Jardín Japonés, museos, cafés y tiendas",
-        "attraction-4": "Planetario Galileo Galilei",
-        "attraction-5": "Puerto Madero y Reserva Ecológica",
-        "attraction-6": "Museo Nacional de Bellas Artes",
-        "attraction-7": "Recoleta: Cementerio histórico, feria de artesanos y cafés",
-        "attraction-8": "Plaza de Mayo y Casa Rosada",
-        "recommended-activities-title": "Actividades recomendadas",
-        "rec-activity-0": "Tango y espectáculos típicos (San Telmo o La Boca)",
-        "rec-activity-1": "Tours guiados a pie o en bicicleta",
-        "rec-activity-2": "Picnic en los bosques de Palermo",
-        "rec-activity-3": "Visita a museos y ferias artesanales",
-        "rec-activity-4": "Paseo en barco por el Río de la Plata (Puerto Madero)",
-        "gastronomy-title": "Gastronomía destacada",
-        "gastronomy-intro": "La ciudad ofrece desde parrillas tradicionales hasta restaurantes gourmet, opciones vegetarianas/veganas y cafeterías históricas.",
-        "restaurants-title": "Restaurantes recomendados",
-        "table-restaurant": "Restaurante",
-        "table-type": "Tipo",
-        "table-gluten-free": "Sin Gluten",
-        "table-sugar-free": "Sin Azúcar",
-        "restaurant-type-0": "Parrilla clásica",
-        "restaurant-type-1": "Vegano gourmet",
-        "restaurant-type-2": "Orgánico",
-        "restaurant-type-3": "Fusión Peruano-Japonesa",
-        "cafes-title": "Confiterías y cafés",
-        "table-cafe": "Confitería",
-        "cafe-type-0": "Histórico / Clásico",
-        "cafe-type-1": "Alfajores / Café",
-        "cafe-type-2": "Repostería Tradicional",
-        "yes-symbol": "✔️",
-        "no-symbol": "❌",
-        "ai-menu-title": "Generador de Menú Saludable ✨",
-        "ai-menu-description": "Obtén sugerencias de menú para un día completo (desayuno, almuerzo, cena) adaptadas para dietas bajas en carbohidratos, aptas para diabéticos y, si es posible, sin gluten, inspiradas en la gastronomía de Buenos Aires.",
-        "generate-menu-button": "Generar Menú",
-        "ai-loading": "Generando menú...",
-        "ai-error": "Error al generar el menú. Por favor, inténtalo de nuevo más tarde.",
-        "ai-menu-prompt": "Genera un plan de menú de un día (desayuno, almuerzo, cena) para una familia que visita Buenos Aires, Argentina. Las opciones deben ser aptas para diabéticos, bajas en carbohidratos y, si es posible, sin gluten. Incluye ejemplos de platos típicos argentinos adaptados a estas restricciones dietéticas. Formatea la respuesta en párrafos claros para cada comida.",
-        "ai-accommodation-title": "Sugerencias de Alojamiento con IA 🏨",
-        "ai-accommodation-description": "Obtén recomendaciones de alojamiento en Buenos Aires, considerando opciones familiares, seguras y bien ubicadas.",
-        "generate-accommodation-button": "Generar Sugerencias",
-        "ai-accommodation-prompt": "Genera 3-5 sugerencias de alojamiento en Buenos Aires, Argentina, ideales para una familia con 2 hijos. Considera opciones seguras, bien ubicadas y con servicios adecuados para familias (ej. piscina, cocina, áreas de juego). Incluye diferentes tipos de alojamiento como hoteles, apartamentos o Airbnb. Formatea la respuesta con viñetas.",
-        "ai-family-tips-title": "Consejos Adicionales para Familias con IA 👨‍👩‍👧‍👦",
-        "ai-family-tips-description": "Recibe consejos personalizados para disfrutar Buenos Aires en familia, incluyendo actividades, seguridad y logística.",
-        "generate-family-tips-button": "Generar Consejos",
-        "ai-family-tips-prompt": "Proporciona 5 consejos prácticos y personalizados para una familia con niños que visita Buenos Aires, Argentina. Los consejos deben cubrir aspectos como actividades para niños, seguridad en la ciudad, opciones de transporte familiar, y cómo aprovechar al máximo la estadía. Formatea la respuesta con viñetas.",
-        "ai-budget-title": "Análisis de Presupuesto con IA 💰",
-        "ai-budget-description": "Obtén un análisis y desglose del presupuesto orientativo para tu estadía en Buenos Aires, con posibles optimizaciones.",
-        "generate-budget-button": "Analizar Presupuesto",
-        "ai-budget-prompt": "Analiza el siguiente presupuesto orientativo para una familia en Buenos Aires (USD): Alojamiento (noche): 50-120, Comida (día): 30-70, Transporte (día): 3-5, Actividades (día): 20-50, Entradas: 0-15. Proporciona un desglose estimado por día y por categoría, y sugiere 2-3 formas de optimizar o ahorrar en este presupuesto sin sacrificar la experiencia familiar. Formatea la respuesta en párrafos.",
-        "accommodation-title": "Alojamiento (ejemplos)",
-        "accommodation-0": "Alvear Palace",
-        "accommodation-1": "Madero",
-        "accommodation-2": "Ibis",
-        "accommodation-3": "Airbnb Palermo",
-        "coordinates-title": "Coordenadas aproximadas",
-        "coordinates-text": "34° 36' S 58° 22' 48\" W",
-        "events-agenda-title": "Agenda de eventos",
-        "event-0": "**29/09/2025**: Festival de Tango al aire libre en Plaza Dorrego",
-        "event-1": "**01/10/2025**: Noche de los Museos (entrada libre en museos seleccionados)",
-        "download-agenda": "Descargar agenda completa en formato iCal (.zip)",
-        "family-tips-title": "Consejos para familias",
-        "family-tip-0": "Las zonas turísticas son seguras y están bien conectadas por transporte público (tarjeta SUBE).",
-        "family-tip-1": "Hay muchas actividades gratuitas y para todas las edades.",
-        "family-tip-2": "Los fines de semana suelen haber espectáculos callejeros y ferias.",
-        "family-tip-3": "Se recomienda reservar alojamiento con anticipación en Palermo o Recoleta.",
-        "budget-title": "Presupuesto orientativo",
-        "budget-concept": "Concepto",
-        "budget-price": "Precio estimado (USD)",
-        "budget-concept-0": "Alojamiento (noche, familia)",
-        "budget-price-0": "50–120",
-        "budget-concept-1": "Comida (por día, familia)",
-        "budget-price-1": "30–70",
-        "budget-concept-2": "Transporte público (por día)",
-        "budget-price-2": "3–5",
-        "budget-concept-3": "Actividades y tours (por día)",
-        "budget-price-3": "20–50",
-        "budget-concept-4": "Entradas museos/atracciones",
-        "budget-price-4": "0–15",
-        "cultural-tips-title": "Tips culturales",
-        "cultural-tip-0": "El idioma oficial es español (rioplatense, muy amigable).",
-        "cultural-tip-1": "Es común saludar con un beso en la mejilla.",
-        "cultural-tip-2": "Los horarios de comida suelen ser más tarde que en otros países (cena desde las 21:00).",
-        "cultural-tip-3": "El mate es la infusión nacional.",
-        "map-title": "Mapa de Buenos Aires",
-        "see-bigger-map": "Ver mapa más grande",
-        "back-link": "⬅ Volver al itinerario"
-      },
-      he: {
-        "page-title": "בואנוס איירס | טיול משפחתי בארגנטינה",
-        "idioma": "שפה:",
-        "moneda": "מטבע:",
-        "city-title": "בואנוס איירס",
-        "welcome-text": "בואנוס איירס היא בירת ארגנטינה, עיר קוסמופוליטית, תוססת ועם המון הצעות לבילוי משפחתי.",
-        "foto-caption": "האובליסק של בואנוס איירס",
-        "dates-duration-title": "תאריכים ומשך שהייה",
-        "stay-duration": "**שהייה**: 28/09 עד 02/10 (5 ימים) ו-29/10 (יום אחד)",
-        "how-to-arrive": "**איך מגיעים**: הגעה בינלאומית (EZE/AEP) / טיסה מקוריינטס ללילה האחרון",
-        "main-attractions-title": "מקומות שאסור לפספס",
-        "attraction-0": "האובליסק ושדרת 9 ביולי",
-        "attraction-1": "תיאטרון קולון (סיורים מודרכים)",
-        "attraction-2": "לה בוקה וקמיניטו הצבעוניים",
-        "attraction-3": "פלרמו: יערות, הגן היפני, מוזיאונים, בתי קפה וחנויות",
-        "attraction-4": "פלנטריום גלילאו גליליי",
-        "attraction-5": "פוארטו מדרו ושמורת הטבע",
-        "attraction-6": "המוזיאון הלאומי לאמנויות יפות",
-        "attraction-7": "רקולטה: בית קברות היסטורי, יריד אומנים ובתי קפה",
-        "attraction-8": "פלאסה דה מאיו וקאסה רוסאדה",
-        "recommended-activities-title": "פעילויות מומלצות",
-        "rec-activity-0": "מופעי טנגו טיפוסיים (סן טלמו או לה בוקה)",
-        "rec-activity-1": "סיורים מודרכים ברגל או באופניים",
-        "rec-activity-2": "פיקניק ביערות פלרמו",
-        "rec-activity-3": "ביקור במוזיאונים ובירידי אומנים",
-        "rec-activity-4": "שייט בנהר ריו דה לה פלאטה (פוארטו מדרו)",
-        "gastronomy-title": "גסטרונומיה מומלצת",
-        "gastronomy-intro": "העיר מציעה ממסעדות בשרים מסורתיות ועד מסעדות גורמה, אפשרויות צמחוניות/טבעוניות ובתי קפה היסטוריים.",
-        "restaurants-title": "מסעדות מומלצות",
-        "table-restaurant": "מסעדה",
-        "table-type": "סוג",
-        "table-gluten-free": "ללא גלוטן",
-        "table-sugar-free": "ללא סוכר",
-        "restaurant-type-0": "מסעדת בשרים קלאסית",
-        "restaurant-type-1": "טבעוני גורמה",
-        "restaurant-type-2": "אורגני",
-        "restaurant-type-3": "פיוז'ן פרואני-יפני",
-        "cafes-title": "קונדיטוריות ובתי קפה",
-        "table-cafe": "קונדיטוריה",
-        "cafe-type-0": "היסטורי / קלאסי",
-        "cafe-type-1": "אלפחורס / קפה",
-        "cafe-type-2": "קונדיטוריה מסורתית",
-        "yes-symbol": "✔️",
-        "no-symbol": "❌",
-        "ai-menu-title": "מחולל תפריט בריא ✨",
-        "ai-menu-description": "קבלו הצעות לתפריט יומי (ארוחת בוקר, צהריים, ערב) המותאמות לדיאטות דלות פחמימות, מתאימות לסוכרתיים, ואם אפשר, ללא גלוטן, בהשראת הגסטרונומיה של בואנוס איירס.",
-        "generate-menu-button": "צור תפריט",
-        "ai-loading": "מייצר תפריט...",
-        "ai-error": "שגיאה ביצירת התפריט. אנא נסו שוב מאוחר יותר.",
-        "ai-menu-prompt": "צור תוכנית תפריט יומית (ארוחת בוקר, צהריים, ערב) למשפחה המבקרת בבואנוס איירס, ארגנטינה. האפשרויות צריכות להיות מתאימות לסוכרתיים, דלות פחמימות, ואם אפשר, ללא גלוטן. כלול דוגמאות למנות ארגנטינאיות טיפוסיות המותאמות למגבלות תזונתיות אלו. פרמט את התשובה בפסקאות ברורות לכל ארוחה.",
-        "ai-accommodation-title": "הצעות לינה עם AI 🏨",
-        "ai-accommodation-description": "קבלו המלצות לינה בבואנוס איירס, תוך התחשבות באפשרויות ידידותיות למשפחות, בטוחות וממוקמות היטב.",
-        "generate-accommodation-button": "צור הצעות",
-        "ai-accommodation-prompt": "צור 3-5 הצעות לינה בבואנוס איירס, ארגנטינה, אידיאליות למשפחה עם 2 ילדים. קח בחשבון אפשרויות בטוחות, ממוקמות היטב ועם שירותים מתאימים למשפחות (למשל, בריכה, מטבח, אזורי משחק). כלול סוגי לינה שונים כמו בתי מלון, דירות או Airbnb. פרמט את התשובה עם נקודות.",
-        "ai-family-tips-title": "טיפים נוספים למשפחות עם AI 👨‍👩‍👧‍👦",
-        "ai-family-tips-description": "קבלו טיפים מותאמים אישית לבילוי בבואנוס איירס עם המשפחה, כולל פעילויות, בטיחות ולוגיסטיקה.",
-        "generate-family-tips-button": "צור טיפים",
-        "ai-family-tips-prompt": "ספק 5 טיפים מעשיים ומותאמים אישית למשפחה עם ילדים המבקרת בבואנוס איירס, ארגנטינה. הטיפים צריכים לכסות היבטים כמו פעילויות לילדים, בטיחות בעיר, אפשרויות תחבורה משפחתיות וכיצד להפיק את המרב מהשהייה. פרמט את התשובה עם נקודות.",
-        "ai-budget-title": "ניתוח תקציב עם AI 💰",
-        "ai-budget-description": "קבלו ניתוח ופירוט של התקציב המשוער לשהותכם בבואנוס איירס, עם אופטימיזציות אפשריות.",
-        "generate-budget-button": "נתח תקציב",
-        "ai-budget-prompt": "נתח את התקציב המשוער הבא למשפחה בבואנוס איירס (USD): לינה (לילה): 50-120, אוכל (יום): 30-70, תחבורה (יום): 3-5, פעילויות (día): 20-50, entradas: 0-15. ספק פירוט משוער ליום ולפי קטגוריה, והצע 2-3 דרכים לייעל או לחסוך בתקציב זה מבלי לוותר על החוויה המשפחתית. פרמט את התשובה בפסקאות.",
-        "accommodation-title": "לינה (דוגמאות)",
-        "accommodation-0": "אלבאר פאלאס",
-        "accommodation-1": "מאדרו",
-        "accommodation-2": "איביס",
-        "accommodation-3": "Airbnb פלרמו",
-        "coordinates-title": "קואורדינטות משוערות",
-        "coordinates-text": "34° 36' S 58° 22' 48\" W",
-        "events-agenda-title": "לוח אירועים",
-        "event-0": "**29/09/2025**: פסטיבל טנגו באוויר הפתוח בכיכר דורגו",
-        "event-1": "**01/10/2025**: ליל המוזיאונים (כניסה חופשית למוזיאונים נבחרים)",
-        "download-agenda": "הורד את לוח האירועים המלא בפורמט iCal (.zip)",
-        "family-tips-title": "טיפים למשפחות",
-        "family-tip-0": "אזורי התיירות בטוחים ומחוברים היטב בתחבורה ציבורית (כרטיס SUBE).",
-        "family-tip-1": "יש הרבה פעילויות חינמיות ולכל הגילאים.",
-        "family-tip-2": "בסופי שבוע יש בדרך כלל מופעי רחוב וירידים.",
-        "family-tip-3": "מומלץ להזמין לינה מראש בפלרמו או רקולטה.",
-        "budget-title": "תקציב משוער",
-        "budget-concept": "מושג",
-        "budget-price": "מחיר משוער (USD)",
-        "budget-concept-0": "לינה (לילה, משפחה)",
-        "budget-price-0": "50–120",
-        "budget-concept-1": "אוכל (ליום, משפחה)",
-        "budget-price-1": "30–70",
-        "budget-concept-2": "תחבורה ציבורית (ליום)",
-        "budget-price-2": "3–5",
-        "budget-concept-3": "פעילויות וסיורים (ליום)",
-        "budget-price-3": "20–50",
-        "budget-concept-4": "כניסות למוזיאונים/אטרקציות",
-        "budget-price-4": "0–15",
-        "cultural-tips-title": "טיפים תרבותיים",
-        "cultural-tip-0": "השפה הרשמית היא ספרדית (ריו-פלטנסית, מאוד ידידותית).",
-        "cultural-tip-1": "מקובל לברך בנשיקה בלחי.",
-        "cultural-tip-2": "שעות הארוחות בדרך כלל מאוחרות יותר מאשר במדינות אחרות (ארוחת ערב החל מ-21:00).",
-        "cultural-tip-3": "המאטה הוא המשקה הלאומי.",
-        "map-title": "מפת בואנוס איירס",
-        "see-bigger-map": "לצפייה במפה גדולה יותר",
-        "back-link": "⬅ חזרה למפת המסלול"
-      }
-    };
-
-    // Tasas de cambio (se actualizan al cargar la página)
-    let tasas = {
-      ARS: 1,
-      USD: 1000, // Valor de ejemplo, se actualizará
-      ILS: 110   // Valor de ejemplo, se actualizará
-    };
-    // Símbolos de moneda
-    const simbolos = {
-      ARS: "$",
-      USD: "US$",
-      ILS: "₪"
-    };
-
-    let idiomaActual = 'es'; // Idioma predeterminado
-    let monedaActual = 'ARS'; // Moneda predeterminada
-
-    // Función para obtener tasas de cambio reales desde ExchangeRate-API
-    function actualizarTasas(callback) {
-      fetch('https://open.er-api.com/v6/latest/USD')
-        .then(response => response.json())
-        .then(data => {
-          if (data && data.result === "success") {
-            tasas.ARS = data.rates.ARS;
-            tasas.USD = 1;
-            tasas.ILS = data.rates.ILS;
-          }
-          if (typeof callback === "function") callback();
-        })
-        .catch(() => {
-          // Si falla, sigue con los valores por defecto
-          if (typeof callback === "function") callback();
-        });
-    }
-
-    function translatePage(language) {
-      idiomaActual = language; // Actualiza la variable global idiomaActual
-      document.body.dir = (language === 'he') ? 'rtl' : 'ltr';
-      document.title = translations[language]["page-title"];
-
-      document.querySelectorAll('[data-i18n]').forEach(el => {
-        const key = el.getAttribute('data-i18n');
-        if (translations[language][key]) { // Asegurarse de que la clave exista
-          if (key.includes('event-') || key.includes('stay-duration') || key.includes('how-to-arrive')) {
-            el.innerHTML = translations[language][key];
-          } else {
-            el.textContent = translations[language][key];
-          }
-        }
-      });
-      // Actualiza el estado activo de los botones de idioma
-      document.getElementById('btn-es').classList.toggle('active', language === 'es');
-      document.getElementById('btn-he').classList.toggle('active', language === 'he');
-      // Guarda la preferencia de idioma en localStorage
-      localStorage.setItem('idiomaPreferido', language);
-    }
-
-    function cambiarMoneda(moneda) {
-      monedaActual = moneda; // Actualiza la variable global monedaActual
-      document.getElementById('btn-ars').classList.toggle('active', moneda === 'ARS');
-      document.getElementById('btn-usd').classList.toggle('active', moneda === 'USD');
-      document.getElementById('btn-ils').classList.toggle('active', moneda === 'ILS');
-      // Guarda la preferencia de moneda en localStorage
-      localStorage.setItem('monedaPreferida', moneda);
-      // No hay tablas de precios dinámicas en esta página de ciudad, pero si se agregaran, se llamarían aquí.
-    }
-
-    // Función genérica para llamar a la API de Gemini
-    async function callGeminiAPI(promptKey, responseDivId, buttonId, loadingIndicatorId) {
-      const button = document.getElementById(buttonId);
-      const loadingIndicator = document.getElementById(loadingIndicatorId);
-      const responseDiv = document.getElementById(responseDivId);
-
-      button.disabled = true;
-      loadingIndicator.style.display = 'block';
-      responseDiv.textContent = ''; // Limpiar respuesta anterior
-
-      const currentLanguage = localStorage.getItem('idiomaPreferido') || 'es';
-      // Asegurarse de que el prompt se obtiene correctamente del diccionario
-      const promptText = translations[currentLanguage][promptKey];
-
-      if (!promptText) {
-        responseDiv.textContent = translations[currentLanguage]["ai-error"] + " (Prompt no encontrado)";
-        console.error(`Error: Prompt con clave '${promptKey}' no encontrado para el idioma '${currentLanguage}'.`);
-        button.disabled = false;
-        loadingIndicator.style.display = 'none';
-        return;
-      }
-
-      let chatHistory = [];
-      chatHistory.push({ role: "user", parts: [{ text: promptText }] });
-
-      const payload = {
-        contents: chatHistory,
-        generationConfig: {
-            responseMimeType: "text/plain"
-        }
-      };
-
-      const apiKey = ""; // La clave API se proporcionará en tiempo de ejecución por el entorno Canvas
-      const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
-
-      try {
-        const response = await fetch(apiUrl, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(payload)
-        });
-
-        const result = await response.json();
-
-        if (result.candidates && result.candidates.length > 0 &&
-            result.candidates[0].content && result.candidates[0].content.parts &&
-            result.candidates[0].content.parts.length > 0) {
-          const text = result.candidates[0].content.parts[0].text;
-          responseDiv.textContent = text;
-        } else {
-          responseDiv.textContent = translations[currentLanguage]["ai-error"];
-          console.error("Estructura de respuesta inesperada del LLM:", result);
-        }
-      } catch (error) {
-        responseDiv.textContent = translations[currentLanguage]["ai-error"];
-        console.error("Error al llamar a la API de Gemini:", error);
-      } finally {
-        button.disabled = false;
-        loadingIndicator.style.display = 'none';
+    // Simulación de IA para desarrollo offline
+    function mockIA(btnId, loadingId, respId, esp, heb) {
+      const btn = document.getElementById(btnId);
+      btn.onclick = () => {
+        btn.disabled = true;
+        document.getElementById(loadingId).style.display = "block";
+        setTimeout(() => {
+          document.getElementById(respId).innerHTML = (document.documentElement.lang === "he" ? heb : esp);
+          btn.disabled = false;
+          document.getElementById(loadingId).style.display = "none";
+        }, 1500);
       }
     }
-
-    // Inicialización de la página al cargar el DOM
-    document.addEventListener('DOMContentLoaded', function() {
-      // Carga las preferencias de idioma y moneda desde localStorage
-      const idiomaGuardado = localStorage.getItem('idiomaPreferido');
-      const monedaGuardada = localStorage.getItem('monedaPreferida');
-
-      // Aplica el idioma guardado o 'es' por defecto
-      translatePage(idiomaGuardado || 'es');
-      // Aplica la moneda guardada o 'ARS' por defecto
-      cambiarMoneda(monedaGuardada || 'ARS');
-
-      // Asocia los eventos click a los botones de IA
-      document.getElementById('generate-menu-btn').addEventListener('click', () =>
-        callGeminiAPI('ai-menu-prompt', 'ai-menu-response', 'generate-menu-btn', 'ai-menu-loading-indicator')
-      );
-      document.getElementById('generate-accommodation-btn').addEventListener('click', () =>
-        callGeminiAPI('ai-accommodation-prompt', 'ai-accommodation-response', 'generate-accommodation-btn', 'ai-accommodation-loading-indicator')
-      );
-      document.getElementById('generate-family-tips-btn').addEventListener('click', () =>
-        callGeminiAPI('ai-family-tips-prompt', 'ai-family-tips-response', 'generate-family-tips-btn', 'ai-family-tips-loading-indicator')
-      );
-      document.getElementById('generate-budget-btn').addEventListener('click', () =>
-        callGeminiAPI('ai-budget-prompt', 'ai-budget-response', 'generate-budget-btn', 'ai-budget-loading-indicator')
-      );
-    });
+    mockIA('generate-menu-btn', 'ai-menu-loading-indicator', 'ai-menu-response',
+      "Ejemplo de menú saludable: <br><b>Desayuno:</b> Omelette con espinaca y queso. <b>Almuerzo:</b> Ensalada de pollo y vegetales frescos. <b>Cena:</b> Pescado grillado con puré de calabaza.",
+      "תפריט לדוגמה: <br><b>ארוחת בוקר:</b> חביתה עם תרד וגבינה. <b>ארוחת צהריים:</b> סלט עוף וירקות טריים. <b>ארוחת ערב:</b> דג בגריל עם פירה דלעת."
+    );
+    mockIA('generate-accommodation-btn', 'ai-accommodation-loading-indicator', 'ai-accommodation-response',
+      "Sugerencias: <ul><li>Hotel Alvear Palace</li><li>Depto familiar en Palermo</li><li>Airbnb cerca de Recoleta</li></ul>",
+      "הצעות: <ul><li>מלון אלבאר פאלאס</li><li>דירה משפחתית בפלרמו</li><li>Airbnb ליד רקולטה</li></ul>"
+    );
+    mockIA('generate-family-tips-btn', 'ai-family-tips-loading-indicator', 'ai-family-tips-response',
+      "<ul><li>Usar la tarjeta SUBE para moverse.</li><li>Disfrutar espectáculos gratuitos los fines de semana.</li><li>Reservar alojamiento con anticipación.</li><li>Visitar museos con entrada libre.</li><li>Llevar paraguas por si llueve.</li></ul>",
+      "<ul><li>השתמשו בכרטיס SUBE לתחבורה ציבורית.</li><li>הופעות רחוב חינם בסופי שבוע.</li><li>להזמין לינה מראש.</li><li>לבקר במוזיאונים עם כניסה חופשית.</li><li>להביא מטריה לימים גשומים.</li></ul>"
+    );
+    mockIA('generate-budget-btn', 'ai-budget-loading-indicator', 'ai-budget-response',
+      "Presupuesto estimado diario: <ul><li>Alojamiento: 50-120 USD</li><li>Comida: 30-70 USD</li><li>Transporte: 3-5 USD</li><li>Actividades: 20-50 USD</li><li>Entradas: 0-15 USD</li></ul> Para ahorrar: reservar con anticipación, aprovechar actividades gratuitas y usar transporte público.",
+      "תקציב יומי משוער: <ul><li>לינה: 50-120 דולר</li><li>אוכל: 30-70 דולר</li><li>תחבורה: 3-5 דולר</li><li>פעילויות: 20-50 דולר</li><li>כניסות: 0-15 דולר</li></ul> לחסכון: להזמין מראש, לנצל פעילויות חינם ולהשתמש בתחבורה ציבורית."
+    );
   </script>
 </body>
 </html>
