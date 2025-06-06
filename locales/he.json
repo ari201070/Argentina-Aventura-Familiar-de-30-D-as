@@ -42,5 +42,12 @@
     ["חוחוי", "איגואסו", "טיסה", "2 שעות", 85000, "<a href='https://www.aerolineas.com.ar/' target='_blank'>Aerolineas Argentinas</a>"],
     ["איגואסו", "קוריינטס", "אוטובוס", "9 שעות", 40000, "<a href='https://www.crucerodelnorte.com.ar/' target='_blank'>Crucero del Norte</a>"],
     ["קוריינטס", "איברה", "רמיס/הסעה", "4 שעות", 60000, "<a href='https://corrientes.tur.ar/producto/esterosdelibera/' target='_blank'>Esteros del Iberá Turismo</a>"]
-  ]
+  ],
+  "welcome": "ברוכים הבאים לאפליקציית ריאקט",
+  "backToItinerary": "חזרה למסלול הראשי",
+  "aiQueryTitle": "שאילתא לבינה מלאכותית (ריאקט)",
+  "aiQueryButtonAsk": "שאל בינה מלאכותית",
+  "aiQueryButtonLoading": "טוען...",
+  "aiQueryErrorEmpty": "השאלה אינה יכולה להיות ריקה.",
+  "aiQueryMockResponsePrefix": "תגובה מדומה (ריאקט):"
 }

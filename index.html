@@ -166,9 +166,41 @@
   <script>
     // Mapa interactivo
     const map = L.map('map').setView([-34.5, -63], 4.2); // Ajusta la vista inicial si es necesario
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+
+    const tileLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '&copy; OpenStreetMap contributors'
-    }).addTo(map);
+    });
+
+    let mapErrorMessageDisplayed = false;
+    tileLayer.on('tileerror', function(errorEvent) { // Changed 'error' to 'errorEvent' to avoid conflict with any global 'error'
+      console.error('Tile load error:', errorEvent);
+      if (!mapErrorMessageDisplayed) {
+        mapErrorMessageDisplayed = true;
+        const mapDiv = document.getElementById('map');
+        if (mapDiv) {
+          const errorMessageDiv = document.createElement('div');
+          errorMessageDiv.style.position = 'absolute';
+          errorMessageDiv.style.top = '50%';
+          errorMessageDiv.style.left = '50%';
+          errorMessageDiv.style.transform = 'translate(-50%, -50%)';
+          errorMessageDiv.style.padding = '10px';
+          errorMessageDiv.style.backgroundColor = 'rgba(255, 255, 255, 0.9)'; // Slightly more opaque
+          errorMessageDiv.style.color = 'black';
+          errorMessageDiv.style.border = '1px solid red';
+          errorMessageDiv.style.borderRadius = '5px'; // Added border radius
+          errorMessageDiv.style.zIndex = '1000'; // Ensure it's on top
+          errorMessageDiv.style.textAlign = 'center'; // Center text
+          errorMessageDiv.textContent = 'Map tiles could not be loaded. Please check your internet connection or try again later.';
+          // Consider adding a data-key here if translations are set up for dynamic elements:
+          // errorMessageDiv.setAttribute('data-key', 'map_tile_error');
+          // And then call a translate function if available for dynamically added elements.
+          mapDiv.appendChild(errorMessageDiv);
+        }
+      }
+    });
+
+    tileLayer.addTo(map);
+
     const destinations = [
       { name: 'Buenos Aires', coords: [-34.6118, -58.3960] },
       { name: 'Rosario', coords: [-32.9442, -60.6505] },

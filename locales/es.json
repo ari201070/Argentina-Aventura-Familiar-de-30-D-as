@@ -42,5 +42,12 @@
     ["Jujuy", "Iguazú", "Vuelo", "2 h", 85000, "<a href='https://www.aerolineas.com.ar/' target='_blank'>Aerolineas Argentinas</a>"],
     ["Iguazú", "Corrientes", "Bus", "9 h", 40000, "<a href='https://www.crucerodelnorte.com.ar/' target='_blank'>Crucero del Norte</a>"],
     ["Corrientes", "Iberá", "Remis/Transfer", "4 h", 60000, "<a href='https://corrientes.tur.ar/producto/esterosdelibera/' target='_blank'>Esteros del Iberá Turismo</a>"]
-  ]
+  ],
+  "welcome": "Bienvenido a la App React",
+  "backToItinerary": "Volver al Itinerario Principal",
+  "aiQueryTitle": "Consulta a IA (React)",
+  "aiQueryButtonAsk": "Consultar IA",
+  "aiQueryButtonLoading": "Cargando...",
+  "aiQueryErrorEmpty": "La pregunta no puede estar vacía.",
+  "aiQueryMockResponsePrefix": "Respuesta simulada (React):"
 }

@@ -1,6 +1,7 @@
 import React from 'react';
 import './i18n'; // Importa la configuración de i18next
 import { useTranslation } from 'react-i18next';
+import AIQuery from './components/AIQuery/AIQuery';
 
 function App() {
   const { t, i18n } = useTranslation();
@@ -32,6 +33,7 @@ function App() {
         <h1>{t('welcome')}</h1>
         <a href="/">{t('backToItinerary')}</a>
         {/* Aquí tu contenido, usando t('clave') para traducir */}
+        <AIQuery />
       </main>
     </div>
   );
