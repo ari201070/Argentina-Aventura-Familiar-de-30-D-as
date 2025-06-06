@@ -1,4 +1,27 @@
-body {
+.table-restaurantes, .table-cafes, .table-presupuesto {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 18px auto 28px auto;
+  background: #f7fbff;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  border-radius: 8px;
+  overflow: hidden;
+  max-width: 750px;
+}
+.table-restaurantes th, .table-restaurantes td,
+.table-cafes th, .table-cafes td,
+.table-presupuesto th, .table-presupuesto td {
+  border: 1px solid #b3c7e6;
+  padding: 10px 15px;
+  text-align: left;
+  font-size: 16px;
+}
+.table-restaurantes th, .table-cafes th, .table-presupuesto th {
+  background: #e6f0fa;
+  font-weight: bold;
+}
+.table-restaurantes tr:nth-child(even), .table-cafes tr:nth-child(even), .table-presupuesto tr:nth-child(even) {
+  background-color: #f9f9f9;
 }
 .table-restaurantes tr:hover, .table-cafes tr:hover, .table-presupuesto tr:hover {
   background-color: #f1f1f1;
@@ -9,83 +32,4 @@ body {
 }
 .table-restaurantes td a:hover, .table-cafes td a:hover {
   color: #3f7edb;
-}
-
-/* ---------- TÍTULOS Y SECCIONES ---------- */
-h2, h3 {
-  color: #0F4761;
-  margin-top: 32px;
-  margin-bottom: 12px;
-}
-h1 {
-  color: #312878;
-  margin: 36px 0 12px 0;
-}
-.city-cover {
-  text-align: center;
-  margin-bottom: 24px;
-}
-.city-cover-img {
-  width: 100%;
-  max-width: 900px;
-  height: auto;
-  border-radius: 16px;
-  box-shadow: 0 3px 16px rgba(0,0,0,0.15);
-}
-
-/* ---------- IA SECTIONS ---------- */
-.ai-section {
-  background: #e6f0fa;
-  padding: 20px;
-  border-radius: 8px;
-  margin: 34px auto 30px auto;
-  max-width: 750px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.10);
-}
-.ai-section h2 {
-  color: #2176d2;
-  margin-top: 0;
-}
-.ai-button {
-  background-color: #7c6ae5;
-  color: white;
-  padding: 12px 20px;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  font-size: 16px;
-  transition: background-color 0.3s;
-  margin: 15px 0 0 0;
-  font-weight: 600;
-  display: block;
-  max-width: 350px;
-}
-.ai-button:hover {
-  background-color: #4b3fb2;
-}
-.ai-button:disabled {
-  background-color: #cccccc;
-  cursor: not-allowed;
-}
-.ai-loading {
-  text-align: center;
-  font-style: italic;
-  color: #666;
-  margin: 10px 0;
-}
-.ai-response {
-  margin-top: 16px;
-  padding: 15px;
-  background-color: #ffffff;
-  border: 1px solid #d0e0f0;
-  border-radius: 6px;
-  white-space: pre-wrap;
-  font-size: 15px;
-  line-height: 1.6;
-  min-height: 50px;
-}
-
-/* ---------- UL Y LI ---------- */
-ul {
-  margin-bottom: 20px;
 }
