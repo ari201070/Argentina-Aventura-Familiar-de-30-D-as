@@ -3,91 +3,35 @@ node_modules/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-pnpm-debug.log*
-package-lock.json
-yarn.lock
-.pnpm-debug.log
+.pnpm-debug.log*
 
-# Build output
-dist/
-build/
-out/
-coverage/
-.tmp/
-temp/
-.cache/
-.next/
-.nuxt/
-.svelte-kit/
-.eslintcache
-.vite/
-vite.config.ts
-
-# Logs
-logs/
-*.log
-
-# OS
+# Sistemas operativos
 .DS_Store
-Thumbs.db
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
 ehthumbs.db
-Icon?
-Desktop.ini
+Thumbs.db
 
-# IDEs
-.vscode/
+# Editores y IDEs
 .idea/
+.vscode/
 *.suo
 *.ntvs*
 *.njsproj
 *.sln
 *.sw?
+*.sublime-project
+*.sublime-workspace
 
-# Python (si usas)
-__pycache__/
-*.pyc
-*.pyo
-*.pyd
-.env
-.venv/
+# Logs y temporales
+/logs/
+/tmp/
+*.log
+*.pid
+*.seed
+*.pid.lock
 
-# Misc
-.env.*
-.env
-*.local
-*.test.js
-*.test.ts
-*.spec.js
-*.spec.ts
-
-# Frontend
-*.map
-*.lock
-.cache/
-bower_components/
-jspm_packages/
-typings/
-jspm_packages/
-*.tsbuildinfo
-
-# Mac
-.AppleDouble
-.LSOverride
-
-# Windows
-$RECYCLE.BIN/
-*.cab
-*.msi
-*.msm
-*.msp
-
-# CopilotForXcode
-xcuserdata/
-*.xcworkspace
-*.xcodeproj
-*.xcuserstate
-*.xcuserdatad
-
-# Others
-*.bak
-*.tmp
+# Archivos vacíos
+*.empty

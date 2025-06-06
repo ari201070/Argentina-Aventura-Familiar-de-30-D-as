@@ -1,4 +1,3 @@
-
 let lang = localStorage.getItem('lang') || 'es';
 let currency = localStorage.getItem('currency') || 'ARS';
 // rates[X] almacenará cuántas unidades de la moneda X equivalen a 1 ARS.
