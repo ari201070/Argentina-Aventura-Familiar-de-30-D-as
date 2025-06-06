@@ -1,18 +1,7 @@
-
 let lang = localStorage.getItem('lang') || 'es';
 let currency = localStorage.getItem('currency') || 'ARS';
-<<<<<<< Updated upstream
-// Tasas base, se intentarán actualizar. Estos son los valores por ARS (1 ARS = X USD)
-// La API devuelve X USD por 1 ARS, por lo que necesitamos invertirlo.
-// La caché almacenará las tasas directas de la API.
-const rates = { ARS: 1, USD: 1/0.0011, EUR: 1/0.0009, ILS: 1/0.0037 }; // Valores iniciales como ARS por unidad de moneda extranjera
-
-const STATIC_CURRENCY_RATES_KEY = 'staticCurrencyRates';
-const CURRENCY_CACHE_DURATION_MS = 24 * 60 * 60 * 1000; // 24 hours
-=======
 // rates[X] almacenará cuántas unidades de la moneda X equivalen a 1 ARS.
 const rates = { ARS: 1, USD: 0.001, EUR: 0.0009, ILS: 0.0037 }; // Tasas base iniciales
->>>>>>> Stashed changes
 
 async function loadTranslations(lang) {
   try {
@@ -40,72 +29,7 @@ async function loadTranslations(lang) {
 }
 
 async function updateExchangeRates() {
-    let cachedData = null;
     try {
-        const cachedDataString = localStorage.getItem(STATIC_CURRENCY_RATES_KEY);
-        if (cachedDataString) {
-            cachedData = JSON.parse(cachedDataString);
-            if (cachedData.timestamp && (Date.now() - new Date(cachedData.timestamp).getTime() < CURRENCY_CACHE_DURATION_MS)) {
-                if (cachedData.apiRates) {
-                    console.log("Using cached currency rates.");
-                    // Populate global rates from cached API rates, applying inversion
-                    rates.USD = 1 / cachedData.apiRates.USD;
-                    rates.EUR = 1 / cachedData.apiRates.EUR;
-                    rates.ILS = 1 / cachedData.apiRates.ILS;
-                    rates.ARS = 1; // ARS is the base
-                    // console.log("Rates populated from fresh cache:", rates);
-                    return; // Exit if fresh cache is used
-                }
-            }
-        }
-    } catch (e) {
-        console.warn("Error reading or parsing currency cache:", e);
-        // Proceed to fetch, cachedData might be null or stale
-    }
-
-    try {
-<<<<<<< Updated upstream
-        // Nota: Debes reemplazar 'YOUR_API_KEY' por tu clave real de exchangerate-api.com u otro proveedor.
-        // O usar una API gratuita sin clave si está disponible y es confiable.
-        // Ejemplo con una API pública (puede tener limitaciones de uso):
-        console.log("Fetching rates from API...");
-        const response = await fetch('https://open.er-api.com/v6/latest/ARS'); // Base ARS
-        const data = await response.json();
-        if (data && data.rates) {
-            // Populate global rates from API, applying inversion
-            rates.USD = 1 / data.rates.USD;
-            rates.EUR = 1 / data.rates.EUR;
-            rates.ILS = 1 / data.rates.ILS;
-            rates.ARS = 1; // ARS es la base
-
-            // Store raw API rates in cache
-            localStorage.setItem(STATIC_CURRENCY_RATES_KEY, JSON.stringify({
-                timestamp: new Date().toISOString(),
-                apiRates: data.rates
-            }));
-            console.log("Rates updated from API and cached:", rates);
-        } else {
-            // API did not return expected data, try using stale cache if available
-            throw new Error("API response did not contain valid rates data.");
-        }
-    } catch (error) {
-        console.warn("Error updating exchange rates from API:", error.message);
-        if (cachedData && cachedData.apiRates) {
-            // Use stale cache as fallback
-            console.warn("API fetch failed. Using stale cached currency rates.");
-            rates.USD = 1 / cachedData.apiRates.USD;
-            rates.EUR = 1 / cachedData.apiRates.EUR;
-            rates.ILS = 1 / cachedData.apiRates.ILS;
-            rates.ARS = 1;
-            // console.log("Rates populated from stale cache:", rates);
-        } else {
-            // No cache available (neither fresh nor stale) and API failed
-            console.warn("API fetch failed. No cached rates available. Using default hardcoded rates.");
-            // The global `rates` will retain their initial hardcoded values in this case.
-            // Ensure ARS is 1 if somehow it was altered
-            rates.ARS = 1;
-        }
-=======
         const response = await fetch('https://open.er-api.com/v6/latest/ARS'); // Base ARS
         const data = await response.json();
         if (data && data.rates) {
@@ -119,7 +43,6 @@ async function updateExchangeRates() {
         }
     } catch (error) {
         console.warn("Error actualizando tasas de cambio desde API, usando valores por defecto:", error);
->>>>>>> Stashed changes
     }
 }
 
