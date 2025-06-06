@@ -1,53 +1,110 @@
-
 {
-  "tituloPrincipal": "מסלול משפחתי בארגנטינה",
-  "bienvenidaPrincipal": "ברוכים הבאים! לחצו על כל עיר למידע, מפות והמלצות.",
-  "idioma": "שפה:",
-  "moneda": "מטבע:",
-  "buenosaires_title": "בואנוס איירס",
-  "rosario_title": "רוסאריו",
-  "bariloche_title": "ברילוצ'ה",
-  "mendoza_title": "מנדוסה",
-  "malargue_title": "מלארגואה",
-  "jujuy_title": "חוחוי",
-  "iguazu_title": "איגואסו",
-  "corrientes_title": "קוריינטס",
-  "ibera_title": "איברה",
-  "explore_btn": "לפרטים נוספים",
-  "transporte": "תחבורה בין ערים",
-  "desde": "מקור",
-  "hasta": "יעד",
-  "medio": "אמצעי",
-  "tiempo": "זמן",
-  "precio": "מחיר משוער",
-  "compania": "חברה",
-  "mapaInteractivoTitulo": "מפה אינטראקטיבית של הטיול המשפחתי",
-  "mapaInteractivoBienvenida": "סיירו במסלול המשפחתי בארגנטינה. לחצו על כל עיר לפרטים.",
-  "packing_title": "רשימת ציוד",
-  "packing_add": "הוסף",
-  "packing_essential": "חיוניים",
-  "packing_optional": "אופציונליים",
-  "packing_placeholder": "מה עוד אתם לוקחים?",
-  "conversorTitulo": "ממיר מטבעות",
-  "convertirBtn": "המר",
-  "iaTitulo": "שאלה לבינה מלאכותית",
-  "iaPlaceholder": "כתוב כאן את שאלתך על הטיול...",
-  "consultarBtn": "שאל",
-  "ia_response_prefix": "תשובה מדומה מבינה מלאכותית:",
-  "tablaTransporte": [
-    ["בואנוס איירס", "רוסאריו", "אוטובוס", "4 שעות", 20000, "<a href='https://busplus.com.ar/' target='_blank'>BusPlus</a>"],
-    ["רוסאריו", "מנדוסה", "אוטובוס", "13 שעות", 50000, "<a href='https://www.andesmar.com/' target='_blank'>Andesmar</a>"],
-    ["מנדוסה", "מלארגואה", "אוטובוס", "6 שעות", 18000, "<a href='https://www.catainternacional.com/' target='_blank'>CATA</a>"],
-    ["מלארגואה", "חוחוי", "טיסה + אוטובוס", "10 שעות", 110000, "<a href='https://www.centraldepasajes.com.ar/cdp/pasajes-micro/mendoza/san-salvador-de-jujuy' target='_blank'>כרטיסים מוזלים</a>"],
-    ["חוחוי", "איגואסו", "טיסה", "2 שעות", 85000, "<a href='https://www.aerolineas.com.ar/' target='_blank'>Aerolineas Argentinas</a>"],
-    ["איגואסו", "קוריינטס", "אוטובוס", "9 שעות", 40000, "<a href='https://www.crucerodelnorte.com.ar/' target='_blank'>Crucero del Norte</a>"],
-    ["קוריינטס", "איברה", "רמיס/הסעה", "4 שעות", 60000, "<a href='https://corrientes.tur.ar/producto/esterosdelibera/' target='_blank'>Esteros del Iberá Turismo</a>"]
-  ],
-  "welcome": "ברוכים הבאים לאפליקציית ריאקט",
-  "backToItinerary": "חזרה למסלול הראשי",
-  "aiQueryTitle": "שאילתא לבינה מלאכותית (ריאקט)",
-  "aiQueryButtonAsk": "שאל בינה מלאכותית",
-  "aiQueryButtonLoading": "טוען...",
-  "aiQueryErrorEmpty": "השאלה אינה יכולה להיות ריקה.",
-  "aiQueryMockResponsePrefix": "תגובה מדומה (ריאקט):"
+  "welcome.title": "ברוכים הבאים למסע שלכם בארגנטינה",
+  "currencyConverter.title": " ממיר מטבע מודרני",
+  "convert": "להמיר",
+  "packingList.title": "רשימת מזוודה",
+  "addItem": "הוסף פריט",
+  "aiQuery.title": "שאלה ל-IA",
+  "backToItinerary": "⬅ חזור למסלול",
+  "exploreDetails": "גלה עוד פרטים",
+  "transport": {
+    "from": "מ",
+    "to": "אל",
+    "company": "חברה"
+  },
+  "rosario": {
+    "title": "רוסאריו",
+    "introduction": {
+      "title": "הקדמה",
+      "text": "רוסאריו היא עיר דינמית על חוף נהר הפרנה, ידועה בהיסטוריה, תרבות וחיי לילה. מומלצת למשפחות עם ילדים ומבוגרים."
+    },
+    "activities": {
+      "title": "פעילויות מומלצות",
+      "1": "ביקור במנצהל תג התערוכה",
+      "2": "הליכה לאורך הנהר",
+      "3": "סיור בפארק העצמאות",
+      "4": "ביקור במוזיאון האמנות העכשווית (MACRO)"
+    },
+    "food": {
+      "title": "אכילה",
+      "description": "רוסאריו מציעה אפשרויות כמו מסעדות משפחתיות, סטייקים טיפוסיים וקרמיות ביתיות.",
+      "1": "רוק אנד פלר (בדקו אם אין גלוטן)",
+      "2": "קרמיות מקומיות",
+      "3": "בתי פיצה משפחתיים"
+    },
+    "accommodation": {
+      "title": "אכסון מומלץ",
+      "text": "דירות מרכזיות או קרוב לנהר (פישינצ'ה). מומלץ:",
+      "1": "מלון NH Collection Rosario",
+      "2": "דירות באזור פישינצ'ה"
+    },
+    "agenda": {
+      "title": "לוח אירועים",
+      "1": "שוק סן מיגל (בשישי)",
+      "2": "חגיגת הביילה הלאומית (אפריל)",
+      "3": "תערוכת מוצרים אזוריים (ספטמבר)"
+    },
+    "transport": {
+      "title": "תחבורה",
+      "text": "רוסאריו מציעה תחבורה ציבורית נגישה וטקסיס זולים. מומלץ:",
+      "1": "רכבת מטרופולינית (חיבור לנמל התעופה)",
+      "2": "אפליקציות נסיעות (אויבר, דידי)"
+    }
+  },
+  "buenosaires": {
+    "title": "בונס איירס",
+    "description": " столית תרבותית עם גנים ומוזיאונים.",
+    "introduction": {
+      "text": "בונס איירס היא בירת ארגנטינה, ידועה באדריכלות אירופאית, חיי תרבות ומטבח."
+    }
+  },
+  "bariloche": {
+    "title": "סן קרלוס דה בריילושה",
+    "description": "הרפתקה באנדים הפתגוניים.",
+    "introduction": {
+      "text": "בריילושה היא יעד אידיאלי לאוהבי טבע, עם אגמים, הרים ופעילויות באוויר הפתוח."
+    }
+  },
+  "mendoza": {
+    "title": "מנדוסה",
+    "description": "מסלול היין וההרים.",
+    "introduction": {
+      "text": "מנדוסה מפורסמת בכריית היין שלה, יינות והנוף האנדי."
+    }
+  },
+  "malargue": {
+    "title": "מלרגה",
+    "description": "הרפתקה בהר האנדים.",
+    "introduction": {
+      "text": "מלרגה מציעה נושאים מדבריים ופעילויות הרפתקה בהר."
+    }
+  },
+  "jujuy": {
+    "title": "ג'וג'וי",
+    "description": "צבעים של נחלות המוהומוקה.",
+    "introduction": {
+      "text": "ג'וג'וי ידועה בנושאים המגוונים שלה ותרבות האנדית."
+    }
+  },
+  "iguazu": {
+    "title": "פורטו איגואזו",
+    "description": "קטארקטים וטבע מרשימים.",
+    "introduction": {
+      "text": "איגואזו מפורסם בקטארקטים שלו ויער הגשם הטרופי."
+    }
+  },
+  "corrientes": {
+    "title": "קורינטס",
+    "description": "תרבות צ'ממרית והומדלים.",
+    "introduction": {
+      "text": "קורינטס משלבת מסורות תרבותיות עם נושאים של נהרות והומדלים."
+    }
+  },
+  "ibera": {
+    "title": "אסטרוס דל איברה",
+    "description": "שמורות טבע וחיות ייחודיות.",
+    "introduction": {
+      "text": "איברה היא גן עדן טבעי עם חיות ייחודיות ופעילויות אקוטוריסטיקה."
+    }
+  }
 }
