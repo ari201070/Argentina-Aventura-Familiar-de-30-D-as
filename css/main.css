@@ -1,306 +1,35 @@
-/* Reset y fuentes */
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
-body {
-  font-family: 'Segoe UI', Arial, sans-serif;
-  background: #f4f5ff; /* Un fondo suave general */
-  color: #222;
-  min-height: 100vh;
-  direction: ltr; /* Dirección por defecto */
-}
-
-body[dir="rtl"] {
-  direction: rtl;
-}
-
-/* Barra superior fija */
-.top-bar {
-  position: fixed;
-  top: 0;
-  right: 0;
-  left: 0;
-  background: #fff;
-  z-index: 100;
-  height: 54px;
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  padding: 0 24px;
-  box-shadow: 0 2px 8px rgba(80,70,180,0.07);
-}
-
-.top-bar span {
-  margin: 0 5px 0 15px;
-  font-size: 0.95em;
-}
-
-.btn-lang, .btn-currency {
-  background: none;
-  border: 1px solid #ddd;
-  font-weight: 600;
-  font-size: 0.9em;
-  color: #7c6ae5;
-  margin: 0 3px;
-  cursor: pointer;
-  padding: 6px 10px;
-  border-radius: 6px;
-  transition: background 0.15s, color 0.15s;
-}
-
-.btn-lang:hover, .btn-currency:hover {
-  background: #f0eefc;
-}
-
-.btn-lang.active, .btn-currency.active {
-  background: #7c6ae5;
-  color: #fff;
-  border-color: #7c6ae5;
-}
-
-
-/* Contenedor principal */
-.main-container {
-  max-width: 1100px;
-  margin: 80px auto 0 auto; /* Espacio para la barra superior */
-  padding: 24px;
-  background: #fff;
-  border-radius: 18px;
-  box-shadow: 0 4px 16px rgba(80,70,180,0.08);
-}
-
-h1[data-key="tituloPrincipal"] {
-  text-align: center;
-  color: #333;
-  margin-bottom: 12px;
-}
-p[data-key="bienvenidaPrincipal"] {
-  text-align: center;
-  color: #555;
-  margin-bottom: 30px;
-  font-size: 1.1em;
-}
-
-/* Tarjetas de ciudades */
-.cards-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(330px, 1fr)); /* Tarjetas más anchas */
-  gap: 28px;
-  margin: 32px 0;
-}
-
-.card {
-  position: relative;
-  height: 340px; /* Altura aumentada para tarjetas más anchas */
-  border-radius: 16px;
-  overflow: hidden;
-  background-size: cover;
-  background-position: center;
-  box-shadow: 0 2px 12px rgba(80,70,180,0.09);
-  display: flex;
-  align-items: flex-end; /* Contenido al final */
-  transition: transform 0.13s, box-shadow 0.13s;
-  cursor: pointer;
-}
-
-.card:hover {
-  transform: translateY(-6px) scale(1.03);
-  box-shadow: 0 6px 24px rgba(80,70,180,0.14);
-}
-
-.card-content {
-  background: linear-gradient(0deg, rgba(30,30,30,0.93) 85%, transparent);
-  color: #fff;
-  width: 100%;
-  padding: 22px 18px 16px 18px;
-  border-radius: 0 0 16px 16px; /* Solo abajo */
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-}
-
-.card-content h3 {
-  font-size: 1.45em;
-  font-weight: 700;
-  margin-bottom: 12px; /* Más espacio para el botón */
-}
-
-.btn-visit {
-  background: #7c6ae5;
-  color: #fff;
-  border: none;
-  border-radius: 8px;
-  font-size: 1em;
-  padding: 8px 18px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background 0.15s;
-  align-self: flex-start; /* Alinea el botón a la izquierda dentro del card-content */
-}
-
-.btn-visit:hover {
-  background: #4b3fb2; /* Un hover más oscuro */
-}
-
-/* Imágenes de fondo para cada ciudad */
-.card-buenosaires { background-image: url('../docs/imagenes/buenosaires/buenosaires.jpg'); }
-.card-rosario { background-image: url('../docs/imagenes/rosario/Monumento-a-la-Bandera-1024x768.jpg'); }
-.card-bariloche { background-image: url('../docs/imagenes/bariloche/emilio-lujan-HhobdGoYzaA-unsplash.jpg'); }
-.card-mendoza { background-image: url('../docs/imagenes/mendoza/Mendoza-Puente-del-Inca.jpg'); }
-.card-malargue { background-image: url('../docs/imagenes/malargue/Malargue-Argentina.jpg'); }
-.card-jujuy { background-image: url('../docs/imagenes/jujuy/julieta-acosta-u4GAAc-myrg-unsplash.jpg'); }
-.card-iguazu { background-image: url('../docs/imagenes/iguazu/claudio-mota-R9ZvATRLDSk-unsplash.jpg'); }
-.card-corrientes { background-image: url('../docs/imagenes/corrientes/fachy-marin-A5xJay6N_fI-unsplash.jpg'); }
-.card-ibera { background-image: url('../docs/imagenes/ibera/snapsaga-DMVuTOv5Vys-unsplash.jpg'); }
-
-
-/* Tabla transporte */
-h2[data-key="transporte"], h2[data-key="mapaInteractivoTitulo"] {
-    text-align: center;
-    margin-top: 40px;
-    margin-bottom: 15px;
-    color: #333;
-}
-.table-transporte {
+/* Tablas de gastronomía y cafés con diseño estándar */
+.table-restaurantes, .table-cafes {
   width: 100%;
   border-collapse: collapse;
-  margin: 20px 0 30px 0;
-  font-size: 1em;
+  margin: 18px auto 28px auto;
+  background: #f7fbff;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  border-radius: 8px;
+  overflow: hidden;
+  max-width: 750px;
 }
-.table-transporte th, .table-transporte td {
-  border: 1px solid #ddd;
-  padding: 10px 12px;
+.table-restaurantes th, .table-restaurantes td,
+.table-cafes th, .table-cafes td {
+  border: 1px solid #b3c7e6;
+  padding: 10px 15px;
   text-align: left;
+  font-size: 16px;
 }
-.table-transporte th {
-  background: #e5e3fa; /* Color suave para header de tabla */
-  color: #4b3fb2;
-  font-weight: 600;
+.table-restaurantes th, .table-cafes th {
+  background: #e6f0fa;
+  font-weight: bold;
 }
-.table-transporte tr:nth-child(even) {
+.table-restaurantes tr:nth-child(even), .table-cafes tr:nth-child(even) {
   background-color: #f9f9f9;
 }
-.table-transporte tr:hover {
+.table-restaurantes tr:hover, .table-cafes tr:hover {
   background-color: #f1f1f1;
 }
-.table-transporte td a {
-    color: #7c6ae5;
-    text-decoration: none;
-    font-weight: 500;
+.table-restaurantes td a, .table-cafes td a {
+  color: #2553a2;
+  text-decoration: underline;
 }
-.table-transporte td a:hover {
-    text-decoration: underline;
-}
-
-
-/* Secciones personalizadas (Lista de equipaje, IA, Conversor) */
-.custom-section {
-  background: #f6f7fb; /* Fondo ligeramente diferente para destacar */
-  border-radius: 12px;
-  padding: 20px;
-  margin: 30px 0;
-  box-shadow: 0 2px 8px rgba(80,70,180,0.07);
-}
-.custom-section h2 {
-  color: #333;
-  margin-top: 0;
-  margin-bottom: 20px;
-  font-size: 1.5em;
-  display: flex;
-  align-items: center;
-}
-.custom-section h2 .fas { /* Iconos de FontAwesome */
-  margin-right: 10px;
-}
-
-.custom-btn {
-  background: #7c6ae5;
-  color: #fff;
-  border: none;
-  border-radius: 8px;
-  font-size: 1em;
-  padding: 8px 18px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background 0.15s;
-}
-.custom-btn:hover {
-  background: #4b3fb2;
-}
-
-.custom-select, .custom-input, textarea#iaQuestion {
-  font-size: 1em;
-  padding: 7px 12px;
-  border-radius: 6px;
-  border: 1px solid #b3b3b3;
-  margin: 0 7px 7px 0;
-}
-input#amount { width: 100px; }
-textarea#iaQuestion {
-    width: calc(100% - 130px); /* Ajustar al lado del botón */
-    min-height: 40px;
-    vertical-align: middle;
-}
-button#iaSubmit { vertical-align: middle; }
-
-
-/* Lista de equipaje específica */
-.packing-controls {
-  margin-bottom: 15px;
-  display: flex;
-  align-items: center;
-}
-.packing-lists {
-  display: flex;
-  justify-content: space-between;
-  gap: 20px;
-}
-.packing-lists h4 {
-  color: #555;
-  margin-bottom: 8px;
-}
-.packing-lists ul {
-  list-style: none;
-  padding: 0;
-}
-.packing-lists ul li {
-  padding: 5px 0;
-  font-size: 1em;
-}
-
-
-/* Footer */
-.footer {
-  background: #e5e3fa;
-  color: #4b3fb2;
-  text-align: center;
-  padding: 16px 0;
-  margin-top: 40px;
-  border-radius: 0 0 18px 18px; /* Solo abajo, si main-container tiene el superior */
-}
-
-/* Media queries */
-@media (max-width: 900px) {
-  .main-container { padding: 15px; }
-  .cards-container { grid-template-columns: 1fr 1fr; } /* Dos tarjetas en tablets */
-  .card { height: 280px; } /* Reducir un poco la altura */
-}
-
-@media (max-width: 600px) {
-  .top-bar {
-    padding: 10px;
-    height: auto;
-    flex-direction: column;
-    gap: 8px;
-  }
-  .top-bar span { margin: 0 5px; }
-  .main-container { margin-top: 120px; /* Más espacio por barra superior más alta */ padding: 10px; }
-  .cards-container { grid-template-columns: 1fr; } /* Una tarjeta en móviles */
-  .card { height: 250px; }
-  .packing-lists { flex-direction: column; }
-  textarea#iaQuestion { width: 100%; margin-bottom: 10px; }
-  button#iaSubmit { width: 100%; }
+.table-restaurantes td a:hover, .table-cafes td a:hover {
+  color: #3f7edb;
 }
