@@ -114,3 +114,7 @@ La gastronomía de Bariloche es famosa por sus chocolates, carnes de caza (cierv
 ## Mapa de Bariloche
 
 [Ver mapa más grande](https://www.openstreetmap.org/#map=12/-41.133/-71.328)
+
+## Imagen de Bariloche
+
+https://drive.google.com/file/d/1xAFu-3SicDoAbH_Bj5FRtdWgQmm7LfFk/view?usp=drive_link
