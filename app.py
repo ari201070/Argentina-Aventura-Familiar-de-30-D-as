@@ -14,7 +14,7 @@ st.write("¡Bienvenido! Esta herramienta te ayudará a planificar tu viaje.")
 try:
     api_key = st.secrets["GEMINI_API_KEY"]
     genai.configure(api_key=api_key)
-    model = genai.GenerativeModel('gemini-1.5-pro-latest')
+    model = genai.GenerativeModel('gemini-1.5-flash-latest')
     st.success("Conexión con la API de Gemini exitosa.")
 except KeyError:
     st.error("Error: La clave de API de Gemini no se encuentra en los Secrets de Streamlit.")
