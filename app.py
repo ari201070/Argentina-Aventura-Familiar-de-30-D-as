@@ -1,40 +1,45 @@
 # app.py
 import streamlit as st
-import subprocess # Esta librería nos permite ejecutar comandos de la terminal, como "gemini"
+import google.generativeai as genai
+import os
 
-# --- Configuración de la Página ---
+# --- Configuración de la Página y Título ---
 st.set_page_config(page_title="Aventura Familiar Argentina", layout="wide")
 st.title("Generador de Itinerarios para Aventura Familiar en Argentina 🇦🇷")
-st.write("Usa esta herramienta para generar ideas y planes para tu viaje. Simplemente escribe lo que necesitas y la IA te ayudará.")
+st.write("¡Bienvenido! Esta herramienta te ayudará a planificar tu viaje.")
 
-# --- Área de Interacción con el Usuario ---
-# Un área de texto grande para que el usuario escriba su petición
-prompt_usuario = st.text_area("Escribe tu petición aquí (ej: 'Dame un itinerario de 3 días para ver cataratas en Iguazú con niños de 8 y 10 años')", height=150)
+# --- Configuración de la API de Gemini ---
+# IMPORTANTE: Debes configurar tu clave de API en los "Secrets" de Streamlit
+# El nombre del secret debe ser "GEMINI_API_KEY"
+try:
+    api_key = st.secrets["GEMINI_API_KEY"]
+    genai.configure(api_key=api_key)
+    model = genai.GenerativeModel('gemini-1.5-pro-latest')
+    st.success("Conexión con la API de Gemini exitosa.")
+except KeyError:
+    st.error("Error: La clave de API de Gemini no se encuentra en los Secrets de Streamlit.")
+    st.info("Por favor, añade 'GEMINI_API_KEY = \"tu_clave_aqui\"' a los secrets de tu app.")
+    st.stop()
+except Exception as e:
+    st.error(f"Ocurrió un error al configurar la API: {e}")
+    st.stop()
 
-# El botón que iniciará la magia
+
+# --- Interfaz de Usuario ---
+prompt_usuario = st.text_area("Describe el tipo de itinerario que deseas:", "Ej: Un itinerario de 5 días por el norte de Argentina, enfocado en naturaleza y con actividades para niños.")
+
 if st.button("Generar Itinerario"):
-    if prompt_usuario: # Nos aseguramos de que el usuario haya escrito algo
-        # Mostramos un mensaje de "cargando" para que el usuario sepa que algo está pasando
-        with st.spinner("Contactando a la IA de Gemini... por favor, espera."):
+    if prompt_usuario:
+        with st.spinner("Generando tu aventura... Por favor, espera."):
             try:
-                # --- ¡AQUÍ ESTÁ LA MAGIA! ---
-                # Ejecutamos el comando "gemini" con el prompt del usuario
-                # subprocess.run es como escribir "gemini 'el texto del usuario'" en la terminal
-                comando = ["gemini", prompt_usuario]
-                resultado = subprocess.run(comando, capture_output=True, text=True, check=True)
-
-                # Si el comando fue exitoso, mostramos la respuesta
-                st.subheader("💡 Respuesta de Gemini:")
-                st.markdown(resultado.stdout) # stdout es la respuesta estándar del comando
-
-            except subprocess.CalledProcessError as e:
-                # Si el comando falla, mostramos un error útil
-                st.error(f"Ocurrió un error al ejecutar Gemini:")
-                st.code(e.stderr) # stderr es el mensaje de error del comando
-            except FileNotFoundError:
-                # Este error ocurre si Streamlit Cloud no puede encontrar el comando "gemini"
-                st.error("Error crítico: El comando 'gemini' no se encontró en el entorno de la aplicación.")
-
+                # --- Llamada a la API de Gemini ---
+                response = model.generate_content(prompt_usuario)
+                
+                # --- Mostrar la Respuesta ---
+                st.subheader("Aquí tienes tu itinerario propuesto:")
+                st.markdown(response.text)
+                st.balloons()
+            except Exception as e:
+                st.error(f"Ocurrió un error al generar la respuesta de Gemini: {e}")
     else:
-        # Si el usuario no escribió nada, le avisamos
-        st.warning("Por favor, escribe una petición en el área de texto.")
+        st.warning("Por favor, escribe una descripción para generar el itinerario.")
