@@ -1,3 +1,2 @@
-# requirements.txt
 streamlit
-google-gemini-cli
+google-generativeai
