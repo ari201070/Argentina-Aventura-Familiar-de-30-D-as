@@ -7,31 +7,32 @@ San Carlos de Bariloche, la capital de los Lagos, es un destino de montaña en l
 ## Fechas y duración
 
 - **Estadía**: 05/10 al 09/10 (5 días)
-- **Cómo llegar**: Vuelo desde Rosario / Bus de larga distancia
+- **Cómo llegar**: [Vuelo desde Rosario](https://www.google.com/flights?q=ROS+to+BRC) / [Bus de larga distancia](https://www.plataforma10.com.ar/)
 
 ---
 
 ## Lugares imperdibles
 
-- **Centro Cívico**: Corazón de la ciudad con arquitectura alpina.
-- **Lago Nahuel Huapi**: Para paseos en barco y actividades acuáticas.
-- **Circuito Chico**: Recorrido panorámico con vistas espectaculares.
-- **Cerro Catedral**: Centro de esquí en invierno, trekking y vistas en verano.
-- **Cerro Campanario**: Votado entre las mejores vistas del mundo, con aerosilla.
-- **Bosque de Arrayanes**: Un bosque único al que se llega en barco.
-- **Puerto Blest y Cascada de los Cántaros**: Excursión en barco por el lago.
+A continuación, se presenta la lista de lugares imperdibles con sus respectivos vínculos para obtener más información:
 
+  - **[Centro Cívico](https://barilocheturismo.gob.ar/es/centro-civico)**: Corazón de la ciudad con arquitectura alpina.
+  - **[Lago Nahuel Huapi](https://www.parquesnacionales.gob.ar/areas-protegidas/region-patagonia/pn-nahuel-huapi/)**: Para paseos en barco y actividades acuáticas.
+  - **[Circuito Chico](https://barilocheturismo.gob.ar/es/circuito-chico)**: Recorrido panorámico con vistas espectaculares.
+  - **[Cerro Catedral](https://www.catedralaltapatagonia.com/)**: Centro de esquí en invierno, trekking y vistas en verano.
+  - **[Cerro Campanario](https://www.cerrocampanario.com.ar/)**: Votado entre las mejores vistas del mundo, con aerosilla.
+  - **[Bosque de Arrayanes](https://www.argentina.gob.ar/parquesnacionales/losarrayanes)**: Un bosque único al que se llega en barco.
+  - **[Puerto Blest y Cascada de los Cántaros](https://www.turisur.com.ar/excursion/puerto-blest-y-cascada-de-los-cantaros)**: Excursión en barco por el lago.
 ---
 
 ## Actividades recomendadas
 
-- Degustación de chocolates y cervezas artesanales.
-- Navegación por el Lago Nahuel Huapi.
+- Degustación de [chocolates](https://barilocheturismo.gob.ar/es/chocolate) y [cervezas artesanales](https://barilocheturismo.gob.ar/es/cerveza-artesanal).
+- [Navegación por el Lago Nahuel Huapi](https://www.turisur.com.ar/).
 - Trekking y senderismo (adaptados para familias).
-- Deportes de nieve en invierno (esquí, snowboard, culipatin).
-- Cabalgatas o canopy en los alrededores.
-- Visita a la Colonia Suiza para probar el curanto.
-- Recorrer el Circuito Chico en auto o bicicleta.
+- [Deportes de nieve en invierno](https://www.catedralaltapatagonia.com/invierno.php) (esquí, snowboard, culipatin).
+- [Cabalgatas o canopy](https://www.extremoaextremo.com/) en los alrededores.
+- Visita a la [Colonia Suiza](https://barilocheturismo.gob.ar/es/colonia-suiza) para probar el curanto.
+- Recorrer el Circuito Chico en auto o [bicicleta de alquiler](https://www.circuitochicobikerental.com/).
 
 ---
 
@@ -41,43 +42,44 @@ La gastronomía de Bariloche es famosa por sus chocolates, carnes de caza (cierv
 
 ### Restaurantes recomendados
 
-| Restaurante             | Tipo                       | Sin Gluten | Sin Azúcar |
-|-------------------------|:--------------------------:|:----------:|:----------:|
-| El Boliche de Alberto   | Parrilla / Carnes          | ✔️        | ❌         |
-| La Fonda del Tío        | Comida patagónica casera   | ✔️        | ✔️         |
-| Butterfly               | Alta cocina / Trucha       | ✔️        | ✔️         |
-| Rapa Nui                | Chocolatería / Cafetería   | ✔️        | ✔️         |
+| Restaurante | Tipo | Sin Gluten | Sin Azúcar |
+| :--- | :--- | :--- | :--- |
+| [El Boliche de Alberto](https://elbolichedealberto.com/) | Parrilla / Carnes | ✔️ | ❌ |
+| [La Fonda del Tío](https://www.lafondadeltio.com.ar/) | Comida patagónica casera | ✔️ | ✔️ |
+| Butterfly | Alta cocina / Trucha | ✔️ | ✔️ |
+| [Rapa Nui](https://rapanui.com.ar/) | Chocolatería / Cafetería | ✔️ | ✔️ |
+
 
 ### Confiterías y cafés
 
-| Confitería              | Tipo                       | Sin Gluten | Sin Azúcar |
-|-------------------------|:--------------------------:|:----------:|:----------:|
-| Mamuschka               | Chocolatería / Pastelería  | ✔️        | ✔️         |
-| Abuela Goye             | Chocolatería / Cafetería   | ✔️        | ✔️         |
-| El Almacén de Flores    | Café de especialidad       | ✔️        | ✔️         |
+| Confitería | Tipo | Sin Gluten | Sin Azúcar |
+| :--- | :--- | :--- | :--- |
+| [Mamuschka](https://chocolatesmamuschka.com/) | Chocolatería / Pastelería | ✔️ | ✔️ |
+| [Abuela Goye](http://www.abuelagoye.com/) | Chocolatería / Cafetería | ✔️ | ✔️ |
+| El Almacén de Flores | Café de especialidad | ✔️ | ✔️ |
 
 ---
 
 ## Alojamiento (ejemplos)
 
-- Hotel Llao Llao (lujo)
-- Hotel Panamericano Bariloche
-- Cabañas y complejos turísticos con actividades para niños
-- Airbnb en el centro o cerca del Circuito Chico
+- [Hotel Llao Llao](https://www.llaollao.com/) (lujo)
+- [Hotel Panamericano Bariloche](https://www.panamericanobariloche.com/)
+- [Cabañas y complejos turísticos](https://www.booking.com/cottages/city/ar/san-carlos-de-bariloche.es.html) con actividades para niños
+- [Airbnb en el centro o cerca del Circuito Chico](https://www.airbnb.com.ar/s/San-Carlos-de-Bariloche--R%C3%ADo-Negro--Argentina)
 
 ---
 
 ## Coordenadas aproximadas
 
-- 41° 08' S 71° 18' O
+- [41° 08' S 71° 18' O](https://www.google.com/maps/place/41%C2%B008'00.0%22S+71%C2%B018'00.0%22W)
 
 ---
 
 ## Agenda de eventos
 
-- **(Consultar agenda local)**: Eventos de invierno (Fiesta Nacional de la Nieve).
+- **(Consultar agenda local)**: Eventos de invierno ([Fiesta Nacional de la Nieve](https://www.fiestanacionaldelanieve.com.ar/)).
 - **(Consultar agenda local)**: Festivales de música o gastronomía en otras estaciones.
-- [Descargar agenda completa en formato iCal (.zip)](../docs/agenda/ariflier1970@gmail.com.ical.zip)
+- [Ver agenda de eventos de Bariloche](https://barilocheturismo.gob.ar/es/eventos)
 
 ---
 
@@ -93,20 +95,20 @@ La gastronomía de Bariloche es famosa por sus chocolates, carnes de caza (cierv
 
 ## Presupuesto orientativo
 
-| Concepto                      | Precio estimado (USD) |
-|-------------------------------|:--------------------:|\
-| Alojamiento (noche, familia)  | 70–180               |
-| Comida (por día, familia)     | 40–90                |
-| Transporte local (por día)    | 5–15                 |
-| Actividades y tours (por día) | 30–80                |
-| Entradas museos/atracciones   | 0–20                 |
+| Concepto | Precio estimado (USD) |
+| :--- | :--- |
+| Alojamiento (noche, familia) | 70–180 |
+| Comida (por día, familia) | 40–90 |
+| Transporte local (por día) | 5–15 |
+| Actividades y tours (por día) | 30–80 |
+| Entradas museos/atracciones | 0–20 |
 
 ---
 
 ## Tips culturales
 
-- Bariloche tiene una fuerte influencia de inmigrantes suizos y alemanes, visible en su arquitectura y gastronomía.
-- Es un destino popular para viajes de egresados, por lo que puede haber muchos jóvenes en ciertas épocas.
+- Bariloche tiene una [fuerte influencia de inmigrantes suizos y alemanes](https://www.barilochense.com/notas/la-herencia-alemana-en-bariloche-y-su-influencia-en-la-ciudad), visible en su arquitectura y gastronomía.
+- Es un destino popular para [viajes de egresados](https://es.wikipedia.org/wiki/Viaje_de_egresados), por lo que puede haber muchos jóvenes en ciertas épocas.
 - La cultura de montaña es muy arraigada: respeto por la naturaleza, deportes al aire libre.
 
 ---
@@ -117,4 +119,4 @@ La gastronomía de Bariloche es famosa por sus chocolates, carnes de caza (cierv
 
 ## Imagen de Bariloche
 
-https://drive.google.com/file/d/1xAFu-3SicDoAbH_Bj5FRtdWgQmm7LfFk/view?usp=drive_link
+[Ver imagen en Google Drive](https://drive.google.com/file/d/1xAFu-3SicDoAbH_Bj5FRtdWgQmm7LfFk/view?usp=drive_link)
