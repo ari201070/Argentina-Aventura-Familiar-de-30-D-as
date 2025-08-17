@@ -1,21 +1,110 @@
 {
-  "titulo": "Bienvenido a la Aventura Argentina",
-  "ciudad_rosario": "Rosario",
-  "volver_itinerario": "⬅ Volver al itinerario",
-  "idioma": "Idioma:",
-  "espanol": "Español",
-  "hebreo": "Hebreo",
-  "bienvenida_rosario": "Bienvenidos a la sección de Rosario.",
-  "atracciones_principales": "Atracciones principales",
-  "monumento_bandera": "Monumento Nacional a la Bandera",
-  "parque_independencia": "Parque Independencia",
-  "costanera_parana": "Costanera y Río Paraná",
-  "macro": "Museo de Arte Contemporáneo (MACRO)",
-  "tipos_restaurantes": "Tipos de restaurantes",
-  "parrillas": "Parrillas",
-  "pizzerias": "Pizzerías",
-  "heladerias": "Heladerías artesanales",
-  "bares": "Bares y cervecerías",
-  "mapa_rosario": "Mapa de Rosario",
-  "ver_mapa_grande": "Ver mapa más grande"
+  "welcome.title": "Bienvenido a tu viaje por Argentina",
+  "currencyConverter.title": "Conversor de moneda",
+  "convert": "Convertir",
+  "packingList.title": "Lista de equipaje",
+  "addItem": "Agregar",
+  "aiQuery.title": "Consulta a IA",
+  "backToItinerary": "⬅ Volver al itinerario",
+  "exploreDetails": "Explorar más detalles",
+  "transport": {
+    "from": "Origen",
+    "to": "Destino",
+    "company": "Compañía"
+  },
+  "rosario": {
+    "title": "Rosario",
+    "introduction": {
+      "title": "Introducción",
+      "text": "Rosario es una ciudad vibrante en la costa del Río Paraná, conocida por su historia, cultura y vida nocturna. Ideal para familias con niños y adultos mayores."
+    },
+    "activities": {
+      "title": "Actividades recomendadas",
+      "1": "Visitar el Monumento a la Bandera",
+      "2": "Pasear por la Costanera Central",
+      "3": "Explorar el Parque de la Independencia",
+      "4": "Visitar el Museo de Arte Contemporáneo (MACRO)"
+    },
+    "food": {
+      "title": "Gastronomía",
+      "description": "Rosario ofrece opciones como restaurantes familiares, parrillas tradicionales y heladerías artesanales.",
+      "1": "Rock&Fellers (consultar Sin TACC)",
+      "2": "Heladerías locales",
+      "3": "Pizzerías familiares"
+    },
+    "accommodation": {
+      "title": "Alojamiento sugerido",
+      "text": "Apartamentos céntricos o cerca del río (Pichincha). Recomendamos:",
+      "1": "Hotel NH Collection Rosario",
+      "2": "Departamentos en zona Pichincha"
+    },
+    "agenda": {
+      "title": "Agenda de eventos",
+      "1": "Mercado de San Miguel (domingos)",
+      "2": "Fiesta Nacional de la Biela (abril)",
+      "3": "Feria de Productos Regionales (septiembre)"
+    },
+    "transport": {
+      "title": "Transporte",
+      "text": "Rosario cuenta con transporte público accesible y taxis económicos. Recomendamos:",
+      "1": "Tren metropolitano (conexión con aeropuerto)",
+      "2": "Apps de viaje (Uber, Didi)"
+    }
+  },
+  "buenosaires": {
+    "title": "Buenos Aires",
+    "description": "Capital cultural con parques y museos.",
+    "introduction": {
+      "text": "Buenos Aires es la capital de Argentina, conocida por su arquitectura europea, vida cultural y gastronomía."
+    }
+  },
+  "bariloche": {
+    "title": "San Carlos de Bariloche",
+    "description": "Aventura en los Andes patagónicos.",
+    "introduction": {
+      "text": "Bariloche es un destino ideal para amantes de la naturaleza, con lagos, montañas y actividades al aire libre."
+    }
+  },
+  "mendoza": {
+    "title": "Mendoza",
+    "description": "Ruta del vino y montañas.",
+    "introduction": {
+      "text": "Mendoza es famosa por sus viñedos, vinos y paisajes andinos."
+    }
+  },
+  "malargue": {
+    "title": "Malargüe",
+    "description": "Aventura en la cordillera de los Andes.",
+    "introduction": {
+      "text": "Malargüe ofrece paisajes desérticos y actividades de aventura en la montaña."
+    }
+  },
+  "jujuy": {
+    "title": "Jujuy",
+    "description": "Colores de la Quebrada de Humahuaca.",
+    "introduction": {
+      "text": "Jujuy es conocida por sus paisajes multicolores y cultura andina."
+    }
+  },
+  "iguazu": {
+    "title": "Puerto Iguazú",
+    "description": "Cataratas y naturaleza imponente.",
+    "introduction": {
+      "text": "Iguazú es famoso por sus cataratas y selva tropical."
+    }
+  },
+  "corrientes": {
+    "title": "Corrientes",
+    "description": "Cultura chamamecera y humedales.",
+    "introduction": {
+      "text": "Corrientes combina tradiciones culturales con paisajes de ríos y humedales."
+    }
+  },
+  "ibera": {
+    "title": "Esteros del Iberá",
+    "description": "Reservas naturales y fauna única.",
+    "introduction": {
+      "text": "Iberá es un paraíso natural con fauna única y actividades de ecoturismo."
+    }
+  }
 }

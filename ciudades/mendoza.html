@@ -2,8 +2,10 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Mendoza | Viaje Familiar a Argentina</title>
+  <title data-i18n="page-title">Mendoza | Viaje Familiar a Argentina</title>
+  <link rel="stylesheet" href="estilos.css">
   <style>
+    /* Estilos generales del cuerpo y barra superior */
     body {
       font-family: Arial, sans-serif;
       background: #f9f9f9;
@@ -20,15 +22,23 @@
       padding: 5px;
       border-radius: 5px;
       box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+      display: flex; /* Para alinear los botones de idioma y moneda */
+      align-items: center;
+      gap: 10px; /* Espacio entre elementos */
     }
-    .language-btn {
+    .language-btn, .currency-btn { /* Clase unificada para botones de control */
       font-weight: bold;
       padding: 8px 12px;
-      margin: 0 5px;
+      margin: 0 2px;
       border: none;
       border-radius: 4px;
       cursor: pointer;
       background-color: #f0f0f0;
+    }
+    .language-btn.active, .currency-btn.active {
+      background: #e6eaff;
+      border-color: #6d7fc9;
+      font-weight: bold;
     }
     .back-link {
       margin-left: 20px;
@@ -36,104 +46,700 @@
       font-weight: bold;
       color: #007BFF;
     }
-    h1, h2 {
+    /* Estilos para la foto de la ciudad */
+    .ciudad-foto {
+      width: 100%;
+      max-width: 700px;
+      height: auto;
+      display: block;
+      margin: 30px auto 20px auto;
+      border-radius: 14px;
+      box-shadow: 0 3px 16px rgba(0,0,0,0.15);
+    }
+    .foto-caption {
+      text-align: center;
+      color: #555;
+      font-size: 1em;
+      margin-bottom: 30px;
+    }
+    h1, h2, h3 { /* Agregado h3 para subsecciones */
       color: #0F4761;
     }
     ul {
       margin-bottom: 20px;
+      padding-left: 25px; /* Ajuste para listas */
+    }
+    ul li {
+      margin-bottom: 5px;
     }
     iframe {
       border: 1px solid black;
+      width: 100%; /* Asegura que el mapa sea responsive */
+      max-width: 700px; /* Limita el ancho máximo del mapa */
+      display: block;
+      margin: 20px auto; /* Centra el mapa */
+    }
+    /* Estilos para tablas añadidas */
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      max-width: 700px; /* Limita el ancho máximo de las tablas */
+      margin: 20px auto;
+      background: #f7fbff;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    th, td {
+      border: 1px solid #b3c7e6;
+      padding: 10px 15px;
+      text-align: left;
+      font-size: 16px;
+    }
+    th {
+      background: #e6f0fa;
+      font-weight: bold;
+    }
+    .rtl {
+      direction: rtl !important;
+      text-align: right !important;
+    }
+    .rtl ul {
+      padding-right: 25px;
+      padding-left: 0;
+    }
+
+    /* Estilos para las secciones de IA */
+    .ai-section {
+      background: #e6f0fa;
+      padding: 20px;
+      border-radius: 8px;
+      margin: 30px auto;
+      max-width: 700px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    .ai-section h2 {
+      color: #2176d2;
+      margin-top: 0;
+    }
+    .ai-button {
+      background-color: #4CAF50; /* Green */
+      color: white;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: background-color 0.3s ease;
+      display: block;
+      margin: 15px auto;
+      max-width: 300px;
+    }
+    .ai-button:hover {
+      background-color: #45a049;
+    }
+    .ai-button:disabled {
+      background-color: #cccccc;
+      cursor: not-allowed;
+    }
+    .ai-response {
+      margin-top: 20px;
+      padding: 15px;
+      background-color: #ffffff;
+      border: 1px solid #d0e0f0;
+      border-radius: 5px;
+      white-space: pre-wrap;
+      font-size: 15px;
+      line-height: 1.6;
+      min-height: 50px;
+    }
+    .ai-loading {
+      text-align: center;
+      font-style: italic;
+      color: #666;
+      margin-top: 10px;
     }
   </style>
 </head>
 <body>
   <div id="language-selector">
-    <button onclick="translatePage('es')" class="language-btn">Español</button>
-    <button onclick="translatePage('he')" class="language-btn">עברית</button>
-    <a href="../index.html" class="back-link" id="back-link">⬅ Volver al itinerario</a>
+    <span data-i18n="idioma">Idioma:</span>
+    <button onclick="translatePage('es')" class="language-btn" id="btn-es">Español</button>
+    <button onclick="translatePage('he')" class="language-btn" id="btn-he">עברית</button>
+    <span data-i18n="moneda">Moneda:</span>
+    <button id="btn-ars" onclick="cambiarMoneda('ARS')" class="currency-btn">ARS</button>
+    <button id="btn-usd" onclick="cambiarMoneda('USD')" class="currency-btn">USD</button>
+    <button id="btn-ils" onclick="cambiarMoneda('ILS')" class="currency-btn">ILS</button>
+    <a href="../index.html" class="back-link" id="back-link" data-i18n="back-link">⬅ Volver al itinerario</a>
   </div>
 
-  <h1 id="city-title">Mendoza</h1>
-  <p id="welcome-text">Bienvenidos a la sección de Mendoza.</p>
+  <img src="../docs/imagenes/mendoza/Mendoza-Puente-del-Inca.jpg"
+       alt="Paisaje de Mendoza"
+       class="ciudad-foto" id="city-photo" onerror="this.src='https://placehold.co/700x400/cccccc/333333?text=Imagen+Mendoza'">
+  <div class="foto-caption" id="foto-caption" data-i18n="foto-caption">Paisaje de Mendoza con la Cordillera de los Andes</div>
 
-  <h2 id="main-attractions-title">Atracciones principales</h2>
+  <h1 id="city-title" data-i18n="city-title">Mendoza</h1>
+  <p id="welcome-text" data-i18n="welcome-text">Mendoza, la tierra del sol y del buen vino, se encuentra al pie de la Cordillera de los Andes. Es un oasis en medio del desierto, con una vibrante cultura vitivinícola, aventuras al aire libre y hermosos parques.</p>
+
+  <h2 data-i18n="dates-duration-title">Fechas y duración</h2>
+  <ul>
+    <li data-i18n="stay-duration">**Estadía**: 09/10 al 13/10 (5 días)</li>
+    <li data-i18n="how-to-arrive">**Cómo llegar**: Vuelo desde Bariloche / Bus de larga distancia</li>
+  </ul>
+
+  <h2 id="main-attractions-title" data-i18n="main-attractions-title">Lugares imperdibles</h2>
   <ul id="main-attractions-list">
-    <li><a href="https://es.wikipedia.org/wiki/Parque_General_San_Mart%C3%ADn" target="_blank" id="attraction-0">Parque General San Martín</a></li>
-    <li><a href="https://es.wikipedia.org/wiki/Monte_Aconcagua" target="_blank" id="attraction-1">Aconcagua</a></li>
-    <li><a href="https://es.wikipedia.org/wiki/Vi%C3%B1edo" target="_blank" id="attraction-2">Bodegas y viñedos</a></li>
-    <li><a href="https://es.wikipedia.org/wiki/Potrerillos" target="_blank" id="attraction-3">Potrerillos</a></li>
+    <li><a href="https://es.wikipedia.org/wiki/Parque_General_San_Mart%C3%ADn" target="_blank" id="attraction-0" data-i18n="attraction-0">Parque General San Martín</a></li>
+    <li><a href="https://es.wikipedia.org/wiki/Cerro_de_la_Gloria" target="_blank" id="attraction-1" data-i18n="attraction-1">Cerro de la Gloria</a></li>
+    <li><a href="https://www.bodegasdeargentina.org/" target="_blank" id="attraction-2" data-i18n="attraction-2">Bodegas de Luján de Cuyo y Maipú</a></li>
+    <li><a href="https://es.wikipedia.org/wiki/Plaza_Independencia_(Mendoza)" target="_blank" id="attraction-3" data-i18n="attraction-3">Plazas fundacionales</a></li>
+    <li><a href="https://es.wikipedia.org/wiki/Ca%C3%B1%C3%B3n_del_Atuel" target="_blank" id="attraction-4" data-i18n="attraction-4">Cañón del Atuel (Malargüe)</a></li>
+    <li><a href="https://es.wikipedia.org/wiki/Puente_del_Inca" target="_blank" id="attraction-5" data-i18n="attraction-5">Puente del Inca</a></li>
   </ul>
 
-  <h2 id="restaurant-types-title">Tipos de restaurantes</h2>
-  <ul id="restaurant-types-list">
-    <li id="rest-0">Parrillas</li>
-    <li id="rest-1">Bodegones</li>
-    <li id="rest-2">Restaurantes gourmet</li>
-    <li id="rest-3">Cafés y casas de té</li>
+  <h2 data-i18n="recommended-activities-title">Actividades recomendadas</h2>
+  <ul>
+    <li data-i18n="rec-activity-0">Recorrido por bodegas con degustación (algunas ofrecen jugos y actividades para niños).</li>
+    <li data-i18n="rec-activity-1">Visita a la alta montaña, incluyendo el Parque Provincial Aconcagua (mirador).</li>
+    <li data-i18n="rec-activity-2">Rafting en el Río Mendoza (para edades adecuadas).</li>
+    <li data-i18n="rec-activity-3">Paseo en bicicleta por los viñedos.</li>
+    <li data-i18n="rec-activity-4">Visita al Acuario de Mendoza.</li>
+    <li data-i18n="rec-activity-5">Caminatas y picnics en el Parque San Martín.</li>
+    <li data-i18n="rec-activity-6">Exploración de la ciudad a pie, visitando sus plazas y calles arboladas.</li>
   </ul>
 
-  <h2 id="map-title">Mapa de Mendoza</h2>
-  <iframe src="https://www.openstreetmap.org/export/embed.html?bbox=-68.908%2C-32.998%2C-68.789%2C-32.823&amp;layer=mapnik" width="100%" height="350"></iframe>
-  <br><small><a href="https://www.openstreetmap.org/#map=13/-32.8908/-68.8446" target="_blank" id="see-bigger-map">Ver mapa más grande</a></small>
+  <h2 data-i18n="gastronomy-title">Gastronomía destacada</h2>
+  <p data-i18n="gastronomy-intro">Mendoza es un paraíso gastronómico, famoso por sus carnes a la parrilla, olivas y, por supuesto, la vasta oferta de vinos. Muchos restaurantes en bodegas ofrecen opciones de alta cocina.</p>
+  <h3 data-i18n="restaurants-title">Restaurantes recomendados</h3>
+  <table>
+    <thead>
+      <tr>
+        <th data-i18n="table-restaurant">Restaurante</th>
+        <th data-i18n="table-type">Tipo</th>
+        <th data-i18n="table-gluten-free">Sin Gluten</th>
+        <th data-i18n="table-sugar-free">Sin Azúcar</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a href="https://www.sietecocinas.com.ar/" target="_blank">Siete Cocinas</a></td>
+        <td data-i18n="restaurant-type-0">Cocina regional / de autor</td>
+        <td data-i18n="yes-symbol">✔️</td>
+        <td data-i18n="yes-symbol">✔️</td>
+      </tr>
+      <tr>
+        <td><a href="https://www.azafran.com.ar/" target="_blank">Azafrán</a></td>
+        <td data-i18n="restaurant-type-1">Alta cocina con maridaje</td>
+        <td data-i18n="yes-symbol">✔️</td>
+        <td data-i18n="yes-symbol">✔️</td>
+      </tr>
+      <tr>
+        <td><a href="https://www.lamarchigiana.com.ar/" target="_blank">La Marchigiana</a></td>
+        <td data-i18n="restaurant-type-2">Cocina italiana clásica</td>
+        <td data-i18n="yes-symbol">✔️</td>
+        <td data-i18n="no-symbol">❌</td>
+      </tr>
+      <tr>
+        <td><a href="https://www.zuccardiwines.com/es/piedra-infinita-cocina/" target="_blank">Bodega Zuccardi (Piedra Infinita)</a></td>
+        <td data-i18n="restaurant-type-3">Experiencia gourmet en bodega</td>
+        <td data-i18n="yes-symbol">✔️</td>
+        <td data-i18n="yes-symbol">✔️</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 data-i18n="cafes-title">Confiterías y cafés</h3>
+  <table>
+    <thead>
+      <tr>
+        <th data-i18n="table-cafe">Confitería</th>
+        <th data-i18n="table-type">Tipo</th>
+        <th data-i18n="table-gluten-free">Sin Gluten</th>
+        <th data-i18n="table-sugar-free">Sin Azúcar</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a href="https://www.tripadvisor.com.ar/Restaurant_Review-g312781-d10103700-Reviews-Mamma_Mia-Mendoza_Province_of_Mendoza_Cuyo.html" target="_blank">Mamma Mia</a></td>
+        <td data-i18n="cafe-type-0">Pastelería / Cafetería</td>
+        <td data-i18n="yes-symbol">✔️</td>
+        <td data-i18n="yes-symbol">✔️</td>
+      </tr>
+      <tr>
+        <td><a href="https://www.havanna.com.ar/" target="_blank">Havanna (varias sucursales)</a></td>
+        <td data-i18n="cafe-type-1">Alfajores / Café</td>
+        <td data-i18n="yes-symbol">✔️</td>
+        <td data-i18n="yes-symbol">✔️</td>
+      </tr>
+      <tr>
+        <td><a href="https://www.tripadvisor.com.ar/Restaurant_Review-g312781-d10103700-Reviews-The_Bazaar_Bar-Mendoza_Province_of_Mendoza_Cuyo.html" target="_blank">The Bazaar Bar</a></td>
+        <td data-i18n="cafe-type-2">Café de especialidad</td>
+        <td data-i18n="yes-symbol">✔️</td>
+        <td data-i18n="yes-symbol">✔️</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="ai-section">
+    <h2 data-i18n="ai-menu-title">Generador de Menú Saludable ✨</h2>
+    <p data-i18n="ai-menu-description">Obtén sugerencias de menú para un día completo (desayuno, almuerzo, cena) adaptadas para dietas bajas en carbohidratos, aptas para diabéticos y, si es posible, sin gluten, inspiradas en la gastronomía de Mendoza.</p>
+    <button class="ai-button" id="generate-menu-btn" data-i18n="generate-menu-button">Generar Menú</button>
+    <div class="ai-loading" id="ai-menu-loading-indicator" style="display:none;" data-i18n="ai-loading">Generando menú...</div>
+    <div class="ai-response" id="ai-menu-response"></div>
+  </div>
+
+  <div class="ai-section">
+    <h2 data-i18n="ai-accommodation-title">Sugerencias de Alojamiento con IA 🏨</h2>
+    <p data-i18n="ai-accommodation-description">Obtén recomendaciones de alojamiento en Mendoza, considerando opciones familiares, seguras y bien ubicadas.</p>
+    <button class="ai-button" id="generate-accommodation-btn" data-i18n="generate-accommodation-button">Generar Sugerencias</button>
+    <div class="ai-loading" id="ai-accommodation-loading-indicator" style="display:none;" data-i18n="ai-loading">Generando sugerencias...</div>
+    <div class="ai-response" id="ai-accommodation-response"></div>
+  </div>
+
+  <div class="ai-section">
+    <h2 data-i18n="ai-family-tips-title">Consejos Adicionales para Familias con IA 👨‍👩‍👧‍👦</h2>
+    <p data-i18n="ai-family-tips-description">Recibe consejos personalizados para disfrutar Mendoza en familia, incluyendo actividades, seguridad y logística.</p>
+    <button class="ai-button" id="generate-family-tips-btn" data-i18n="generate-family-tips-button">Generar Consejos</button>
+    <div class="ai-loading" id="ai-family-tips-loading-indicator" style="display:none;" data-i18n="ai-loading">Generando consejos...</div>
+    <div class="ai-response" id="ai-family-tips-response"></div>
+  </div>
+
+  <div class="ai-section">
+    <h2 data-i18n="ai-budget-title">Análisis de Presupuesto con IA 💰</h2>
+    <p data-i18n="ai-budget-description">Obtén un análisis y desglose del presupuesto orientativo para tu estadía en Mendoza, con posibles optimizaciones.</p>
+    <button class="ai-button" id="generate-budget-btn" data-i18n="generate-budget-button">Analizar Presupuesto</button>
+    <div class="ai-loading" id="ai-budget-loading-indicator" style="display:none;" data-i18n="ai-loading">Analizando presupuesto...</div>
+    <div class="ai-response" id="ai-budget-response"></div>
+  </div>
+
+  <h2 data-i18n="accommodation-title">Alojamiento (ejemplos)</h2>
+  <ul>
+    <li data-i18n="accommodation-0">Park Hyatt Mendoza</li>
+    <li data-i18n="accommodation-1">Diplomatic Hotel Mendoza</li>
+    <li data-i18n="accommodation-2">Cabañas o lodges en Chacras de Coria o Luján de Cuyo (zona de bodegas)</li>
+    <li data-i18n="accommodation-3">Airbnb en el centro o en barrios residenciales tranquilos.</li>
+  </ul>
+
+  <h2 data-i18n="coordinates-title">Coordenadas aproximadas</h2>
+  <p data-i18n="coordinates-text">32° 53' S 68° 50' O</p>
+
+  <h2 data-i18n="events-agenda-title">Agenda de eventos</h2>
+  <ul>
+    <li data-i18n="event-0">**(Consultar agenda local)**: Vendimia (Febrero/Marzo).</li>
+    <li data-i18n="event-1">**(Consultar agenda local)**: Ferias de artesanos y mercados de productos locales.</li>
+    <li><a href="../docs/agenda/ariflier1970@gmail.com.ical.zip" target="_blank" data-i18n="download-agenda">Descargar agenda completa en formato iCal (.zip)</a></li>
+  </ul>
+
+  <h2 data-i18n="family-tips-title">Consejos para familias</h2>
+  <ul>
+    <li data-i18n="family-tip-0">Consideren alquilar un auto para explorar las bodegas y la alta montaña a su propio ritmo.</li>
+    <li data-i18n="family-tip-1">Siempre lleven agua y protector solar, el clima es seco y soleado.</li>
+    <li data-i18n="family-tip-2">Algunas bodegas tienen áreas de juego o actividades para niños mientras los adultos degustan.</li>
+    <li data-i18n="family-tip-3">La ciudad es muy arbolada y con canales de riego, lo que la hace agradable para caminar.</li>
+    <li data-i18n="family-tip-4">En la alta montaña, las temperaturas pueden bajar considerablemente, incluso en verano.</li>
+  </ul>
+
+  <h2 data-i18n="budget-title">Presupuesto orientativo</h2>
+  <table>
+    <thead>
+      <tr>
+        <th data-i18n="budget-concept">Concepto</th>
+        <th data-i18n="budget-price">Precio estimado (USD)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td data-i18n="budget-concept-0">Alojamiento (noche, familia)</td>
+        <td data-i18n="budget-price-0">60–160</td>
+      </tr>
+      <tr>
+        <td data-i18n="budget-concept-1">Comida (por día, familia)</td>
+        <td data-i18n="budget-price-1">40–80</td>
+      </tr>
+      <tr>
+        <td data-i18n="budget-concept-2">Transporte local (por día)</td>
+        <td data-i18n="budget-price-2">5–20</td>
+      </tr>
+      <tr>
+        <td data-i18n="budget-concept-3">Actividades y tours (por día)</td>
+        <td data-i18n="budget-price-3">25–70</td>
+      </tr>
+      <tr>
+        <td data-i18n="budget-concept-4">Entradas museos/atracciones</td>
+        <td data-i18n="budget-price-4">0–20</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2 data-i18n="cultural-tips-title">Tips culturales</h2>
+  <ul>
+    <li data-i18n="cultural-tip-0">La cultura del vino es central en Mendoza.</li>
+    <li data-i18n="cultural-tip-1">La "siesta" es una costumbre muy arraigada, con muchos comercios cerrando al mediodía.</li>
+    <li data-i18n="cultural-tip-2">Los mendocinos son muy orgullosos de su provincia y su producción vitivinícola.</li>
+    <li data-i18n="cultural-tip-3">La calidez de su gente es notable.</li>
+  </ul>
+
+  <h2 id="map-title" data-i18n="map-title">Mapa de Mendoza</h2>
+  <iframe src="https://www.openstreetmap.org/export/embed.html?bbox=-69.0%2C-33.0%2C-68.7%2C-32.7&amp;layer=mapnik" width="100%" height="350"></iframe>
+  <br><small><a href="https://www.openstreetmap.org/#map=12/-32.889/-68.846" target="_blank" id="see-bigger-map" data-i18n="see-bigger-map">Ver mapa más grande</a></small>
 
   <script>
     // Diccionario de traducciones español ↔ hebreo
     const translations = {
       es: {
+        "page-title": "Mendoza | Viaje Familiar a Argentina",
+        "idioma": "Idioma:",
+        "moneda": "Moneda:",
         "city-title": "Mendoza",
-        "welcome-text": "Bienvenidos a la sección de Mendoza.",
-        "main-attractions-title": "Atracciones principales",
+        "welcome-text": "Mendoza, la tierra del sol y del buen vino, se encuentra al pie de la Cordillera de los Andes. Es un oasis en medio del desierto, con una vibrante cultura vitivinícola, aventuras al aire libre y hermosos parques.",
+        "foto-caption": "Paisaje de Mendoza con la Cordillera de los Andes",
+        "dates-duration-title": "Fechas y duración",
+        "stay-duration": "**Estadía**: 09/10 al 13/10 (5 días)",
+        "how-to-arrive": "**Cómo llegar**: Vuelo desde Bariloche / Bus de larga distancia",
+        "main-attractions-title": "Lugares imperdibles",
         "attraction-0": "Parque General San Martín",
-        "attraction-1": "Aconcagua",
-        "attraction-2": "Bodegas y viñedos",
-        "attraction-3": "Potrerillos",
-        "restaurant-types-title": "Tipos de restaurantes",
-        "rest-0": "Parrillas",
-        "rest-1": "Bodegones",
-        "rest-2": "Restaurantes gourmet",
-        "rest-3": "Cafés y casas de té",
+        "attraction-1": "Cerro de la Gloria",
+        "attraction-2": "Bodegas de Luján de Cuyo y Maipú",
+        "attraction-3": "Plazas fundacionales",
+        "attraction-4": "Cañón del Atuel (Malargüe)",
+        "attraction-5": "Puente del Inca",
+        "recommended-activities-title": "Actividades recomendadas",
+        "rec-activity-0": "Recorrido por bodegas con degustación (algunas ofrecen jugos y actividades para niños).",
+        "rec-activity-1": "Visita a la alta montaña, incluyendo el Parque Provincial Aconcagua (mirador).",
+        "rec-activity-2": "Rafting en el Río Mendoza (para edades adecuadas).",
+        "rec-activity-3": "Paseo en bicicleta por los viñedos.",
+        "rec-activity-4": "Visita al Acuario de Mendoza.",
+        "rec-activity-5": "Caminatas y picnics en el Parque San Martín.",
+        "rec-activity-6": "Exploración de la ciudad a pie, visitando sus plazas y calles arboladas.",
+        "gastronomy-title": "Gastronomía destacada",
+        "gastronomy-intro": "Mendoza es un paraíso gastronómico, famoso por sus carnes a la parrilla, olivas y, por supuesto, la vasta oferta de vinos. Muchos restaurantes en bodegas ofrecen opciones de alta cocina.",
+        "restaurants-title": "Restaurantes recomendados",
+        "table-restaurant": "Restaurante",
+        "table-type": "Tipo",
+        "table-gluten-free": "Sin Gluten",
+        "table-sugar-free": "Sin Azúcar",
+        "restaurant-type-0": "Cocina regional / de autor",
+        "restaurant-type-1": "Alta cocina con maridaje",
+        "restaurant-type-2": "Cocina italiana clásica",
+        "restaurant-type-3": "Experiencia gourmet en bodega",
+        "cafes-title": "Confiterías y cafés",
+        "table-cafe": "Confitería",
+        "cafe-type-0": "Pastelería / Cafetería",
+        "cafe-type-1": "Alfajores / Café",
+        "cafe-type-2": "Café de especialidad",
+        "yes-symbol": "✔️",
+        "no-symbol": "❌",
+        "ai-menu-title": "Generador de Menú Saludable ✨",
+        "ai-menu-description": "Obtén sugerencias de menú para un día completo (desayuno, almuerzo, cena) adaptadas para dietas bajas en carbohidratos, aptas para diabéticos y, si es posible, sin gluten, inspiradas en la gastronomía de Mendoza.",
+        "generate-menu-button": "Generar Menú",
+        "ai-loading": "Generando menú...",
+        "ai-error": "Error al generar el menú. Por favor, inténtalo de nuevo más tarde.",
+        "ai-menu-prompt": "Genera un plan de menú de un día (desayuno, almuerzo, cena) para una familia que visita Mendoza, Argentina. Las opciones deben ser aptas para diabéticos, bajas en carbohidratos y, si es posible, sin gluten. Incluye ejemplos de platos típicos mendocinos adaptados a estas restricciones dietéticas. Formatea la respuesta en párrafos claros para cada comida.",
+        "ai-accommodation-title": "Sugerencias de Alojamiento con IA 🏨",
+        "ai-accommodation-description": "Obtén recomendaciones de alojamiento en Mendoza, considerando opciones familiares, seguras y bien ubicadas.",
+        "generate-accommodation-button": "Generar Sugerencias",
+        "ai-accommodation-prompt": "Genera 3-5 sugerencias de alojamiento en Mendoza, Argentina, ideales para una familia con 2 hijos. Considera opciones seguras, bien ubicadas y con servicios adecuados para familias (ej. piscina, cocina, áreas de juego). Incluye diferentes tipos de alojamiento como hoteles, cabañas o Airbnb. Formatea la respuesta con viñetas.",
+        "ai-family-tips-title": "Consejos Adicionales para Familias con IA 👨‍👩‍👧‍👦",
+        "ai-family-tips-description": "Recibe consejos personalizados para disfrutar Mendoza en familia, incluyendo actividades, seguridad y logística.",
+        "generate-family-tips-button": "Generar Consejos",
+        "ai-family-tips-prompt": "Proporciona 5 consejos prácticos y personalizados para una familia con niños que visita Mendoza, Argentina. Los consejos deben cubrir aspectos como actividades para niños, seguridad en la ciudad, opciones de transporte familiar, y cómo aprovechar al máximo la estadía. Formatea la respuesta con viñetas.",
+        "ai-budget-title": "Análisis de Presupuesto con IA 💰",
+        "ai-budget-description": "Obtén un análisis y desglose del presupuesto orientativo para tu estadía en Mendoza, con posibles optimizaciones.",
+        "generate-budget-button": "Analizar Presupuesto",
+        "ai-budget-prompt": "Analiza el siguiente presupuesto orientativo para una familia en Mendoza (USD): Alojamiento (noche): 60-160, Comida (día): 40-80, Transporte local (día): 5-20, Actividades (día): 25-70, Entradas: 0-20. Proporciona un desglose estimado por día y por categoría, y sugiere 2-3 formas de optimizar o ahorrar en este presupuesto sin sacrificar la experiencia familiar. Formatea la respuesta en párrafos.",
+        "accommodation-title": "Alojamiento (ejemplos)",
+        "accommodation-0": "Park Hyatt Mendoza",
+        "accommodation-1": "Diplomatic Hotel Mendoza",
+        "accommodation-2": "Cabañas o lodges en Chacras de Coria o Luján de Cuyo (zona de bodegas)",
+        "accommodation-3": "Airbnb en el centro o en barrios residenciales tranquilos.",
+        "coordinates-title": "Coordenadas aproximadas",
+        "coordinates-text": "32° 53' S 68° 50' O",
+        "events-agenda-title": "Agenda de eventos",
+        "event-0": "**(Consultar agenda local)**: Vendimia (Febrero/Marzo).",
+        "event-1": "**(Consultar agenda local)**: Ferias de artesanos y mercados de productos locales.",
+        "download-agenda": "Descargar agenda completa en formato iCal (.zip)",
+        "family-tips-title": "Consejos para familias",
+        "family-tip-0": "Consideren alquilar un auto para explorar las bodegas y la alta montaña a su propio ritmo.",
+        "family-tip-1": "Siempre lleven agua y protector solar, el clima es seco y soleado.",
+        "family-tip-2": "Algunas bodegas tienen áreas de juego o actividades para niños mientras los adultos degustan.",
+        "family-tip-3": "La ciudad es muy arbolada y con canales de riego, lo que la hace agradable para caminar.",
+        "family-tip-4": "En la alta montaña, las temperaturas pueden bajar considerablemente, incluso en verano.",
+        "budget-title": "Presupuesto orientativo",
+        "budget-concept": "Concepto",
+        "budget-price": "Precio estimado (USD)",
+        "budget-concept-0": "Alojamiento (noche, familia)",
+        "budget-price-0": "60–160",
+        "budget-concept-1": "Comida (por día, familia)",
+        "budget-price-1": "40–80",
+        "budget-concept-2": "Transporte local (por día)",
+        "budget-price-2": "5–20",
+        "budget-concept-3": "Actividades y tours (por día)",
+        "budget-price-3": "25–70",
+        "budget-concept-4": "Entradas museos/atracciones",
+        "budget-price-4": "0–20",
+        "cultural-tips-title": "Tips culturales",
+        "cultural-tip-0": "La cultura del vino es central en Mendoza.",
+        "cultural-tip-1": "La \"siesta\" es una costumbre muy arraigada, con muchos comercios cerrando al mediodía.",
+        "cultural-tip-2": "Los mendocinos son muy orgullosos de su provincia y su producción vitivinícola.",
+        "cultural-tip-3": "La calidez de su gente es notable.",
         "map-title": "Mapa de Mendoza",
         "see-bigger-map": "Ver mapa más grande",
         "back-link": "⬅ Volver al itinerario"
       },
       he: {
+        "page-title": "מנדוסה | טיול משפחתי בארגנטינה",
+        "idioma": "שפה:",
+        "moneda": "מטבע:",
         "city-title": "מנדוסה",
-        "welcome-text": "ברוכים הבאים למדור מנדוסה.",
-        "main-attractions-title": "אטרקציות עיקריות",
-        "attraction-0": "פארק חנרל סן מרטין",
-        "attraction-1": "הר אקונקגואה",
-        "attraction-2": "יקבים וכרמים",
-        "attraction-3": "פוטרריווס",
-        "restaurant-types-title": "סוגי מסעדות",
-        "rest-0": "מסעדות בשרים (פריז'ות)",
-        "rest-1": "מסעדות מסורתיות (בודגונים)",
-        "rest-2": "מסעדות גורמה",
-        "rest-3": "בתי קפה ובתי תה",
+        "welcome-text": "מנדוסה, ארץ השמש והיין המשובח, שוכנת למרגלות הרי האנדים. זוהי נווה מדבר בלב המדבר, עם תרבות יין תוססת, הרפתקאות בחיק הטבע ופארקים יפים.",
+        "foto-caption": "נוף של מנדוסה עם הרי האנדים",
+        "dates-duration-title": "תאריכים ומשך שהייה",
+        "stay-duration": "**שהייה**: 09/10 עד 13/10 (5 ימים)",
+        "how-to-arrive": "**איך מגיעים**: טיסה מברילוצ'ה / אוטובוס למרחקים ארוכים",
+        "main-attractions-title": "מקומות שאסור לפספס",
+        "attraction-0": "פארק סן מרטין הכללי",
+        "attraction-1": "סרו דה לה גלוריה",
+        "attraction-2": "יקבים בלוג'אן דה קויו ומאיפו",
+        "attraction-3": "כיכרות היסוד",
+        "attraction-4": "קניון האטואל (מלארגואה)",
+        "attraction-5": "גשר האינקה",
+        "recommended-activities-title": "פעילויות מומלצות",
+        "rec-activity-0": "סיור ביקב עם טעימות (חלקם מציעים מיצים ופעילויות לילדים).",
+        "rec-activity-1": "ביקור בהרים הגבוהים, כולל פארק פרובינציאלי אקונקגואה (תצפית).",
+        "rec-activity-2": "רפטינג בנהר מנדוסה (לגילאים מתאימים).",
+        "rec-activity-3": "רכיבה על אופניים דרך הכרמים.",
+        "rec-activity-4": "ביקור באקווריום של מנדוסה.",
+        "rec-activity-5": "טיולים ופיקניקים בפארק סן מרטין.",
+        "rec-activity-6": "חקירת העיר ברגל, ביקור בכיכרות וברחובותיה הירוקים.",
+        "gastronomy-title": "גסטרונומיה מומלצת",
+        "gastronomy-intro": "מנדוסה היא גן עדן קולינרי, מפורסמת בבשרים על האש, זיתים וכמובן, מגוון רחב של יינות. מסעדות רבות ביקב מציעות אפשרויות של מטבח עילי.",
+        "restaurants-title": "מסעדות מומלצות",
+        "table-restaurant": "מסעדה",
+        "table-type": "סוג",
+        "table-gluten-free": "ללא גלוטן",
+        "table-sugar-free": "ללא סוכר",
+        "restaurant-type-0": "מטבח אזורי / שף",
+        "restaurant-type-1": "מטבח עילי עם התאמת יין",
+        "restaurant-type-2": "מטבח איטלקי קלאסי",
+        "restaurant-type-3": "חוויה גורמה ביקב",
+        "cafes-title": "קונדיטוריות ובתי קפה",
+        "table-cafe": "קונדיטוריה",
+        "cafe-type-0": "קונדיטוריה / בית קפה",
+        "cafe-type-1": "אלפחורס / קפה",
+        "cafe-type-2": "קפה מיוחד",
+        "yes-symbol": "✔️",
+        "no-symbol": "❌",
+        "ai-menu-title": "מחולל תפריט בריא ✨",
+        "ai-menu-description": "קבלו הצעות לתפריט יומי (ארוחת בוקר, צהריים, ערב) המותאמות לדיאטות דלות פחמימות, מתאימות לסוכרתיים, ואם אפשר, ללא גלוטן, בהשראת הגסטרונומיה של מנדוסה.",
+        "generate-menu-button": "צור תפריט",
+        "ai-loading": "מייצר תפריט...",
+        "ai-error": "שגיאה ביצירת התפריט. אנא נסו שוב מאוחר יותר.",
+        "ai-menu-prompt": "צור תוכנית תפריט יומית (ארוחת בוקר, צהריים, ערב) למשפחה המבקרת במנדוסה, ארגנטינה. האפשרויות צריכות להיות מתאימות לסוכרתיים, דלות פחמימות, ואם אפשר, ללא גלוטן. כלול דוגמאות למנות טיפוסיות ממנדוסה המותאמות למגבלות תזונתיות אלו. פרמט את התשובה בפסקאות ברורות לכל ארוחה.",
+        "ai-accommodation-title": "הצעות לינה עם AI 🏨",
+        "ai-accommodation-description": "קבלו המלצות לינה במנדוסה, תוך התחשבות באפשרויות ידידותיות למשפחות, בטוחות וממוקמות היטב.",
+        "generate-accommodation-button": "צור הצעות",
+        "ai-accommodation-prompt": "צור 3-5 הצעות לינה במנדוסה, ארגנטינה, אידיאליות למשפחה עם 2 ילדים. קח בחשבון אפשרויות בטוחות, ממוקמות היטב ועם שירותים מתאימים למשפחות (למשל, בריכה, מטבח, אזורי משחק). כלול סוגי לינה שונים כמו בתי מלון, בקתות או Airbnb. פרמט את התשובה עם נקודות.",
+        "ai-family-tips-title": "טיפים נוספים למשפחות עם AI 👨‍👩‍👧‍👦",
+        "ai-family-tips-description": "קבלו טיפים מותאמים אישית לבילוי במנדוסה עם המשפחה, כולל פעילויות, בטיחות ולוגיסטיקה.",
+        "generate-family-tips-button": "צור טיפים",
+        "ai-family-tips-prompt": "ספק 5 טיפים מעשיים ומותאמים אישית למשפחה עם ילדים המבקרת במנדוסה, ארגנטינה. הטיפים צריכים לכסות היבטים כמו פעילויות לילדים, בטיחות בעיר, אפשרויות תחבורה משפחתיות וכיצד להפיק את המרב מהשהייה. פרמט את התשובה עם נקודות.",
+        "ai-budget-title": "ניתוח תקציב עם AI 💰",
+        "ai-budget-description": "קבלו ניתוח ופירוט של התקציב המשוער לשהותכם במנדוסה, עם אופטימיזציות אפשריות.",
+        "generate-budget-button": "נתח תקציב",
+        "ai-budget-prompt": "נתח את התקציב המשוער הבא למשפחה במנדוסה (USD): לינה (לילה): 60-160, אוכל (יום): 40-80, תחבורה מקומית (יום): 5-20, פעילויות (יום): 25-70, כניסות: 0-20. ספק פירוט משוער ליום ולפי קטגוריה, והצע 2-3 דרכים לייעל או לחסוך בתקציב זה מבלי לוותר על החוויה המשפחתית. פרמט את התשובה בפסקאות.",
+        "accommodation-title": "לינה (דוגמאות)",
+        "accommodation-0": "פארק הייאט מנדוסה",
+        "accommodation-1": "מלון דיפלומטיק מנדוסה",
+        "accommodation-2": "בקתות או לודג'ים בצ'אקראס דה קוריה או לוג'אן דה קויו (אזור יקבים)",
+        "accommodation-3": "Airbnb במרכז או בשכונות מגורים שקטות.",
+        "coordinates-title": "קואורדינטות משוערות",
+        "coordinates-text": "32° 53' S 68° 50' O",
+        "events-agenda-title": "לוח אירועים",
+        "event-0": "**(בדקו לוח אירועים מקומי)**: בציר (פברואר/מרץ).",
+        "event-1": "**(בדקו לוח אירועים מקומי)**: ירידי אומנים ושווקי תוצרת מקומית.",
+        "download-agenda": "הורד את לוח האירועים המלא בפורמט iCal (.zip)",
+        "family-tips-title": "טיפים למשפחות",
+        "family-tip-0": "שקלו לשכור רכב כדי לחקור את היקבים ואת ההרים הגבוהים בקצב שלכם.",
+        "family-tip-1": "תמיד קחו מים וקרם הגנה, האקלים יבש ושמשי.",
+        "family-tip-2": "חלק מהיקבים מציעים אזורי משחק או פעילויות לילדים בזמן שהמבוגרים טועמים.",
+        "family-tip-3": "העיר מרובת עצים ועם תעלות השקיה, מה שהופך אותה לנעימה להליכה.",
+        "family-tip-4": "בהרים הגבוהים, הטמפרטורות יכולות לרדת באופן משמעותי, גם בקיץ.",
+        "budget-title": "תקציב משוער",
+        "budget-concept": "מושג",
+        "budget-price": "מחיר משוער (USD)",
+        "budget-concept-0": "לינה (לילה, משפחה)",
+        "budget-price-0": "60–160",
+        "budget-concept-1": "אוכל (ליום, משפחה)",
+        "budget-price-1": "40–80",
+        "budget-concept-2": "תחבורה מקומית (ליום)",
+        "budget-price-2": "5–20",
+        "budget-concept-3": "פעילויות וסיורים (ליום)",
+        "budget-price-3": "25–70",
+        "budget-concept-4": "כניסות למוזיאונים/אטרקציות",
+        "budget-price-4": "0–20",
+        "cultural-tips-title": "טיפים תרבותיים",
+        "cultural-tip-0": "תרבות היין מרכזית במנדוסה.",
+        "cultural-tip-1": "ה\"סיאסטה\" היא מנהג מושרש מאוד, עם עסקים רבים הנסגרים בצהריים.",
+        "cultural-tip-2": "תושבי מנדוסה גאים מאוד במחוזם וביצור היין שלהם.",
+        "cultural-tip-3": "חום לבם של האנשים בולט.",
         "map-title": "מפת מנדוסה",
         "see-bigger-map": "לצפייה במפה גדולה יותר",
         "back-link": "⬅ חזרה למפת המסלול"
       }
     };
 
-    function translatePage(language) {
-      document.body.dir = (language === 'he') ? 'rtl' : 'ltr';
-      document.getElementById('city-title').textContent = translations[language]["city-title"];
-      document.getElementById('welcome-text').textContent = translations[language]["welcome-text"];
-      document.getElementById('main-attractions-title').textContent = translations[language]["main-attractions-title"];
-      document.getElementById('attraction-0').textContent = translations[language]["attraction-0"];
-      document.getElementById('attraction-1').textContent = translations[language]["attraction-1"];
-      document.getElementById('attraction-2').textContent = translations[language]["attraction-2"];
-      document.getElementById('attraction-3').textContent = translations[language]["attraction-3"];
-      document.getElementById('restaurant-types-title').textContent = translations[language]["restaurant-types-title"];
-      document.getElementById('rest-0').textContent = translations[language]["rest-0"];
-      document.getElementById('rest-1').textContent = translations[language]["rest-1"];
-      document.getElementById('rest-2').textContent = translations[language]["rest-2"];
-      document.getElementById('rest-3').textContent = translations[language]["rest-3"];
-      document.getElementById('map-title').textContent = translations[language]["map-title"];
-      document.getElementById('see-bigger-map').textContent = translations[language]["see-bigger-map"];
-      document.getElementById('back-link').textContent = translations[language]["back-link"];
+    // Tasas de cambio (se actualizan al cargar la página)
+    let tasas = {
+      ARS: 1,
+      USD: 1000, // Valor de ejemplo, se actualizará
+      ILS: 110   // Valor de ejemplo, se actualizará
+    };
+    // Símbolos de moneda
+    const simbolos = {
+      ARS: "$",
+      USD: "US$",
+      ILS: "₪"
+    };
+
+    let idiomaActual = 'es'; // Idioma predeterminado
+    let monedaActual = 'ARS'; // Moneda predeterminada
+
+    // Función para obtener tasas de cambio reales desde ExchangeRate-API
+    function actualizarTasas(callback) {
+      fetch('https://open.er-api.com/v6/latest/USD')
+        .then(response => response.json())
+        .then(data => {
+          if (data && data.result === "success") {
+            tasas.ARS = data.rates.ARS;
+            tasas.USD = 1;
+            tasas.ILS = data.rates.ILS;
+          }
+          if (typeof callback === "function") callback();
+        })
+        .catch(() => {
+          // Si falla, sigue con los valores por defecto
+          if (typeof callback === "function") callback();
+        });
     }
+
+    function translatePage(language) {
+      idiomaActual = language; // Actualiza la variable global idiomaActual
+      document.body.dir = (language === 'he') ? 'rtl' : 'ltr';
+      document.title = translations[language]["page-title"];
+
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (translations[language][key]) { // Asegurarse de que la clave exista
+          if (key.includes('event-') || key.includes('stay-duration') || key.includes('how-to-arrive')) {
+            el.innerHTML = translations[language][key];
+          } else {
+            el.textContent = translations[language][key];
+          }
+        }
+      });
+      // Actualiza el estado activo de los botones de idioma
+      document.getElementById('btn-es').classList.toggle('active', language === 'es');
+      document.getElementById('btn-he').classList.toggle('active', language === 'he');
+      // Guarda la preferencia de idioma en localStorage
+      localStorage.setItem('idiomaPreferido', language);
+    }
+
+    function cambiarMoneda(moneda) {
+      monedaActual = moneda; // Actualiza la variable global monedaActual
+      document.getElementById('btn-ars').classList.toggle('active', moneda === 'ARS');
+      document.getElementById('btn-usd').classList.toggle('active', moneda === 'USD');
+      document.getElementById('btn-ils').classList.toggle('active', moneda === 'ILS');
+      // Guarda la preferencia de moneda en localStorage
+      localStorage.setItem('monedaPreferida', moneda);
+      // No hay tablas de precios dinámicas en esta página de ciudad, pero si se agregaran, se llamarían aquí.
+    }
+
+    // Función genérica para llamar a la API de Gemini
+    async function callGeminiAPI(promptKey, responseDivId, buttonId, loadingIndicatorId) {
+      const button = document.getElementById(buttonId);
+      const loadingIndicator = document.getElementById(loadingIndicatorId);
+      const responseDiv = document.getElementById(responseDivId);
+
+      button.disabled = true;
+      loadingIndicator.style.display = 'block';
+      responseDiv.textContent = ''; // Limpiar respuesta anterior
+
+      const currentLanguage = localStorage.getItem('idiomaPreferido') || 'es';
+      // Asegurarse de que el prompt se obtiene correctamente del diccionario
+      const promptText = translations[currentLanguage][promptKey];
+
+      if (!promptText) {
+        responseDiv.textContent = translations[currentLanguage]["ai-error"] + " (Prompt no encontrado)";
+        console.error(`Error: Prompt con clave '${promptKey}' no encontrado para el idioma '${currentLanguage}'.`);
+        button.disabled = false;
+        loadingIndicator.style.display = 'none';
+        return;
+      }
+
+      let chatHistory = [];
+      chatHistory.push({ role: "user", parts: [{ text: promptText }] });
+
+      const payload = {
+        contents: chatHistory,
+        generationConfig: {
+            responseMimeType: "text/plain"
+        }
+      };
+
+      const apiKey = ""; // La clave API se proporcionará en tiempo de ejecución por el entorno Canvas
+      const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+
+      try {
+        const response = await fetch(apiUrl, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+
+        const result = await response.json();
+
+        if (result.candidates && result.candidates.length > 0 &&
+            result.candidates[0].content && result.candidates[0].content.parts &&
+            result.candidates[0].content.parts.length > 0) {
+          const text = result.candidates[0].content.parts[0].text;
+          responseDiv.textContent = text;
+        } else {
+          responseDiv.textContent = translations[currentLanguage]["ai-error"];
+          console.error("Estructura de respuesta inesperada del LLM:", result);
+        }
+      } catch (error) {
+        responseDiv.textContent = translations[currentLanguage]["ai-error"];
+        console.error("Error al llamar a la API de Gemini:", error);
+      } finally {
+        button.disabled = false;
+        loadingIndicator.style.display = 'none';
+      }
+    }
+
+    // Inicialización de la página al cargar el DOM
+    document.addEventListener('DOMContentLoaded', function() {
+      // Carga las preferencias de idioma y moneda desde localStorage
+      const idiomaGuardado = localStorage.getItem('idiomaPreferido');
+      const monedaGuardada = localStorage.getItem('monedaPreferida');
+
+      // Aplica el idioma guardado o 'es' por defecto
+      translatePage(idiomaGuardado || 'es');
+      // Aplica la moneda guardada o 'ARS' por defecto
+      cambiarMoneda(monedaGuardada || 'ARS');
+
+      // Asocia los eventos click a los botones de IA
+      document.getElementById('generate-menu-btn').addEventListener('click', () =>
+        callGeminiAPI('ai-menu-prompt', 'ai-menu-response', 'generate-menu-btn', 'ai-menu-loading-indicator')
+      );
+      document.getElementById('generate-accommodation-btn').addEventListener('click', () =>
+        callGeminiAPI('ai-accommodation-prompt', 'ai-accommodation-response', 'generate-accommodation-btn', 'ai-accommodation-loading-indicator')
+      );
+      document.getElementById('generate-family-tips-btn').addEventListener('click', () =>
+        callGeminiAPI('ai-family-tips-prompt', 'ai-family-tips-response', 'generate-family-tips-btn', 'ai-family-tips-loading-indicator')
+      );
+      document.getElementById('generate-budget-btn').addEventListener('click', () =>
+        callGeminiAPI('ai-budget-prompt', 'ai-budget-response', 'generate-budget-btn', 'ai-budget-loading-indicator')
+      );
+    });
   </script>
 </body>
 </html>

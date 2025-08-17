@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title data-i18n="page-title">Jujuy | Viaje Familiar a Argentina</title>
+  <link rel="stylesheet" href="estilos.css">
+  <style>
+    /* Estilos generales del cuerpo y barra superior */
+    body {
+      font-family: Arial, sans-serif;
+      background: #f9f9f9;
+      color: #333;
+      margin: 20px;
+      transition: direction 0.3s;
+    }
+    #language-selector {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 1000;
+      background-color: rgba(255,255,255,0.8);
+      padding: 5px;
+      border-radius: 5px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+      display: flex; /* Para alinear los botones de idioma y moneda */
+      align-items: center;
+      gap: 10px; /* Espacio entre elementos */
+    }
+    .language-btn, .currency-btn { /* Clase unificada para botones de control */
+      font-weight: bold;
+      padding: 8px 12px;
+      margin: 0 2px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      background-color: #f0f0f0;
+    }
+    .language-btn.active, .currency-btn.active {
+      background: #e6eaff;
+      border-color: #6d7fc9;
+      font-weight: bold;
+    }
+    .back-link {
+      margin-left: 20px;
+      text-decoration: none;
+      font-weight: bold;
+      color: #007BFF;
+    }
+    /* Estilos para la foto de la ciudad */
+    .ciudad-foto {
+      width: 100%;
+      max-width: 700px;
+      height: auto;
+      display: block;
+      margin: 30px auto 20px auto;
+      border-radius: 14px;
+      box-shadow: 0 3px 16px rgba(0,0,0,0.15);
+    }
+    .foto-caption {
+      text-align: center;
+      color: #555;
+      font-size: 1em;
+      margin-bottom: 30px;
+    }
+    h1, h2, h3 { /* Agregado h3 para subsecciones */
+      color: #0F4761;
+    }
+    ul {
+      margin-bottom: 20px;
+      padding-left: 25px; /* Ajuste para listas */
+    }
+    ul li {
+      margin-bottom: 5px;
+    }
+    iframe {
+      border: 1px solid black;
+      width: 100%; /* Asegura que el mapa sea responsive */
+      max-width: 700px; /* Limita el ancho máximo del mapa */
+      display: block;
+      margin: 20px auto; /* Centra el mapa */
+    }
+    /* Estilos para tablas añadidas */
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      max-width: 700px; /* Limita el ancho máximo de las tablas */
+      margin: 20px auto;
+      background: #f7fbff;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    th, td {
+      border: 1px solid #b3c7e6;
+      padding: 10px 15px;
+      text-align: left;
+      font-size: 16px;
+    }
+    th {
+      background: #e6f0fa;
+      font-weight: bold;
+    }
+    .rtl {
+      direction: rtl !important;
+      text-align: right !important;
+    }
+    .rtl ul {
+      padding-right: 25px;
+      padding-left: 0;
+    }
+
+    /* Estilos para las secciones de IA */
+    .ai-section {
+      background: #e6f0fa;
+      padding: 20px;
+      border-radius: 8px;
+      margin: 30px auto;
+      max-width: 700px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    .ai-section h2 {
+      color: #2176d2;
+      margin-top: 0;
+    }
+    .ai-button {
+      background-color: #4CAF50; /* Green */
+      color: white;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: background-color 0.3s ease;
+      display: block;
+      margin: 15px auto;
+      max-width: 300px;
+    }
+    .ai-button:hover {
+      background-color: #45a049;
+    }
+    .ai-button:disabled {
+      background-color: #cccccc;
+      cursor: not-allowed;
+    }
+    .ai-response {
+      margin-top: 20px;
+      padding: 15px;
+      background-color: #ffffff;
+      border: 1px solid #d0e0f0;
+      border-radius: 5px;
+      white-space: pre-wrap;
+      font-size: 15px;
+      line-height: 1.6;
+      min-height: 50px;
+    }
+    .ai-loading {
+      text-align: center;
+      font-style: italic;
+      color: #666;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div id="language-selector">
+    <span data-i18n="idioma">Idioma:</span>
+    <button onclick="translatePage('es')" class="language-btn" id="btn-es">Español</button>
+    <button onclick="translatePage('he')" class="language-btn" id="btn-he">עברית</button>
+    <span data-i18n="moneda">Moneda:</span>
+    <button id="btn-ars" onclick="cambiarMoneda('ARS')" class="currency-btn">ARS</button>
+    <button id="btn-usd" onclick="cambiarMoneda('USD')" class="currency-btn">USD</button>
+    <button id="btn-ils" onclick="cambiarMoneda('ILS')" class="currency-btn">ILS</button>
+    <a href="../index.html" class="back-link" id="back-link" data-i18n="back-link">⬅ Volver al itinerario</a>
+  </div>
+
+  <img src="../docs/imagenes/jujuy/julieta-acosta-u4GAAc-myrg-unsplash.jpg"
+       alt="Paisaje de la Quebrada de Humahuaca en Jujuy"
+       class="ciudad-foto" id="city-photo" onerror="this.src='https://placehold.co/700x400/cccccc/333333?text=Imagen+Jujuy'">
+  <div class="foto-caption" id="foto-caption" data-i18n="foto-caption">Paisaje de la Quebrada de Humahuaca en Jujuy</div>
+
+  <h1 id="city-title" data-i18n="city-title">Jujuy</h1>
+  <p id="welcome-text" data-i18n="welcome-text">La provincia de Jujuy, en el noroeste argentino, es una explosión de colores y cultura andina. Famosa por sus paisajes de montañas multicolores, pueblos ancestrales y ricas tradiciones, es un destino fascinante para toda la familia.</p>
+
+  <h2 data-i18n="dates-duration-title">Fechas y duración</h2>
+  <ul>
+    <li data-i18n="stay-duration">**Estadía**: 16/10 al 20/10 (5 días)</li>
+    <li data-i18n="how-to-arrive">**Cómo llegar**: Vuelo desde Mendoza (con escala) / Bus de larga distancia.</li>
+  </ul>
+
+  <h2 id="main-attractions-title" data-i18n="main-attractions-title">Lugares imperdibles</h2>
+  <ul id="main-attractions-list">
+    <li><a href="https://es.wikipedia.org/wiki/Quebrada_de_Humahuaca" target="_blank" id="attraction-0" data-i18n="attraction-0">Quebrada de Humahuaca</a></li>
+    <li><a href="https://es.wikipedia.org/wiki/Purmamarca" target="_blank" id="attraction-1" data-i18n="attraction-1">Purmamarca</a></li>
+    <li><a href="https://es.wikipedia.org/wiki/Tilcara" target="_blank" id="attraction-2" data-i18n="attraction-2">Tilcara</a></li>
+    <li><a href="https://es.wikipedia.org/wiki/Humahuaca" target="_blank" id="attraction-3" data-i18n="attraction-3">Humahuaca</a></li>
+    <li><a href="https://es.wikipedia.org/wiki/Salinas_Grandes_(Argentina)" target="_blank" id="attraction-4" data-i18n="attraction-4">Salinas Grandes</a></li>
+    <li><a href="https://es.wikipedia.org/wiki/Garganta_del_Diablo_(Tilcara)" target="_blank" id="attraction-5" data-i18n="attraction-5">Garganta del Diablo (Tilcara)</a></li>
+    <li><a href="https://es.wikipedia.org/wiki/San_Salvador_de_Jujuy" target="_blank" id="attraction-6" data-i18n="attraction-6">San Salvador de Jujuy</a></li>
+  </ul>
+
+  <h2 data-i18n="recommended-activities-title">Actividades recomendadas</h2>
+  <ul>
+    <li data-i18n="rec-activity-0">Recorridos por los pueblos de la Quebrada y sus mercados artesanales.</li>
+    <li data-i18n="rec-activity-1">Caminatas suaves en Purmamarca o Tilcara.</li>
+    <li data-i18n="rec-activity-2">Visita a la Pucará de Tilcara.</li>
+    <li data-i18n="rec-activity-3">Excursión a Salinas Grandes (llevar protector solar y gafas de sol).</li>
+    <li data-i18n="rec-activity-4">Observación de estrellas en la Quebrada (poca contaminación lumínica).</li>
+    <li data-i18n="rec-activity-5">Disfrutar de la música folclórica y las danzas locales.</li>
+    <li data-i18n="rec-activity-6">Probar las empanadas jujeñas y tamales.</li>
+  </ul>
+
+  <h2 data-i18n="gastronomy-title">Gastronomía destacada</h2>
+  <p data-i18n="gastronomy-intro">La gastronomía jujeña es una fusión de sabores andinos y criollos, con platos a base de maíz, papa, llama y cabra. Las opciones sin gluten y bajas en carbohidratos pueden requerir adaptación en platos tradicionales, pero siempre hay alternativas con carnes y verduras.</p>
+  <h3 data-i18n="restaurants-title">Restaurantes recomendados</h3>
+  <table>
+    <thead>
+      <tr>
+        <th data-i18n="table-restaurant">Restaurante</th>
+        <th data-i18n="table-type">Tipo</th>
+        <th data-i18n="table-gluten-free">Sin Gluten</th>
+        <th data-i18n="table-sugar-free">Sin Azúcar</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a href="https://www.tripadvisor.com.ar/Restaurant_Review-g312803-d10103700-Reviews-El_Patio_de_la_Empanada-San_Salvador_de_Jujuy_Province_of_Jujuy_Northern_Argentina.html" target="_blank">El Patio de la Empanada</a></td>
+        <td data-i18n="restaurant-type-0">Comida regional / Empanadas</td>
+        <td data-i18n="yes-symbol">✔️</td>
+        <td data-i18n="no-symbol">❌</td>
+      </tr>
+      <tr>
+        <td><a href="https://www.tripadvisor.com.ar/Restaurant_Review-g312803-d10103700-Reviews-La_Cocina_del_Colorado-San_Salvador_de_Jujuy_Province_of_Jujuy_Northern_Argentina.html" target="_blank">La Cocina del Colorado</a></td>
+        <td data-i18n="restaurant-type-1">Cocina andina tradicional</td>
+        <td data-i18n="yes-symbol">✔️</td>
+        <td data-i18n="yes-symbol">✔️</td>
+      </tr>
+      <tr>
+        <td><a href="https://www.tripadvisor.com.ar/Restaurant_Review-g312803-d10103700-Reviews-Killa-San_Salvador_de_Jujuy_Province_of_Jujuy_Northern_Argentina.html" target="_blank">Killa</a></td>
+        <td data-i18n="restaurant-type-2">Cocina de autor / Regional</td>
+        <td data-i18n="yes-symbol">✔️</td>
+        <td data-i18n="yes-symbol">✔️</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 data-i18n="cafes-title">Confiterías y cafés</h3>
+  <table>
+    <thead>
+      <tr>
+        <th data-i18n="table-cafe">Confitería</th>
+        <th data-i18n="table-type">Tipo</th>
+        <th data-i18n="table-gluten-free">Sin Gluten</th>
+        <th data-i18n="table-sugar-free">Sin Azúcar</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td data-i18n="cafe-type-0">(Opciones locales)</td>
+        <td data-i18n="cafe-type-1">Panaderías / Cafés</td>
+        <td data-i18n="no-symbol">❌</td>
+        <td data-i18n="no-symbol">❌</td>
+      </tr>
+      <tr>
+        <td data-i18n="cafe-type-2">Mercados artesanales</td>
+        <td data-i18n="cafe-type-3">Productos locales</td>
+        <td data-i18n="yes-symbol">✔️</td>
+        <td data-i18n="yes-symbol">✔️</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="ai-section">
+    <h2 data-i18n="ai-menu-title">Generador de Menú Saludable ✨</h2>
+    <p data-i18n="ai-menu-description">Obtén sugerencias de menú para un día completo (desayuno, almuerzo, cena) adaptadas para dietas bajas en carbohidratos, aptas para diabéticos y, si es posible, sin gluten, inspiradas en la gastronomía de Jujuy.</p>
+    <button class="ai-button" id="generate-menu-btn" data-i18n="generate-menu-button">Generar Menú</button>
+    <div class="ai-loading" id="ai-menu-loading-indicator" style="display:none;" data-i18n="ai-loading">Generando menú...</div>
+    <div class="ai-response" id="ai-menu-response"></div>
+  </div>
+
+  <div class="ai-section">
+    <h2 data-i18n="ai-accommodation-title">Sugerencias de Alojamiento con IA 🏨</h2>
+    <p data-i18n="ai-accommodation-description">Obtén recomendaciones de alojamiento en Jujuy, considerando opciones familiares, seguras y bien ubicadas.</p>
+    <button class="ai-button" id="generate-accommodation-btn" data-i18n="generate-accommodation-button">Generar Sugerencias</button>
+    <div class="ai-loading" id="ai-accommodation-loading-indicator" style="display:none;" data-i18n="ai-loading">Generando sugerencias...</div>
+    <div class="ai-response" id="ai-accommodation-response"></div>
+  </div>
+
+  <div class="ai-section">
+    <h2 data-i18n="ai-family-tips-title">Consejos Adicionales para Familias con IA 👨‍👩‍👧‍👦</h2>
+    <p data-i18n="ai-family-tips-description">Recibe consejos personalizados para disfrutar Jujuy en familia, incluyendo actividades, seguridad y logística.</p>
+    <button class="ai-button" id="generate-family-tips-btn" data-i18n="generate-family-tips-button">Generar Consejos</button>
+    <div class="ai-loading" id="ai-family-tips-loading-indicator" style="display:none;" data-i18n="ai-loading">Generando consejos...</div>
+    <div class="ai-response" id="ai-family-tips-response"></div>
+  </div>
+
+  <div class="ai-section">
+    <h2 data-i18n="ai-budget-title">Análisis de Presupuesto con IA 💰</h2>
+    <p data-i18n="ai-budget-description">Obtén un análisis y desglose del presupuesto orientativo para tu estadía en Jujuy, con posibles optimizaciones.</p>
+    <button class="ai-button" id="generate-budget-btn" data-i18n="generate-budget-button">Analizar Presupuesto</button>
+    <div class="ai-loading" id="ai-budget-loading-indicator" style="display:none;" data-i18n="ai-loading">Analizando presupuesto...</div>
+    <div class="ai-response" id="ai-budget-response"></div>
+  </div>
+
+  <h2 data-i18n="accommodation-title">Alojamiento (ejemplos)</h2>
+  <ul>
+    <li data-i18n="accommodation-0">Hoteles boutique en Purmamarca o Tilcara.</li>
+    <li data-i18n="accommodation-1">Estancias y hosterías rurales en la Quebrada.</li>
+    <li data-i18n="accommodation-2">Hoteles en San Salvador de Jujuy para mayor oferta.</li>
+    <li data-i18n="accommodation-3">Airbnb en casas de adobe tradicionales.</li>
+  </ul>
+
+  <h2 data-i18n="coordinates-title">Coordenadas aproximadas</h2>
+  <p data-i18n="coordinates-text">San Salvador de Jujuy: 24° 11' S 65° 18' O<br>Purmamarca: 23° 44' S 65° 30' O</p>
+
+  <h2 data-i18n="events-agenda-title">Agenda de eventos</h2>
+  <ul>
+    <li data-i18n="event-0">**(Consultar agenda local)**: Carnaval (Febrero/Marzo, muy concurrido).</li>
+    <li data-i18n="event-1">**(Consultar agenda local)**: Festivales folclóricos y religiosos.</li>
+    <li><a href="../docs/agenda/ariflier1970@gmail.com.ical.zip" target="_blank" data-i18n="download-agenda">Descargar agenda completa en formato iCal (.zip)</a></li>
+  </ul>
+
+  <h2 data-i18n="family-tips-title">Consejos para familias</h2>
+  <ul>
+    <li data-i18n="family-tip-0">La altura puede afectar a algunos viajeros (San Salvador está a ~1200m, Purmamarca a ~2300m, Humahuaca a ~3000m, Salinas Grandes a ~3500m). Hidrátense bien y caminen despacio los primeros días.</li>
+    <li data-i18n="family-tip-1">Lleven protector solar, sombrero y gafas de sol, la radiación solar es alta.</li>
+    <li data-i18n="family-tip-2">Vístanse en capas, las temperaturas varían mucho entre el día y la noche.</li>
+    <li data-i18n="family-tip-3">El alquiler de auto es recomendable para recorrer la Quebrada con libertad.</li>
+    <li data-i18n="family-tip-4">Siempre tengan cambio y billetes pequeños, especialmente en mercados locales.</li>
+  </ul>
+
+  <h2 data-i18n="budget-title">Presupuesto orientativo</h2>
+  <table>
+    <thead>
+      <tr>
+        <th data-i18n="budget-concept">Concepto</th>
+        <th data-i18n="budget-price">Precio estimado (USD)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td data-i18n="budget-concept-0">Alojamiento (noche, familia)</td>
+        <td data-i18n="budget-price-0">40–110</td>
+      </tr>
+      <tr>
+        <td data-i18n="budget-concept-1">Comida (por día, familia)</td>
+        <td data-i18n="budget-price-1">25–65</td>
+      </tr>
+      <tr>
+        <td data-i18n="budget-concept-2">Transporte local (por día)</td>
+        <td data-i18n="budget-price-2">5–20</td>
+      </tr>
+      <tr>
+        <td data-i18n="budget-concept-3">Actividades y tours (por día)</td>
+        <td data-i18n="budget-price-3">15–50</td>
+      </tr>
+      <tr>
+        <td data-i18n="budget-concept-4">Entradas museos/atracciones</td>
+        <td data-i18n="budget-price-4">0–10</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2 data-i18n="cultural-tips-title">Tips culturales</h2>
+  <ul>
+    <li data-i18n="cultural-tip-0">La cultura andina es muy presente: respeto a la Pachamama (Madre Tierra), rituales, música (quenas, charangos).</li>
+    <li data-i18n="cultural-tip-1">El idioma español con influencia quechua es común.</li>
+    <li data-i18n="cultural-tip-2">La artesanía local es muy rica: textiles de llama/alpaca, cerámicas, trabajos en madera.</li>
+    <li data-i18n="cultural-tip-3">La amabilidad de la gente es una característica destacada.</li>
+  </ul>
+
+  <h2 id="map-title" data-i18n="map-title">Mapa de Jujuy</h2>
+  <iframe src="https://www.openstreetmap.org/export/embed.html?bbox=-65.5%2C-24.5%2C-65.3%2C-23.5&amp;layer=mapnik" width="100%" height="350"></iframe>
+  <br><small><a href="https://www.openstreetmap.org/#map=10/-23.597/-65.405" target="_blank" id="see-bigger-map" data-i18n="see-bigger-map">Ver mapa más grande</a></small>
+
+  <script>
+    // Diccionario de traducciones español ↔ hebreo
+    const translations = {
+      es: {
+        "page-title": "Jujuy | Viaje Familiar a Argentina",
+        "idioma": "Idioma:",
+        "moneda": "Moneda:",
+        "city-title": "Jujuy",
+        "welcome-text": "La provincia de Jujuy, en el noroeste argentino, es una explosión de colores y cultura andina. Famosa por sus paisajes de montañas multicolores, pueblos ancestrales y ricas tradiciones, es un destino fascinante para toda la familia.",
+        "foto-caption": "Paisaje de la Quebrada de Humahuaca en Jujuy",
+        "dates-duration-title": "Fechas y duración",
+        "stay-duration": "**Estadía**: 16/10 al 20/10 (5 días)",
+        "how-to-arrive": "**Cómo llegar**: Vuelo desde Mendoza (con escala) / Bus de larga distancia.",
+        "main-attractions-title": "Lugares imperdibles",
+        "attraction-0": "Quebrada de Humahuaca",
+        "attraction-1": "Purmamarca",
+        "attraction-2": "Tilcara",
+        "attraction-3": "Humahuaca",
+        "attraction-4": "Salinas Grandes",
+        "attraction-5": "Garganta del Diablo (Tilcara)",
+        "attraction-6": "San Salvador de Jujuy",
+        "recommended-activities-title": "Actividades recomendadas",
+        "rec-activity-0": "Recorridos por los pueblos de la Quebrada y sus mercados artesanales.",
+        "rec-activity-1": "Caminatas suaves en Purmamarca o Tilcara.",
+        "rec-activity-2": "Visita a la Pucará de Tilcara.",
+        "rec-activity-3": "Excursión a Salinas Grandes (llevar protector solar y gafas de sol).",
+        "rec-activity-4": "Observación de estrellas en la Quebrada (poca contaminación lumínica).",
+        "rec-activity-5": "Disfrutar de la música folclórica y las danzas locales.",
+        "rec-activity-6": "Probar las empanadas jujeñas y tamales.",
+        "gastronomy-title": "Gastronomía destacada",
+        "gastronomy-intro": "La gastronomía jujeña es una fusión de sabores andinos y criollos, con platos a base de maíz, papa, llama y cabra. Las opciones sin gluten y bajas en carbohidratos pueden requerir adaptación en platos tradicionales, pero siempre hay alternativas con carnes y verduras.",
+        "restaurants-title": "Restaurantes recomendados",
+        "table-restaurant": "Restaurante",
+        "table-type": "Tipo",
+        "table-gluten-free": "Sin Gluten",
+        "table-sugar-free": "Sin Azúcar",
+        "restaurant-type-0": "Comida regional / Empanadas",
+        "restaurant-type-1": "Cocina andina tradicional",
+        "restaurant-type-2": "Cocina de autor / Regional",
+        "cafes-title": "Confiterías y cafés",
+        "table-cafe": "Confitería",
+        "cafe-type-0": "(Opciones locales)",
+        "cafe-type-1": "Panaderías / Cafés",
+        "cafe-type-2": "Mercados artesanales",
+        "cafe-type-3": "Productos locales",
+        "yes-symbol": "✔️",
+        "no-symbol": "❌",
+        "ai-menu-title": "Generador de Menú Saludable ✨",
+        "ai-menu-description": "Obtén sugerencias de menú para un día completo (desayuno, almuerzo, cena) adaptadas para dietas bajas en carbohidratos, aptas para diabéticos y, si es posible, sin gluten, inspiradas en la gastronomía de Jujuy.",
+        "generate-menu-button": "Generar Menú",
+        "ai-loading": "Generando menú...",
+        "ai-error": "Error al generar el menú. Por favor, inténtalo de nuevo más tarde.",
+        "ai-menu-prompt": "Genera un plan de menú de un día (desayuno, almuerzo, cena) para una familia que visita Jujuy, Argentina. Las opciones deben ser aptas para diabéticos, bajas en carbohidratos y, si es posible, sin gluten. Incluye ejemplos de platos típicos jujeños adaptados a estas restricciones dietéticas. Formatea la respuesta en párrafos claros para cada comida.",
+        "ai-accommodation-title": "Sugerencias de Alojamiento con IA 🏨",
+        "ai-accommodation-description": "Obtén recomendaciones de alojamiento en Jujuy, considerando opciones familiares, seguras y bien ubicadas.",
+        "generate-accommodation-button": "Generar Sugerencias",
+        "ai-accommodation-prompt": "Genera 3-5 sugerencias de alojamiento en Jujuy, Argentina, ideales para una familia con 2 hijos. Considera opciones seguras, bien ubicadas y con servicios adecuados para familias. Incluye diferentes tipos de alojamiento como hoteles, hosterías o Airbnb. Formatea la respuesta con viñetas.",
+        "ai-family-tips-title": "Consejos Adicionales para Familias con IA 👨‍👩‍👧‍👦",
+        "ai-family-tips-description": "Recibe consejos personalizados para disfrutar Jujuy en familia, incluyendo actividades, seguridad y logística.",
+        "generate-family-tips-button": "Generar Consejos",
+        "ai-family-tips-prompt": "Proporciona 5 consejos prácticos y personalizados para una familia con niños que visita Jujuy, Argentina. Los consejos deben cubrir aspectos como actividades para niños, seguridad en la ciudad y en la Quebrada, opciones de transporte familiar, y cómo aprovechar al máximo la estadía. Formatea la respuesta con viñetas.",
+        "ai-budget-title": "Análisis de Presupuesto con IA 💰",
+        "ai-budget-description": "Obtén un análisis y desglose del presupuesto orientativo para tu estadía en Jujuy, con posibles optimizaciones.",
+        "generate-budget-button": "Analizar Presupuesto",
+        "ai-budget-prompt": "Analiza el siguiente presupuesto orientativo para una familia en Jujuy (USD): Alojamiento (noche): 40-110, Comida (día): 25-65, Transporte local (día): 5-20, Actividades (día): 15-50, Entradas: 0-10. Proporciona un desglose estimado por día y por categoría, y sugiere 2-3 formas de optimizar o ahorrar en este presupuesto sin sacrificar la experiencia familiar. Formatea la respuesta en párrafos.",
+        "accommodation-title": "Alojamiento (ejemplos)",
+        "accommodation-0": "Hoteles boutique en Purmamarca o Tilcara.",
+        "accommodation-1": "Estancias y hosterías rurales en la Quebrada.",
+        "accommodation-2": "Hoteles en San Salvador de Jujuy para mayor oferta.",
+        "accommodation-3": "Airbnb en casas de adobe tradicionales.",
+        "coordinates-title": "Coordenadas aproximadas",
+        "coordinates-text": "San Salvador de Jujuy: 24° 11' S 65° 18' O<br>Purmamarca: 23° 44' S 65° 30' O",
+        "events-agenda-title": "Agenda de eventos",
+        "event-0": "**(Consultar agenda local)**: Carnaval (Febrero/Marzo, muy concurrido).",
+        "event-1": "**(Consultar agenda local)**: Festivales folclóricos y religiosos.",
+        "download-agenda": "Descargar agenda completa en formato iCal (.zip)",
+        "family-tips-title": "Consejos para familias",
+        "family-tip-0": "La altura puede afectar a algunos viajeros (San Salvador está a ~1200m, Purmamarca a ~2300m, Humahuaca a ~3000m, Salinas Grandes a ~3500m). Hidrátense bien y caminen despacio los primeros días.",
+        "family-tip-1": "Lleven protector solar, sombrero y gafas de sol, la radiación solar es alta.",
+        "family-tip-2": "Vístanse en capas, las temperaturas varían mucho entre el día y la noche.",
+        "family-tip-3": "El alquiler de auto es recomendable para recorrer la Quebrada con libertad.",
+        "family-tip-4": "Siempre tengan cambio y billetes pequeños, especialmente en mercados locales.",
+        "budget-title": "Presupuesto orientativo",
+        "budget-concept": "Concepto",
+        "budget-price": "Precio estimado (USD)",
+        "budget-concept-0": "Alojamiento (noche, familia)",
+        "budget-price-0": "40–110",
+        "budget-concept-1": "Comida (por día, familia)",
+        "budget-price-1": "25–65",
+        "budget-concept-2": "Transporte local (por día)",
+        "budget-price-2": "5–20",
+        "budget-concept-3": "Actividades y tours (por día)",
+        "budget-price-3": "15–50",
+        "budget-concept-4": "Entradas museos/atracciones",
+        "budget-price-4": "0–10",
+        "cultural-tips-title": "Tips culturales",
+        "cultural-tip-0": "התרבות האנדית נוכחת מאוד: כבוד לפצ'אמאמה (אמא אדמה), טקסים, מוזיקה (קנה, צ'רנגו).",
+        "cultural-tip-1": "השפה הספרדית עם השפעה קצ'ואה נפוצה.",
+        "cultural-tip-2": "אומנות מקומית עשירה מאוד: טקסטיל מלימה/אלפקה, קרמיקה, עבודות עץ.",
+        "cultural-tip-3": "אדיבותם של האנשים בולטת.",
+        "map-title": "מפת חוחוי",
+        "see-bigger-map": "לצפייה במפה גדולה יותר",
+        "back-link": "⬅ חזרה למפת המסלול"
+      }
+    };
+
+    // Tasas de cambio (se actualizan al cargar la página)
+    let tasas = {
+      ARS: 1,
+      USD: 1000, // Valor de ejemplo, se actualizará
+      ILS: 110   // Valor de ejemplo, se actualizará
+    };
+    // Símbolos de moneda
+    const simbolos = {
+      ARS: "$",
+      USD: "US$",
+      ILS: "₪"
+    };
+
+    let idiomaActual = 'es'; // Idioma predeterminado
+    let monedaActual = 'ARS'; // Moneda predeterminada
+
+    // Función para obtener tasas de cambio reales desde ExchangeRate-API
+    function actualizarTasas(callback) {
+      fetch('https://open.er-api.com/v6/latest/USD')
+        .then(response => response.json())
+        .then(data => {
+          if (data && data.result === "success") {
+            tasas.ARS = data.rates.ARS;
+            tasas.USD = 1;
+            tasas.ILS = data.rates.ILS;
+          }
+          if (typeof callback === "function") callback();
+        })
+        .catch(() => {
+          // Si falla, sigue con los valores por defecto
+          if (typeof callback === "function") callback();
+        });
+    }
+
+    function translatePage(language) {
+      idiomaActual = language; // Actualiza la variable global idiomaActual
+      document.body.dir = (language === 'he') ? 'rtl' : 'ltr';
+      document.title = translations[language]["page-title"];
+
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (translations[language][key]) { // Asegurarse de que la clave exista
+          if (key.includes('event-') || key.includes('stay-duration') || key.includes('how-to-arrive')) {
+            el.innerHTML = translations[language][key];
+          } else {
+            el.textContent = translations[language][key];
+          }
+        }
+      });
+      // Actualiza el estado activo de los botones de idioma
+      document.getElementById('btn-es').classList.toggle('active', language === 'es');
+      document.getElementById('btn-he').classList.toggle('active', language === 'he');
+      // Guarda la preferencia de idioma en localStorage
+      localStorage.setItem('idiomaPreferido', language);
+    }
+
+    function cambiarMoneda(moneda) {
+      monedaActual = moneda; // Actualiza la variable global monedaActual
+      document.getElementById('btn-ars').classList.toggle('active', moneda === 'ARS');
+      document.getElementById('btn-usd').classList.toggle('active', moneda === 'USD');
+      document.getElementById('btn-ils').classList.toggle('active', moneda === 'ILS');
+      // Guarda la preferencia de moneda en localStorage
+      localStorage.setItem('monedaPreferida', moneda);
+      // No hay tablas de precios dinámicas en esta página de ciudad, pero si se agregaran, se llamarían aquí.
+    }
+
+    // Función genérica para llamar a la API de Gemini
+    async function callGeminiAPI(promptKey, responseDivId, buttonId, loadingIndicatorId) {
+      const button = document.getElementById(buttonId);
+      const loadingIndicator = document.getElementById(loadingIndicatorId);
+      const responseDiv = document.getElementById(responseDivId);
+
+      button.disabled = true;
+      loadingIndicator.style.display = 'block';
+      responseDiv.textContent = ''; // Limpiar respuesta anterior
+
+      const currentLanguage = localStorage.getItem('idiomaPreferido') || 'es';
+      // Asegurarse de que el prompt se obtiene correctamente del diccionario
+      const promptText = translations[currentLanguage][promptKey];
+
+      if (!promptText) {
+        responseDiv.textContent = translations[currentLanguage]["ai-error"] + " (Prompt no encontrado)";
+        console.error(`Error: Prompt con clave '${promptKey}' no encontrado para el idioma '${currentLanguage}'.`);
+        button.disabled = false;
+        loadingIndicator.style.display = 'none';
+        return;
+      }
+
+      let chatHistory = [];
+      chatHistory.push({ role: "user", parts: [{ text: promptText }] });
+
+      const payload = {
+        contents: chatHistory,
+        generationConfig: {
+            responseMimeType: "text/plain"
+        }
+      };
+
+      const apiKey = ""; // La clave API se proporcionará en tiempo de ejecución por el entorno Canvas
+      const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+
+      try {
+        const response = await fetch(apiUrl, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+
+        const result = await response.json();
+
+        if (result.candidates && result.candidates.length > 0 &&
+            result.candidates[0].content && result.candidates[0].content.parts &&
+            result.candidates[0].content.parts.length > 0) {
+          const text = result.candidates[0].content.parts[0].text;
+          responseDiv.textContent = text;
+        } else {
+          responseDiv.textContent = translations[currentLanguage]["ai-error"];
+          console.error("Estructura de respuesta inesperada del LLM:", result);
+        }
+      } catch (error) {
+        responseDiv.textContent = translations[currentLanguage]["ai-error"];
+        console.error("Error al llamar a la API de Gemini:", error);
+      } finally {
+        button.disabled = false;
+        loadingIndicator.style.display = 'none';
+      }
+    }
+
+    // Inicialización de la página al cargar el DOM
+    document.addEventListener('DOMContentLoaded', function() {
+      // Carga las preferencias de idioma y moneda desde localStorage
+      const idiomaGuardado = localStorage.getItem('idiomaPreferido');
+      const monedaGuardada = localStorage.getItem('monedaPreferida');
+
+      // Aplica el idioma guardado o 'es' por defecto
+      translatePage(idiomaGuardado || 'es');
+      // Aplica la moneda guardada o 'ARS' por defecto
+      cambiarMoneda(monedaGuardada || 'ARS');
+
+      // Asocia los eventos click a los botones de IA
+      document.getElementById('generate-menu-btn').addEventListener('click', () =>
+        callGeminiAPI('ai-menu-prompt', 'ai-menu-response', 'generate-menu-btn', 'ai-menu-loading-indicator')
+      );
+      document.getElementById('generate-accommodation-btn').addEventListener('click', () =>
+        callGeminiAPI('ai-accommodation-prompt', 'ai-accommodation-response', 'generate-accommodation-btn', 'ai-accommodation-loading-indicator')
+      );
+      document.getElementById('generate-family-tips-btn').addEventListener('click', () =>
+        callGeminiAPI('ai-family-tips-prompt', 'ai-family-tips-response', 'generate-family-tips-btn', 'ai-family-tips-loading-indicator')
+      );
+      document.getElementById('generate-budget-btn').addEventListener('click', () =>
+        callGeminiAPI('ai-budget-prompt', 'ai-budget-response', 'generate-budget-btn', 'ai-budget-loading-indicator')
+      );
+    });
+  </script>
+</body>
+</html>

@@ -1,168 +1,88 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" dir="ltr">
 <head>
   <meta charset="UTF-8">
-  <title>Rosario | Viaje Familiar a Argentina</title>
-  <link rel="stylesheet" href="estilos.css">
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f9f9f9;
-      color: #333;
-      margin: 20px;
-      transition: direction 0.3s;
-    }
-    #language-selector {
-      position: fixed;
-      top: 20px;
-      right: 20px;
-      z-index: 1000;
-      background-color: rgba(255,255,255,0.8);
-      padding: 5px;
-      border-radius: 5px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-    }
-    .language-btn {
-      font-weight: bold;
-      padding: 8px 12px;
-      margin: 0 5px;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-      background-color: #f0f0f0;
-    }
-    .back-link {
-      margin-left: 20px;
-      text-decoration: none;
-      font-weight: bold;
-      color: #007BFF;
-    }
-    .ciudad-foto {
-      width: 100%;
-      max-width: 700px;
-      height: auto;
-      display: block;
-      margin: 30px auto 20px auto;
-      border-radius: 14px;
-      box-shadow: 0 3px 16px rgba(0,0,0,0.15);
-    }
-    .foto-caption {
-      text-align: center;
-      color: #555;
-      font-size: 1em;
-      margin-bottom: 30px;
-    }
-    h1, h2 {
-      color: #0F4761;
-    }
-    ul {
-      margin-bottom: 20px;
-    }
-    iframe {
-      border: 1px solid black;
-    }
-    .rtl {
-      direction: rtl !important;
-      text-align: right !important;
-    }
-  </style>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rosario - Argentina</title>
+  <link rel="stylesheet" href="../css/main.css">
 </head>
 <body>
-  <div id="language-selector">
-    <button onclick="translatePage('es')" class="language-btn">Español</button>
-    <button onclick="translatePage('he')" class="language-btn">עברית</button>
-    <a href="../index.html" class="back-link" id="back-link">⬅ Volver al itinerario</a>
+  <!-- Barra superior fija -->
+  <div class="top-right-bar">
+    <button class="lang-btn" onclick="setLang('es')" data-key="es">ES</button>
+    <button class="lang-btn" onclick="setLang('he')" data-key="he">HE</button>
+    <button onclick="window.location.href='../index.html'" data-key="backToItinerary">⬅ Volver al itinerario</button>
   </div>
 
-  <!-- FOTO REPRESENTATIVA DE ROSARIO -->
-  <img src="https://www.shutterstock.com/shutterstock/photos/2199861453/display_1500/stock-photo-buenos-aires-argentina-september-obelisk-of-buenos-aires-el-obelisco-a-national-2199861453.jpg"
-       alt="Monumento a la Bandera, Rosario"
-       class="ciudad-foto" id="city-photo">
-  <div class="foto-caption" id="foto-caption">Monumento Nacional a la Bandera, Rosario</div>
+  <!-- Título y portada -->
+  <div class="city-detail">
+    <img 
+      src="../docs/imagenes/rosario/Monumento-a-la-Bandera-1024x768.jpg" 
+      alt="Rosario" 
+      class="cover-image"
+    />
+    <h1 data-key="rosario.title">Rosario</h1>
 
-  <h1 id="city-title">Rosario</h1>
-  <p id="welcome-text">Bienvenidos a la sección de Rosario.</p>
+    <!-- Sección: Introducción -->
+    <section class="city-section">
+      <h2 data-key="rosario.introduction.title">Introducción</h2>
+      <p data-key="rosario.introduction.text">Rosario es una ciudad vibrante en la costa del Río Paraná, conocida por su historia, cultura y vida nocturna. Ideal para familias con niños y adultos mayores.</p>
+    </section>
 
-  <h2 id="main-attractions-title">Atracciones principales</h2>
-  <ul id="main-attractions-list">
-    <li><a href="https://es.wikipedia.org/wiki/Monumento_Nacional_a_la_Bandera_(Argentina)" target="_blank" id="attraction-0">Monumento Nacional a la Bandera</a></li>
-    <li><a href="https://es.wikipedia.org/wiki/Parque_Independencia_(Rosario)" target="_blank" id="attraction-1">Parque Independencia</a></li>
-    <li><a href="https://es.wikipedia.org/wiki/Costanera_Centro_de_Rosario" target="_blank" id="attraction-2">Costanera y Río Paraná</a></li>
-    <li><a href="https://es.wikipedia.org/wiki/Museo_de_Arte_Contempor%C3%A1neo_de_Rosario" target="_blank" id="attraction-3">Museo de Arte Contemporáneo (MACRO)</a></li>
-  </ul>
+    <!-- Sección: Actividades -->
+    <section class="city-section">
+      <h2 data-key="rosario.activities.title">Actividades recomendadas</h2>
+      <ul>
+        <li data-key="rosario.activities.1">Visitar el Monumento a la Bandera</li>
+        <li data-key="rosario.activities.2">Pasear por la Costanera Central</li>
+        <li data-key="rosario.activities.3">Explorar el Parque de la Independencia</li>
+        <li data-key="rosario.activities.4">Visitar el Museo de Arte Contemporáneo (MACRO)</li>
+      </ul>
+    </section>
 
-  <h2 id="restaurant-types-title">Tipos de restaurantes</h2>
-  <ul id="restaurant-types-list">
-    <li id="rest-0">Parrillas</li>
-    <li id="rest-1">Pizzerías</li>
-    <li id="rest-2">Heladerías artesanales</li>
-    <li id="rest-3">Bares y cervecerías</li>
-  </ul>
+    <!-- Sección: Gastronomía -->
+    <section class="city-section">
+      <h2 data-key="rosario.food.title">Gastronomía</h2>
+      <p data-key="rosario.food.description">Rosario ofrece opciones como restaurantes familiares, parrillas tradicionales y heladerías artesanales.</p>
+      <ul>
+        <li data-key="rosario.food.1">Rock&Fellers (consultar Sin TACC)</li>
+        <li data-key="rosario.food.2">Heladerías locales</li>
+        <li data-key="rosario.food.3">Pizzerías familiares</li>
+      </ul>
+    </section>
 
-  <h2 id="map-title">Mapa de Rosario</h2>
-  <iframe src="https://www.openstreetmap.org/export/embed.html?bbox=-60.701%2C-32.997%2C-60.620%2C-32.894&amp;layer=mapnik" width="100%" height="350"></iframe>
-  <br><small><a href="https://www.openstreetmap.org/#map=13/-32.9527/-60.6393" target="_blank" id="see-bigger-map">Ver mapa más grande</a></small>
+    <!-- Sección: Alojamiento -->
+    <section class="city-section">
+      <h2 data-key="rosario.accommodation.title">Alojamiento sugerido</h2>
+      <p data-key="rosario.accommodation.text">Apartamentos céntricos o cerca del río (Pichincha). Recomendamos:</p>
+      <ul>
+        <li data-key="rosario.accommodation.1">Hotel NH Collection Rosario</li>
+        <li data-key="rosario.accommodation.2">Departamentos en zona Pichincha</li>
+      </ul>
+    </section>
 
-  <script>
-    // Diccionario de traducciones español ↔ hebreo
-    const translations = {
-      es: {
-        "city-title": "Rosario",
-        "welcome-text": "Bienvenidos a la sección de Rosario.",
-        "main-attractions-title": "Atracciones principales",
-        "attraction-0": "Monumento Nacional a la Bandera",
-        "attraction-1": "Parque Independencia",
-        "attraction-2": "Costanera y Río Paraná",
-        "attraction-3": "Museo de Arte Contemporáneo (MACRO)",
-        "restaurant-types-title": "Tipos de restaurantes",
-        "rest-0": "Parrillas",
-        "rest-1": "Pizzerías",
-        "rest-2": "Heladerías artesanales",
-        "rest-3": "Bares y cervecerías",
-        "map-title": "Mapa de Rosario",
-        "see-bigger-map": "Ver mapa más grande",
-        "back-link": "⬅ Volver al itinerario",
-        "foto-caption": "Monumento Nacional a la Bandera, Rosario"
-      },
-      he: {
-        "city-title": "רוסאריו",
-        "welcome-text": "ברוכים הבאים למדור רוסאריו.",
-        "main-attractions-title": "אטרקציות עיקריות",
-        "attraction-0": "המונומנטו הלאומי לדגל",
-        "attraction-1": "פארק אינדפנדנסיה",
-        "attraction-2": "הטיילת ונהר פרנה",
-        "attraction-3": "מוזיאון האמנות המודרנית (MACRO)",
-        "restaurant-types-title": "סוגי מסעדות",
-        "rest-0": "מסעדות בשרים (פריז'ות)",
-        "rest-1": "פיצריות",
-        "rest-2": "גלידריות בוטיק",
-        "rest-3": "ברים ופאבים",
-        "map-title": "מפת רוסאריו",
-        "see-bigger-map": "לצפייה במפה גדולה יותר",
-        "back-link": "⬅ חזרה למפת המסלול",
-        "foto-caption": "אנדרטת הדגל הלאומי, רוסאריו"
-      }
-    };
+    <!-- Sección: Agenda -->
+    <section class="city-section">
+      <h2 data-key="rosario.agenda.title">Agenda de eventos</h2>
+      <ul>
+        <li data-key="rosario.agenda.1">Mercado de San Miguel (domingos)</li>
+        <li data-key="rosario.agenda.2">Fiesta Nacional de la Biela (abril)</li>
+        <li data-key="rosario.agenda.3">Feria de Productos Regionales (septiembre)</li>
+      </ul>
+    </section>
 
-    function translatePage(language) {
-      document.body.dir = (language === 'he') ? 'rtl' : 'ltr';
-      document.getElementById('city-title').textContent = translations[language]["city-title"];
-      document.getElementById('welcome-text').textContent = translations[language]["welcome-text"];
-      document.getElementById('main-attractions-title').textContent = translations[language]["main-attractions-title"];
-      document.getElementById('attraction-0').textContent = translations[language]["attraction-0"];
-      document.getElementById('attraction-1').textContent = translations[language]["attraction-1"];
-      document.getElementById('attraction-2').textContent = translations[language]["attraction-2"];
-      document.getElementById('attraction-3').textContent = translations[language]["attraction-3"];
-      document.getElementById('restaurant-types-title').textContent = translations[language]["restaurant-types-title"];
-      document.getElementById('rest-0').textContent = translations[language]["rest-0"];
-      document.getElementById('rest-1').textContent = translations[language]["rest-1"];
-      document.getElementById('rest-2').textContent = translations[language]["rest-2"];
-      document.getElementById('rest-3').textContent = translations[language]["rest-3"];
-      document.getElementById('map-title').textContent = translations[language]["map-title"];
-      document.getElementById('see-bigger-map').textContent = translations[language]["see-bigger-map"];
-      document.getElementById('back-link').textContent = translations[language]["back-link"];
-      document.getElementById('foto-caption').textContent = translations[language]["foto-caption"];
-    }
-  </script>
+    <!-- Sección: Transporte -->
+    <section class="city-section">
+      <h2 data-key="rosario.transport.title">Transporte</h2>
+      <p data-key="rosario.transport.text">Rosario cuenta con transporte público accesible y taxis económicos. Recomendamos:</p>
+      <ul>
+        <li data-key="rosario.transport.1">Tren metropolitano (conexión con aeropuerto)</li>
+        <li data-key="rosario.transport.2">Apps de viaje (Uber, Didi)</li>
+      </ul>
+    </section>
+  </div>
+
+  <!-- Scripts -->
+  <script src="../js/translate.js"></script>
 </body>
 </html>

@@ -1,42 +1,24 @@
-import React, { createContext, useContext, useState, useEffect } from "react";
+import React, { createContext, useContext, useState, useEffect } from 'react';
 
+// Crea el contexto
 const MonedaContext = createContext();
 
+// Hook personalizado para usar el contexto
+export function useMoneda() {
+  return useContext(MonedaContext);
+}
+
+// Proveedor del contexto de moneda
 export function MonedaProvider({ children }) {
-  const [moneda, setMoneda] = useState("ARS");
-  const [tasas, setTasas] = useState({});
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
+  const [moneda, setMoneda] = useState(localStorage.getItem('moneda') || 'ARS');
 
   useEffect(() => {
-    async function fetchTasa() {
-      if (moneda === "ARS" || tasas[moneda]) return;
-      setLoading(true);
-      setError("");
-      try {
-        const res = await fetch(`http://localhost:3001/mcp/currency/convert?from=ARS&to=${moneda}&amount=1`);
-        const data = await res.json();
-        if (data.result) {
-          setTasas(prev => ({ ...prev, [moneda]: data.result }));
-        } else {
-          setError("No se pudo obtener la tasa de cambio.");
-        }
-      } catch (e) {
-        setError("Error consultando la tasa de cambio.");
-      }
-      setLoading(false);
-    }
-    fetchTasa();
-    // eslint-disable-next-line
+    localStorage.setItem('moneda', moneda);
   }, [moneda]);
 
   return (
-    <MonedaContext.Provider value={{ moneda, setMoneda, tasas, loading, error }}>
+    <MonedaContext.Provider value={{ moneda, setMoneda }}>
       {children}
     </MonedaContext.Provider>
   );
-}
-
-export function useMoneda() {
-  return useContext(MonedaContext);
 }

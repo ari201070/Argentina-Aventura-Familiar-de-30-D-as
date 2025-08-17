@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title data-key="corrientes_title">Corrientes</title>
+  <link rel="stylesheet" href="../css/main.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+</head>
+<body>
+  <!-- Barra superior fija -->
+  <div class="top-bar">
+    <button class="btn-back" onclick="window.location.href='../index.html'">
+      <i class="fas fa-arrow-left"></i> <span data-key="volverAlItinerario">Volver al itinerario</span>
+    </button>
+    <span data-key="idioma">Idioma:</span>
+    <button class="btn-lang" data-lang="es" id="btn-es">Español</button>
+    <button class="btn-lang" data-lang="he" id="btn-he">עברית</button>
+    <span data-key="moneda">Moneda:</span>
+    <button class="btn-currency" data-currency="ARS" id="btn-ars">ARS</button>
+    <button class="btn-currency" data-currency="USD" id="btn-usd">USD</button>
+    <button class="btn-currency" data-currency="ILS" id="btn-ils">ILS</button>
+    <button class="btn-currency" data-currency="EUR" id="btn-eur">EUR</button>
+  </div>
+
+  <div class="main-container">
+    <h1 data-key="corrientes_title">Corrientes</h1>
+    <!-- Foto de portada -->
+    <img src="../docs/imagenes/corrientes.jpg" alt="Corrientes" class="ciudad-foto">
+    <p class="foto-caption" data-key="corrientes_foto_caption">Río Paraná y Costanera de Corrientes</p>
+
+    <!-- Introducción -->
+    <section>
+      <h2 data-key="intro_title">Introducción</h2>
+      <p data-key="corrientes_intro_md">
+        Corrientes, la ciudad de las "Siete Corrientes", se ubica a orillas del río Paraná y es un centro cultural vibrante, conocido por su carnaval, chamamé y rica historia. Es una puerta de entrada a los Esteros del Iberá.
+      </p>
+    </section>
+
+    <!-- Actividades recomendadas -->
+    <section>
+      <h2 data-key="actividades_title">Actividades recomendadas</h2>
+      <ul>
+        <li data-key="corrientes_act1_md">Pasear por la Costanera General San Martín (Sur y Norte), especialmente al atardecer.</li>
+        <li data-key="corrientes_act2">Disfrutar de las playas urbanas del Paraná.</li>
+        <li data-key="corrientes_act3_md">Visitar el casco histórico, sus iglesias y la Manzana Franciscana.</li>
+        <li data-key="corrientes_act4_md">Explorar el Museo Provincial de Bellas Artes "Dr. Juan Ramón Vidal" y el Museo del Carnaval.</li>
+        <li data-key="corrientes_act5_md">Excursión de día completo a los Esteros del Iberá (reservar con anticipación).</li>
+        <li data-key="corrientes_act6_new">Disfrutar de un espectáculo de chamamé (música típica).</li>
+        <li data-key="corrientes_act7_new">Explorar los mercados artesanales para comprar productos locales.</li>
+        <li data-key="corrientes_act8_new">Pesca deportiva en el río Paraná (con guías habilitados).</li>
+      </ul>
+    </section>
+
+    <!-- Gastronomía -->
+    <section>
+      <h2 data-key="gastronomia_title">Gastronomía</h2>
+      <p data-key="corrientes_gast_intro">La gastronomía correntina está fuertemente influenciada por el río, con platos a base de pescado (dorado, surubí, pacú), y la tradición guaraní (mandioca, chipá, mbejú). Hay opciones para todos los gustos.</p>
+      <ul>
+        <li data-key="corrientes_gast1">Prueba el chipá, mbejú y especialidades de pescado de río como pacú, surubí o dorado.</li>
+        <li data-key="corrientes_gast2">Opciones bajas en carbohidratos: parrillas con variedad de carnes, pescados a la plancha o al horno, y ensaladas frescas.</li>
+        <li data-key="corrientes_gast3_elmariscal">Recomendado: <a href="https://www.instagram.com/restauranteelmariscal/" target="_blank">El Mariscal</a> (pescados y opciones sin TACC).</li>
+        <li data-key="corrientes_gast4_larosita">Recomendado: La Rosita (cocina casera, con opciones sin gluten y sin azúcar).</li>
+        <li data-key="corrientes_gast5_elsolar">Recomendado: El Solar del Paraná (pescados de río y cocina regional).</li>
+      </ul>
+    </section>
+
+    <!-- Alojamiento -->
+    <section>
+      <h2 data-key="alojamiento_title">Alojamiento recomendado</h2>
+      <ul>
+        <li data-key="corrientes_aloja1">Hotel La Alondra (boutique, familiar, pileta)</li>
+        <li data-key="corrientes_aloja2">Donsuites Apart Hotel (ideal con niños, cerca de la costanera)</li>
+        <li data-key="corrientes_aloja3_md">Hotel de Turismo Corrientes</li>
+        <li data-key="corrientes_aloja4_md">Hostal del Río</li>
+        <li data-key="corrientes_aloja5_md">Apartamentos en el centro o cerca de la Costanera</li>
+        <li data-key="corrientes_aloja6_md">Opciones en Airbnb en barrios residenciales</li>
+      </ul>
+    </section>
+
+    <!-- Agenda de eventos -->
+    <section>
+      <h2 data-key="agenda_title">Agenda de eventos</h2>
+      <ul>
+        <li data-key="corrientes_event1_md">Carnavales Correntinos (generalmente enero-febrero, consultar fechas exactas).</li>
+        <li data-key="corrientes_event2_md">Festival Nacional del Chamamé (generalmente en enero).</li>
+        <li data-key="corrientes_event3">Feria de Artesanías Regionales (consultar fechas).</li>
+        <li data-key="corrientes_event4_ical">
+            <span data-key="descargar_agenda_ical">Descargar agenda completa en formato iCal (.zip):</span>
+            <a href="../docs/agenda/ariflier1970@gmail.com.ical.zip" download data-key="agenda_ical_link_text">ariflier1970@gmail.com.ical.zip</a>
+        </li>
+      </ul>
+    </section>
+
+    <!-- Atracciones -->
+    <section>
+      <h2 data-key="atracciones_title">Atracciones</h2>
+      <ul>
+        <li data-key="corrientes_atr1">Costanera General San Martín (Sur y Norte)</li>
+        <li data-key="corrientes_atr2">Catedral de Corrientes</li>
+        <li data-key="corrientes_atr3">Parque Mitre</li>
+        <li data-key="corrientes_atr4">Puente General Belgrano (vistas panorámicas)</li>
+        <li data-key="corrientes_atr5">Playas Arazaty y Malvinas</li>
+        <li data-key="corrientes_atr6_new">Museo Provincial de Bellas Artes "Dr. Juan Ramón Vidal"</li>
+        <li data-key="corrientes_atr7_new">Teatro Oficial Juan de Vera</li>
+        <li data-key="corrientes_atr8_new">Manzana Franciscana (complejo histórico-religioso)</li>
+      </ul>
+    </section>
+
+    <!-- Presupuesto orientativo -->
+    <section>
+      <h2 data-key="presupuesto_title">Presupuesto orientativo</h2>
+      <ul>
+        <li data-key="corrientes_pres1">Alojamiento: ARS 40.000 - 80.000 por noche (familia)</li>
+        <li data-key="corrientes_pres2">Comidas: ARS 8.000 - 20.000 por persona por comida principal</li>
+        <li data-key="corrientes_pres3">Excursión a Iberá (desde Corrientes): ARS 60.000 - 90.000 por persona (varía según operador y servicios)</li>
+        <li data-key="corrientes_pres4">Transporte urbano (colectivo): ARS 800 - 1000 por tramo (aproximado)</li>
+      </ul>
+    </section>
+
+    <!-- Consejos para familias -->
+    <section>
+      <h2 data-key="consejos_title">Consejos para familias</h2>
+      <ul>
+        <li data-key="corrientes_tip1_md">Llevar repelente de insectos y protector solar siempre.</li>
+        <li data-key="corrientes_tip2_md">Usar ropa ligera, sombrero, especialmente en verano.</li>
+        <li data-key="corrientes_tip3_md">Reservar excursiones (especialmente a Iberá) con anticipación.</li>
+        <li data-key="corrientes_tip4_md">Consultar la agenda de eventos local para aprovechar actividades culturales y festivales.</li>
+        <li data-key="corrientes_tip5_md">En verano, evitar la exposición solar directa en horarios de máxima radiación (mediodía).</li>
+        <li data-key="corrientes_tip6_new">Disfruten de la Costanera al atardecer, es un paseo muy popular y agradable.</li>
+        <li data-key="corrientes_tip7_new">Consideren un paseo en lancha para ver la ciudad desde el río.</li>
+      </ul>
+    </section>
+
+    <!-- Tips culturales -->
+    <section>
+      <h2 data-key="cultural_tips_title">Tips culturales</h2>
+      <ul>
+        <li data-key="corrientes_cult1_chamame">El chamamé es el ritmo musical y danza por excelencia de la provincia; intenten escuchar o ver un espectáculo.</li>
+        <li data-key="corrientes_cult2_guarani">El guaraní es un idioma cooficial y su influencia se siente en el dialecto local y nombres de lugares.</li>
+        <li data-key="corrientes_cult3_virgen">La devoción a la Virgen de Itatí es muy fuerte en la región.</li>
+        <li data-key="corrientes_cult4_terere">El tereré (mate frío con hierbas yuyos) es una bebida muy popular, especialmente en verano. ¡Anímense a probarlo!</li>
+      </ul>
+    </section>
+
+    <!-- Mapa de Corrientes -->
+    <section>
+        <h2 data-key="map_title">Mapa de Corrientes</h2>
+        <p><a href="https://www.openstreetmap.org/#map=13/-27.468/-58.835" target="_blank" data-key="corrientes_map_link_text">Ver mapa de Corrientes en OpenStreetMap</a></p>
+    </section>
+
+    <!-- Lista de equipaje (checklist y borrar) -->
+    <div class="custom-section" id="packing-section">
+      <h2><i class="fas fa-suitcase-rolling" style="color:#f9a825;"></i> <span data-key="packing_title">Lista de equipaje</span></h2>
+      <div class="packing-controls">
+        <button class="custom-btn" id="packing-add" data-key="packing_add">Agregar</button>
+        <select class="custom-select" id="packing-type">
+          <option value="esencial" data-key="packing_essential">Esenciales</option>
+          <option value="opcional" data-key="packing_optional">Opcionales</option>
+        </select>
+        <input class="custom-input" id="packing-input" placeholder="¿Qué más llevás?" data-key="packing_placeholder">
+      </div>
+      <div class="packing-lists">
+        <h4 data-key="packing_essential">Esenciales</h4>
+        <ul id="packing-list-esencial"></ul>
+        <h4 data-key="packing_optional">Opcionales</h4>
+        <ul id="packing-list-opcional"></ul>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <p>© 2025 Viaje Familiar Argentina</p>
+  </footer>
+
+  <script src="../js/main.js"></script>
+  <script>
+    // --- PACKING LIST: checklist y borrar ---
+    function renderPackingListCiudad() {
+      const listEsencial = document.getElementById('packing-list-esencial');
+      const listOpcional = document.getElementById('packing-list-opcional');
+      listEsencial.innerHTML = '';
+      listOpcional.innerHTML = '';
+      const packingList = JSON.parse(localStorage.getItem('packingListCorrientes')) || {esencial:[], opcional:[]};
+      ['esencial', 'opcional'].forEach(type => {
+        packingList[type].forEach((item, idx) => {
+          const li = document.createElement('li');
+          li.innerHTML = `
+            <input type="checkbox" class="packing-check" ${item.checked ? 'checked' : ''} data-type="${type}" data-idx="${idx}">
+            <span class="packing-item" style="text-decoration:${item.checked?'line-through':'none'}">${item.text}</span>
+            <button class="packing-delete" data-type="${type}" data-idx="${idx}" title="Borrar"><i class="fas fa-trash"></i></button>
+          `;
+          if(type === 'esencial') listEsencial.appendChild(li);
+          else listOpcional.appendChild(li);
+        });
+      });
+      // Eventos de check
+      document.querySelectorAll('.packing-check').forEach(chk => {
+        chk.addEventListener('change', function() {
+          const type = this.dataset.type, idx = this.dataset.idx;
+          const packingList = JSON.parse(localStorage.getItem('packingListCorrientes')) || {esencial:[], opcional:[]};
+          packingList[type][idx].checked = this.checked;
+          localStorage.setItem('packingListCorrientes', JSON.stringify(packingList));
+          renderPackingListCiudad();
+        });
+      });
+      // Eventos de borrar
+      document.querySelectorAll('.packing-delete').forEach(btn => {
+        btn.addEventListener('click', function() {
+          const type = this.dataset.type, idx = this.dataset.idx;
+          const packingList = JSON.parse(localStorage.getItem('packingListCorrientes')) || {esencial:[], opcional:[]};
+          packingList[type].splice(idx,1);
+          localStorage.setItem('packingListCorrientes', JSON.stringify(packingList));
+          renderPackingListCiudad();
+        });
+      });
+    }
+    renderPackingListCiudad();
+
+    // Agregar ítem al presionar Enter
+    document.getElementById('packing-input').addEventListener('keypress', function(e) {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        document.getElementById('packing-add').click();
+      }
+    });
+
+    document.getElementById('packing-add').addEventListener('click', () => {
+      const type = document.getElementById('packing-type').value;
+      const input = document.getElementById('packing-input');
+      const value = input.value.trim();
+      if(value) {
+        const packingList = JSON.parse(localStorage.getItem('packingListCorrientes')) || {esencial:[], opcional:[]};
+        packingList[type].push({text: value, checked: false});
+        localStorage.setItem('packingListCorrientes', JSON.stringify(packingList));
+        renderPackingListCiudad();
+        input.value = '';
+      }
+    });
+  </script>
+</body>
+</html>

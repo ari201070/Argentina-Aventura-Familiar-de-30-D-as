@@ -1,16 +1,35 @@
-body {
-  font-family: Arial, Helvetica, sans-serif;
-  background: #fafafa;
-  margin: 20px;
+.table-restaurantes, .table-cafes, .table-presupuesto {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 18px auto 28px auto;
+  background: #f7fbff;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  border-radius: 8px;
+  overflow: hidden;
+  max-width: 750px;
 }
-
-button {
-  margin: 2px;
-  padding: 4px 8px;
-  font-size: 1em;
+.table-restaurantes th, .table-restaurantes td,
+.table-cafes th, .table-cafes td,
+.table-presupuesto th, .table-presupuesto td {
+  border: 1px solid #b3c7e6;
+  padding: 10px 15px;
+  text-align: left;
+  font-size: 16px;
 }
-
-.rtl {
-  direction: rtl;
-  text-align: right;
+.table-restaurantes th, .table-cafes th, .table-presupuesto th {
+  background: #e6f0fa;
+  font-weight: bold;
+}
+.table-restaurantes tr:nth-child(even), .table-cafes tr:nth-child(even), .table-presupuesto tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+.table-restaurantes tr:hover, .table-cafes tr:hover, .table-presupuesto tr:hover {
+  background-color: #f1f1f1;
+}
+.table-restaurantes td a, .table-cafes td a {
+  color: #2553a2;
+  text-decoration: underline;
+}
+.table-restaurantes td a:hover, .table-cafes td a:hover {
+  color: #3f7edb;
 }

@@ -1,0 +1,202 @@
+/* AgendaCorrientes.css - Archivo completo */
+.agenda-container {
+  padding: 20px;
+  max-width: 800px;
+  margin: 0 auto;
+  font-family: Arial, sans-serif;
+  padding-top: 60px; /* Espacio para la barra superior fija */
+}
+
+/* Soporte RTL para hebreo */
+.rtl {
+  direction: rtl;
+  text-align: right;
+}
+
+.ltr {
+  direction: ltr;
+  text-align: left;
+}
+
+/* Barra superior fija */
+.barra-superior {
+  position: fixed;
+  top: 0;
+  right: 0;
+  padding: 10px;
+  display: flex;
+  gap: 10px;
+  background: white;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  z-index: 1000;
+}
+
+.botones-idioma {
+  display: flex;
+  gap: 5px;
+}
+
+.btn-idioma {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  background: #3498db;
+  color: white;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.btn-idioma:hover {
+  background: #2980b9;
+}
+
+.btn-idioma.activo {
+  background: #2980b9;
+  font-weight: bold;
+}
+
+.btn-volver {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  background: #2ecc71;
+  color: white;
+  text-decoration: none;
+  transition: background 0.2s;
+}
+
+.btn-volver:hover {
+  background: #27ae60;
+}
+
+.agenda-titulo {
+  color: #2c3e50;
+  text-align: center;
+  margin-bottom: 30px;
+  font-size: 24px;
+}
+
+.filtros {
+  margin-bottom: 20px;
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.filtro-btn {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  background: #3498db;
+  color: white;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.filtro-btn:hover {
+  background: #2980b9;
+}
+
+.filtro-btn.activo {
+  background: #2980b9;
+  font-weight: bold;
+}
+
+.eventos-lista {
+  display: grid;
+  gap: 20px;
+}
+
+.evento-card {
+  background: #fff;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  transition: transform 0.2s;
+}
+
+.evento-card:hover {
+  transform: translateY(-2px);
+}
+
+.evento-titulo {
+  color: #2c3e50;
+  margin: 0 0 10px 0;
+  font-size: 18px;
+}
+
+.evento-fecha, 
+.evento-lugar {
+  color: #666;
+  margin: 5px 0;
+  font-size: 14px;
+}
+
+.evento-descripcion {
+  margin-top: 10px;
+  line-height: 1.5;
+  color: #444;
+}
+
+.cargando, 
+.error,
+.no-eventos {
+  text-align: center;
+  padding: 20px;
+  color: #666;
+  font-size: 16px;
+}
+
+.error {
+  color: #e74c3c;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .agenda-container {
+    padding: 15px;
+    padding-top: 100px;
+  }
+
+  .barra-superior {
+    flex-wrap: wrap;
+    justify-content: flex-end;
+  }
+
+  .filtros {
+    flex-direction: column;
+  }
+
+  .filtro-btn,
+  .btn-idioma,
+  .btn-volver {
+    width: 100%;
+    text-align: center;
+  }
+
+  .evento-card {
+    padding: 15px;
+  }
+}
+
+/* Estilos para elementos fuertes y énfasis */
+.evento-fecha strong,
+.evento-lugar strong {
+  font-weight: bold;
+  color: #2c3e50;
+}
+
+/* Animaciones */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.evento-card {
+  animation: fadeIn 0.3s ease-in-out;
+}

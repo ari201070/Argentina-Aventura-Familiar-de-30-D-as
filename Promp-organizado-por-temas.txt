@@ -1,0 +1,753 @@
+# Promp para Copilot y colaboradores: Organización y lineamientos del proyecto
+
+Este archivo contiene TODAS las reglas y lineamientos para el desarrollo y edición del proyecto **Argentina Aventura Familiar de 30 Días**.  
+Toda nueva instrucción debe agregarse en este archivo, bajo el tema correspondiente.  
+**No borres este archivo. Si surgen conflictos entre reglas, consultar a ari201070 antes de decidir.**
+
+---
+
+## 1. Objetivo general del proyecto
+
+- Documentar y organizar un viaje familiar de un mes por Argentina, orientado a familias (pareja + 2 hijos), con información en español y hebreo.
+- Se incluyen: itinerario, actividades, alojamientos, presupuesto, logística, consejos y recursos útiles, priorizando experiencia y comodidad familiar.
+El proyecto está orientado a documentar y organizar un viaje familiar de un mes por Argentina, con información en hebreo, para una familia (pareja + 2 hijos). Incluye itinerario, actividades, alojamientos, coordenadas y presupuesto detallado, así como la adaptación cultural y lingüística para viajeros israelíes o de habla hebrea.
+
+Estructura y Contenidos:
+
+Itinerario detallado: Incluye destinos principales (Buenos Aires, Rosario, Bariloche, Mendoza, Jujuy, Puerto Iguazú, Corrientes, regreso a Buenos Aires), duración en cada lugar, actividades clave, sugerencias de alojamiento y coordenadas geográficas.
+
+Presupuesto: Cálculo de costos diarios promedio (alojamiento, comidas, actividades, transporte local), suma total para 30 días, margen de seguridad del 25%, y costos de vuelos internacionales desde Israel sin pasar por Turquía o países árabes.
+
+Archivos fuente: El itinerario y los datos principales están en hojas de cálculo (Excel), lo que facilita la actualización y exportación de datos.
+
+Enfoque en la experiencia familiar: Las actividades y alojamientos están pensados para familias y priorizan la comodidad, la seguridad y la variedad de experiencias.
+
+Para las opciones de comida tiene que ser apta para diabeticos y baja en carbohiratos (sin gluten de ser posible), si tiene que ser el unico tipo de dieta pero si abarcar estas posibilidades.
+---
+
+## 2. Estructura del proyecto
+
+```
+/ (raíz del proyecto)
+├── index.html                         # Página principal del itinerario
+├── Promp para github.txt              # Archivo de reglas original (NO BORRAR)
+├── Promp-organizado-por-temas.txt     # Este archivo, versión ordenada y ampliable
+├── docs/
+│   ├── imagenes/
+│   │   ├── buenosaires.jpg
+│   │   ├── rosario.jpg
+│   │   ├── bariloche.jpg
+│   │   ├── ... (más imágenes por ciudad, en minúsculas y sin espacios)
+│   └── ... (otros recursos/documentos de apoyo) ...
+├── ciudades/
+│   ├── buenosaires.html
+│   ├── rosario.html
+│   ├── bariloche.html
+│   ├── ... (todas las ciudades y mapa interactivo) ...
+├── css/   # Opcional, estilos compartidos
+├── js/    # Opcional, scripts JS compartidos
+├── README.md
+└── ... (otros archivos como favicon, licencia, etc.)
+```
+- Todas las imágenes deben estar en `docs/imagenes/` y llamarse igual al nombre de la ciudad en minúsculas, sin espacios, con extensión `.jpg` (o `.png` si aplica).
+- Todas las páginas de ciudad y el mapa están en la carpeta `ciudades/`.
+- Todos los archivos auxiliares/documentación en `docs/`.
+- Si usás módulos externos, podés agregar una carpeta `libs/`.
+
+---
+
+## 3. Reglas de entrega y edición de archivos
+
+- **SIEMPRE entregar los archivos completos, de principio a fin, listos para copiar y pegar.**
+- **No omitir nada de lo ya existente salvo pedido explícito.**
+- **No dejar comentarios ambiguos como “el resto es igual” ni archivos parciales.**
+- Al corregir, integrar o agregar módulos, conservar toda la estructura y contenido previo (sólo agregar o modificar lo necesario).
+- ¿Conflicto entre pedidos? Consultar a ari201070 antes de decidir.
+
+---
+
+## 4. Consistencia visual y funcional
+
+- Barra fija arriba a la derecha con botones de idioma y botón "Volver al itinerario".
+- Uso de las mismas clases y estructura para todos los botones (idioma, moneda, volver).
+- Foto de portada cargada desde `docs/imagenes/[ciudad].jpg` (o `.png` si corresponde) en todas las páginas de ciudad.
+- Toda la estructura HTML y CSS debe ser igual en todas las ciudades (incluyendo IDs y clases para traducción automática y funcionalidad consistente).
+- El menú de navegación, función de cambio de idioma y moneda, y botón "Volver al itinerario" deben funcionar igual en todas las páginas.
+- El nombre de la imagen debe corresponder exactamente al nombre de la ciudad (minúsculas, sin espacios ni tildes).
+- Las imágenes deben estar presentes en la carpeta correspondiente antes de publicar la página.
+-Para que todas las páginas de ciudades sean consistentes y multi-idioma, solo necesitas que la barra superior tenga:
+
+Botón: Español
+Botón: עברית
+Enlace: ⬅ Volver al itinerario (que también se traduce a hebreo automáticamente)
+Copia el mismo bloque HTML y el mismo script que usa el diccionario con la clave "back-link".
+Así, cuando cambies de idioma, el texto del enlace también cambia (por ejemplo, a:
+⬅ חזרה למפת המסלול ).
+
+---
+
+## 5. Traducción dinámica y soporte multilenguaje
+
+- Todos los textos, botones, títulos, placeholders y mensajes de error deben ser traducibles dinámicamente según el idioma elegido.
+-El diccionario de traducción (translations) debe incluir todas las cadenas de texto del contenido.
+- El selector de idioma debe cambiar textos y enlaces al idioma correspondiente.
+- Al navegar, la selección de idioma se mantiene (usando localStorage o querystring).
+- Todos los IDs y clases deben mantenerse igual para que la traducción funcione en todas las páginas.
+- Los ítems de la lista de equipaje se traducen automáticamente al cambiar el idioma.
+- La IA responde en el idioma en que se hace la pregunta.
+-Soporte para texto de derecha a izquierda (RTL) en el idioma Hebreo
+
+---
+
+## 6. Herramientas interactivas y módulos especiales
+
+### 6.1 Conversor de moneda
+
+- Conversor interactivo moderno, ubicado al final de index.html (antes de `</body>`), con tasas reales y actualización diaria (Polygon.io o exchangerate.host).
+- Conversor clásico en la tabla sigue funcionando con ARS/USD/ILS/EUR.
+- Si el par directo no está disponible, la conversión se realiza usando USD como intermediario (ejemplo: ARS → USD → ILS).
+- Solo monedas ARS, USD, EUR, ILS.
+- El resultado de la conversión debe ser claro y visible.
+
+### 6.2 Lista de equipaje
+
+- Lista con esenciales y opcionales (selector para agregar ítems en la lista correspondiente).
+- Agregar ítems traduce automáticamente al cambiar de idioma.
+- El botón para agregar ítems debe ser visible y traducido.
+- (Ideal: persistencia usando localStorage).
+
+### 6.3 Consulta a IA
+
+- Módulo de consulta a IA experto en viajes familiares en Argentina, al final de index.html.
+- Puede ser mock (respuesta simulada) o conectado a Pyrefly o a una API real.
+- El botón de consulta queda deshabilitado mientras responde.
+- Manejo de errores: si la IA falla, mostrar mensaje claro en el idioma actual.
+- Traducción de todos los textos y errores de IA.
+- La respuesta debe mostrarse en el idioma de la pregunta.
+
+---
+
+## 7. Reglas para imágenes
+
+- El nombre del archivo de la imagen será el nombre de la ciudad en minúsculas, sin espacios ni tildes y extensión .jpg.
+- Deben estar presentes en `docs/imagenes/`.
+- Descargar imágenes libres de Unsplash o equivalentes para cada ciudad.
+
+---
+
+## 8. Buenas prácticas y organización de datos/documentos
+
+- Guardar los Excel/CSV fuente en subcarpetas específicas por temática en `docs/`.
+- Si la app consume datos, agregar una carpeta `/data` con versiones en JSON.
+- README(s) en Markdown explicando el propósito de cada carpeta y archivo.
+- Mantener documentación clara y actualizada en `docs/`.
+- No crear carpetas vacías: si es necesario, agregar un archivo `.gitkeep`.
+
+---
+
+## 9. Sincronización y enriquecimiento de contenidos
+
+- Cada sección importante de la ciudad en su archivo .md debe reflejarse y ampliarse en la carpeta correspondiente en `docs/`.
+- Las secciones de ciudad deben estar sincronizadas entre los .html, .md y la documentación `docs/`.
+- Ejemplo: "Agenda de eventos" debe estar tanto en la página de la ciudad como en `docs/agenda/[ciudad]/README.md`.
+
+---
+
+## 10. Centralización de idioma y moneda
+
+- El estado de idioma y moneda debe manejarse globalmente (centralizado, por localStorage o querystring).
+- Cambiar idioma no afecta la conversión de moneda y viceversa.
+- Los selectores de idioma y moneda usan la misma lógica y clases activas en todas las páginas.
+- Al navegar o cambiar idioma/moneda, toda la navegación y los contenidos se mantienen en ese idioma y moneda.
+
+---
+
+## 11. .gitignore recomendado
+
+- Incluir reglas para:
+  - Node.js (node_modules, logs)
+  - Mac, Linux y Windows (archivos de sistema)
+  - IDEs (VSCode, JetBrains, etc.)
+  - Archivos generados automáticamente y de configuración local
+  - No subir logs, cachés, temporales, ni archivos vacíos
+
+---
+
+## 12. Propuestas y mejoras futuras
+
+- Integrar APIs de tipo de cambio, reservas, mapas, etc.
+- Formularios para agregar notas y gastos diarios.
+- Visualización de presupuesto con tablas, tarjetas, o gráficos.
+- Documentar scripts de automatización de datos.
+- Internacionalización: README en español, inglés y hebreo.
+-Sincronizar eventos automáticamente con tu archivo de ciudades.
+-Mejorar UI (más íconos, colores por tipo, edición de reservas, exportar PDF, etc.).
+-Permitir agregar eventos personalizados.
+
+---
+
+## 13. Ciudades y destinos incluidos
+
+- Buenos Aires
+- Rosario
+- Bariloche
+- Mendoza
+- Malargüe
+- Jujuy
+- Iguazú
+- Corrientes
+- Iberá
+- Mapa Interactivo
+
+---
+Flujo del Itinerario
+Buenos Aires (inicio)
+Rosario
+Mendoza
+Malargüe
+Jujuy
+Cataratas del Iguazú
+Corrientes
+Esteros del Iberá
+Buenos Aires (regreso)
+
+## 14. Estructura de las páginas
+
+### 14.1 Estructura de index.html (página principal)
+
+- Es la página principal del itinerario del viaje y debe contener:
+  - Barra superior fija a la derecha con selectores de idioma y moneda, usando las mismas clases y estructura para los botones en todas las páginas.
+  - Título principal y bienvenida.
+  - Lista de ciudades/destinos, cada una con su link correspondiente a la página de ciudad.
+  - Tabla de transporte entre ciudades, con nombres de compañías como enlace (no columna web).
+  - (Opcional) Sección de atracciones destacadas (ej: Corrientes) según corresponda.
+  - Módulos interactivos al final (antes de `</body>`): conversor de moneda moderno, lista de equipaje, y consulta a IA, todos integrados y funcionando.
+  - Traducción dinámica de textos y soporte multilenguaje para todos los componentes y módulos.
+  - Consistencia visual y funcional en todos los elementos y botones.
+  - Al hacer clic en "⬅ Volver al itinerario" desde cualquier página de ciudad, debe retornar a `index.html`.
+
+### 14.2 Estructura de páginas de ciudad (por ejemplo: ciudades/rosario.html)
+
+- Cada página de ciudad debe tener la siguiente estructura:
+  - Barra superior fija arriba a la derecha, con el mismo diseño y funcionalidad que en index.html: botones de idioma, selector de moneda (si aplica), y botón "⬅ Volver al itinerario" (link a `/index.html`).
+  - Título con el nombre de la ciudad, traducido dinámicamente.
+  - Foto de portada correspondiente, cargada desde `docs/imagenes/[ciudad].jpg` (el nombre del archivo debe ser igual al de la ciudad en minúsculas, sin espacios ni tildes).
+  - Secciones principales: breve introducción, actividades recomendadas, gastronomía, alojamiento, agenda de eventos, atracciones, presupuesto orientativo y consejos para familias.
+  - Cada sección debe tener su propio título y contenido, ambos traducibles dinámicamente.
+  - El menú de navegación y todos los botones deben usar las mismas clases e IDs que en index.html para que la traducción y la experiencia sean consistentes.
+  - Todos los enlaces internos (a otras ciudades/mapa/etc.) deben funcionar igual y mantenerse en el idioma seleccionado.
+  - El diseño, IDs, y clases deben ser los mismos en todas las páginas de ciudad.
+  - Si se agregan módulos adicionales (ejemplo: galería, comentarios, etc.), se deben ubicar después del contenido principal y antes de `</body>`, siguiendo la misma lógica de integración que los módulos de la página principal.
+
+---
+
+**IMPORTANTE:**  
+- Toda nueva instrucción debe agregarse en este archivo, bajo el tema correspondiente.  
+- Si tienes dudas o surge un conflicto entre pedidos, CONSÚLTALO antes de decidir.
+
+---
+
+Recomendaciones según tu objetivo de crear una web interactiva integrando MCP y facilitando el proceso de desarrollo y colaboración con GitHub Copilot:
+
+1. Visual Studio Code (VSCode)
+Imprescindible si aún no lo usás. Es el editor más flexible para proyectos web modernos.
+Extensión recomendada:
+GitHub Copilot (para autocompletado inteligente).
+GitHub Copilot Chat (interacción conversacional integrada).
+Gestión de MCP:
+Soporte completo para Node.js, React, Python, etc.
+Terminal integrada para correr scripts y servidores.
+2. Extensiones útiles para proyectos MCP / Web
+Prettier: Autoformato de código.
+ESLint: Linter para JavaScript/React.
+Live Server: Vista previa instantánea de HTML/JS/CSS.
+Markdown Preview Enhanced: Para trabajar con la documentación en Markdown.
+REST Client: Probar APIs de tu backend MCP desde el propio editor.
+Thunder Client: Alternativa sencilla a Postman para testeo de APIs REST.
+3. Git y GitHub
+Extensión de GitHub en VSCode para hacer commits, push, pull y revisión de PRs desde el editor.
+GitLens: Para análisis avanzado de historial y autoría de código.
+4. MCP (Modelo Cliente-Servidor)
+Si te referís a frameworks o herramientas para facilitar el desarrollo MCP:
+
+Si usás Node.js, asegurate de tener Node.js y npm instalados.
+Para backend en Python: Python, pip y frameworks como Flask o FastAPI.
+Si querés desarrollo “fullstack” integrado: Vite o Create React App para React.
+No hay una extensión “MCP” oficial, pero sí muchas para facilitar cliente-servidor:
+
+Thunder Client o REST Client para probar APIs.
+Docker (si pensás dockerizar).
+5. Opcional: AI y asistencia
+Tabnine: Alternativa/extra de AI para autocompletado.
+Kite: Otro complemento de AI (menos popular que Copilot, pero útil).
+
+1. Mejorar la navegación visualmente
+Podés usar una lista (<ul>) o agregar algo de padding para que la navegación se vea mejor.
+
+2. Resaltar el link activo
+Con NavLink de React Router, podés resaltar el enlace actual automáticamente.
+
+3. Usar App.jsx en vez de App.js (opcional)
+La convención en proyectos modernos con React + Vite es usar .jsx para componentes con JSX, pero ambos funcionan.
+
+TU FLUJO DE TRABAJO IDEAL
+Abrí el archivo con Notepad, VS Code o Notepad++
+
+Si el archivo no existe, crealo desde el explorador de archivos de Windows o desde tu editor.
+Copiá el código que te paso y pegalo en el archivo.
+
+Guardá el archivo.
+
+En GitHub Desktop:
+
+Verificá los cambios (deberían aparecer listados).
+Poné un mensaje de commit (ej: "agrego main.jsx").
+Hacé Commit y luego Push.
+Refrescá en GitHub web para ver los cambios reflejados.
+
+Mejoras en el Código:
+
+Separar las traducciones en archivos JSON independientes dentro de /locales/ para facilitar el mantenimiento
+Implementar un sistema de rutas más limpio
+Crear componentes reutilizables para elementos comunes como el header y footer
+Implementar un sistema de templates para reducir la duplicación de código HTML
+Optimizaciones Técnicas:
+
+Implementar manejo de caché para recursos estáticos
+Minificar archivos CSS y JavaScript para producción
+Optimizar las imágenes para mejor rendimiento
+Implementar lazy loading para imágenes y contenido
+Mejoras de Accesibilidad:
+
+Añadir atributos ARIA para mejor accesibilidad
+Mejorar el contraste de colores
+Asegurar que todos los elementos interactivos sean accesibles por teclado
+Incluir textos alternativos para todas las imágenes
+Documentación:
+
+Crear un archivo CONTRIBUTING.md con guías de contribución
+Mejorar la documentación en el README.md
+Añadir comentarios explicativos en el código
+Documentar el sistema de traducciones
+Gestión de Estado:
+
+Implementar un sistema de gestión de estado más robusto para manejar las preferencias de idioma y moneda
+Guardar las preferencias del usuario en localStorage
+Mejoras en el Sistema de Traducciones:
+
+Centralizar todas las cadenas de texto en archivos de idioma
+Implementar un sistema de fallback para traducciones faltantes
+Añadir soporte para más idiomas de manera escalable
+SEO y Metadatos:
+
+Mejorar los metadatos para SEO
+Añadir Open Graph tags para compartir en redes sociales
+Implementar un sitemap.xml
+Añadir un robots.txt
+Estilos y Diseño:
+
+Implementar un sistema de diseño consistente
+Usar variables CSS para una gestión más fácil de colores y temas
+Mejorar la responsividad para diferentes dispositivos
+Implementar temas claro/oscuro
+Testing:
+
+Añadir tests unitarios para las funciones JavaScript
+Implementar tests de integración
+Añadir pruebas de accesibilidad automatizadas
+Implementar pruebas de rendimiento
+Manejo de Errores:
+
+Implementar un sistema de manejo de errores más robusto
+Añadir páginas de error personalizadas (404, 500)
+Implementar logging de errores
+Seguridad:
+
+Implementar headers de seguridad
+Sanitizar inputs de usuario
+Proteger contra XSS y otros vectores de ataque comunes
+Performance:
+
+Implementar service workers para funcionalidad offline
+Optimizar el critical rendering path
+Implementar code splitting para reducir el tamaño inicial de la carga
+Control de Versiones:
+
+Añadir un archivo .gitignore apropiado
+Implementar conventional commits
+Configurar GitHub Actions para CI/CD
+
+
+Propuestas y Buenas Prácticas
+Separar claramente frontend y documentación/datos:
+
+Mantener la app React en la carpeta frontend/.
+Centralizar la documentación y archivos fuente en /docs.
+Hojas de cálculo y datos estructurados:
+
+Guardar los Excel y CSV en subcarpetas específicas por temática (itinerario, presupuesto, alojamientos, etc).
+Si la app consume datos, agregar una carpeta /data con versiones en JSON, facilitando la integración y futuras automatizaciones.
+Documentación clara:
+
+README(s) en Markdown explicando el propósito de cada carpeta y archivo.
+Resumir el itinerario y presupuesto también en Markdown para visualización rápida en GitHub.
+Consejos culturales y lingüísticos:
+
+Crear un archivo dedicado (por ejemplo, /docs/cultura-lenguaje/adaptacion.md) con recomendaciones para viajeros israelíes/hebrea.
+Automatización y scripts:
+
+Si el itinerario y presupuesto se actualizan frecuentemente, agregar scripts para convertir Excel/CSV a JSON para la app.
+Documentar el uso de estos scripts.
+Versionado de datos:
+
+Si varias personas editan los datos, sugerir el uso de formatos fácilmente versionables (CSV, JSON, Markdown) además de Excel.
+Internacionalización:
+
+Si el contenido está en hebreo, indicar el idioma en los nombres de archivo o carpetas (ej: itinerario-he.xlsx).
+Considerar agregar un README en español, inglés y hebreo para mayor alcance.
+Separar claramente la app del contenido documental y de datos hará el proyecto más escalable, colaborativo y fácil de mantener.
+Documentar y versionar los datos clave, y ofrecer formatos tanto para humanos (Excel, Markdown) como para la app (JSON), es una práctica ideal.
+Scripts y automatización ayudan a mantener todo sincronizado.
+La documentación cultural y de contexto en carpetas propias refuerza el valor diferencial de tu proyecto.
+
+Es recomendable y necesario incluir la carpeta del backend si el proyecto tiene lógica de servidor, base de datos, API, etc. Esto mejora la claridad, organización y escalabilidad del repositorio.
+¿Por qué es importante incluir mcp-backend?
+Claridad: Deja explícito que el proyecto es full-stack o tiene lógica de backend.
+Mantenimiento: Permite a otros contribuir o desplegar el backend fácilmente.
+Separación de responsabilidades: Facilita trabajar frontend y backend por separado, con sus propias dependencias y despliegues.
+Escalabilidad: Si en el futuro el backend crece (más servicios, autenticación, etc), está listo para organizarse.
+
+Estructura recomendada y utilidad de archivos
+Carpeta raíz del proyecto
+README.md
+Útil y fundamental. Resume el objetivo, alcance y cómo empezar. Ya lo tenés completísimo y muy detallado.
+/frontend
+Carpeta esencial para toda la app web.
+Incluye:
+public/ y src/: Necesarios para React.
+package.json y yarn.lock: Mantener, gestionan dependencias y scripts.
+Otros archivos de configuración (ej. .env, .gitignore): Útiles para ambiente y ocultar datos sensibles.
+/mcp-backend (si tuvieras backend)
+Muy útil si pensás integrar APIs propias, lógica de servidores, autenticación, almacenamiento de datos dinámicos, etc.
+Si aún no existe, podés dejarlo para más adelante, pero tener la carpeta pensada es bueno para crecer.
+/docs
+Muy útil y recomendable para documentación, planillas, explicaciones, etc.
+itinerario/: Guardar itinerario en .xlsx y .csv, y un resumen en .md.
+presupuesto/: Igual que itinerario, pero para costos.
+alojamientos/, actividades/, coordenadas/: Útiles si querés tener documentación y archivos de datos que no cambian seguido.
+cultura-lenguaje/: Muy útil para tips de viaje, cultura, costumbres, consejos para israelíes/hebrea, etc.
+/data
+Clave si querés que tu web consuma datos estructurados (JSON, CSV).
+Acá podés tener:
+itinerario.json
+presupuesto.json
+alojamiento.json
+actividades.json
+etc.
+Permite actualizar la web fácilmente desde Excel (con scripts de conversión).
+/scripts
+Muy útil si querés automatizar la conversión de Excel/CSV a JSON para la web, importar datos, o procesar info externa (por ejemplo, tasas de cambio, traducciones, etc).
+
+Propuestas para potenciar la web (MCP + funciones modernas)
+Cambio de monedas automático:
+
+Integrá una API de tipo de cambio (ej. exchangerate-api, openexchangerates, etc).
+Guardá el resultado en /data/cambio.json y actualizalo con un script.
+Mostrá siempre valores en pesos, dólares y shekels (o la moneda de preferencia).
+Traducción de páginas/contenido:
+
+Usá librerías como i18next, react-intl, o incluso APIs externas (Google Translate, DeepL) para traducir contenido.
+Guardá los textos en /data/lang/ (ej. es.json, he.json, en.json).
+Búsqueda de transportes y reservas:
+
+Integrá APIs de buses, vuelos o plataformas de reservas (si están disponibles) o permití búsquedas manuales con enlaces útiles.
+Mantené archivos de referencia en /docs/ o /data/ con las empresas, plataformas y tips.
+Actualización dinámica de datos:
+
+Automatizá la importación de datos (precios, itinerarios) con scripts en /scripts/ y/o conecta el frontend a una API (backend propio o servicios externos).
+Otras ideas para MCP/Interactividad:
+
+Formulario para que la familia agregue notas, comentarios o sugerencias.
+Calendario interactivo.
+Mapas con marcadores (usá Leaflet, Mapbox, Google Maps API).
+Panel con alertas de salud, clima o avisos importantes.
+Sección de “Preguntas frecuentes” dinámica.
+
+¿En qué carpeta poner presupuesto.json e itinerario.json?
+La mejor práctica es colocarlos en una carpeta llamada /data en la raíz de tu proyecto, para mantener separados los datos estructurados del código fuente y la documentación.
+
+Opciones para mostrar el presupuesto en la web
+Algunas opciones de visualización recomendadas:
+
+Tabla simple: Una tabla HTML mostrando los costos por ciudad, tipo de gasto, totales, etc.
+Tarjetas/resúmenes: Un bloque resumen con el total, margen de seguridad y conversión de monedas, y tarjetas individuales para cada ciudad o gasto.
+Gráficos: Barras o tortas usando librerías como Chart.js o Recharts para mostrar la distribución de gastos.
+Filtros/interactividad: Permitir seleccionar moneda, ciudad, tipo de gasto, etc., y que la tabla/gráficos se actualicen dinámicamente.
+Resumen destacado: Un bloque visual muy claro con el total del viaje, gastos diarios, margen, etc.
+
+Presupuesto: Tabla simple y posibilidad de actualización diaria
+a) Organización para actualización diaria
+Para registrar los gastos diarios, te recomiendo:
+
+Mantener el archivo presupuesto.json como resumen y plan general.
+Crear un archivo adicional gastos-diarios.json donde cada miembro de la familia puede cargar cuánto gastó cada día y en qué rubro.
+Mostrar en la web tanto el plan (presupuesto) como el gasto real acumulado, permitiendo comparar y ver la diferencia.
+Código completo: frontend/src/pages/Presupuesto.jsx
+Este componente:
+
+Lee presupuesto.json y gastos-diarios.json.
+Muestra tabla de presupuesto planificado y tabla de gastos reales diarios.
+Permite comparar totales y ver la diferencia.
+La edición/carga de gastos diarios la podés hacer editando el archivo (o después agregar un formulario).
+
+Conviene juntar los archivos solo si tienen información redundante o si ambos son usados siempre juntos y tienen la misma estructura y propósito.
+Si uno es, por ejemplo, un archivo .html con formato web y otro es un .md (Markdown) para documentación, lo mejor es dejarlos separados.
+¿Ventajas de dejarlos separados?
+Puedes usar cada uno para fines específicos:
+El .md para documentación, notas, edición colaborativa, integración con sistemas como GitHub, etc.
+El .html para visualizar como página web, mostrar en un navegador, etc.
+No hay conflictos si están en la misma carpeta, siempre que tengan nombres distintos (buenosaires.md y buenosaires.html, por ejemplo).
+¿Qué tener en cuenta?
+Si hay información que quieres mantener sincronizada entre ambos, deberías actualizar los dos si cambia algo importante.
+Puedes agregar un README.md en la carpeta explicando para qué es cada archivo.
+
+Los archivos de información y contenido principal (por ejemplo, .md, .html) de cada ciudad van todos juntos en la carpeta ciudades.
+Todos los recursos multimedia y archivos adjuntos (imágenes, mapas, PDFs, etc.) se almacenan ordenados por ciudad dentro de docs/ciudad/.
+Evitás duplicar o complicar la estructura.
+Es más fácil encontrar y mantener la información.
+Todos los .md y .html de ciudades juntos en ciudades/.
+Todos los recursos multimedia y documentos adjuntos en docs/nombreciudad/.
+
+
+Ejemplo completo para la sincronización entre las carpetas ciudades/ y docs/ para Buenos Aires, siguiendo la estructura y convenciones que definimos.
+1. Archivo Markdown principal
+# Buenos Aires
+
+## Actividades principales
+
+| Actividad                                                                 | Horario        | Precio aprox. | Info                                              |
+|---------------------------------------------------------------------------|---------------|---------------|---------------------------------------------------|
+| Tours culturales                                                          | 09:00–12:00   | 15 USD        | [Wiki](https://es.wikipedia.org/wiki/Buenos_Aires)|
+| Espectáculo de tango                                                      | 20:00–22:30   | 40 USD        | —                                                 |
+| Paseo en bote por Puerto Madero                                           | 17:00–18:00   | 10 USD        | [Wiki](https://es.wikipedia.org/wiki/Puerto_Madero)|
+| Visita al Teatro Colón, Casa Rosada, Obelisco, Recoleta, MNBA y La Boca   | 14:00–18:00   | Gratis        | [La Boca](https://es.wikipedia.org/wiki/La_Boca)  |
+| Recorrido por Parque Tres de Febrero                                      | 10:00–12:00   | Gratis        | [Wiki](https://es.wikipedia.org/wiki/Parque_Tres_de_Febrero)|
+| Día en el Jardín Japonés                                                  | 09:30–11:30   | 5 USD         | [Wiki](https://es.wikipedia.org/wiki/Jard%C3%ADn_Japon%C3%A9s_(Buenos_Aires))|
+| Explorar Palermo (tiendas y cafés)                                        | 16:00–19:00   | Variable      | [Wiki](https://es.wikipedia.org/wiki/Palermo_(Buenos_Aires))|
+
+![Obelisco de Buenos Aires](../docs/buenosaires/obelisco.jpg)
+
+Puedes consultar el [mapa turístico de Buenos Aires (PDF)](../docs/buenosaires/mapa.pdf).
+
+---
+
+## Restaurantes recomendados
+
+| Restaurante                                      | Tipo                      | Gluten-free | Sugar-free |
+|--------------------------------------------------|---------------------------|:-----------:|:----------:|
+| [Don Julio](https://www.parrilladonjulio.com/)   | Parrilla Premium          | ✔️          | ❌         |
+| [Sacro](https://www.sacro.restaurant/)           | Vegano Gourmet            | ✔️          | ✔️         |
+| [Bio Restaurante](https://www.biorestaurante.com/) | Orgánico                 | ✔️          | ✔️         |
+| [Paru Inkas Sushi & Grill](https://parurestaurant.com/) | Fusión Peruano-Japonesa | ✔️          | ❌         |
+
+También puedes descargar un [listado ampliado de restaurantes (PDF)](../docs/buenosaires/restaurantes.pdf).
+
+---
+
+## Confiterías y cafés
+
+| Confitería                                         | Tipo                      | Gluten-free | Sugar-free |
+|----------------------------------------------------|---------------------------|:-----------:|:----------:|
+| [Café Tortoni](https://www.cafetortoni.com.ar/)    | Histórico / Clásico       | ❌          | ❌         |
+| [Havanna](https://www.havanna.com.ar/)             | Alfajores / Café          | ✔️          | ✔️         |
+| [Confitería Ideal](https://www.confiteriaideal.com/) | Repostería Tradicional   | ❌          | ❌         |
+
+---
+
+![Show de Tango](../docs/buenosaires/tango-show.jpg)
+
+> **Notas:**  
+> - Los horarios y precios pueden variar según la temporada.  
+> - Consultar disponibilidad para actividades y reservas en restaurantes recomendados.
+> - Descarga el [itinerario editable de Buenos Aires (xlsx)](../docs/buenosaires/itinerario.xlsx) para organizar tu viaje.
+
+2. Contenido para la carpeta docs/buenosaires/
+Puedes agregar y organizar recursos que referencie el markdown, por ejemplo:
+
+obelisco.jpg (imagen del Obelisco, ya referenciada en el archivo .md)
+mapa.pdf (mapa turístico, guía de la ciudad)
+restaurantes.pdf (listado ampliado de restaurantes)
+tango-show.jpg (imagen de un espectáculo de tango)
+itinerario.xlsx (planilla editable con itinerario)
+
+# Buenos Aires
+
+## Actividades principales
+
+![Obelisco de Buenos Aires](../docs/buenosaires/obelisco.jpg)
+
+Consulta el [mapa turístico de Buenos Aires](../docs/buenosaires/mapa.pdf) para ubicarte fácilmente.
+
+...
+
+> Descarga el itinerario editable: [Itinerario Buenos Aires (xlsx)](../docs/buenosaires/itinerario.xlsx)
+
+## Restaurantes recomendados
+
+Puedes ver la lista ampliada aquí: [restaurantes.pdf](../docs/buenosaires/restaurantes.pdf)
+
+3. Ejemplo de estructura de la carpeta docs/buenosaires/
+
+docs/
+└── buenosaires/
+    ├── obelisco.jpg
+    ├── mapa.pdf
+    ├── restaurantes.pdf
+    ├── tango-show.jpg
+    └── itinerario.xlsx
+
+De esta forma, todo lo que referencies en tu archivo Markdown de Buenos Aires está sincronizado y organizado dentro de docs/buenosaires/, quedando claro y ordenado.
+1. Sobre la estructura HTML y “Agenda de eventos”
+Todas las ciudades ahora deben tener la sección <h2>Agenda de eventos</h2>, como ya lo agregaste.
+El menú de navegación y el enlace "Volver al itinerario" ya funcionan y están sincronizados para todas las ciudades.
+La entrada <li><a href="../mapa.html">Mapa Interactivo</a></li> también debe estar para todas las ciudades, lo cual ya hiciste.
+2. Sincronización y enriquecimiento entre /ciudades y /docs
+¿Qué significa “enriquecer” docs?
+Que los archivos dentro de docs/ (por ejemplo, docs/actividades/buenosaires/README.md, docs/alojamientos/buenosaires/README.md, etc.) contengan información actualizada, ampliada y consistente con lo que figura en los archivos .md y .html de cada ciudad.
+Que toda sección importante de la ciudad en su .md también se refleje y amplíe en la carpeta correspondiente en docs/.
+¿Cómo se puede sincronizar y enriquecer?
+Revisar el contenido de cada archivo de ciudad (.md y .html) para ver qué secciones existen: atracciones, agenda, restaurantes, cultura, itinerario, etc.
+Asegurarse que cada sección tenga su contraparte en docs/:
+Ejemplo:
+La sección "Tipos de restaurantes" en el .md de Buenos Aires debe estar en docs/alojamientos/buenosaires/README.md o, si lo deseas más detallado, en un archivo específico dentro de alojamientos.
+La sección "Agenda de eventos" debe figurar en docs/agenda/buenosaires/README.md o en el README principal de la ciudad dentro de docs/.
+"Atracciones" en docs/actividades/buenosaires/README.md.
+Enriquecer agregando información adicional relevante en cada archivo de docs/ según el tema:
+Más detalles sobre lugares, eventos, contactos, recomendaciones, mapas, enlaces útiles, etc.
+Mantener la estructura y el formato coherentes:
+Usar títulos, listas, enlaces y tablas igual o mejor que en la versión .md principal.
+3. Ejemplo concreto para Buenos Aires
+Supón que tu ciudades/buenosaires.md tiene secciones como:
+
+Lugares imperdibles
+Actividades recomendadas
+Gastronomía destacada
+Tipos de restaurantes
+Agenda de eventos
+Consejos para familias
+Presupuesto orientativo
+Tips culturales
+Cómo sincronizar y enriquecer docs para Buenos Aires:
+
+docs/actividades/buenosaires/README.md:
+“Lugares imperdibles” y “Actividades recomendadas”, pero más detallado o ampliado.
+docs/alojamientos/buenosaires/README.md:
+Descripción de zonas, hoteles, hospedajes y “Tipos de restaurantes”, con ejemplos y recomendaciones.
+docs/presupuesto/buenosaires/README.md:
+Presupuesto orientativo, pero con detalles ampliados, consejos de ahorro, etc.
+docs/cultura-lenguaje/buenosaires/README.md:
+Tips culturales, costumbres, idioma, eventos, etc.
+docs/itinerario/buenosaires/README.md:
+Sugerencias de recorrido, itinerarios día por día.
+docs/coordenadas/buenosaires/README.md:
+Coordenadas exactas de atracciones, mapas integrados, enlaces a Google Maps.
+docs/agenda/buenosaires/README.md (nuevo, si querés):
+Agenda de eventos actualizada, enlaces de descarga, iCal, etc.
+
+
+Poner una sección “Agenda de eventos” en cada página de ciudad, con los eventos locales relevantes y/o un enlace a una agenda central si existe.
+Si hay eventos nacionales o compartidos, podés poner una agenda general en el index y, en cada ciudad, enlazar a esa agenda además de mostrar los eventos propios.
+Ejemplo de organización:
+En cada ciudades/<ciudad>.html:
+
+Agenda de eventos locales destacados (propios de la ciudad).
+Enlace a la agenda general si hay eventos nacionales o itinerantes.
+En index.html:
+
+Agenda general del viaje (eventos nacionales, fechas clave, etc.).
+
+¿Por qué de esta forma?
+Así el usuario encuentra rápido los eventos de la ciudad que le interesa.
+No se pierde la visión global del viaje.
+Es fácil de mantener: solo los eventos propios van en la ciudad, los grandes o nacionales en el index.
+
+Solo interesa mostrar los eventos que ocurren en la ciudad en la que efectivamente va a estar la familia en esa fecha.
+
+Esto implica:
+
+La agenda de eventos debe estar asociada a cada ciudad, solo con los eventos relevantes para las fechas en las que esa ciudad está programada en el itinerario.
+No tiene sentido mostrar eventos de Buenos Aires cuando ya se está en Mendoza, ni viceversa.
+¿Cómo organizarlo?
+Cada archivo de ciudad (por ejemplo, buenosaires.html) debe incluir solo los eventos que ocurren durante las fechas en que la familia estará en Buenos Aires.
+Lo mismo para Mendoza, Rosario, etc.
+Si querés una agenda general, puede ser solo a modo de referencia, pero la que importa para la experiencia del usuario está en cada ciudad.
+Ejemplo concreto (“Buenos Aires”)
+Supongamos que del 10 al 13 de octubre están en Buenos Aires.
+Solo listamos los eventos de Buenos Aires entre esas fechas en su sección de “Agenda de eventos”.
+
+Recomendación final
+La agenda de cada ciudad debe mostrar solo los eventos de las fechas en que están allí.
+Si en algún lado centralizás la agenda (por ejemplo, en el index), debe dejar muy claro en qué ciudad se está cada día y solo mostrar los eventos que corresponden.
+¡Esto hace la experiencia mucho más relevante y clara!
+
+El proyecto tiene que funcionar sin conexión a internet (offline).
+Las plataformas principales serán teléfonos y tablets Android (posiblemente usando el navegador de esos dispositivos).
+No vas a poder depender de servidores externos ni de tu PC.
+Todo debe ser autocontenible y local, es decir, que funcione aunque no haya internet.
+¿Qué implica esto para la traducción y la estructura del proyecto?
+1. Traducción “local” es lo correcto
+Cuando menciono “local”, me refiero a que todos los archivos necesarios (HTML, JS, CSS, textos de traducción) estén guardados dentro del propio proyecto y NO dependan de recursos de internet.
+
+Los archivos con los textos traducidos (es.json, he.json, etc.) deben estar dentro de tu carpeta del proyecto.
+El script JS que maneja la traducción también tiene que estar dentro del proyecto.
+2. Nada de cargar archivos externos o usar APIs online
+No uses Google Translate ni ningún otro servicio externo de traducción en tiempo real.
+No uses librerías que requieran conexión para cargar recursos (CDN). Si usás librerías, descargá el archivo .js y guardalo en tu proyecto.
+3. ¿Cómo se usa en Android y tablets?
+Simplemente abrís el archivo index.html en el navegador del celular/tablet.
+Todo el contenido y la lógica funcionan igual, estés o no conectado.
+4. ¿Qué estructura te propongo?
+/index.html
+/js/i18n.js ← Script de traducción
+/locales/es.json
+/locales/he.json
+/ciudades/rosario.html, etc.
+Otros archivos estáticos (imágenes, etc.)
+Todo esto puede ser copiado a cualquier teléfono/tablet y abierto con el navegador.
+
+Respondiendo a tu duda
+Sí conviene que todo sea local, porque:
+
+Te asegura que el sitio funcione sin internet.
+No dependés de servidores ni recursos externos.
+Es fácil de copiar a cualquier dispositivo (teléfono, tablet, otra PC).
+
+Eel proyecto debe funcionar siempre aunque no tengas conexión a internet, pero no necesitás evitar que funcione online cuando haya acceso.
+Lo importante es que la app nunca dependa de recursos externos para funciones críticas como la traducción, la navegación o el acceso a los contenidos.
+
+Resumen de la solución ideal para tu caso:
+
+Todo el contenido, textos y scripts de traducción deben estar guardados en los archivos del propio proyecto (es decir, local en el sentido de “incluido en la carpeta del sitio”).
+Si hay internet, la app funciona igual; si no hay, sigue funcionando exactamente igual.
+Si en el futuro querés agregar funciones online (comentarios, mapas en vivo, etc.), podés hacerlo sin afectar la parte básica.
+
+Colocá los archivos i18n.js y estilos.css en la carpeta ciudades.
+Usá los atributos data-i18n="clave" en los elementos a traducir en tu HTML.
+
+Selector de idioma arriba a la derecha, igual que Bariloche.
+Traducción dinámica usando archivos locales/es.json y locales/he.json.
+El idioma se mantiene si salís y volvés (usando localStorage).
+Si estás en עברית y apretás "⬅ חזרה למפת המסלול", vas al itinerario con ?lang=he para que siga en hebreo.
+Todos los textos usan data-i18n para facilitar la traducción.
+El botón del idioma seleccionado aparece en negrita.
+
+¿Dónde guardar las imágenes?
+Lo mejor es que las imágenes que uses sean propias, libres de derechos, o subidas a tu propio proyecto (ejemplo: en una carpeta img/ dentro del proyecto), para no depender de servicios externos y evitar problemas de copyright.
+Si usas imágenes con derechos (como Shutterstock), aparecerán marcas de agua y no es legal usarlas públicamente.
+
+Recomendación:
+
+Crea una carpeta img en la raíz del proyecto (o dentro de ciudades).
+Guarda ahí tus imágenes representativas.
+Usa la ruta relativa en el src, por ejemplo: src="../img/rosario.jpg"
+

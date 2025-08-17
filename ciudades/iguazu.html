@@ -2,8 +2,10 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Cataratas del Iguazú | Viaje Familiar a Argentina</title>
+  <title data-i18n="page-title">Puerto Iguazú | Viaje Familiar a Argentina</title>
+  <link rel="stylesheet" href="estilos.css">
   <style>
+    /* Estilos generales del cuerpo y barra superior */
     body {
       font-family: Arial, sans-serif;
       background: #f9f9f9;
@@ -20,15 +22,23 @@
       padding: 5px;
       border-radius: 5px;
       box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+      display: flex; /* Para alinear los botones de idioma y moneda */
+      align-items: center;
+      gap: 10px; /* Espacio entre elementos */
     }
-    .language-btn {
+    .language-btn, .currency-btn { /* Clase unificada para botones de control */
       font-weight: bold;
       padding: 8px 12px;
-      margin: 0 5px;
+      margin: 0 2px;
       border: none;
       border-radius: 4px;
       cursor: pointer;
       background-color: #f0f0f0;
+    }
+    .language-btn.active, .currency-btn.active {
+      background: #e6eaff;
+      border-color: #6d7fc9;
+      font-weight: bold;
     }
     .back-link {
       margin-left: 20px;
@@ -36,104 +46,337 @@
       font-weight: bold;
       color: #007BFF;
     }
-    h1, h2 {
+    /* Estilos para la foto de la ciudad */
+    .ciudad-foto {
+      width: 100%;
+      max-width: 700px;
+      height: auto;
+      display: block;
+      margin: 30px auto 20px auto;
+      border-radius: 14px;
+      box-shadow: 0 3px 16px rgba(0,0,0,0.15);
+    }
+    .foto-caption {
+      text-align: center;
+      color: #555;
+      font-size: 1em;
+      margin-bottom: 30px;
+    }
+    h1, h2, h3 { /* Agregado h3 para subsecciones */
       color: #0F4761;
     }
     ul {
       margin-bottom: 20px;
+      padding-left: 25px; /* Ajuste para listas */
+    }
+    ul li {
+      margin-bottom: 5px;
     }
     iframe {
       border: 1px solid black;
+      width: 100%; /* Asegura que el mapa sea responsive */
+      max-width: 700px; /* Limita el ancho máximo del mapa */
+      display: block;
+      margin: 20px auto; /* Centra el mapa */
+    }
+    /* Estilos para tablas añadidas */
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      max-width: 700px; /* Limita el ancho máximo de las tablas */
+      margin: 20px auto;
+      background: #f7fbff;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    th, td {
+      border: 1px solid #b3c7e6;
+      padding: 10px 15px;
+      text-align: left;
+      font-size: 16px;
+    }
+    th {
+      background: #e6f0fa;
+      font-weight: bold;
+    }
+    .rtl {
+      direction: rtl !important;
+      text-align: right !important;
+    }
+    .rtl ul {
+      padding-right: 25px;
+      padding-left: 0;
+    }
+
+    /* Estilos para las secciones de IA */
+    .ai-section {
+      background: #e6f0fa;
+      padding: 20px;
+      border-radius: 8px;
+      margin: 30px auto;
+      max-width: 700px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    .ai-section h2 {
+      color: #2176d2;
+      margin-top: 0;
+    }
+    .ai-button {
+      background-color: #4CAF50; /* Green */
+      color: white;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: background-color 0.3s ease;
+      display: block;
+      margin: 15px auto;
+      max-width: 300px;
+    }
+    .ai-button:hover {
+      background-color: #45a049;
+    }
+    .ai-button:disabled {
+      background-color: #cccccc;
+      cursor: not-allowed;
+    }
+    .ai-response {
+      margin-top: 20px;
+      padding: 15px;
+      background-color: #ffffff;
+      border: 1px solid #d0e0f0;
+      border-radius: 5px;
+      white-space: pre-wrap;
+      font-size: 15px;
+      line-height: 1.6;
+      min-height: 50px;
+    }
+    .ai-loading {
+      text-align: center;
+      font-style: italic;
+      color: #666;
+      margin-top: 10px;
     }
   </style>
 </head>
 <body>
   <div id="language-selector">
-    <button onclick="translatePage('es')" class="language-btn">Español</button>
-    <button onclick="translatePage('he')" class="language-btn">עברית</button>
-    <a href="../index.html" class="back-link" id="back-link">⬅ Volver al itinerario</a>
+    <span data-i18n="idioma">Idioma:</span>
+    <button onclick="translatePage('es')" class="language-btn" id="btn-es">Español</button>
+    <button onclick="translatePage('he')" class="language-btn" id="btn-he">עברית</button>
+    <span data-i18n="moneda">Moneda:</span>
+    <button id="btn-ars" onclick="cambiarMoneda('ARS')" class="currency-btn">ARS</button>
+    <button id="btn-usd" onclick="cambiarMoneda('USD')" class="currency-btn">USD</button>
+    <button id="btn-ils" onclick="cambiarMoneda('ILS')" class="currency-btn">ILS</button>
+    <a href="../index.html" class="back-link" id="back-link" data-i18n="back-link">⬅ Volver al itinerario</a>
   </div>
 
-  <h1 id="city-title">Cataratas del Iguazú</h1>
-  <p id="welcome-text">Bienvenidos a la sección de Cataratas del Iguazú.</p>
+  <img src="../docs/imagenes/iguazu/claudio-mota-R9ZvATRLDSk-unsplash.jpg"
+       alt="Cataratas del Iguazú"
+       class="ciudad-foto" id="city-photo" onerror="this.src='https://placehold.co/700x400/cccccc/333333?text=Imagen+Iguazu'">
+  <div class="foto-caption" id="foto-caption" data-i18n="foto-caption">Cataratas del Iguazú</div>
 
-  <h2 id="main-attractions-title">Atracciones principales</h2>
+  <h1 id="city-title" data-i18n="city-title">Puerto Iguazú</h1>
+  <p id="welcome-text" data-i18n="welcome-text">Puerto Iguazú es la ciudad argentina que sirve de puerta de entrada a las majestuosas Cataratas del Iguazú, una de las Siete Maravillas Naturales del Mundo y Patrimonio de la Humanidad. Un destino selvático e imperdible para toda la familia.</p>
+
+  <h2 data-i18n="dates-duration-title">Fechas y duración</h2>
+  <ul>
+    <li data-i18n="stay-duration">**Estadía**: 20/10 al 24/10 (5 días)</li>
+    <li data-i18n="how-to-arrive">**Cómo llegar**: Vuelo desde Jujuy (con escala en Buenos Aires) / Bus de larga distancia.</li>
+  </ul>
+
+  <h2 id="main-attractions-title" data-i18n="main-attractions-title">Lugares imperdibles</h2>
   <ul id="main-attractions-list">
-    <li><a href="https://es.wikipedia.org/wiki/Cataratas_del_Iguaz%C3%BA" target="_blank" id="attraction-0">Parque Nacional Iguazú y Cataratas</a></li>
-    <li><a href="https://es.wikipedia.org/wiki/Garganta_del_Diablo" target="_blank" id="attraction-1">Garganta del Diablo</a></li>
-    <li><a href="https://es.wikipedia.org/wiki/Paseo_Superior_y_Paseo_Inferior" target="_blank" id="attraction-2">Paseos Superior e Inferior</a></li>
-    <li><a href="https://es.wikipedia.org/wiki/Isla_San_Mart%C3%ADn" target="_blank" id="attraction-3">Isla San Martín</a></li>
+    <li><a href="https://www.iguazuargentina.com/" target="_blank" id="attraction-0" data-i18n="attraction-0">Parque Nacional Iguazú (lado argentino)</a></li>
+    <li><a href="https://www.cataratasdoiguacu.com.br/" target="_blank" id="attraction-1" data-i18n="attraction-1">Parque Nacional do Iguaçu (lado brasileño)</a></li>
+    <li><a href="https://es.wikipedia.org/wiki/Hito_Tres_Fronteras" target="_blank" id="attraction-2" data-i18n="attraction-2">Hito de las Tres Fronteras</a></li>
+    <li><a href="https://www.guiraoga.com.ar/" target="_blank" id="attraction-3" data-i18n="attraction-3">Güira Oga (Refugio de Animales Silvestres)</a></li>
+    <li><a href="https://www.jardindeloscolibries.com/" target="_blank" id="attraction-4" data-i18n="attraction-4">Jardín de los Picaflores</a></li>
+    <li><a href="https://www.laripuca.com.ar/" target="_blank" id="attraction-5" data-i18n="attraction-5">Aripuca</a></li>
+    <li><a href="https://www.museodeceraiguazu.com.ar/" target="_blank" id="attraction-6" data-i18n="attraction-6">Museo de Cera</a></li>
   </ul>
 
-  <h2 id="restaurant-types-title">Tipos de restaurantes</h2>
-  <ul id="restaurant-types-list">
-    <li id="rest-0">Parrillas</li>
-    <li id="rest-1">Restaurantes regionales</li>
-    <li id="rest-2">Buffets en el parque</li>
-    <li id="rest-3">Cafés y casas de té</li>
+  <h2 data-i18n="recommended-activities-title">Actividades recomendadas</h2>
+  <ul>
+    <li data-i18n="rec-activity-0">Caminatas por las pasarelas del lado argentino y brasileño de las cataratas.</li>
+    <li data-i18n="rec-activity-1">Gran Aventura (paseo en gomón bajo las cataratas) – apto para edades adecuadas y sin restricciones de salud.</li>
+    <li data-i18n="rec-activity-2">Navegación al atardecer por el río Iguazú.</li>
+    <li data-i18n="rec-activity-3">Visita al Hito de las Tres Fronteras al atardecer.</li>
+    <li data-i18n="rec-activity-4">Recorrer el Duty Free Shop (lado argentino).</li>
+    <li data-i18n="rec-activity-5">Visitar el Parque das Aves (lado brasileño, si se cruza la frontera).</li>
+    <li data-i18n="rec-activity-6">Explorar el Parque Nacional por sus diversos senderos.</li>
   </ul>
 
-  <h2 id="map-title">Mapa de Cataratas del Iguazú</h2>
-  <iframe src="https://www.openstreetmap.org/export/embed.html?bbox=-54.478%2C-25.707%2C-54.438%2C-25.664&amp;layer=mapnik" width="100%" height="350"></iframe>
-  <br><small><a href="https://www.openstreetmap.org/#map=14/-25.686/-54.458" target="_blank" id="see-bigger-map">Ver mapa más grande</a></small>
+  <h2 data-i18n="gastronomy-title">Gastronomía destacada</h2>
+  <p data-i18n="gastronomy-intro">La gastronomía en Puerto Iguazú ofrece una mezcla de cocina regional (pescados de río, mandioca), con opciones de comida internacional y parrillas. Es importante buscar lugares que ofrezcan variedad y preguntar por opciones para dietas especiales.</p>
+  <h3 data-i18n="restaurants-title">Restaurantes recomendados</h3>
+  <table>
+    <thead>
+      <tr>
+        <th data-i18n="table-restaurant">Restaurante</th>
+        <th data-i18n="table-type">Tipo</th>
+        <th data-i18n="table-gluten-free">Sin Gluten</th>
+        <th data-i18n="table-sugar-free">Sin Azúcar</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a href="https://www.tripadvisor.com.ar/Restaurant_Review-g303444-d10103700-Reviews-La_Vaca_Enamorada-Puerto_Iguazu_Province_of_Misiones_Litoral.html" target="_blank">La Vaca Enamorada</a></td>
+        <td data-i18n="restaurant-type-0">Parrilla / Carnes</td>
+        <td data-i18n="yes-symbol">✔️</td>
+        <td data-i18n="no-symbol">❌</td>
+      </tr>
+      <tr>
+        <td><a href="https://www.aqvarestaurant.com.ar/" target="_blank">Aqva Restaurant</a></td>
+        <td data-i18n="restaurant-type-1">Cocina de autor / Fusión</td>
+        <td data-i18n="yes-symbol">✔️</td>
+        <td data-i18n="yes-symbol">✔️</td>
+      </tr>
+      <tr>
+        <td><a href="https://www.tripadvisor.com.ar/Restaurant_Review-g303444-d10103700-Reviews-Lo_de_Juan-Puerto_Iguazu_Province_of_Misiones_Litoral.html" target="_blank">Lo de Juan</a></td>
+        <td data-i18n="restaurant-type-2">Pescados de río / Regional</td>
+        <td data-i18n="yes-symbol">✔️</td>
+        <td data-i18n="no-symbol">❌</td>
+      </tr>
+      <tr>
+        <td><a href="https://www.elquinchodeltioquerido.com.ar/" target="_blank">El Quincho del Tío Querido</a></td>
+        <td data-i18n="restaurant-type-3">Parrilla / Show folclórico</td>
+        <td data-i18n="yes-symbol">✔️</td>
+        <td data-i18n="no-symbol">❌</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 data-i18n="cafes-title">Confiterías y cafés</h3>
+  <table>
+    <thead>
+      <tr>
+        <th data-i18n="table-cafe">Confitería</th>
+        <th data-i18n="table-type">Tipo</th>
+        <th data-i18n="table-gluten-free">Sin Gluten</th>
+        <th data-i18n="table-sugar-free">Sin Azúcar</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a href="https://www.tripadvisor.com.ar/Restaurant_Review-g303444-d10103700-Reviews-Cafe_Central-Puerto_Iguazu_Province_of_Misiones_Litoral.html" target="_blank">Café Central</a></td>
+        <td data-i18n="cafe-type-0">Cafetería / Panadería</td>
+        <td data-i18n="no-symbol">❌</td>
+        <td data-i18n="no-symbol">❌</td>
+      </tr>
+      <tr>
+        <td><a href="https://www.cremolatti.com.ar/" target="_blank">Heladería Cremolatti</a></td>
+        <td data-i18n="cafe-type-1">Helados</td>
+        <td data-i18n="yes-symbol">✔️</td>
+        <td data-i18n="yes-symbol">✔️</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="ai-section">
+    <h2 data-i18n="ai-menu-title">Generador de Menú Saludable ✨</h2>
+    <p data-i18n="ai-menu-description">Obtén sugerencias de menú para un día completo (desayuno, almuerzo, cena) adaptadas para dietas bajas en carbohidratos, aptas para diabéticos y, si es posible, sin gluten, inspiradas en la gastronomía de Puerto Iguazú.</p>
+    <button class="ai-button" id="generate-menu-btn" data-i18n="generate-menu-button">Generar Menú</button>
+    <div class="ai-loading" id="ai-menu-loading-indicator" style="display:none;" data-i18n="ai-loading">Generando menú...</div>
+    <div class="ai-response" id="ai-menu-response"></div>
+  </div>
+
+  <div class="ai-section">
+    <h2 data-i18n="ai-accommodation-title">Sugerencias de Alojamiento con IA 🏨</h2>
+    <p data-i18n="ai-accommodation-description">Obtén recomendaciones de alojamiento en Puerto Iguazú, considerando opciones familiares, seguras y bien ubicadas.</p>
+    <button class="ai-button" id="generate-accommodation-btn" data-i18n="generate-accommodation-button">Generar Sugerencias</button>
+    <div class="ai-loading" id="ai-accommodation-loading-indicator" style="display:none;" data-i18n="ai-loading">Generando sugerencias...</div>
+    <div class="ai-response" id="ai-accommodation-response"></div>
+  </div>
+
+  <div class="ai-section">
+    <h2 data-i18n="ai-family-tips-title">Consejos Adicionales para Familias con IA 👨‍👩‍👧‍👦</h2>
+    <p data-i18n="ai-family-tips-description">Recibe consejos personalizados para disfrutar Puerto Iguazú en familia, incluyendo actividades, seguridad y logística.</p>
+    <button class="ai-button" id="generate-family-tips-btn" data-i18n="generate-family-tips-button">Generar Consejos</button>
+    <div class="ai-loading" id="ai-family-tips-loading-indicator" style="display:none;" data-i18n="ai-loading">Generando consejos...</div>
+    <div class="ai-response" id="ai-family-tips-response"></div>
+  </div>
+
+  <div class="ai-section">
+    <h2 data-i18n="ai-budget-title">Análisis de Presupuesto con IA 💰</h2>
+    <p data-i18n="ai-budget-description">Obtén un análisis y desglose del presupuesto orientativo para tu estadía en Puerto Iguazú, con posibles optimizaciones.</p>
+    <button class="ai-button" id="generate-budget-btn" data-i18n="generate-budget-button">Analizar Presupuesto</button>
+    <div class="ai-loading" id="ai-budget-loading-indicator" style="display:none;" data-i18n="ai-loading">Analizando presupuesto...</div>
+    <div class="ai-response" id="ai-budget-response"></div>
+  </div>
+
+  <h2 data-i18n="accommodation-title">Alojamiento (ejemplos)</h2>
+  <ul>
+    <li data-i18n="accommodation-0">Gran Meliá Iguazú (dentro del Parque Nacional)</li>
+    <li data-i18n="accommodation-1">Amerian Portal del Iguazú</li>
+    <li data-i18n="accommodation-2">Hoteles y posadas más pequeños en el centro de Puerto Iguazú</li>
+    <li data-i18n="accommodation-3">Airbnb o cabañas en zonas más tranquilas.</li>
+  </ul>
+
+  <h2 data-i18n="coordinates-title">Coordenadas aproximadas</h2>
+  <p data-i18n="coordinates-text">Puerto Iguazú: 25° 36' S 54° 34' O<br>Cataratas del Iguazú: 25° 40' S 54° 26' O</p>
+
+  <h2 data-i18n="events-agenda-title">Agenda de eventos</h2>
+  <ul>
+    <li data-i18n="event-0">**(Consultar agenda local)**: Eventos culturales o festivales locales.</li>
+    <li data-i18n="event-1">**(Consultar agenda local)**: La principal atracción son las cataratas y la naturaleza.</li>
+    <li><a href="../docs/agenda/ariflier1970@gmail.com.ical.zip" target="_blank" data-i18n="download-agenda">Descargar agenda completa en formato iCal (.zip)</a></li>
+  </ul>
+
+  <h2 data-i18n="family-tips-title">Consejos para familias</h2>
+  <ul>
+    <li data-i18n="family-tip-0">Lleven repelente de insectos (fundamental), protector solar, sombrero y ropa liviana.</li>
+    <li data-i18n="family-tip-1">Usen calzado cómodo y antideslizante para las pasarelas.</li>
+    <li data-i18n="family-tip-2">En la Gran Aventura, se mojarán por completo; lleven ropa de recambio.</li>
+    <li data-i18n="family-tip-3">Si planean cruzar a Brasil, verifiquen los requisitos de visa y pasaporte para todos los integrantes de la familia.</li>
+    <li data-i18n="family-tip-4">Los monos y coatíes son comunes en el parque, no los alimenten ni los toquen.</li>
+    <li data-i18n="family-tip-5">El agua embotellada es recomendable.</li>
+  </ul>
+
+  <h2 data-i18n="budget-title">Presupuesto orientativo</h2>
+  <table>
+    <thead>
+      <tr>
+        <th data-i18n="budget-concept">Concepto</th>
+        <th data-i18n="budget-price">Precio estimado (USD)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td data-i18n="budget-concept-0">Alojamiento (noche, familia)</td>
+        <td data-i18n="budget-price-0">60–150</td>
+      </tr>
+      <tr>
+        <td data-i18n="budget-concept-1">Comida (por día, familia)</td>
+        <td data-i18n="budget-price-1">30–75</td>
+      </tr>
+      <tr>
+        <td data-i18n="budget-concept-2">Transporte local (por día)</td>
+        <td data-i18n="budget-price-2">5–20</td>
+      </tr>
+      <tr>
+        <td data-i18n="budget-concept-3">Actividades y tours (por día)</td>
+        <td data-i18n="budget-price-3">30–80</td>
+      </tr>
+      <tr>
+        <td data-i18n="budget-concept-4">Entradas museos/atracciones</td>
+        <td data-i18n="budget-price-4">25–40 (solo cataratas)</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2 data-i18n="cultural-tips-title">Tips culturales</h2>
+  <ul>
+    <li data-i18n="cultural-tip-0">La cultura de la región está muy influenciada por las tres fronteras (Argentina, Brasil, Paraguay).</li>
+    <li data-i18n="cultural-tip-1">El guaraní es un idioma cooficial en algunas zonas, aunque el español es dominante.</li>
+    <li data-i18n="cultural-tip-2">La mandioca es un alimento básico en la dieta local.</li>
+    <li data-i18n="cultural-tip-3">La calidez del clima se refleja en el ritmo de vida.</li>
+  </ul>
+
+  <h2 id="map-title" data-i18n="map-title">Mapa de Puerto Iguazú</h2>
+  <iframe src="https://www.openstreetmap.org/export/embed.html?bbox=-54.6%2C-25.7%2C-54.3%2C-25.4&amp;layer=mapnik" width="100%" height="350"></iframe>
+  <br><small><a href="https://www.openstreetmap.org/#map=13/-25.594/-54.467" target="_blank" id="see-bigger-map" data-i18n="see-bigger-map">Ver mapa más grande</a></small>
 
   <script>
-    // Diccionario de traducciones español ↔ hebreo
-    const translations = {
-      es: {
-        "city-title": "Cataratas del Iguazú",
-        "welcome-text": "Bienvenidos a la sección de Cataratas del Iguazú.",
-        "main-attractions-title": "Atracciones principales",
-        "attraction-0": "Parque Nacional Iguazú y Cataratas",
-        "attraction-1": "Garganta del Diablo",
-        "attraction-2": "Paseos Superior e Inferior",
-        "attraction-3": "Isla San Martín",
-        "restaurant-types-title": "Tipos de restaurantes",
-        "rest-0": "Parrillas",
-        "rest-1": "Restaurantes regionales",
-        "rest-2": "Buffets en el parque",
-        "rest-3": "Cafés y casas de té",
-        "map-title": "Mapa de Cataratas del Iguazú",
-        "see-bigger-map": "Ver mapa más grande",
-        "back-link": "⬅ Volver al itinerario"
-      },
-      he: {
-        "city-title": "מפלי איגואסו",
-        "welcome-text": "ברוכים הבאים למדור מפלי איגואסו.",
-        "main-attractions-title": "אטרקציות עיקריות",
-        "attraction-0": "הפארק הלאומי ומפלי איגואסו",
-        "attraction-1": "גרגנטה דל דיאבלו",
-        "attraction-2": "מסלול עליון ותחתון",
-        "attraction-3": "אי סן מרטין",
-        "restaurant-types-title": "סוגי מסעדות",
-        "rest-0": "מסעדות בשרים (פריז'ות)",
-        "rest-1": "מסעדות אזוריות",
-        "rest-2": "בופה בפארק",
-        "rest-3": "בתי קפה ובתי תה",
-        "map-title": "מפת מפלי איגואסו",
-        "see-bigger-map": "לצפייה במפה גדולה יותר",
-        "back-link": "⬅ חזרה למפת המסלול"
-      }
-    };
-
-    function translatePage(language) {
-      document.body.dir = (language === 'he') ? 'rtl' : 'ltr';
-      document.getElementById('city-title').textContent = translations[language]["city-title"];
-      document.getElementById('welcome-text').textContent = translations[language]["welcome-text"];
-      document.getElementById('main-attractions-title').textContent = translations[language]["main-attractions-title"];
-      document.getElementById('attraction-0').textContent = translations[language]["attraction-0"];
-      document.getElementById('attraction-1').textContent = translations[language]["attraction-1"];
-      document.getElementById('attraction-2').textContent = translations[language]["attraction-2"];
-      document.getElementById('attraction-3').textContent = translations[language]["attraction-3"];
-      document.getElementById('restaurant-types-title').textContent = translations[language]["restaurant-types-title"];
-      document.getElementById('rest-0').textContent = translations[language]["rest-0"];
-      document.getElementById('rest-1').textContent = translations[language]["rest-1"];
-      document.getElementById('rest-2').textContent = translations[language]["rest-2"];
-      document.getElementById('rest-3').textContent = translations[language]["rest-3"];
-      document.getElementById('map-title').textContent = translations[language]["map-title"];
-      document.getElementById('see-bigger-map').textContent = translations[language]["see-bigger-map"];
-      document.getElementById('back-link').textContent = translations[language]["back-link"];
-    }
-  </script>
-</body>
-</html>
+   
